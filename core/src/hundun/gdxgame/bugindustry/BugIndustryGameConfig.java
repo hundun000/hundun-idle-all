@@ -11,6 +11,7 @@ import com.badlogic.gdx.Gdx;
 import hundun.gdxgame.bugindustry.logic.ConstructionId;
 import hundun.gdxgame.bugindustry.logic.BuiltinConstructionsLoader;
 import hundun.gdxgame.bugindustry.logic.GameArea;
+import hundun.gdxgame.bugindustry.logic.ResourceType;
 import hundun.gdxgame.idleframe.data.ChildGameConfig;
 import hundun.gdxgame.idlestarter.ConstructionsFileLoader;
 
@@ -49,6 +50,12 @@ public class BugIndustryGameConfig extends ChildGameConfig {
         ));
         this.setAreaControlableConstructionIds(areaShownConstructionIds);
         this.setAreaShowEntityConstructionIds(areaShownConstructionIds);
+        
+        Map<String, List<String>> areaShownResourceIds = new HashMap<>(); 
+        areaShownResourceIds.put(GameArea.BEE_FARM, Arrays.asList(
+            ResourceType.BEE
+        ));
+        this.setAreaShowEntityResourceIds(areaShownResourceIds);
         
         Map<String, Integer> constructionStarterLevelMap = Map.of(ConstructionId.WOOD_SELL_HOUSE, 1);
         this.setConstructionStarterLevelMap(constructionStarterLevelMap);

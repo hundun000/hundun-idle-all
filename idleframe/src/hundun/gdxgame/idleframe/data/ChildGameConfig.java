@@ -19,7 +19,7 @@ public abstract class ChildGameConfig {
     Map<String, List<String>> areaControlableConstructionIds;
     Map<String, List<String>> areaShowEntityConstructionIds;
     Map<String, List<String>> areaShowEntityResourceIds;
-    Map<String, List<String>> areaShownResourceIds;
+    //Map<String, List<String>> areaShownResourceIds;
     List<BaseConstruction> constructions;
     Map<String, Integer> constructionStarterLevelMap;
 }

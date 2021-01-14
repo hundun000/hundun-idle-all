@@ -33,6 +33,7 @@ public class BugIndustryGame extends BaseIdleGame {
     
     public BugIndustryGame() {
         super(640, 480);
+        drawGameImageAndPlayAudio = false;
     }
     
     @Override

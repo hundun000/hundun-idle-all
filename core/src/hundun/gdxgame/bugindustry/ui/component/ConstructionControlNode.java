@@ -55,7 +55,7 @@ public class ConstructionControlNode extends Table implements ILogicFrameListene
 
         
         
-        this.setBounds(5 + SELF_WIDTH * index, 5, SELF_WIDTH, SELF_HEIGHT);
+        //this.setBounds(5 + SELF_WIDTH * index, 5, SELF_WIDTH, SELF_HEIGHT);
         //this.setTouchable(Touchable.enabled);
         this.addListener(new ClickListener() {
             

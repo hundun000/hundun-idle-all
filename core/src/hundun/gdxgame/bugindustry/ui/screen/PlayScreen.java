@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -15,12 +16,14 @@ import hundun.gdxgame.bugindustry.ui.component.AchievementMaskBoard;
 import hundun.gdxgame.bugindustry.ui.component.BackgroundImageBox;
 import hundun.gdxgame.bugindustry.ui.component.ConstructionControlBoard;
 import hundun.gdxgame.bugindustry.ui.component.GameAreaControlBoard;
-import hundun.gdxgame.bugindustry.ui.component.GameImageDrawHelper;
+
 import hundun.gdxgame.bugindustry.ui.component.PopupInfoBoard;
 import hundun.gdxgame.bugindustry.ui.component.StorageInfoBoard;
+import hundun.gdxgame.bugindustry.ui.image.GameEntityFactory;
 import hundun.gdxgame.idleframe.model.AchievementPrototype;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idlestarter.BasePlayScreen;
+import hundun.gdxgame.idlestarter.GameImageDrawHelper;
 
 /**
  * @author hundun
@@ -42,9 +45,10 @@ public class PlayScreen extends BasePlayScreen<BugIndustryGame> {
     private PopupInfoBoard popUpInfoBoard;
     private GameAreaControlBoard gameAreaControlBoard;
     private AchievementMaskBoard achievementMaskBoard;
-    private GameImageDrawHelper gameImageDrawHelper;
+    private GameImageDrawHelper<BugIndustryGame> gameImageDrawHelper;
 
     Table uiRootTable;
+    Table popupRootTable;
     Stage popupUiStage;
     private Stage backUiStage;
     
@@ -70,7 +74,7 @@ public class PlayScreen extends BasePlayScreen<BugIndustryGame> {
     
     private void initLogicChildren() {
         
-        gameImageDrawHelper = new GameImageDrawHelper(this, uiStage.getCamera());
+        gameImageDrawHelper = new GameImageDrawHelper<BugIndustryGame>(this, uiStage.getCamera(), new GameEntityFactory(game));
         
         
         logicFrameListeners.add(constructionControlBoard);
@@ -82,7 +86,7 @@ public class PlayScreen extends BasePlayScreen<BugIndustryGame> {
 
     private void initUiRoot() {
         uiRootTable = new Table();
-        uiRootTable.setSize(game.LOGIC_WIDTH, game.LOGIC_HEIGHT - 10);
+        uiRootTable.setFillParent(true);
         uiStage.addActor(uiRootTable);
         
         
@@ -93,9 +97,9 @@ public class PlayScreen extends BasePlayScreen<BugIndustryGame> {
         uiRootTable.add(gameAreaControlBoard).expand().right().row();
 
         constructionControlBoard = new ConstructionControlBoard(this);
-        uiRootTable.add(constructionControlBoard).height(constructionControlBoard.getHeight());
+        uiRootTable.add(constructionControlBoard).height(constructionControlBoard.BOARD_BORDER_HEIGHT);
         
-        
+        uiRootTable.debugCell();
     }
     
     private void initBackUiAndPopupUi() {
@@ -103,9 +107,16 @@ public class PlayScreen extends BasePlayScreen<BugIndustryGame> {
         this.backgroundImageBox = new BackgroundImageBox(this);
         backUiStage.addActor(backgroundImageBox);
         
+        popupRootTable = new Table();
+        popupRootTable.setFillParent(true);
+        //popupRootTable.debug();
+        popupUiStage.addActor(popupRootTable);
+        
         popUpInfoBoard = new PopupInfoBoard(this);
-        popupUiStage.addActor(popUpInfoBoard);
-
+        popupRootTable.add(popUpInfoBoard).bottom().expand().row();
+        // empty image for hold the space
+        popupRootTable.add(new Image()).height(game.LOGIC_HEIGHT / 4);
+        
         achievementMaskBoard = new AchievementMaskBoard(this);
         popupUiStage.addActor(achievementMaskBoard);
     }
@@ -135,6 +146,7 @@ public class PlayScreen extends BasePlayScreen<BugIndustryGame> {
         
         uiStage.act();
         
+        // ====== be careful of draw order ======
         backUiStage.draw();
         if (game.drawGameImageAndPlayAudio) {
             gameImageDrawHelper.drawAll();

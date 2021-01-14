@@ -7,12 +7,15 @@ import hundun.gdxgame.bugindustry.logic.ConstructionId;
 import hundun.gdxgame.bugindustry.logic.ResourceType;
 import hundun.gdxgame.bugindustry.ui.component.GameAreaControlBoard;
 import hundun.gdxgame.bugindustry.ui.component.StorageInfoBoard;
+import hundun.gdxgame.idleframe.model.entity.GameEntity;
+import hundun.gdxgame.idleframe.model.entity.IGameEntityFactory;
+import hundun.gdxgame.idleframe.model.entity.RandomMoveEntity;
 
 /**
  * @author hundun
  * Created on 2021/11/26
  */
-public class GameEntityFactory {
+public class GameEntityFactory implements IGameEntityFactory {
     public float FLY_MIN_X;
     public float FLY_MAX_X;
     public float FLY_MIN_Y;
@@ -25,6 +28,7 @@ public class GameEntityFactory {
     
     public float FLY_UNION_SPEED = 2;
 
+    public float RESOURCE_MAX_DRAW_NUM = 5;
     
     ResourceType type;
     int baseX;
@@ -154,8 +158,8 @@ public class GameEntityFactory {
     }
     
     
-    public GameEntity newBeeEntity() {
-        GameEntity entity = new GameEntity();
+    private GameEntity newBeeEntity() {
+        GameEntity entity = new RandomMoveEntity(FLY_MAX_X, FLY_MAX_X, FLY_MAX_X, FLY_MAX_X, FLY_MAX_X);
         entity.setTexture(new Sprite(game.getTextureManager().getBeeTexture()));
         entity.setX((FLY_MAX_X - FLY_MIN_X) / 2);
         entity.setY((FLY_MAX_Y - FLY_MIN_Y) / 2);
@@ -163,35 +167,30 @@ public class GameEntityFactory {
         entity.setDrawHeight(BEE_HEIGHT);
         entity.setRandomMove(true);
         entity.setRandomMoveCount(0);
-        checkRandomeMoveSpeedChange(entity);
+        entity.checkRandomeMoveSpeedChange();
         return entity;
     }
-    
-    public void checkRandomeMoveSpeedChange(GameEntity entity) {
-        if (entity.isRandomMove()) {
-            if (entity.getRandomMoveCount() > 0) {
-                entity.setRandomMoveCount(entity.getRandomMoveCount() - 1);
-            } else {
-                entity.setRandomMoveCount(50 + (int) (Math.random() * 50));
-                double angle = Math.toRadians(Math.random() * 360);
-                double unionSpeed = FLY_UNION_SPEED;
-                entity.setSpeedX((float) (unionSpeed * Math.cos(angle)));
-                entity.setSpeedY((float) (unionSpeed * Math.sin(angle)));
-            }
-            
-            if ((entity.getX() < FLY_MIN_X && entity.getSpeedX() < 0) 
-                    || (entity.getX() + entity.getDrawWidth() > FLY_MAX_X && entity.getSpeedX() > 0)) {
-                entity.setSpeedX(entity.getSpeedX() * -1);
-            }
-            if ((entity.getY() < FLY_MIN_Y && entity.getSpeedY() < 0) 
-                    || (entity.getY() + entity.getDrawHeight() > FLY_MAX_Y && entity.getSpeedY() > 0)) {
-                entity.setSpeedY(entity.getSpeedY() * -1);
-            }
-            
-            entity.setTextureFlipX(entity.getSpeedX() < 0);
 
+    @Override
+    public int calculateResourceDrawNum(String resourceId, long logicAmount) {
+        return (int) Math.min(RESOURCE_MAX_DRAW_NUM, logicAmount);
+    }
+
+    @Override
+    public int calculateConstructionDrawNum(String constructionid, long logicAmount, int max) {
+        return (int) Math.min(max, logicAmount);
+    }
+
+    @Override
+    public GameEntity newResourceEntity(String resourceId) {
+        switch (resourceId) {
+            case ResourceType.BEE:
+                return newBeeEntity();
+            default:
+                return null;
         }
     }
+
     
     
 }
