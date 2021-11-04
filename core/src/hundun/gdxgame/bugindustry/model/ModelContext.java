@@ -1,5 +1,6 @@
 package hundun.gdxgame.bugindustry.model;
 
+import hundun.gdxgame.bugindustry.model.construction.WoodGatherConstruction;
 import lombok.Data;
 
 /**
@@ -9,4 +10,5 @@ import lombok.Data;
 @Data
 public class ModelContext {
     StorageModel storageModel;
+    WoodGatherConstruction woodGatherConstruction;
 }

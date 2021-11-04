@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
  */
 @AllArgsConstructor
 public abstract class BaseScreen implements Screen {
-    protected final BugIndustryGame game;
+    public final BugIndustryGame game;
     protected final OrthographicCamera camera;
     protected final Stage stage;
     

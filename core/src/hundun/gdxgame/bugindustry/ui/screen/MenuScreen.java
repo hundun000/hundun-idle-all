@@ -53,6 +53,8 @@ public class MenuScreen extends BaseScreen {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 return true;
             }
+            
+            
         });
         table.addActor(buttonIntoGameScreen);
         

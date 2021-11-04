@@ -1,5 +1,8 @@
 package hundun.gdxgame.bugindustry.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import lombok.Data;
 
 /**
@@ -9,8 +12,19 @@ import lombok.Data;
 @Data
 public class StorageModel {
     
-    long numWood;
-    long numBee;
+    Map<ResourceType, Integer> ownResoueces = new HashMap<>();
     
+    public String getResourceDescription(ResourceType key) {
+        int amount = getResourceNum(key);
+        return key.getShowName() + ": " + amount;
+    }
+    
+    public int getResourceNum(ResourceType key) {
+        return ownResoueces.getOrDefault(key, 0);
+    }
+    
+    public int addResourceNum(ResourceType key, int add) {
+        return ownResoueces.merge(key, add, (oldValue, newValue) -> oldValue + newValue);
+    }
 
 }
