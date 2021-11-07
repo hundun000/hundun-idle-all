@@ -1,5 +1,12 @@
 package hundun.gdxgame.bugindustry.ui.other;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -10,8 +17,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import hundun.gdxgame.bugindustry.BugIndustryGame;
+import hundun.gdxgame.bugindustry.model.GameArea;
+import hundun.gdxgame.bugindustry.model.ModelContext;
+import hundun.gdxgame.bugindustry.model.ResourceType;
+import hundun.gdxgame.bugindustry.model.construction.BaseConstruction;
 import hundun.gdxgame.bugindustry.ui.ILogicFrameListener;
-import hundun.gdxgame.bugindustry.ui.screen.GameBeeScreen;
+import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
 
 /**
  * @author hundun
@@ -19,56 +31,61 @@ import hundun.gdxgame.bugindustry.ui.screen.GameBeeScreen;
  */
 public class ConstructionInfoBorad extends Table implements ILogicFrameListener {
     
-    GameBeeScreen parent;
-    ConstructionView constructionView;
+    GameScreen parent;
+    List<ConstructionView> constructionViews = new ArrayList<>();
+    GameArea currentArea = null; 
+    Map<GameArea, List<BaseConstruction>> areaShownConstructions; 
+    int NUM = 5;
     
-    public ConstructionInfoBorad(GameBeeScreen parent) {
+    private void init(ModelContext modelContext) {
+        areaShownConstructions = new HashMap<>();
+        areaShownConstructions.put(GameArea.BEE, Arrays.asList(
+                modelContext.getBeeGatherConstruction(),
+                modelContext.getSmallBeehiveConstruction()
+                ));
+        areaShownConstructions.put(GameArea.FOREST, Arrays.asList(
+                modelContext.getWoodGatherConstruction()
+                ));
+        
+    }
+    
+    public ConstructionInfoBorad(GameScreen parent) {
         this.parent = parent;
         this.setBackground(parent.tableBackgroundDrawable);
         this.setBounds(10, 10, Gdx.graphics.getWidth() - 20, 100);
         
+        for (int i = 0; i < NUM; i++) {
+            var constructionView = new ConstructionView(parent, i);
+            constructionViews.add(constructionView);
+            this.addActor(constructionView);
+        }
         
-        this.constructionView = new ConstructionView(parent, parent.game.getModelContext().getWoodGatherConstruction());
-        constructionView.setBounds(10, 10, 120, 60);
-        this.addActor(constructionView);
         this.debugAll();
+        
+        init(parent.game.getModelContext());
     }
 
     @Override
     public void onLogicFrame() {
-        this.constructionView.onLogicFrame();
+        updateViewData();
+        constructionViews.forEach(item -> item.onLogicFrame());
+    }
+
+    public void updateViewData() {
+        if (currentArea == null || currentArea != parent.getArea()) {
+            currentArea = parent.getArea();
+            List<BaseConstruction> newConstructions = areaShownConstructions.get(currentArea);
+            Gdx.app.log("ConstructionInfoBorad", "Constructions change to: " + newConstructions.stream().map(construction -> construction.getName()).collect(Collectors.joining(",")));
+            for (int i = 0; i < NUM; i++) {
+                if (i < newConstructions.size()) {
+                    constructionViews.get(i).setModel(newConstructions.get(i));
+                } else {
+                    constructionViews.get(i).setModel(null);
+                }
+            }
+        }
     }
     
-//    int nodeGroupWidth = (100 + 50 + 10);
-//    private WidgetGroup createUpgradeNodeGroup(int index) {
-//        HorizontalGroup group = new HorizontalGroup();
-//        Button upgradeButton = new TextButton("upgrade " + index, parent.game.getButtonSkin());
-//        upgradeButton.setSize(100, 50);
-//        upgradeButton.addListener(new ClickListener() {
-//            @Override
-//            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-//                super.enter(event, x, y, pointer, fromActor);
-//                Gdx.app.log("test", "enter");
-//            }
-//            
-//            @Override
-//            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-//                super.exit(event, x, y, pointer, toActor);
-//                Gdx.app.log("test", "exit");
-//            }
-//            
-//        });
-//        //upgradeButton.setPosition(5, 0);
-//        group.addActor(upgradeButton);
-//        
-//        Button questionButton = new TextButton("?", parent.game.getButtonSkin());
-//        questionButton.setSize(50, 50);
-//        //questionButton.setPosition(100, 5);
-//        group.addActor(questionButton);
-//        
-//        group.setSize(160, 60);
-//        group.setPosition(index * nodeGroupWidth, 0);
-//        return group;
-//    }
+    
     
 }

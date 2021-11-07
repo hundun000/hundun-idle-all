@@ -12,7 +12,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ConstructionOuputRule {
-    int successRate;
+    
     ResourceType resourceType;
     int amount;
+    int successRate;
 }

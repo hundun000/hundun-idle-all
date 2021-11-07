@@ -4,10 +4,11 @@ package hundun.gdxgame.bugindustry.model.construction;
  * Created on 2021/11/05
  */
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 
 import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.bugindustry.data.ConstructionOuputRule;
@@ -19,29 +20,39 @@ public abstract class BaseConstruction {
     protected BugIndustryGame game;
     
     protected ConstructionOuputRule clickGatherOutputRule;
-    protected List<ConstructionOuputRule> frameOutputRules;
+    protected List<ConstructionOuputRule> autoOutputRules;
     
-    protected Map<ResourceType, Integer> upgradeCost;
+    protected List<Map<ResourceType, Integer>> upgradeCostRules = new ArrayList<>();
     @Getter
     protected int level;
     @Getter
     protected String name;
     @Getter
-    protected String gatherDescroption;
+    protected String buttonDescroption;
+    @Getter
+    protected String detailDescroption;
     
     public BaseConstruction(BugIndustryGame game) {
         this.game = game;
     }
     
-    public boolean canClickGather() {
+    public boolean isClickGatherType() {
         if (clickGatherOutputRule == null) {
             return false;
         }
         return true;
     }
     
-    public void clickGather() {
-        if (!canClickGather()) {
+    public void onClick() {
+        if (isClickGatherType()) {
+            clickForGather();
+        } else {
+            clickForUpgrade();
+        }
+    }
+    
+    private void clickForGather() {
+        if (!isClickGatherType()) {
             return;
         }
         boolean success = random.nextInt(100) < clickGatherOutputRule.getSuccessRate();
@@ -51,24 +62,47 @@ public abstract class BaseConstruction {
         
     }
     
-    public boolean canUpgrade() {
-        if (upgradeCost == null) {
+    public boolean canClick() {
+        if (isClickGatherType()) {
+            return true;
+        } else {
+            return canUpgrade();
+        }
+    }
+    
+    private boolean canUpgrade() {
+        if (level >= upgradeCostRules.size()) {
             return false;
         }
-        for (var entry : upgradeCost.entrySet()) {
+        var upgradeCostRule = upgradeCostRules.get(level);
+        for (var entry : upgradeCostRule.entrySet()) {
             int own = game.getModelContext().getStorageModel().getResourceNum(entry.getKey());
-            if (own <= entry.getValue()) {
+            if (own < entry.getValue()) {
                 return false;
             }
         }
         return true;
     }
     
-    public void upgrade() {
+    public void autoOutputOnce() {
+        if (autoOutputRules == null) {
+            return;
+        }
+        for (ConstructionOuputRule rule : autoOutputRules) {
+            boolean success = random.nextInt(100) < rule.getSuccessRate();
+            if (success) {
+                int sumAmout = rule.getAmount() * level;
+                game.getModelContext().getStorageModel().addResourceNum(rule.getResourceType(), sumAmout);
+            }
+        }
+    }
+    
+    private void clickForUpgrade() {
         if (!canUpgrade()) {
             return;
         }
-        for (var entry : upgradeCost.entrySet()) {
+        var upgradeCostRule = upgradeCostRules.get(level);
+        for (var entry : upgradeCostRule.entrySet()) {
             game.getModelContext().getStorageModel().addResourceNum(entry.getKey(), -1 * entry.getValue());
         }
         this.level++;

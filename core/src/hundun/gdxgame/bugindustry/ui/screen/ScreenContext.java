@@ -9,5 +9,5 @@ import lombok.Data;
 @Data
 public class ScreenContext {
     MenuScreen menuScreen;
-    GameBeeScreen gameBeeScreen;
+    GameScreen gameBeeScreen;
 }

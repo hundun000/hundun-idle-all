@@ -11,23 +11,23 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-import hundun.gdxgame.bugindustry.ui.screen.GameBeeScreen;
+import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
 
 /**
  * @author hundun
  * Created on 2021/11/04
  */
 public class GameAreaChangeButton extends ImageButton {
-    GameBeeScreen parent;
+    GameScreen parent;
     boolean directRight;
     
-    public static GameAreaChangeButton create(GameBeeScreen parent, String path, boolean directRight) {
+    public static GameAreaChangeButton create(GameScreen parent, String path, boolean directRight) {
         Texture texture = new Texture(path);
         Drawable drawable = new TextureRegionDrawable(new TextureRegion(texture));
         return new GameAreaChangeButton(parent, drawable, directRight);
     }
     
-    public GameAreaChangeButton(GameBeeScreen parent, Drawable drawable, boolean directRight) {
+    public GameAreaChangeButton(GameScreen parent, Drawable drawable, boolean directRight) {
         super(drawable);
         this.parent = parent;
         this.directRight = directRight;

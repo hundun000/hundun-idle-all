@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
@@ -21,6 +22,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.bugindustry.model.GameArea;
 import hundun.gdxgame.bugindustry.ui.other.GameAreaChangeButton;
+import hundun.gdxgame.bugindustry.ui.other.PopupInfoBoard;
+import hundun.gdxgame.bugindustry.ui.other.PopupInfoBoard;
 import hundun.gdxgame.bugindustry.ui.other.StorageInfoBoard;
 import hundun.gdxgame.bugindustry.ui.other.ConstructionInfoBorad;
 import lombok.Getter;
@@ -30,8 +33,8 @@ import lombok.Setter;
  * @author hundun
  * Created on 2021/11/02
  */
-public class GameBeeScreen extends BaseScreen {
-
+public class GameScreen extends BaseScreen {
+    private static final float LOGIC_FRAME_LENGTH = 1 / 1f; 
     public Pixmap tableBackgroundPixmap;
     public TextureRegionDrawable tableBackgroundDrawable;
     public Pixmap tableBackgroundPixmap2;
@@ -39,12 +42,17 @@ public class GameBeeScreen extends BaseScreen {
     
     StorageInfoBoard storageInfoTable;
     ConstructionInfoBorad constructionInfoBorad;
-    Table backTable;
+    //Table backTable;
+    Label clockLabel;
+    PopupInfoBoard popUpInfoBoard;
+    int clockCount = 0;
+    private float logicFramAccumulator;
+    
     @Setter
     @Getter
     GameArea area;
     
-    public GameBeeScreen(BugIndustryGame game) {
+    public GameScreen(BugIndustryGame game) {
         super(game);
         
     }
@@ -62,15 +70,21 @@ public class GameBeeScreen extends BaseScreen {
         tableBackgroundPixmap2.fill();
         tableBackgroundDrawable2 = new TextureRegionDrawable(new TextureRegion(new Texture(tableBackgroundPixmap2)));
         
-        backTable = new Table();
-        backTable.setBackground(tableBackgroundDrawable2);
-        backTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        //backTable = new Table();
+        //backTable.setBackground(tableBackgroundDrawable2);
+        //backTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         var areaChangeButtonL = GameAreaChangeButton.create(this, "GameAreaChangeButton_L.png", false);
-        backTable.addActor(areaChangeButtonL);
+        stage.addActor(areaChangeButtonL);
         var areaChangeButtonR = GameAreaChangeButton.create(this, "GameAreaChangeButton_R.png", true);
-        backTable.addActor(areaChangeButtonR);
-        backTable.debugAll();
-        stage.addActor(backTable);
+        stage.addActor(areaChangeButtonR);
+        clockLabel = new Label("", game.getButtonSkin());
+        clockLabel.setBounds(0, Gdx.graphics.getHeight() - 10 - 50, 200, 50);
+        stage.addActor(clockLabel);
+        //backTable.debugAll();
+        //stage.addActor(backTable);
+        
+        popUpInfoBoard = new PopupInfoBoard(this);
+        stage.addActor(popUpInfoBoard);
         
         storageInfoTable = new StorageInfoBoard(this);
         stage.addActor(storageInfoTable);
@@ -92,21 +106,32 @@ public class GameBeeScreen extends BaseScreen {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        update();
+        logicFramAccumulator += delta;
+        if (logicFramAccumulator >= LOGIC_FRAME_LENGTH) {
+            logicFramAccumulator -= LOGIC_FRAME_LENGTH;
+            onLogicFrame();
+        }
         
         stage.act();
         stage.draw();
     }
 
-    private void update() {
-        storageInfoTable.onRenderFrame();
-        boolean onLogicFrame = true;
-        if (onLogicFrame) {
-            constructionInfoBorad.onLogicFrame();
-        }
+    private void onLogicFrame() {
+        clockCount++;
+        clockLabel.setText("LogicFrame: " + clockCount);
         
+        constructionInfoBorad.onLogicFrame();
     }
 
+    public void showAndUpdateGuideInfo(String text) {
+        popUpInfoBoard.setVisible(true);
+        popUpInfoBoard.setText(text);
+    }
+    
+    public void hideAndCleanGuideInfo() {
+        popUpInfoBoard.setVisible(false);
+        popUpInfoBoard.setText("GUIDE_TEXT");
+    }
 
     @Override
     public void dispose() {
