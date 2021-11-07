@@ -92,7 +92,7 @@ public class ConstructionView extends VerticalGroup implements ILogicFrameListen
         
         // ------ update model ------
         if (!model.isClickGatherType()) {
-            model.autoOutputOnce();
+            model.autoOutputCountAdd();
         }
         
     }

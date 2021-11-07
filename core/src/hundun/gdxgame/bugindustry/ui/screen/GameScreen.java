@@ -34,7 +34,7 @@ import lombok.Setter;
  * Created on 2021/11/02
  */
 public class GameScreen extends BaseScreen {
-    private static final float LOGIC_FRAME_LENGTH = 1 / 1f; 
+    private static final float LOGIC_FRAME_LENGTH = 1 / 30f; 
     public Pixmap tableBackgroundPixmap;
     public TextureRegionDrawable tableBackgroundDrawable;
     public Pixmap tableBackgroundPixmap2;

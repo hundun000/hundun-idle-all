@@ -18,7 +18,8 @@ import lombok.Getter;
 public abstract class BaseConstruction {
     protected Random random = new Random();
     protected BugIndustryGame game;
-    
+    protected int autoOutputCount = 0;
+    protected static final int AUTO_OUPUT_COST = 30;
     protected ConstructionOuputRule clickGatherOutputRule;
     protected List<ConstructionOuputRule> autoOutputRules;
     
@@ -84,7 +85,15 @@ public abstract class BaseConstruction {
         return true;
     }
     
-    public void autoOutputOnce() {
+    public void autoOutputCountAdd() {
+        autoOutputCount++;
+        if (autoOutputCount >= AUTO_OUPUT_COST) {
+            autoOutputCount = 0;
+            autoOutputOnce();
+        }
+    }
+    
+    private void autoOutputOnce() {
         if (autoOutputRules == null) {
             return;
         }
