@@ -22,6 +22,7 @@ import hundun.gdxgame.bugindustry.model.GameArea;
 import hundun.gdxgame.bugindustry.model.ModelContext;
 import hundun.gdxgame.bugindustry.model.ResourceType;
 import hundun.gdxgame.bugindustry.model.construction.BaseConstruction;
+import hundun.gdxgame.bugindustry.ui.IGameAreaChangeListener;
 import hundun.gdxgame.bugindustry.ui.ILogicFrameListener;
 import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
 
@@ -29,24 +30,25 @@ import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
  * @author hundun
  * Created on 2021/11/05
  */
-public class ConstructionInfoBorad extends Table implements ILogicFrameListener {
+public class ConstructionInfoBorad extends Table implements ILogicFrameListener, IGameAreaChangeListener {
     
     GameScreen parent;
     List<ConstructionView> constructionViews = new ArrayList<>();
-    GameArea currentArea = null; 
+
     Map<GameArea, List<BaseConstruction>> areaShownConstructions; 
     int NUM = 5;
     
     private void init(ModelContext modelContext) {
         areaShownConstructions = new HashMap<>();
-        areaShownConstructions.put(GameArea.BEE, Arrays.asList(
+        areaShownConstructions.put(GameArea.BEE_FARM, Arrays.asList(
                 modelContext.getBeeGatherConstruction(),
                 modelContext.getSmallBeehiveConstruction()
                 ));
-        areaShownConstructions.put(GameArea.FOREST, Arrays.asList(
+        areaShownConstructions.put(GameArea.BEE_BUFF, Arrays.asList(
+                ));
+        areaShownConstructions.put(GameArea.FOREST_FARM, Arrays.asList(
                 modelContext.getWoodGatherConstruction()
                 ));
-        
     }
     
     public ConstructionInfoBorad(GameScreen parent) {
@@ -67,23 +69,22 @@ public class ConstructionInfoBorad extends Table implements ILogicFrameListener 
 
     @Override
     public void onLogicFrame() {
-        updateViewData();
         constructionViews.forEach(item -> item.onLogicFrame());
     }
 
-    public void updateViewData() {
-        if (currentArea == null || currentArea != parent.getArea()) {
-            currentArea = parent.getArea();
-            List<BaseConstruction> newConstructions = areaShownConstructions.get(currentArea);
-            Gdx.app.log("ConstructionInfoBorad", "Constructions change to: " + newConstructions.stream().map(construction -> construction.getName()).collect(Collectors.joining(",")));
-            for (int i = 0; i < NUM; i++) {
-                if (i < newConstructions.size()) {
-                    constructionViews.get(i).setModel(newConstructions.get(i));
-                } else {
-                    constructionViews.get(i).setModel(null);
-                }
+
+    @Override
+    public void onChange(GameArea last, GameArea current) {
+        List<BaseConstruction> newConstructions = areaShownConstructions.get(current);
+        Gdx.app.log("ConstructionInfoBorad", "Constructions change to: " + newConstructions.stream().map(construction -> construction.getName()).collect(Collectors.joining(",")));
+        for (int i = 0; i < NUM; i++) {
+            if (i < newConstructions.size()) {
+                constructionViews.get(i).setModel(newConstructions.get(i));
+            } else {
+                constructionViews.get(i).setModel(null);
             }
         }
+
     }
     
     

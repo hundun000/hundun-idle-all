@@ -81,19 +81,13 @@ public class ConstructionView extends VerticalGroup implements ILogicFrameListen
         }
         // ------ update text ------
         constructionNameLabel.setText(model.getName());
-        if (model.isClickGatherType()) {
-            textButton.setText(model.getButtonDescroption());
-        } else {
-            String newText = "Upgrade(lv." + model.getLevel() + ")";
-            textButton.setText(newText);
-        }
+        textButton.setText(model.getButtonDescroption());
+
         boolean clickable = model.canClick();
         textButton.setTouchable(clickable ? Touchable.enabled : Touchable.disabled);
         
         // ------ update model ------
-        if (!model.isClickGatherType()) {
-            model.autoOutputCountAdd();
-        }
+        model.onLogicFrame();
         
     }
     

@@ -15,5 +15,5 @@ public class ConstructionOuputRule {
     
     ResourceType resourceType;
     int amount;
-    int successRate;
+    //int successRate;
 }

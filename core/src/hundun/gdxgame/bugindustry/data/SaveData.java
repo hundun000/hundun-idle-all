@@ -12,4 +12,5 @@ import lombok.Data;
 @Data
 public class SaveData {
     Map<ResourceType, Integer> ownResoueces;
+    Map<String, ConstructionSaveData> constructionSaveDataMap;
 }

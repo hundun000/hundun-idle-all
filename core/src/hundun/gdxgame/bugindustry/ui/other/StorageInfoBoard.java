@@ -26,12 +26,12 @@ public class StorageInfoBoard extends Table {
     Map<GameArea, List<ResourceType>> areaShownResources; 
     private void init() {
         areaShownResources = new HashMap<>();
-        areaShownResources.put(GameArea.BEE, Arrays.asList(
+        areaShownResources.put(GameArea.BEE_FARM, Arrays.asList(
                 ResourceType.WOOD,
                 ResourceType.WORKER_BEE,
                 ResourceType.HONEY
                 ));
-        areaShownResources.put(GameArea.FOREST, Arrays.asList(
+        areaShownResources.put(GameArea.FOREST_FARM, Arrays.asList(
                 ResourceType.WOOD
 
                 ));

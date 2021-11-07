@@ -1,4 +1,4 @@
-package hundun.gdxgame.bugindustry.model.construction;
+package hundun.gdxgame.bugindustry.model.construction.auto;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -11,27 +11,22 @@ import hundun.gdxgame.bugindustry.model.ResourceType;
  * @author hundun
  * Created on 2021/11/06
  */
-public class SmallBeehiveConstruction extends BaseConstruction {
+public class SmallBeehiveConstruction extends BaseAutoConstruction {
     
     public SmallBeehiveConstruction(BugIndustryGame game) {
-        super(game);
+        super(game, "BEE_01");
         this.name = getClass().getSimpleName();
-        this.detailDescroption = "output 1 honey per frame";
-        this.autoOutputRules = Arrays.asList(
-                new ConstructionOuputRule(ResourceType.HONEY, 1, 100)
+        this.detailDescroptionConstPart = "Auto gain some honey";
+        this.baseOutputRules = Arrays.asList(
+                new ConstructionOuputRule(ResourceType.HONEY, 1)
                 );
-        this.upgradeCostRules.add(
+        this.baseUpgradeCostMap = (
                 Map.of(
                         ResourceType.WOOD, 300, 
                         ResourceType.WORKER_BEE, 3
                         )
                 );
-        this.upgradeCostRules.add(
-                Map.of(
-                        ResourceType.WOOD, 800, 
-                        ResourceType.WORKER_BEE, 8
-                        )
-                );
+        updateCurrentCache();
     }
     
     @Override

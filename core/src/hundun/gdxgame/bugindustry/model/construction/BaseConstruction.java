@@ -12,108 +12,52 @@ import java.util.Random;
 
 import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.bugindustry.data.ConstructionOuputRule;
+import hundun.gdxgame.bugindustry.data.ConstructionSaveData;
 import hundun.gdxgame.bugindustry.model.ResourceType;
+import hundun.gdxgame.bugindustry.ui.ILogicFrameListener;
 import lombok.Getter;
+import lombok.Setter;
 
-public abstract class BaseConstruction {
-    protected Random random = new Random();
-    protected BugIndustryGame game;
-    protected int autoOutputCount = 0;
-    protected static final int AUTO_OUPUT_COST = 30;
-    protected ConstructionOuputRule clickGatherOutputRule;
-    protected List<ConstructionOuputRule> autoOutputRules;
+public abstract class BaseConstruction implements ILogicFrameListener {
     
-    protected List<Map<ResourceType, Integer>> upgradeCostRules = new ArrayList<>();
     @Getter
-    protected int level;
+    protected final ConstructionType type;
+    protected Random random = new Random();
+    protected final BugIndustryGame game;
+    @Setter
+    @Getter
+    protected ConstructionSaveData saveData;
+    @Getter
+    private final String saveDataKey;
     @Getter
     protected String name;
+
     @Getter
-    protected String buttonDescroption;
-    @Getter
-    protected String detailDescroption;
+    protected String detailDescroptionConstPart;
     
-    public BaseConstruction(BugIndustryGame game) {
+    protected List<ConstructionOuputRule> baseOutputRules;
+    protected Map<ResourceType, Integer> currentOutputMapCache;
+    protected String currentOutputDeccriptionCache;
+    
+    public BaseConstruction(BugIndustryGame game, ConstructionType type, String saveDataKey) {
         this.game = game;
+        this.type = type;
+        this.saveData = new ConstructionSaveData();
+        this.saveDataKey = saveDataKey;
     }
     
-    public boolean isClickGatherType() {
-        if (clickGatherOutputRule == null) {
-            return false;
-        }
-        return true;
+    public abstract void onClick();
+    
+    public abstract boolean canClick();
+    
+    public abstract String getButtonDescroption();
+    
+    public String getDetailDescroption() {
+        return detailDescroptionConstPart + "\n" + getDetailDescroptionDynamicPart();
     }
     
-    public void onClick() {
-        if (isClickGatherType()) {
-            clickForGather();
-        } else {
-            clickForUpgrade();
-        }
-    }
-    
-    private void clickForGather() {
-        if (!isClickGatherType()) {
-            return;
-        }
-        boolean success = random.nextInt(100) < clickGatherOutputRule.getSuccessRate();
-        if (success) {
-            game.getModelContext().getStorageModel().addResourceNum(clickGatherOutputRule.getResourceType(), clickGatherOutputRule.getAmount());
-        }
-        
-    }
-    
-    public boolean canClick() {
-        if (isClickGatherType()) {
-            return true;
-        } else {
-            return canUpgrade();
-        }
-    }
-    
-    private boolean canUpgrade() {
-        if (level >= upgradeCostRules.size()) {
-            return false;
-        }
-        var upgradeCostRule = upgradeCostRules.get(level);
-        for (var entry : upgradeCostRule.entrySet()) {
-            int own = game.getModelContext().getStorageModel().getResourceNum(entry.getKey());
-            if (own < entry.getValue()) {
-                return false;
-            }
-        }
-        return true;
-    }
-    
-    public void autoOutputCountAdd() {
-        autoOutputCount++;
-        if (autoOutputCount >= AUTO_OUPUT_COST) {
-            autoOutputCount = 0;
-            autoOutputOnce();
-        }
-    }
-    
-    private void autoOutputOnce() {
-        if (autoOutputRules == null) {
-            return;
-        }
-        for (ConstructionOuputRule rule : autoOutputRules) {
-            boolean success = random.nextInt(100) < rule.getSuccessRate();
-            if (success) {
-                int sumAmout = rule.getAmount() * level;
-                game.getModelContext().getStorageModel().addResourceNum(rule.getResourceType(), sumAmout);
-            }
-        }
-    }
-    
-    private void clickForUpgrade() {
-        if (!canUpgrade()) {
-            return;
-        }
-        var upgradeCostRule = upgradeCostRules.get(level);
-        for (var entry : upgradeCostRule.entrySet()) {
-            game.getModelContext().getStorageModel().addResourceNum(entry.getKey(), -1 * entry.getValue());
-        }
-        this.level++;
-    }
+    protected abstract String getDetailDescroptionDynamicPart();
+
+    public abstract void updateCurrentCache();
+
 }

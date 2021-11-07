@@ -19,20 +19,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import hundun.gdxgame.bugindustry.data.SaveData;
 import hundun.gdxgame.bugindustry.model.ModelContext;
 import hundun.gdxgame.bugindustry.model.StorageModel;
-import hundun.gdxgame.bugindustry.model.construction.BeeGatherConstruction;
-import hundun.gdxgame.bugindustry.model.construction.SmallBeehiveConstruction;
-import hundun.gdxgame.bugindustry.model.construction.WoodGatherConstruction;
+import hundun.gdxgame.bugindustry.model.construction.auto.SmallBeehiveConstruction;
+import hundun.gdxgame.bugindustry.model.construction.click.BeeGatherConstruction;
+import hundun.gdxgame.bugindustry.model.construction.click.WoodGatherConstruction;
 import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
 import hundun.gdxgame.bugindustry.ui.screen.MenuScreen;
 import hundun.gdxgame.bugindustry.ui.screen.ScreenContext;
 import hundun.gdxgame.bugindustry.util.FontUtil;
+import hundun.gdxgame.bugindustry.util.SaveUtils;
 import lombok.Getter;
 
 public class BugIndustryGame extends Game {
     public static final int LOGIC_WIDTH = 640;
     public static final int LOGIC_HEIGHT = 480;
     public static final int GRID_SIZE = 64;
-    File saveFile;
+    
     @Getter
     private SpriteBatch batch;
     @Getter
@@ -44,12 +45,12 @@ public class BugIndustryGame extends Game {
     @Getter
     private Skin buttonSkin;
     
-    private ObjectMapper objectMapper = new ObjectMapper();
+    
     
 	@Override
 	public void create () {
 	    FontUtil.init();
-	    this.saveFile = Gdx.files.internal("save.json").file();
+	    SaveUtils.init(Gdx.files.internal("save.json").file());
 	    
 		this.batch = new SpriteBatch();
 		this.font = FontUtil.KOMIKA;
@@ -63,56 +64,13 @@ public class BugIndustryGame extends Game {
 	
 	private void loadAndHookSave() {
 	    
-	    load();
+	    SaveUtils.load(modelContext);
 	    Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-	        save();
+	        SaveUtils.save(modelContext);
 	    }));
 	}
 	
-	private void save() {
-	    if (!saveFile.exists()) {
-	        try {
-	            saveFile.createNewFile();
-	        } catch (IOException e) {
-	            Gdx.app.error(this.getClass().getSimpleName(), "saveFile.createNewFile() fail", e);
-	            e.printStackTrace();
-	        }
-	    }
-	    
-	    SaveData saveData = new SaveData();
-	    saveData.setOwnResoueces(modelContext.getStorageModel().getOwnResoueces());
-	    
-	    try {
-	        BufferedWriter writer = new BufferedWriter(new FileWriter(saveFile));
-            writer.write(objectMapper.writeValueAsString(saveData));
-            writer.flush();
-            writer.close();
-            Gdx.app.log(this.getClass().getSimpleName(), "save() done");
-        } catch (Exception e) {
-            Gdx.app.error(this.getClass().getSimpleName(), "save() error", e);
-        }
-        
-
-	}
 	
-	private void load() {
-	    
-        if (!saveFile.exists()) {
-            Gdx.app.log(this.getClass().getSimpleName(), "no savefile, load() do nothing");
-            return;
-        }
-        
-        SaveData saveData;
-        try {
-            saveData = objectMapper.readValue(saveFile, SaveData.class);
-        } catch (IOException e) {
-            Gdx.app.error(this.getClass().getSimpleName(), "load() error", e);
-            return;
-        }
-        
-        modelContext.getStorageModel().setOwnResoueces(saveData.getOwnResoueces());
-        Gdx.app.log(this.getClass().getSimpleName(), "load() done");
-    }
 	
 	private void initContexts() {
 	    this.screenContext = new ScreenContext();

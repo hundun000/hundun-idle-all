@@ -45,10 +45,12 @@ public class GameScreen extends BaseScreen {
     //Table backTable;
     Label clockLabel;
     PopupInfoBoard popUpInfoBoard;
+    GameAreaChangeButton areaChangeButtonL;
+    GameAreaChangeButton areaChangeButtonR;
     int clockCount = 0;
     private float logicFramAccumulator;
     
-    @Setter
+
     @Getter
     GameArea area;
     
@@ -57,9 +59,19 @@ public class GameScreen extends BaseScreen {
         
     }
     
+    public void setAreaAndNotifyChildren(GameArea area) {
+        GameArea last = this.area;
+        this.area = area;
+        
+        
+        constructionInfoBorad.onChange(last, area);
+        areaChangeButtonL.onChange(last, area);
+        areaChangeButtonR.onChange(last, area);
+    }
+    
 
     
-    private void initScene2d() {
+    private void initChildren() {
         
         tableBackgroundPixmap = new Pixmap(1,1, Pixmap.Format.RGB565);
         tableBackgroundPixmap.setColor(0.8f, 0.8f, 0.8f, 1.0f);
@@ -73,10 +85,11 @@ public class GameScreen extends BaseScreen {
         //backTable = new Table();
         //backTable.setBackground(tableBackgroundDrawable2);
         //backTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        var areaChangeButtonL = GameAreaChangeButton.create(this, "GameAreaChangeButton_L.png", false);
+        areaChangeButtonL = GameAreaChangeButton.create(this, "GameAreaChangeButton_L.png", false);
         stage.addActor(areaChangeButtonL);
-        var areaChangeButtonR = GameAreaChangeButton.create(this, "GameAreaChangeButton_R.png", true);
+        areaChangeButtonR = GameAreaChangeButton.create(this, "GameAreaChangeButton_R.png", true);
         stage.addActor(areaChangeButtonR);
+        
         clockLabel = new Label("", game.getButtonSkin());
         clockLabel.setBounds(0, Gdx.graphics.getHeight() - 10 - 50, 200, 50);
         stage.addActor(clockLabel);
@@ -96,9 +109,10 @@ public class GameScreen extends BaseScreen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-        this.area = GameArea.FOREST;
+
+        initChildren();
         
-        initScene2d();
+        setAreaAndNotifyChildren(GameArea.FOREST_FARM);
     }
 
     @Override
