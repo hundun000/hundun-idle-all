@@ -2,6 +2,8 @@ package hundun.gdxgame.bugindustry.model.construction.click;
 
 import java.util.stream.Collectors;
 
+import com.badlogic.gdx.Gdx;
+
 import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.bugindustry.data.ConstructionOuputRule;
 import hundun.gdxgame.bugindustry.model.construction.BaseConstruction;
@@ -45,15 +47,16 @@ public abstract class BaseClickGatherConstruction extends BaseConstruction {
     }
     
     @Override
-    public void updateCurrentCache() {
-        this.currentOutputMapCache = baseOutputRules.stream()
+    public void updateModifiedValues() {
+        Gdx.app.log(this.getClass().getSimpleName(), "updateCurrentCache called");
+        this.modifiedOutputMap = baseOutputRules.stream()
                 .collect(Collectors.toMap(
                         rule -> rule.getResourceType(), 
                         rule -> rule.getAmount() * 1
                         ));
-        this.currentOutputDeccriptionCache = 
+        this.modifiedOutputDescription = 
                 "AutoOutput: "
-                + currentOutputMapCache.entrySet().stream()
+                + modifiedOutputMap.entrySet().stream()
                 .map(entry -> entry.getKey().getShowName() + "x" + entry.getValue())
                 .collect(Collectors.joining(", "))
                 + "; ";
@@ -61,7 +64,7 @@ public abstract class BaseClickGatherConstruction extends BaseConstruction {
     
     @Override
     protected String getDetailDescroptionDynamicPart() {
-        return currentOutputDeccriptionCache;
+        return modifiedOutputDescription;
     }
 
 }

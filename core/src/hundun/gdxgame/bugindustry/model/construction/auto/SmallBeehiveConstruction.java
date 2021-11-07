@@ -26,7 +26,6 @@ public class SmallBeehiveConstruction extends BaseAutoConstruction {
                         ResourceType.WORKER_BEE, 3
                         )
                 );
-        updateCurrentCache();
     }
     
     @Override

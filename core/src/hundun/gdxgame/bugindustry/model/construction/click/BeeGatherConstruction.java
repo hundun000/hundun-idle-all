@@ -19,6 +19,5 @@ public class BeeGatherConstruction extends BaseClickGatherConstruction {
         this.baseOutputRules = Arrays.asList(
                 new ConstructionOuputRule(ResourceType.WORKER_BEE, 1)
                 );
-        updateCurrentCache();
     }
 }

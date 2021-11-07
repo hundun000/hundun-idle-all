@@ -19,7 +19,6 @@ public class WoodGatherConstruction extends BaseClickGatherConstruction {
         this.baseOutputRules = Arrays.asList(
                 new ConstructionOuputRule(ResourceType.WOOD, 100)
                 );
-        updateCurrentCache();
     }
 
 }

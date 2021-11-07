@@ -38,7 +38,7 @@ public class SaveUtils {
     
     private static void loadConstructionSaveData(Map<String, ConstructionSaveData> map, BaseConstruction construction) {
         construction.setSaveData(map.getOrDefault(construction.getSaveDataKey(), new ConstructionSaveData()));
-        construction.updateCurrentCache();
+        construction.updateModifiedValues();
     }
     
     public static void save(ModelContext modelContext) {
@@ -53,10 +53,12 @@ public class SaveUtils {
         
         SaveData saveData = new SaveData();
         saveData.setOwnResoueces(modelContext.getStorageModel().getOwnResoueces());
+        saveData.setBuffAmounts(modelContext.getBuffManager().getBuffAmounts());
         Map<String, ConstructionSaveData> map = new HashMap<>();
         appendConstructionSaveData(map, modelContext.getWoodGatherConstruction());
         appendConstructionSaveData(map, modelContext.getBeeGatherConstruction());
         appendConstructionSaveData(map, modelContext.getSmallBeehiveConstruction());
+        appendConstructionSaveData(map, modelContext.getHoneyBuffConstruction());
         saveData.setConstructionSaveDataMap(map);
         
         try {
@@ -88,10 +90,15 @@ public class SaveUtils {
         }
         
         modelContext.getStorageModel().setOwnResoueces(saveData.getOwnResoueces());
+        modelContext.getBuffManager().setBuffAmounts(saveData.getBuffAmounts());
         Map<String, ConstructionSaveData> map = saveData.getConstructionSaveDataMap();
         loadConstructionSaveData(map, modelContext.getWoodGatherConstruction());
         loadConstructionSaveData(map, modelContext.getBeeGatherConstruction());
         loadConstructionSaveData(map, modelContext.getSmallBeehiveConstruction());
+        loadConstructionSaveData(map, modelContext.getHoneyBuffConstruction());
+        
+        // post
+        modelContext.getBuffManager().notifyListeners();
         
         Gdx.app.log(SaveUtils.class.getSimpleName(), "load() done");
     }

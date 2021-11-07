@@ -17,9 +17,11 @@ import com.badlogic.gdx.utils.JsonWriter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import hundun.gdxgame.bugindustry.data.SaveData;
+import hundun.gdxgame.bugindustry.model.BuffManager;
 import hundun.gdxgame.bugindustry.model.ModelContext;
 import hundun.gdxgame.bugindustry.model.StorageModel;
 import hundun.gdxgame.bugindustry.model.construction.auto.SmallBeehiveConstruction;
+import hundun.gdxgame.bugindustry.model.construction.buff.HoneyBuffConstruction;
 import hundun.gdxgame.bugindustry.model.construction.click.BeeGatherConstruction;
 import hundun.gdxgame.bugindustry.model.construction.click.WoodGatherConstruction;
 import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
@@ -79,10 +81,12 @@ public class BugIndustryGame extends Game {
         
         this.modelContext = new ModelContext();
         modelContext.setStorageModel(new StorageModel());
+        modelContext.setBuffManager(new BuffManager());
         modelContext.setWoodGatherConstruction(new WoodGatherConstruction(this));
         modelContext.setBeeGatherConstruction(new BeeGatherConstruction(this));
         modelContext.setSmallBeehiveConstruction(new SmallBeehiveConstruction(this));
-    }
+        modelContext.setHoneyBuffConstruction(new HoneyBuffConstruction(this));
+	}
 
 	
 	@Override

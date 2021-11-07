@@ -45,6 +45,7 @@ public class ConstructionInfoBorad extends Table implements ILogicFrameListener,
                 modelContext.getSmallBeehiveConstruction()
                 ));
         areaShownConstructions.put(GameArea.BEE_BUFF, Arrays.asList(
+                modelContext.getHoneyBuffConstruction()
                 ));
         areaShownConstructions.put(GameArea.FOREST_FARM, Arrays.asList(
                 modelContext.getWoodGatherConstruction()
@@ -74,7 +75,7 @@ public class ConstructionInfoBorad extends Table implements ILogicFrameListener,
 
 
     @Override
-    public void onChange(GameArea last, GameArea current) {
+    public void onGameAreaChange(GameArea last, GameArea current) {
         List<BaseConstruction> newConstructions = areaShownConstructions.get(current);
         Gdx.app.log("ConstructionInfoBorad", "Constructions change to: " + newConstructions.stream().map(construction -> construction.getName()).collect(Collectors.joining(",")));
         for (int i = 0; i < NUM; i++) {

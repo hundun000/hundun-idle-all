@@ -8,8 +8,9 @@ import lombok.Getter;
 
 public enum ResourceType {
     WOOD("wood"),
-    HONEY("honey"),
-    WORKER_BEE("woker-bee")
+    HONEY("[GOLD]honey"),
+    WORKER_BEE("woker-bee"),
+    GENE_POINT("gene-point"),
     ;
     @Getter
     private final String showName;

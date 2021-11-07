@@ -3,13 +3,17 @@ package hundun.gdxgame.bugindustry.model.construction.auto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
+
+import com.badlogic.gdx.Gdx;
 
 import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.bugindustry.data.ConstructionOuputRule;
 import hundun.gdxgame.bugindustry.model.ResourceType;
 import hundun.gdxgame.bugindustry.model.construction.BaseConstruction;
 import hundun.gdxgame.bugindustry.model.construction.ConstructionType;
+import hundun.gdxgame.bugindustry.model.construction.buff.BuffId;
 
 /**
  * @author hundun
@@ -21,15 +25,13 @@ public abstract class BaseAutoConstruction extends BaseConstruction {
      * 影响升级后生产量
      */
     protected final double autoOuputSuccessRateLevelUpArg = 4.0;
-    protected final int MAX_LEVEL = 10;
+    
     /**
      * 影响升级后下一级费用
      */
     protected final double upgradeCostLevelUpArg = 4.0;
     
-    protected Map<ResourceType, Integer> baseUpgradeCostMap;
-    protected Map<ResourceType, Integer> currentUpgradeCostMapCache;
-    protected String currentUpgradeCostDeccriptionCache;
+
     
     protected int autoOutputProgress = 0;
     protected static final int AUTO_OUPUT_MAX_PROGRESS = 30;
@@ -39,27 +41,34 @@ public abstract class BaseAutoConstruction extends BaseConstruction {
     }
     
     @Override
-    public void updateCurrentCache() {
-        this.currentUpgradeCostMapCache = baseUpgradeCostMap.entrySet().stream()
+    public void updateModifiedValues() {
+        Gdx.app.log(this.getClass().getSimpleName(), "updateCurrentCache called");
+        this.modifiedUpgradeCostMap = baseUpgradeCostMap.entrySet().stream()
                 .collect(Collectors.toMap(
                         entry -> entry.getKey(), 
-                        entry -> (int)(entry.getValue() * Math.pow(upgradeCostLevelUpArg, saveData.getLevel()))
+                        entry -> (int)(
+                                entry.getValue() 
+                                * Math.pow(upgradeCostLevelUpArg, saveData.getLevel())
+                                )
                         )
                 );
-        this.currentUpgradeCostDeccriptionCache = 
+        this.modifiedUpgradeCostDescription = 
                 "UpgradeCost: "
-                + currentUpgradeCostMapCache.entrySet().stream()
+                + modifiedUpgradeCostMap.entrySet().stream()
                 .map(entry -> entry.getKey().getShowName() + "x" + entry.getValue())
                 .collect(Collectors.joining(", "))
                 + "; ";
-        this.currentOutputMapCache = baseOutputRules.stream()
+        this.modifiedOutputMap = baseOutputRules.stream()
                 .collect(Collectors.toMap(
                         rule -> rule.getResourceType(), 
-                        rule -> rule.getAmount() * saveData.getLevel()
+                        rule -> (int)(rule.getAmount() 
+                                * saveData.getLevel()
+                                * game.getModelContext().getBuffManager().getBuffAmoutOrDefault(BuffId.BUFF_HONEY)
+                                )
                         ));
-        this.currentOutputDeccriptionCache = 
+        this.modifiedOutputDescription = 
                 "AutoOutput: "
-                + currentOutputMapCache.entrySet().stream()
+                + modifiedOutputMap.entrySet().stream()
                 .map(entry -> entry.getKey().getShowName() + "x" + entry.getValue())
                 .collect(Collectors.joining(", "))
                 + "; ";
@@ -70,12 +79,12 @@ public abstract class BaseAutoConstruction extends BaseConstruction {
         if (!canUpgrade()) {
             return;
         }
-        Map<ResourceType, Integer> upgradeCostRule = currentUpgradeCostMapCache;
+        Map<ResourceType, Integer> upgradeCostRule = modifiedUpgradeCostMap;
         for (var entry : upgradeCostRule.entrySet()) {
             game.getModelContext().getStorageModel().addResourceNum(entry.getKey(), -1 * entry.getValue());
         }
         saveData.setLevel(saveData.getLevel() + 1);
-        updateCurrentCache();
+        updateModifiedValues();
     }
 
     @Override
@@ -88,19 +97,7 @@ public abstract class BaseAutoConstruction extends BaseConstruction {
         return "Upgrade(lv." + saveData.getLevel() + ")";
     }
     
-    private boolean canUpgrade() {
-        if (saveData.getLevel() >= MAX_LEVEL) {
-            return false;
-        }
-        Map<ResourceType, Integer> upgradeCostRule = currentUpgradeCostMapCache;
-        for (var entry : upgradeCostRule.entrySet()) {
-            int own = game.getModelContext().getStorageModel().getResourceNum(entry.getKey());
-            if (own < entry.getValue()) {
-                return false;
-            }
-        }
-        return true;
-    }
+    
     
     @Override
     public void onLogicFrame() {
@@ -112,22 +109,19 @@ public abstract class BaseAutoConstruction extends BaseConstruction {
     }
     
     private void autoOutputOnce() {
-        if (baseOutputRules == null) {
-            return;
-        }
-        for (ConstructionOuputRule rule : baseOutputRules) {
+        for (Entry<ResourceType, Integer> entry : modifiedOutputMap.entrySet()) {
             boolean success = true;
             if (success) {
-                int sumAmout = rule.getAmount() * saveData.getLevel();
-                game.getModelContext().getStorageModel().addResourceNum(rule.getResourceType(), sumAmout);
+                game.getModelContext().getStorageModel().addResourceNum(entry.getKey(), entry.getValue());
             }
         }
     }
     
     @Override
     protected String getDetailDescroptionDynamicPart() {
-        return currentOutputDeccriptionCache + "\n" + currentUpgradeCostDeccriptionCache;
+        return modifiedOutputDescription + "\n" + modifiedUpgradeCostDescription;
     }
 
+    
 
 }

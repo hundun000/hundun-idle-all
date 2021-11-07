@@ -7,5 +7,5 @@ import hundun.gdxgame.bugindustry.model.GameArea;
  * Created on 2021/11/05
  */
 public interface IGameAreaChangeListener {
-    void onChange(GameArea last, GameArea current);
+    void onGameAreaChange(GameArea last, GameArea current);
 }

@@ -31,6 +31,9 @@ public class StorageInfoBoard extends Table {
                 ResourceType.WORKER_BEE,
                 ResourceType.HONEY
                 ));
+        areaShownResources.put(GameArea.BEE_BUFF, Arrays.asList(
+                ResourceType.GENE_POINT
+                ));
         areaShownResources.put(GameArea.FOREST_FARM, Arrays.asList(
                 ResourceType.WOOD
 
@@ -60,6 +63,7 @@ public class StorageInfoBoard extends Table {
         String text = shownResources.stream()
                 .map(shownResource -> parent.game.getModelContext().getStorageModel().getResourceDescription(shownResource))
                 .collect(Collectors.joining("    "));
+        text += "\nBuffs = " + parent.game.getModelContext().getBuffManager().getBuffAmounts();
         mainLabel.setText(text);
     }
 

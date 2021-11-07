@@ -64,9 +64,9 @@ public class GameScreen extends BaseScreen {
         this.area = area;
         
         
-        constructionInfoBorad.onChange(last, area);
-        areaChangeButtonL.onChange(last, area);
-        areaChangeButtonR.onChange(last, area);
+        constructionInfoBorad.onGameAreaChange(last, area);
+        areaChangeButtonL.onGameAreaChange(last, area);
+        areaChangeButtonR.onGameAreaChange(last, area);
     }
     
 

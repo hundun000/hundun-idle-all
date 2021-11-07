@@ -3,6 +3,7 @@ package hundun.gdxgame.bugindustry.data;
 import java.util.Map;
 
 import hundun.gdxgame.bugindustry.model.ResourceType;
+import hundun.gdxgame.bugindustry.model.construction.buff.BuffId;
 import lombok.Data;
 
 /**
@@ -12,5 +13,6 @@ import lombok.Data;
 @Data
 public class SaveData {
     Map<ResourceType, Integer> ownResoueces;
+    Map<BuffId, Integer> buffAmounts;
     Map<String, ConstructionSaveData> constructionSaveDataMap;
 }

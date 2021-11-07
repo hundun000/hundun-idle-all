@@ -59,7 +59,7 @@ public class GameAreaChangeButton extends TextButton implements IGameAreaChangeL
     }
 
     @Override
-    public void onChange(GameArea last, GameArea current) {
+    public void onGameAreaChange(GameArea last, GameArea current) {
         GameArea next;
         if (directRight) {
             next = parent.getArea().switchCatogory();
