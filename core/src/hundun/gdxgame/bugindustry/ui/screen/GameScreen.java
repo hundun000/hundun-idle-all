@@ -23,6 +23,7 @@ import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.bugindustry.model.AchievementPrototype;
 import hundun.gdxgame.bugindustry.model.GameArea;
 import hundun.gdxgame.bugindustry.ui.other.GameAreaChangeButton;
+import hundun.gdxgame.bugindustry.ui.other.GameImageDrawHelper;
 import hundun.gdxgame.bugindustry.ui.other.PopupInfoBoard;
 import hundun.gdxgame.bugindustry.ui.other.PopupInfoBoard;
 import hundun.gdxgame.bugindustry.ui.other.StorageInfoBoard;
@@ -52,6 +53,7 @@ public class GameScreen extends BaseScreen {
     GameAreaChangeButton areaChangeButtonL;
     GameAreaChangeButton areaChangeButtonR;
     AchievementMaskBoard achievementMaskBoard;
+    GameImageDrawHelper gameImageDrawHelper;
     int clockCount = 0;
     private float logicFramAccumulator;
     boolean logicFramePause;
@@ -116,6 +118,12 @@ public class GameScreen extends BaseScreen {
         
         achievementMaskBoard = new AchievementMaskBoard(this);
         stage.addActor(achievementMaskBoard);
+        
+        
+        gameImageDrawHelper = new GameImageDrawHelper(this, stage.getCamera());
+//        gameImageDrawHelper.addBeeEntity();
+//        gameImageDrawHelper.addBeeEntity();
+//        gameImageDrawHelper.addBeeEntity();
     }
 
     @Override
@@ -141,6 +149,10 @@ public class GameScreen extends BaseScreen {
         }
         
         stage.act();
+        
+        
+        gameImageDrawHelper.drawAll();
+        
         stage.draw();
     }
 

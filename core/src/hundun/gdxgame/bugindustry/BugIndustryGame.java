@@ -72,6 +72,7 @@ public class BugIndustryGame extends Game {
 	        SaveUtils.load(modelContext);
 	     // post
 	        this.getEventManager().notifyBuffChange(true);
+	        this.getEventManager().notifyResourceAmountChange();
 	    }
 	    
 	    
