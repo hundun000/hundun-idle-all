@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 
 import hundun.gdxgame.bugindustry.BugIndustryGame;
+import hundun.gdxgame.bugindustry.util.SaveUtils;
 
 
 public class MenuScreen extends BaseScreen {
@@ -24,7 +25,8 @@ public class MenuScreen extends BaseScreen {
 
     
     
-    Button buttonIntoGameScreen;
+    Button buttonContinueGame;
+    Button buttonNewGame;
     Button buttonIntoSettingScreen;
     Table table;
     public MenuScreen(BugIndustryGame game) {
@@ -40,27 +42,45 @@ public class MenuScreen extends BaseScreen {
         table.setBounds((Gdx.graphics.getWidth() - 100)/2, 10, 100, 500);
         stage.addActor(table);
         
-        
-        buttonIntoGameScreen = new TextButton("intoGameScreen", game.getButtonSkin());
-        buttonIntoGameScreen.setSize(100, 100);
-        buttonIntoGameScreen.setPosition(0, 0);
-        buttonIntoGameScreen.addListener(new InputListener(){
+        buttonContinueGame = new TextButton("ContinueGame", game.getButtonSkin());
+        //buttonContinueGame.setSize(100, 100);
+        //buttonContinueGame.setPosition(0, 0);
+        buttonContinueGame.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                game.loadAndHookSave(true);
                 game.setScreen(game.getScreenContext().getGameBeeScreen());
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 return true;
             }
-            
-            
         });
-        table.addActor(buttonIntoGameScreen);
+        if (SaveUtils.hasSave()) {
+            table.add(buttonContinueGame).height(100).expandX().row();
+        }
+        
+        
+        
+        buttonNewGame = new TextButton("NewGame", game.getButtonSkin());
+        //buttonNewGame.setSize(100, 100);
+        //buttonContinueGame.setPosition(0, 0);
+        buttonNewGame.addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                game.loadAndHookSave(false);
+                game.setScreen(game.getScreenContext().getGameBeeScreen());
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+        table.add(buttonNewGame).height(100).expandX().row();
         
         buttonIntoSettingScreen = new TextButton("intoSettingScreen", game.getButtonSkin());
-        buttonIntoSettingScreen.setSize(100, 50);
-        buttonIntoSettingScreen.setPosition(0, 100);
+        //buttonIntoSettingScreen.setSize(100, 50);
+        //buttonIntoSettingScreen.setPosition(0, 100);
         buttonIntoSettingScreen.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
@@ -71,8 +91,10 @@ public class MenuScreen extends BaseScreen {
                 return true;
             }
         });
-        table.addActor(buttonIntoSettingScreen);
+        table.add(buttonIntoSettingScreen).height(50).expandX().row();
         
+        
+        //table.debugAll();
     }
     
     public void show() {

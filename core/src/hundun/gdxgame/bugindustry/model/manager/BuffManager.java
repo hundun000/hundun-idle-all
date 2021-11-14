@@ -1,4 +1,4 @@
-package hundun.gdxgame.bugindustry.model;
+package hundun.gdxgame.bugindustry.model.manager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,8 +7,10 @@ import java.util.Map;
 
 import com.badlogic.gdx.graphics.g3d.environment.AmbientCubemap;
 
-import hundun.gdxgame.bugindustry.model.construction.buff.BuffId;
-import hundun.gdxgame.bugindustry.ui.IBuffChangeListener;
+import hundun.gdxgame.bugindustry.BugIndustryGame;
+import hundun.gdxgame.bugindustry.model.ResourceType;
+import hundun.gdxgame.bugindustry.model.construction.BuffId;
+import hundun.gdxgame.bugindustry.ui.IAmountChangeEventListener;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,27 +21,17 @@ import lombok.Setter;
  */
 public class BuffManager {
     
-    List<IBuffChangeListener> listeners = new ArrayList<>();
+    BugIndustryGame game;
     
     @Setter
     @Getter
     Map<BuffId, Integer> buffAmounts = new HashMap<>();
     
-    public BuffManager() {
-        
+    public BuffManager(BugIndustryGame game) {
+        this.game = game;
     }
     
-    public void registerListener(IBuffChangeListener listener) {
-        if (!listeners.contains(listener)) {
-            listeners.add(listener);
-        }
-    }
     
-    public void notifyListeners() {
-        for (IBuffChangeListener listener : listeners) {
-            listener.onBuffChange();
-        }
-    }
     
     public int getBuffAmoutOrDefault(BuffId id) {
         return buffAmounts.getOrDefault(id, 0);
@@ -48,7 +40,7 @@ public class BuffManager {
     public void addBuffAmout(BuffId id, int amount) {
         int oldValue = getBuffAmoutOrDefault(id);
         buffAmounts.put(id, oldValue + amount);
-        notifyListeners();
+        game.getEventManager().notifyBuffChange(false);
     }
 
     
@@ -60,7 +52,7 @@ public class BuffManager {
             switch (buffId) {
                 case BUFF_HONEY:
                     if (resourceType == ResourceType.HONEY) {
-                        newAmout *= (0.5 * buffAmount);
+                        newAmout *= 1 + (0.5 * buffAmount);
                     }
                     break;
     

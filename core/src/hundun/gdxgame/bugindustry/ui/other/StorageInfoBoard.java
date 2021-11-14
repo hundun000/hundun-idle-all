@@ -24,20 +24,21 @@ import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
 public class StorageInfoBoard extends Table {
     
     Map<GameArea, List<ResourceType>> areaShownResources; 
+    List<ResourceType> farmAreaShownResources;
+    
     private void init() {
         areaShownResources = new HashMap<>();
-        areaShownResources.put(GameArea.BEE_FARM, Arrays.asList(
+        farmAreaShownResources = Arrays.asList(
                 ResourceType.WOOD,
                 ResourceType.WORKER_BEE,
                 ResourceType.HONEY
-                ));
+                );
+        
+        areaShownResources.put(GameArea.BEE_FARM, farmAreaShownResources);
         areaShownResources.put(GameArea.BEE_BUFF, Arrays.asList(
                 ResourceType.GENE_POINT
                 ));
-        areaShownResources.put(GameArea.FOREST_FARM, Arrays.asList(
-                ResourceType.WOOD
-
-                ));
+        areaShownResources.put(GameArea.FOREST_FARM, farmAreaShownResources);
         
     }
     
@@ -61,7 +62,7 @@ public class StorageInfoBoard extends Table {
         }
         
         String text = shownResources.stream()
-                .map(shownResource -> parent.game.getModelContext().getStorageModel().getResourceDescription(shownResource))
+                .map(shownResource -> parent.game.getModelContext().getStorageManager().getResourceDescription(shownResource))
                 .collect(Collectors.joining("    "));
         text += "\nBuffs = " + parent.game.getModelContext().getBuffManager().getBuffAmounts();
         mainLabel.setText(text);

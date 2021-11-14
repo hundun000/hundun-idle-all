@@ -1,4 +1,4 @@
-package hundun.gdxgame.bugindustry.model.construction.click;
+package hundun.gdxgame.bugindustry.model.construction;
 
 import java.util.stream.Collectors;
 
@@ -6,17 +6,15 @@ import com.badlogic.gdx.Gdx;
 
 import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.bugindustry.data.ConstructionOuputRule;
-import hundun.gdxgame.bugindustry.model.construction.BaseConstruction;
-import hundun.gdxgame.bugindustry.model.construction.ConstructionType;
 
 /**
  * @author hundun
  * Created on 2021/11/10
  */
-public abstract class BaseClickGatherConstruction extends BaseConstruction {
+public class BaseClickGatherConstruction extends BaseConstruction {
 
-    public BaseClickGatherConstruction(BugIndustryGame game, String saveDataKey) {
-        super(game, ConstructionType.CLICK_GATHER, saveDataKey);
+    public BaseClickGatherConstruction(BugIndustryGame game, ConstructionId id) {
+        super(game, ConstructionType.CLICK_GATHER, id);
         
     }
     
@@ -26,7 +24,7 @@ public abstract class BaseClickGatherConstruction extends BaseConstruction {
             boolean success = true;
             if (success) {
                 int sumAmout = rule.getAmount() * 1;
-                game.getModelContext().getStorageModel().addResourceNum(rule.getResourceType(), sumAmout);
+                game.getModelContext().getStorageManager().addResourceNum(rule.getResourceType(), sumAmout);
             }
         }
     }

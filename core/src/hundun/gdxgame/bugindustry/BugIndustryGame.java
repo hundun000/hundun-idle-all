@@ -17,13 +17,12 @@ import com.badlogic.gdx.utils.JsonWriter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import hundun.gdxgame.bugindustry.data.SaveData;
-import hundun.gdxgame.bugindustry.model.BuffManager;
 import hundun.gdxgame.bugindustry.model.ModelContext;
-import hundun.gdxgame.bugindustry.model.StorageModel;
-import hundun.gdxgame.bugindustry.model.construction.auto.SmallBeehiveConstruction;
-import hundun.gdxgame.bugindustry.model.construction.buff.HoneyBuffConstruction;
-import hundun.gdxgame.bugindustry.model.construction.click.BeeGatherConstruction;
-import hundun.gdxgame.bugindustry.model.construction.click.WoodGatherConstruction;
+import hundun.gdxgame.bugindustry.model.construction.ConstructionFactory;
+import hundun.gdxgame.bugindustry.model.manager.AchievementManager;
+import hundun.gdxgame.bugindustry.model.manager.BuffManager;
+import hundun.gdxgame.bugindustry.model.manager.EventManager;
+import hundun.gdxgame.bugindustry.model.manager.StorageManager;
 import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
 import hundun.gdxgame.bugindustry.ui.screen.MenuScreen;
 import hundun.gdxgame.bugindustry.ui.screen.ScreenContext;
@@ -45,6 +44,9 @@ public class BugIndustryGame extends Game {
     @Getter
     private ModelContext modelContext;
     @Getter
+    private EventManager eventManager;
+
+    @Getter
     private Skin buttonSkin;
     
     
@@ -59,14 +61,21 @@ public class BugIndustryGame extends Game {
 		this.buttonSkin = new Skin(Gdx.files.internal("default/skin/uiskin.json"));
 		initContexts();
 		
-		loadAndHookSave();
+		//loadAndHookSave();
 		
-		setScreen(screenContext.getGameBeeScreen());
+		setScreen(screenContext.getMenuScreen());
 	}
 	
-	private void loadAndHookSave() {
+	public void loadAndHookSave(boolean load) {
 	    
-	    SaveUtils.load(modelContext);
+	    if (load) {
+	        SaveUtils.load(modelContext);
+	     // post
+	        this.getEventManager().notifyBuffChange(true);
+	    }
+	    
+	    
+	    
 	    Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 	        SaveUtils.save(modelContext);
 	    }));
@@ -80,12 +89,11 @@ public class BugIndustryGame extends Game {
         screenContext.setGameBeeScreen(new GameScreen(this));
         
         this.modelContext = new ModelContext();
-        modelContext.setStorageModel(new StorageModel());
-        modelContext.setBuffManager(new BuffManager());
-        modelContext.setWoodGatherConstruction(new WoodGatherConstruction(this));
-        modelContext.setBeeGatherConstruction(new BeeGatherConstruction(this));
-        modelContext.setSmallBeehiveConstruction(new SmallBeehiveConstruction(this));
-        modelContext.setHoneyBuffConstruction(new HoneyBuffConstruction(this));
+        this.eventManager = new EventManager();
+        modelContext.setStorageManager(new StorageManager(this));
+        modelContext.setBuffManager(new BuffManager(this));
+        modelContext.setConstructionFactory(new ConstructionFactory(this));
+        modelContext.setAchievementManager(new AchievementManager(this));
 	}
 
 	

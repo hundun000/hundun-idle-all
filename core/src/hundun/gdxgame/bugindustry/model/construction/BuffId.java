@@ -1,4 +1,4 @@
-package hundun.gdxgame.bugindustry.model.construction.buff;
+package hundun.gdxgame.bugindustry.model.construction;
 /**
  * @author hundun
  * Created on 2021/11/10

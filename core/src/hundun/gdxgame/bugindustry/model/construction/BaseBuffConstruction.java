@@ -1,4 +1,4 @@
-package hundun.gdxgame.bugindustry.model.construction.buff;
+package hundun.gdxgame.bugindustry.model.construction;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -7,14 +7,12 @@ import com.badlogic.gdx.Gdx;
 
 import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.bugindustry.model.ResourceType;
-import hundun.gdxgame.bugindustry.model.construction.BaseConstruction;
-import hundun.gdxgame.bugindustry.model.construction.ConstructionType;
 
 /**
  * @author hundun
  * Created on 2021/11/10
  */
-public abstract class BaseBuffConstruction extends BaseConstruction {
+public class BaseBuffConstruction extends BaseConstruction {
 
     /**
      * 影响升级后下一级费用
@@ -23,8 +21,8 @@ public abstract class BaseBuffConstruction extends BaseConstruction {
     
     private final BuffId buffId;
     
-    public BaseBuffConstruction(BugIndustryGame game, BuffId buffId, String saveDataKey) {
-        super(game, ConstructionType.BUFF, saveDataKey);
+    public BaseBuffConstruction(BugIndustryGame game, BuffId buffId, ConstructionId id) {
+        super(game, ConstructionType.BUFF, id);
         this.buffId = buffId;
     }
 
@@ -40,7 +38,7 @@ public abstract class BaseBuffConstruction extends BaseConstruction {
         }
         Map<ResourceType, Integer> upgradeCostRule = modifiedUpgradeCostMap;
         for (var entry : upgradeCostRule.entrySet()) {
-            game.getModelContext().getStorageModel().addResourceNum(entry.getKey(), -1 * entry.getValue());
+            game.getModelContext().getStorageManager().addResourceNum(entry.getKey(), -1 * entry.getValue());
         }
         saveData.setLevel(saveData.getLevel() + 1);
         game.getModelContext().getBuffManager().addBuffAmout(buffId, 1);

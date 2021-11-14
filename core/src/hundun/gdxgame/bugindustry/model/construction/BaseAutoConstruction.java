@@ -1,4 +1,4 @@
-package hundun.gdxgame.bugindustry.model.construction.auto;
+package hundun.gdxgame.bugindustry.model.construction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,15 +11,12 @@ import com.badlogic.gdx.Gdx;
 import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.bugindustry.data.ConstructionOuputRule;
 import hundun.gdxgame.bugindustry.model.ResourceType;
-import hundun.gdxgame.bugindustry.model.construction.BaseConstruction;
-import hundun.gdxgame.bugindustry.model.construction.ConstructionType;
-import hundun.gdxgame.bugindustry.model.construction.buff.BuffId;
 
 /**
  * @author hundun
  * Created on 2021/11/10
  */
-public abstract class BaseAutoConstruction extends BaseConstruction {
+public class BaseAutoConstruction extends BaseConstruction {
     
     /**
      * 影响升级后生产量
@@ -36,8 +33,8 @@ public abstract class BaseAutoConstruction extends BaseConstruction {
     protected int autoOutputProgress = 0;
     protected static final int AUTO_OUPUT_MAX_PROGRESS = 30;
     
-    public BaseAutoConstruction(BugIndustryGame game, String saveDataKey) {
-        super(game, ConstructionType.AUTO_OUTPUT, saveDataKey);
+    public BaseAutoConstruction(BugIndustryGame game, ConstructionId id) {
+        super(game, ConstructionType.AUTO_OUTPUT, id);
     }
     
     @Override
@@ -61,11 +58,11 @@ public abstract class BaseAutoConstruction extends BaseConstruction {
         this.modifiedOutputMap = baseOutputRules.stream()
                 .collect(Collectors.toMap(
                         rule -> rule.getResourceType(), 
-                        rule -> (int)(rule.getAmount() 
-                                * saveData.getLevel()
-                                * game.getModelContext().getBuffManager().getBuffAmoutOrDefault(BuffId.BUFF_HONEY)
-                                )
-                        ));
+                        rule -> {
+                            int oldAmout = rule.getAmount() * saveData.getLevel();
+                            int modifiedAmout = game.getModelContext().getBuffManager().modifyResourceGain(rule.getResourceType(), oldAmout);
+                            return modifiedAmout;
+                        }));
         this.modifiedOutputDescription = 
                 "AutoOutput: "
                 + modifiedOutputMap.entrySet().stream()
@@ -81,7 +78,7 @@ public abstract class BaseAutoConstruction extends BaseConstruction {
         }
         Map<ResourceType, Integer> upgradeCostRule = modifiedUpgradeCostMap;
         for (var entry : upgradeCostRule.entrySet()) {
-            game.getModelContext().getStorageModel().addResourceNum(entry.getKey(), -1 * entry.getValue());
+            game.getModelContext().getStorageManager().addResourceNum(entry.getKey(), -1 * entry.getValue());
         }
         saveData.setLevel(saveData.getLevel() + 1);
         updateModifiedValues();
@@ -112,7 +109,7 @@ public abstract class BaseAutoConstruction extends BaseConstruction {
         for (Entry<ResourceType, Integer> entry : modifiedOutputMap.entrySet()) {
             boolean success = true;
             if (success) {
-                game.getModelContext().getStorageModel().addResourceNum(entry.getKey(), entry.getValue());
+                game.getModelContext().getStorageManager().addResourceNum(entry.getKey(), entry.getValue());
             }
         }
     }

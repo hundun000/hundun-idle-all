@@ -52,13 +52,14 @@ public class SaveUtils {
         }
         
         SaveData saveData = new SaveData();
-        saveData.setOwnResoueces(modelContext.getStorageModel().getOwnResoueces());
+        saveData.setOwnResoueces(modelContext.getStorageManager().getOwnResoueces());
         saveData.setBuffAmounts(modelContext.getBuffManager().getBuffAmounts());
+        saveData.setUnlockedAchievementNames(modelContext.getAchievementManager().getUnlockedAchievementNames());
         Map<String, ConstructionSaveData> map = new HashMap<>();
-        appendConstructionSaveData(map, modelContext.getWoodGatherConstruction());
-        appendConstructionSaveData(map, modelContext.getBeeGatherConstruction());
-        appendConstructionSaveData(map, modelContext.getSmallBeehiveConstruction());
-        appendConstructionSaveData(map, modelContext.getHoneyBuffConstruction());
+        var constructions = modelContext.getConstructionFactory().getConstructions();
+        for (BaseConstruction construction : constructions) {
+            appendConstructionSaveData(map, construction);
+        }
         saveData.setConstructionSaveDataMap(map);
         
         try {
@@ -72,6 +73,10 @@ public class SaveUtils {
         }
         
 
+    }
+    
+    public static boolean hasSave() {
+        return saveFile.exists();
     }
     
     public static void load(ModelContext modelContext) {
@@ -89,17 +94,15 @@ public class SaveUtils {
             return;
         }
         
-        modelContext.getStorageModel().setOwnResoueces(saveData.getOwnResoueces());
+        modelContext.getStorageManager().setOwnResoueces(saveData.getOwnResoueces());
         modelContext.getBuffManager().setBuffAmounts(saveData.getBuffAmounts());
+        modelContext.getAchievementManager().setUnlockedAchievementNames(saveData.getUnlockedAchievementNames());
         Map<String, ConstructionSaveData> map = saveData.getConstructionSaveDataMap();
-        loadConstructionSaveData(map, modelContext.getWoodGatherConstruction());
-        loadConstructionSaveData(map, modelContext.getBeeGatherConstruction());
-        loadConstructionSaveData(map, modelContext.getSmallBeehiveConstruction());
-        loadConstructionSaveData(map, modelContext.getHoneyBuffConstruction());
-        
-        // post
-        modelContext.getBuffManager().notifyListeners();
-        
+        var constructions = modelContext.getConstructionFactory().getConstructions();
+        for (BaseConstruction construction : constructions) {
+            loadConstructionSaveData(map, construction);
+        }
+
         Gdx.app.log(SaveUtils.class.getSimpleName(), "load() done");
     }
 }

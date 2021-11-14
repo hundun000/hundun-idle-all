@@ -20,11 +20,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import hundun.gdxgame.bugindustry.BugIndustryGame;
+import hundun.gdxgame.bugindustry.model.AchievementPrototype;
 import hundun.gdxgame.bugindustry.model.GameArea;
 import hundun.gdxgame.bugindustry.ui.other.GameAreaChangeButton;
 import hundun.gdxgame.bugindustry.ui.other.PopupInfoBoard;
 import hundun.gdxgame.bugindustry.ui.other.PopupInfoBoard;
 import hundun.gdxgame.bugindustry.ui.other.StorageInfoBoard;
+import hundun.gdxgame.bugindustry.ui.other.AchievementMaskBoard;
 import hundun.gdxgame.bugindustry.ui.other.ConstructionInfoBorad;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,6 +41,8 @@ public class GameScreen extends BaseScreen {
     public TextureRegionDrawable tableBackgroundDrawable;
     public Pixmap tableBackgroundPixmap2;
     public TextureRegionDrawable tableBackgroundDrawable2;
+    public Pixmap maskBackgroundPixmap;
+    public TextureRegionDrawable maskBackgroundDrawable;
     
     StorageInfoBoard storageInfoTable;
     ConstructionInfoBorad constructionInfoBorad;
@@ -47,9 +51,10 @@ public class GameScreen extends BaseScreen {
     PopupInfoBoard popUpInfoBoard;
     GameAreaChangeButton areaChangeButtonL;
     GameAreaChangeButton areaChangeButtonR;
+    AchievementMaskBoard achievementMaskBoard;
     int clockCount = 0;
     private float logicFramAccumulator;
-    
+    boolean logicFramePause;
 
     @Getter
     GameArea area;
@@ -81,6 +86,10 @@ public class GameScreen extends BaseScreen {
         tableBackgroundPixmap2.setColor(0.75f, 0.75f, 0.75f, 1.0f);
         tableBackgroundPixmap2.fill();
         tableBackgroundDrawable2 = new TextureRegionDrawable(new TextureRegion(new Texture(tableBackgroundPixmap2)));
+        maskBackgroundPixmap = new Pixmap(1,1, Pixmap.Format.RGB565);
+        maskBackgroundPixmap.setColor(1f, 1f, 1f, 0.3f);
+        maskBackgroundPixmap.fill();
+        maskBackgroundDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(maskBackgroundPixmap)));
         
         //backTable = new Table();
         //backTable.setBackground(tableBackgroundDrawable2);
@@ -104,6 +113,9 @@ public class GameScreen extends BaseScreen {
         
         constructionInfoBorad = new ConstructionInfoBorad(this);
         stage.addActor(constructionInfoBorad);
+        
+        achievementMaskBoard = new AchievementMaskBoard(this);
+        stage.addActor(achievementMaskBoard);
     }
 
     @Override
@@ -112,7 +124,7 @@ public class GameScreen extends BaseScreen {
 
         initChildren();
         
-        setAreaAndNotifyChildren(GameArea.FOREST_FARM);
+        setAreaAndNotifyChildren(GameArea.BEE_FARM);
     }
 
     @Override
@@ -123,7 +135,9 @@ public class GameScreen extends BaseScreen {
         logicFramAccumulator += delta;
         if (logicFramAccumulator >= LOGIC_FRAME_LENGTH) {
             logicFramAccumulator -= LOGIC_FRAME_LENGTH;
-            onLogicFrame();
+            if (!logicFramePause) {
+                onLogicFrame();
+            }
         }
         
         stage.act();
@@ -153,6 +167,17 @@ public class GameScreen extends BaseScreen {
         
         tableBackgroundPixmap2.dispose();
 
+    }
+
+    public void hideAchievementMaskBoard() {
+        achievementMaskBoard.setVisible(false);
+        logicFramePause = false;
+    }
+
+    public void onAchievementUnlock(AchievementPrototype prototype) {
+        achievementMaskBoard.setAchievementPrototype(prototype);
+        achievementMaskBoard.setVisible(true);
+        logicFramePause = true;
     }
 
 }

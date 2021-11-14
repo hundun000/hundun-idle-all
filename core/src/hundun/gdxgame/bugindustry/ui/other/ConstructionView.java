@@ -49,7 +49,9 @@ public class ConstructionView extends VerticalGroup implements ILogicFrameListen
         this.addListener(new ClickListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                parent.showAndUpdateGuideInfo(model.getDetailDescroption());
+                if (model != null) {
+                    parent.showAndUpdateGuideInfo(model.getDetailDescroption());
+                }
                 super.enter(event, x, y, pointer, fromActor);
             }
             

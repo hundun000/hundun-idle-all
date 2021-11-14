@@ -15,12 +15,12 @@ import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.bugindustry.data.ConstructionOuputRule;
 import hundun.gdxgame.bugindustry.data.ConstructionSaveData;
 import hundun.gdxgame.bugindustry.model.ResourceType;
-import hundun.gdxgame.bugindustry.ui.IBuffChangeListener;
+import hundun.gdxgame.bugindustry.ui.IAmountChangeEventListener;
 import hundun.gdxgame.bugindustry.ui.ILogicFrameListener;
 import lombok.Getter;
 import lombok.Setter;
 
-public abstract class BaseConstruction implements ILogicFrameListener, IBuffChangeListener {
+public abstract class BaseConstruction implements ILogicFrameListener, IAmountChangeEventListener {
     protected final int MAX_LEVEL = 10;
     @Getter
     protected final ConstructionType type;
@@ -29,11 +29,11 @@ public abstract class BaseConstruction implements ILogicFrameListener, IBuffChan
     @Setter
     @Getter
     protected ConstructionSaveData saveData;
-    @Getter
-    private final String saveDataKey;
+
     @Getter
     protected String name;
-
+    @Getter
+    protected ConstructionId id;
     @Getter
     protected String detailDescroptionConstPart;
     
@@ -45,13 +45,13 @@ public abstract class BaseConstruction implements ILogicFrameListener, IBuffChan
     protected Map<ResourceType, Integer> modifiedUpgradeCostMap;
     protected String modifiedUpgradeCostDescription;
     
-    public BaseConstruction(BugIndustryGame game, ConstructionType type, String saveDataKey) {
+    public BaseConstruction(BugIndustryGame game, ConstructionType type, ConstructionId id) {
         this.game = game;
         this.type = type;
         this.saveData = new ConstructionSaveData();
-        this.saveDataKey = saveDataKey;
+        this.id = id;
         
-        game.getModelContext().getBuffManager().registerListener(this);
+        game.getEventManager().registerListener(this);
     }
     
     public abstract void onClick();
@@ -72,7 +72,7 @@ public abstract class BaseConstruction implements ILogicFrameListener, IBuffChan
     public abstract void updateModifiedValues();
     
     @Override
-    public void onBuffChange() {
+    public void onBuffChange(boolean fromLoad) {
         updateModifiedValues();
     }
     
@@ -82,11 +82,15 @@ public abstract class BaseConstruction implements ILogicFrameListener, IBuffChan
         }
         Map<ResourceType, Integer> upgradeCostRule = modifiedUpgradeCostMap;
         for (var entry : upgradeCostRule.entrySet()) {
-            int own = game.getModelContext().getStorageModel().getResourceNum(entry.getKey());
+            int own = game.getModelContext().getStorageManager().getResourceNum(entry.getKey());
             if (own < entry.getValue()) {
                 return false;
             }
         }
         return true;
+    }
+    
+    public String getSaveDataKey() {
+        return id.name();
     }
 }
