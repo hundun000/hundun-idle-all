@@ -9,4 +9,5 @@ import lombok.Data;
 @Data
 public class ConstructionSaveData {
     private int level;
+    private int workingLevel;
 }

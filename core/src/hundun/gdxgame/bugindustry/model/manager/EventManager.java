@@ -24,9 +24,9 @@ public class EventManager {
         }
     }
 
-    public void notifyResourceAmountChange() {
+    public void notifyResourceAmountChange(boolean fromLoad) {
         for (IAmountChangeEventListener listener : listeners) {
-            listener.onResourceChange();
+            listener.onResourceChange(fromLoad);
         }
     }
 }

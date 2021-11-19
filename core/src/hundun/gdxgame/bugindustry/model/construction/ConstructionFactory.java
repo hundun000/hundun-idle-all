@@ -28,12 +28,29 @@ public class ConstructionFactory {
     private void initWood() {
         // gather
         {
-            BaseConstruction construction = new BaseClickGatherConstruction(game, ConstructionId.WOOD_GATHER_POINT);
-            construction.name = construction.getClass().getSimpleName();
+            BaseConstruction construction = new BaseClickGatherConstruction(game, ConstructionId.WOOD_GATHER_HOUSE);
+            construction.name = construction.getId().name();
             construction.detailDescroptionConstPart = "Free gain wood";
-            construction.baseOutputRules = Arrays.asList(
+            construction.baseOutputGainRules = Arrays.asList(
                     new ConstructionOuputRule(ResourceType.WOOD, 100)
                     );
+            register(construction);
+        }
+        // sell
+        {
+            BaseConstruction construction = new BaseAutoConstruction(game, ConstructionId.WOOD_SELL_HOUSE);
+            construction.name = construction.getId().name();
+            construction.detailDescroptionConstPart = "Auto sell wood";
+            construction.baseOutputCostMap = Map.of(
+                    ResourceType.WOOD, 1
+                    );
+            construction.baseOutputGainRules = Arrays.asList(
+                    new ConstructionOuputRule(ResourceType.COIN, 1)
+                    );
+            construction.baseUpgradeCostMap = Map.of(
+                    ResourceType.WOOD, 300
+                    );
+            construction.workingLevelChangable = true;
             register(construction);
         }
     }
@@ -41,34 +58,32 @@ public class ConstructionFactory {
     private void initBee() {
         // gather
         {
-            BaseConstruction construction = new BaseClickGatherConstruction(game, ConstructionId.BEE_GATHER_POINT);
-            construction.name = construction.getClass().getSimpleName();
-            construction.detailDescroptionConstPart = "Free gain worker-bee";
-            construction.baseOutputRules = Arrays.asList(
-                    new ConstructionOuputRule(ResourceType.WORKER_BEE, 1)
+            BaseConstruction construction = new BaseClickGatherConstruction(game, ConstructionId.BEE_GATHER_HOUSE);
+            construction.name = construction.getId().name();
+            construction.detailDescroptionConstPart = "Free gain bee";
+            construction.baseOutputGainRules = Arrays.asList(
+                    new ConstructionOuputRule(ResourceType.BEE, 1)
                     );
             register(construction);
         }
         // auto
         {
             BaseConstruction construction = new BaseAutoConstruction(game, ConstructionId.SMALL_BEEHIVE);
-            construction.name = construction.getClass().getSimpleName();
+            construction.name = construction.getId().name();
             construction.detailDescroptionConstPart = "Auto gain some honey";
-            construction.baseOutputRules = Arrays.asList(
+            construction.baseOutputGainRules = Arrays.asList(
                     new ConstructionOuputRule(ResourceType.HONEY, 1)
                     );
-            construction.baseUpgradeCostMap = (
-                    Map.of(
-                            ResourceType.WOOD, 300, 
-                            ResourceType.WORKER_BEE, 3
-                            )
+            construction.baseUpgradeCostMap = Map.of(
+                    ResourceType.WOOD, 300, 
+                    ResourceType.BEE, 3
                     );
             register(construction);
         }
         // buff
         {
             BaseConstruction construction = new BaseBuffConstruction(game, BuffId.BUFF_HONEY, ConstructionId.HONEY_BUFF_PROVIDER);
-            construction.name = construction.getClass().getSimpleName();
+            construction.name = construction.getId().name();
             construction.detailDescroptionConstPart = "speed up gain honey.";
             construction.baseUpgradeCostMap = (
                     Map.of(

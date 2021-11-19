@@ -8,5 +8,5 @@ import hundun.gdxgame.bugindustry.model.GameArea;
  */
 public interface IAmountChangeEventListener {
     default void onBuffChange(boolean fromLoad) {};
-    default void onResourceChange() {};
+    default void onResourceChange(boolean fromLoad) {};
 }

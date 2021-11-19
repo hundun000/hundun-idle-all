@@ -23,7 +23,9 @@ public class MenuScreen extends BaseScreen {
 //
 //    private GlyphLayout menuText;
 
-    
+    int BUTTON_WIDTH = 100;
+    int BUTTON_BIG_HEIGHT = 100;
+    int BUTTON_SMALL_HEIGHT = 75;
     
     Button buttonContinueGame;
     Button buttonNewGame;
@@ -39,7 +41,7 @@ public class MenuScreen extends BaseScreen {
     private void initScene2d() {
         
         table = new Table();
-        table.setBounds((Gdx.graphics.getWidth() - 100)/2, 10, 100, 500);
+        table.setBounds((Gdx.graphics.getWidth() - BUTTON_WIDTH)/2, 0, BUTTON_WIDTH, Gdx.graphics.getHeight());
         stage.addActor(table);
         
         buttonContinueGame = new TextButton("ContinueGame", game.getButtonSkin());
@@ -50,6 +52,7 @@ public class MenuScreen extends BaseScreen {
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 game.loadAndHookSave(true);
                 game.setScreen(game.getScreenContext().getGameBeeScreen());
+                game.getAudioPlayManager().intoGame();
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -57,30 +60,27 @@ public class MenuScreen extends BaseScreen {
             }
         });
         if (SaveUtils.hasSave()) {
-            table.add(buttonContinueGame).height(100).expandX().row();
+            table.add(buttonContinueGame).height(BUTTON_BIG_HEIGHT).fill().row();
         }
         
         
         
         buttonNewGame = new TextButton("NewGame", game.getButtonSkin());
-        //buttonNewGame.setSize(100, 100);
-        //buttonContinueGame.setPosition(0, 0);
         buttonNewGame.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 game.loadAndHookSave(false);
                 game.setScreen(game.getScreenContext().getGameBeeScreen());
+                game.getAudioPlayManager().intoGame();
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 return true;
             }
         });
-        table.add(buttonNewGame).height(100).expandX().row();
+        table.add(buttonNewGame).height(SaveUtils.hasSave() ? BUTTON_SMALL_HEIGHT : BUTTON_BIG_HEIGHT).fill().row();
         
         buttonIntoSettingScreen = new TextButton("intoSettingScreen", game.getButtonSkin());
-        //buttonIntoSettingScreen.setSize(100, 50);
-        //buttonIntoSettingScreen.setPosition(0, 100);
         buttonIntoSettingScreen.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
@@ -91,10 +91,10 @@ public class MenuScreen extends BaseScreen {
                 return true;
             }
         });
-        table.add(buttonIntoSettingScreen).height(50).expandX().row();
+        table.add(buttonIntoSettingScreen).height(BUTTON_SMALL_HEIGHT).fill().row();
         
         
-        //table.debugAll();
+        table.debugAll();
     }
     
     public void show() {

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import com.badlogic.gdx.Gdx;
 
@@ -36,14 +37,31 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
     protected ConstructionId id;
     @Getter
     protected String detailDescroptionConstPart;
+    @Getter
+    protected boolean workingLevelChangable;
     
-    protected List<ConstructionOuputRule> baseOutputRules;
-    protected Map<ResourceType, Integer> modifiedOutputMap;
-    protected String modifiedOutputDescription;
+    /**
+     * 对于Click型，即为基础点击收益；对于Auto型，即为基础自动收益；
+     */
+    protected List<ConstructionOuputRule> baseOutputGainRules;
+    protected Map<ResourceType, Integer> modifiedOutputGainMap;
+    protected String modifiedOutputGainDescription;
     
+    /**
+     * output行为所需要支付的费用
+     */
+    protected Map<ResourceType, Integer> baseOutputCostMap;
+    protected Map<ResourceType, Integer> modifiedOutputCostMap;
+    protected String modifiedOuputCostDescription;
+    
+    /**
+     * 升级所需要支付的费用
+     */
     protected Map<ResourceType, Integer> baseUpgradeCostMap;
     protected Map<ResourceType, Integer> modifiedUpgradeCostMap;
     protected String modifiedUpgradeCostDescription;
+    
+    
     
     public BaseConstruction(BugIndustryGame game, ConstructionType type, ConstructionId id) {
         this.game = game;
@@ -52,6 +70,9 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
         this.id = id;
         
         game.getEventManager().registerListener(this);
+        if(game.debugMode) {
+            printDebugInfoAfterConstructed();
+        }
     }
     
     public abstract void onClick();
@@ -59,6 +80,10 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
     public abstract boolean canClick();
     
     public abstract String getButtonDescroption();
+    
+    protected abstract int calculateModifiedUpgradeCost(int baseValue, int level);
+    protected abstract int calculateModifiedOutput(int baseValue, int level);
+    protected abstract int calculateModifiedOutputCost(int baseValue, int level);
     
     public String getDetailDescroption() {
         return detailDescroptionConstPart + "\n" + getDetailDescroptionDynamicPart();
@@ -69,12 +94,77 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
     /**
      * 重新计算各个数值的加成后的结果
      */
-    public abstract void updateModifiedValues();
+    public void updateModifiedValues() {
+        Gdx.app.log(this.name, "updateCurrentCache called");
+        // --------------
+        if (this.baseUpgradeCostMap != null) {
+            this.modifiedUpgradeCostMap = baseUpgradeCostMap.entrySet().stream()
+                    .collect(Collectors.toMap(
+                            entry -> entry.getKey(), 
+                            entry -> calculateModifiedUpgradeCost(entry.getValue(), saveData.getWorkingLevel())
+                            )
+                    );
+            this.modifiedUpgradeCostDescription = 
+                    modifiedUpgradeCostMap.entrySet().stream()
+                    .map(entry -> entry.getKey().getShowName() + "x" + entry.getValue())
+                    .collect(Collectors.joining(", "))
+                    + "; ";
+        }
+        // --------------
+        if (this.baseOutputGainRules != null) {
+            this.modifiedOutputGainMap = baseOutputGainRules.stream()
+                    .collect(Collectors.toMap(
+                            rule -> rule.getResourceType(), 
+                            rule -> calculateModifiedOutput(rule.getAmount(), saveData.getWorkingLevel())
+                            )
+                    );
+            this.modifiedOutputGainDescription = 
+                    modifiedOutputGainMap.entrySet().stream()
+                    .map(entry -> entry.getKey().getShowName() + "x" + entry.getValue())
+                    .collect(Collectors.joining(", "))
+                    + "; ";
+        }
+        // --------------
+        if (this.baseOutputCostMap != null) {
+            this.modifiedOutputCostMap = baseOutputCostMap.entrySet().stream()
+                    .collect(Collectors.toMap(
+                            entry -> entry.getKey(), 
+                            entry -> calculateModifiedOutputCost(entry.getValue(), saveData.getWorkingLevel())
+                            ));
+            this.modifiedOuputCostDescription = 
+                    modifiedOutputCostMap.entrySet().stream()
+                    .map(entry -> entry.getKey().getShowName() + "x" + entry.getValue())
+                    .collect(Collectors.joining(", "))
+                    + "; ";
+        }
+        
+    };
     
     @Override
     public void onBuffChange(boolean fromLoad) {
         updateModifiedValues();
     }
+    
+    
+    protected void printDebugInfoAfterConstructed() {
+        // default do nothing
+    }
+    
+    protected boolean canOutput() {
+        if (modifiedOutputCostMap == null) {
+            return true;
+        }
+        
+        Map<ResourceType, Integer> ouputCostRule = modifiedOutputCostMap;
+        for (var entry : ouputCostRule.entrySet()) {
+            int own = game.getModelContext().getStorageManager().getResourceNum(entry.getKey());
+            if (own < entry.getValue()) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
     
     protected boolean canUpgrade() {
         if (saveData.getLevel() >= MAX_LEVEL) {
@@ -92,5 +182,26 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
     
     public String getSaveDataKey() {
         return id.name();
+    }
+    
+    public boolean canChangeWorkingLevel(int delta) {
+        if (!workingLevelChangable) {
+            return false;
+        }
+        int next = saveData.getWorkingLevel() + delta;
+        if (next > saveData.getLevel() || next < 0) {
+            return false;
+        }
+        return true;
+    }
+    
+    public void changeWorkingLevel(int delta) {
+        if (canChangeWorkingLevel(delta)) {
+            saveData.setWorkingLevel(saveData.getWorkingLevel() + delta);
+            updateModifiedValues();
+            Gdx.app.log(this.name, "changeWorkingLevel " + delta + " success to " + saveData.getWorkingLevel());
+        } else {
+            Gdx.app.log(this.name, "changeWorkingLevel " + delta + " but cannot!");
+        }
     }
 }

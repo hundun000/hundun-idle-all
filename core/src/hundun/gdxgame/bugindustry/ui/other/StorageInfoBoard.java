@@ -23,14 +23,19 @@ import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
  */
 public class StorageInfoBoard extends Table {
     
+    public static int BOARD_DISTANCE_TO_FRAME_TOP = 50;
+    public static int BOARD_DISTANCE_TO_FRAME_SIDE = 10;
+    public static int BOARD_HEIGHT = 50;
+    
     Map<GameArea, List<ResourceType>> areaShownResources; 
     List<ResourceType> farmAreaShownResources;
     
     private void init() {
         areaShownResources = new HashMap<>();
         farmAreaShownResources = Arrays.asList(
+                ResourceType.COIN,
                 ResourceType.WOOD,
-                ResourceType.WORKER_BEE,
+                ResourceType.BEE,
                 ResourceType.HONEY
                 );
         
@@ -47,7 +52,11 @@ public class StorageInfoBoard extends Table {
     public StorageInfoBoard(GameScreen parent) {
         this.parent = parent;
         this.setBackground(parent.tableBackgroundDrawable);
-        this.setBounds(10, Gdx.graphics.getHeight() - 10 - 100, Gdx.graphics.getWidth() - 20, 50);
+        this.setBounds(
+                BOARD_DISTANCE_TO_FRAME_SIDE, 
+                Gdx.graphics.getHeight() - BOARD_DISTANCE_TO_FRAME_TOP - BOARD_HEIGHT, 
+                Gdx.graphics.getWidth() - 2 * BOARD_DISTANCE_TO_FRAME_SIDE, 
+                BOARD_HEIGHT);
         this.mainLabel = new Label("", parent.game.getButtonSkin());
         this.add(mainLabel);
         

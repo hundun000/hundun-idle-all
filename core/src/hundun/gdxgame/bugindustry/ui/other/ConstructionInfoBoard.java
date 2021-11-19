@@ -33,36 +33,49 @@ import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
  * @author hundun
  * Created on 2021/11/05
  */
-public class ConstructionInfoBorad extends Table implements ILogicFrameListener, IGameAreaChangeListener {
+public class ConstructionInfoBoard extends Table implements ILogicFrameListener, IGameAreaChangeListener {
+    
+    public static int BOARD_DISTANCE_TO_FRAME = 10;
+    public static int BOARD_HEIGHT = 100;
     
     GameScreen parent;
+    /**
+     * 显示在当前screen的Construction集合。以ConstructionView形式存在。
+     */
     List<ConstructionView> constructionViews = new ArrayList<>();
     Set<BaseConstruction> allConstructionModels = new HashSet<>();
+    /**
+     * 后台运行。不显示在当前screen，但也需要结算逻辑帧的Construction。
+     */
     Set<BaseConstruction> backgroundConstructionModels = new HashSet<>();
     
+    /**
+     * 根据GameArea显示不同的Construction集合
+     */
     Map<GameArea, List<BaseConstruction>> areaShownConstructions; 
     int NUM = 5;
     
     private void init(ModelContext modelContext) {
         areaShownConstructions = new HashMap<>();
         areaShownConstructions.put(GameArea.BEE_FARM, Arrays.asList(
-                modelContext.getConstructionFactory().getConstruction(ConstructionId.BEE_GATHER_POINT),
+                modelContext.getConstructionFactory().getConstruction(ConstructionId.BEE_GATHER_HOUSE),
                 modelContext.getConstructionFactory().getConstruction(ConstructionId.SMALL_BEEHIVE)
                 ));
         areaShownConstructions.put(GameArea.BEE_BUFF, Arrays.asList(
                 modelContext.getConstructionFactory().getConstruction(ConstructionId.HONEY_BUFF_PROVIDER)
                 ));
         areaShownConstructions.put(GameArea.FOREST_FARM, Arrays.asList(
-                modelContext.getConstructionFactory().getConstruction(ConstructionId.WOOD_GATHER_POINT)
+                modelContext.getConstructionFactory().getConstruction(ConstructionId.WOOD_GATHER_HOUSE),
+                modelContext.getConstructionFactory().getConstruction(ConstructionId.WOOD_SELL_HOUSE)
                 ));
         
         areaShownConstructions.values().forEach(item -> allConstructionModels.addAll(item));
     }
     
-    public ConstructionInfoBorad(GameScreen parent) {
+    public ConstructionInfoBoard(GameScreen parent) {
         this.parent = parent;
         this.setBackground(parent.tableBackgroundDrawable);
-        this.setBounds(10, 10, Gdx.graphics.getWidth() - 20, 100);
+        this.setBounds(BOARD_DISTANCE_TO_FRAME, BOARD_DISTANCE_TO_FRAME, Gdx.graphics.getWidth() - BOARD_DISTANCE_TO_FRAME * 2, BOARD_HEIGHT);
         
         for (int i = 0; i < NUM; i++) {
             var constructionView = new ConstructionView(parent, i);

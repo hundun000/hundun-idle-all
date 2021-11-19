@@ -19,14 +19,14 @@ import hundun.gdxgame.bugindustry.model.ResourceType;
 public class BaseAutoConstruction extends BaseConstruction {
     
     /**
-     * 影响升级后生产量
+     * 影响升级后生产量，详见具体公式
      */
     protected final double autoOuputSuccessRateLevelUpArg = 4.0;
     
     /**
-     * 影响升级后下一级费用
+     * 影响升级后下一级费用，详见具体公式
      */
-    protected final double upgradeCostLevelUpArg = 4.0;
+    protected final double upgradeCostLevelUpArg = 2.0;
     
 
     
@@ -38,38 +38,15 @@ public class BaseAutoConstruction extends BaseConstruction {
     }
     
     @Override
-    public void updateModifiedValues() {
-        Gdx.app.log(this.getClass().getSimpleName(), "updateCurrentCache called");
-        this.modifiedUpgradeCostMap = baseUpgradeCostMap.entrySet().stream()
-                .collect(Collectors.toMap(
-                        entry -> entry.getKey(), 
-                        entry -> (int)(
-                                entry.getValue() 
-                                * Math.pow(upgradeCostLevelUpArg, saveData.getLevel())
-                                )
-                        )
-                );
-        this.modifiedUpgradeCostDescription = 
-                "UpgradeCost: "
-                + modifiedUpgradeCostMap.entrySet().stream()
-                .map(entry -> entry.getKey().getShowName() + "x" + entry.getValue())
-                .collect(Collectors.joining(", "))
-                + "; ";
-        this.modifiedOutputMap = baseOutputRules.stream()
-                .collect(Collectors.toMap(
-                        rule -> rule.getResourceType(), 
-                        rule -> {
-                            int oldAmout = rule.getAmount() * saveData.getLevel();
-                            int modifiedAmout = game.getModelContext().getBuffManager().modifyResourceGain(rule.getResourceType(), oldAmout);
-                            return modifiedAmout;
-                        }));
-        this.modifiedOutputDescription = 
-                "AutoOutput: "
-                + modifiedOutputMap.entrySet().stream()
-                .map(entry -> entry.getKey().getShowName() + "x" + entry.getValue())
-                .collect(Collectors.joining(", "))
-                + "; ";
+    protected void printDebugInfoAfterConstructed() {
+        super.printDebugInfoAfterConstructed();
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < MAX_LEVEL; i++) {
+            builder.append(i).append("->").append(calculateModifiedUpgradeCost(1, i)).append(",");
+        }
+        Gdx.app.log(this.id.name(), "getUpgradeCost=[" + builder.toString() + "]");
     }
+
 
     @Override
     public void onClick() {
@@ -77,9 +54,7 @@ public class BaseAutoConstruction extends BaseConstruction {
             return;
         }
         Map<ResourceType, Integer> upgradeCostRule = modifiedUpgradeCostMap;
-        for (var entry : upgradeCostRule.entrySet()) {
-            game.getModelContext().getStorageManager().addResourceNum(entry.getKey(), -1 * entry.getValue());
-        }
+        game.getModelContext().getStorageManager().modifyAllResourceNum(upgradeCostRule, false);
         saveData.setLevel(saveData.getLevel() + 1);
         updateModifiedValues();
     }
@@ -91,7 +66,13 @@ public class BaseAutoConstruction extends BaseConstruction {
     
     @Override
     public String getButtonDescroption() {
-        return "Upgrade(lv." + saveData.getLevel() + ")";
+        String des;
+        if (workingLevelChangable) {
+            des = "Upgrade(" + saveData.getWorkingLevel() + "/" + saveData.getLevel() + ")";
+        } else {
+            des = "Upgrade(" + saveData.getWorkingLevel() + ")";
+        }
+        return des;
     }
     
     
@@ -101,22 +82,50 @@ public class BaseAutoConstruction extends BaseConstruction {
         autoOutputProgress++;
         if (autoOutputProgress >= AUTO_OUPUT_MAX_PROGRESS) {
             autoOutputProgress = 0;
-            autoOutputOnce();
+            tryAutoOutputOnce();
         }
     }
     
-    private void autoOutputOnce() {
-        for (Entry<ResourceType, Integer> entry : modifiedOutputMap.entrySet()) {
-            boolean success = true;
-            if (success) {
-                game.getModelContext().getStorageManager().addResourceNum(entry.getKey(), entry.getValue());
-            }
+    private void tryAutoOutputOnce() {
+        if (!canOutput()) {
+            Gdx.app.log(this.id.name(), "canOutput");
+            return;
         }
+        Gdx.app.log(this.id.name(), "AutoOutput");
+        if (modifiedOutputCostMap != null) {
+            game.getModelContext().getStorageManager().modifyAllResourceNum(modifiedOutputCostMap, false);
+        }
+        game.getModelContext().getStorageManager().modifyAllResourceNum(modifiedOutputGainMap, true);
     }
     
     @Override
     protected String getDetailDescroptionDynamicPart() {
-        return modifiedOutputDescription + "\n" + modifiedUpgradeCostDescription;
+        StringBuilder builder = new StringBuilder();
+        if (modifiedOuputCostDescription != null) {
+            builder.append("AutoCost: ").append(modifiedOuputCostDescription).append("\n");
+        }
+        builder.append("AutoGain: ").append(modifiedOutputGainDescription).append("\n");
+        builder.append("UpgradeCost: ").append(modifiedUpgradeCostDescription).append("\n");
+        return builder.toString();
+    }
+
+    @Override
+    protected int calculateModifiedUpgradeCost(int baseValue, int level) {
+        return (int)(
+                baseValue
+                * (1 + 2 * level)
+                * Math.pow(upgradeCostLevelUpArg, level)
+                );
+    }
+    
+    @Override
+    protected int calculateModifiedOutput(int baseValue, int level) {
+        return baseValue * level;
+    }
+
+    @Override
+    protected int calculateModifiedOutputCost(int baseValue, int level) {
+        return baseValue * level;
     }
 
     

@@ -20,6 +20,7 @@ import hundun.gdxgame.bugindustry.data.SaveData;
 import hundun.gdxgame.bugindustry.model.ModelContext;
 import hundun.gdxgame.bugindustry.model.construction.ConstructionFactory;
 import hundun.gdxgame.bugindustry.model.manager.AchievementManager;
+import hundun.gdxgame.bugindustry.model.manager.AudioPlayManager;
 import hundun.gdxgame.bugindustry.model.manager.BuffManager;
 import hundun.gdxgame.bugindustry.model.manager.EventManager;
 import hundun.gdxgame.bugindustry.model.manager.StorageManager;
@@ -31,6 +32,9 @@ import hundun.gdxgame.bugindustry.util.SaveUtils;
 import lombok.Getter;
 
 public class BugIndustryGame extends Game {
+    public boolean debugMode = true;
+    public boolean drawGameImageAndPlayAudio = false;
+    
     public static final int LOGIC_WIDTH = 640;
     public static final int LOGIC_HEIGHT = 480;
     public static final int GRID_SIZE = 64;
@@ -45,7 +49,9 @@ public class BugIndustryGame extends Game {
     private ModelContext modelContext;
     @Getter
     private EventManager eventManager;
-
+    @Getter
+    private AudioPlayManager audioPlayManager;
+    
     @Getter
     private Skin buttonSkin;
     
@@ -64,7 +70,9 @@ public class BugIndustryGame extends Game {
 		//loadAndHookSave();
 		
 		setScreen(screenContext.getMenuScreen());
+		audioPlayManager.intoMenu();
 	}
+
 	
 	public void loadAndHookSave(boolean load) {
 	    
@@ -72,7 +80,7 @@ public class BugIndustryGame extends Game {
 	        SaveUtils.load(modelContext);
 	     // post
 	        this.getEventManager().notifyBuffChange(true);
-	        this.getEventManager().notifyResourceAmountChange();
+	        this.getEventManager().notifyResourceAmountChange(true);
 	    }
 	    
 	    
@@ -95,6 +103,8 @@ public class BugIndustryGame extends Game {
         modelContext.setBuffManager(new BuffManager(this));
         modelContext.setConstructionFactory(new ConstructionFactory(this));
         modelContext.setAchievementManager(new AchievementManager(this));
+        
+        this.audioPlayManager = new AudioPlayManager(this);
 	}
 
 	
@@ -102,5 +112,6 @@ public class BugIndustryGame extends Game {
 	public void dispose () {
 		batch.dispose();
 		font.dispose();
+		audioPlayManager.dispose();
 	}
 }

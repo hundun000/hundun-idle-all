@@ -2,6 +2,7 @@ package hundun.gdxgame.bugindustry.model.manager;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.badlogic.gdx.Gdx;
 
@@ -35,10 +36,20 @@ public class StorageManager {
         return ownResoueces.getOrDefault(key, 0);
     }
     
+    /**
+     * @param plus ture: plus the map; false: minus the map;
+     */
+    public void modifyAllResourceNum(Map<ResourceType, Integer> map, boolean plus) {
+        Gdx.app.log(this.getClass().getSimpleName(), (plus ? "plus" : "minus") + ": " + map);
+        for (var entry : map.entrySet()) {
+            ownResoueces.merge(entry.getKey(), (plus ? 1 : -1 ) * entry.getValue(), (oldValue, newValue) -> oldValue + newValue);
+        }
+    }
+    
     public void addResourceNum(ResourceType key, int add) {
         Gdx.app.log(this.getClass().getSimpleName(), "addResourceNum:" + key + " " + add);
         ownResoueces.merge(key, add, (oldValue, newValue) -> oldValue + newValue);
-        game.getEventManager().notifyResourceAmountChange();
+        game.getEventManager().notifyResourceAmountChange(false);
     }
 
 }

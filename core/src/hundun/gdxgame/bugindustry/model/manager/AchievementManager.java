@@ -95,8 +95,10 @@ public class AchievementManager implements IAmountChangeEventListener {
     }
     
     @Override
-    public void onResourceChange() {
-        checkAllAchievementUnlock();
+    public void onResourceChange(boolean fromLoad) {
+        if (!fromLoad) {
+            checkAllAchievementUnlock();
+        }
     }
     
     

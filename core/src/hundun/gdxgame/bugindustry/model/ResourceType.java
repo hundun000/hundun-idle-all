@@ -7,9 +7,10 @@ package hundun.gdxgame.bugindustry.model;
 import lombok.Getter;
 
 public enum ResourceType {
+    COIN("coin"),
     WOOD("wood"),
     HONEY("[GOLD]honey"),
-    WORKER_BEE("woker-bee"),
+    BEE("woker-bee"),
     GENE_POINT("gene-point"),
     ;
     @Getter

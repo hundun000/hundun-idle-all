@@ -23,8 +23,12 @@ public class GameImageDrawHelper implements IAmountChangeEventListener {
     private float COOKIE_WIDTH = 50;
     private float COOKIE_HEIGHT = 50;
     private int MAX_DRAW_BEE_NUM = 5;
-    private float MAX_X;
-    private float MAX_Y;
+    private float FLY_MIN_X;
+    private float FLY_MAX_X;
+    private float FLY_MIN_Y;
+    private float FLY_MAX_Y;
+    private float FLY_UNION_SPEED = 5;
+    
     
     GameScreen parent;
     
@@ -38,8 +42,10 @@ public class GameImageDrawHelper implements IAmountChangeEventListener {
     public GameImageDrawHelper(GameScreen parent, Camera camera) {
         this.parent = parent;
         this.beeTexture = new Texture(Gdx.files.internal("cookie.png"));
-        this.MAX_X = camera.viewportWidth;
-        this.MAX_Y = camera.viewportHeight;
+        FLY_MAX_X = Gdx.graphics.getWidth();
+        FLY_MIN_X = 0;
+        FLY_MAX_Y = Gdx.graphics.getHeight() - (StorageInfoBoard.BOARD_HEIGHT + StorageInfoBoard.BOARD_DISTANCE_TO_FRAME_TOP);
+        FLY_MIN_Y = ConstructionInfoBoard.BOARD_DISTANCE_TO_FRAME + ConstructionInfoBoard.BOARD_HEIGHT;
         
         parent.game.getEventManager().registerListener(this);
     }
@@ -69,17 +75,19 @@ public class GameImageDrawHelper implements IAmountChangeEventListener {
             if (entity.getRandomMoveCount() > 0) {
                 entity.setRandomMoveCount(entity.getRandomMoveCount() - 1);
             } else {
-                entity.setRandomMoveCount(100);
+                entity.setRandomMoveCount(50 + (int) (Math.random() * 50));
                 double angle = Math.toRadians(Math.random() * 360);
-                double unionSpeed = 5;
+                double unionSpeed = FLY_UNION_SPEED;
                 entity.setSpeedX((float) (unionSpeed * Math.cos(angle)));
                 entity.setSpeedY((float) (unionSpeed * Math.sin(angle)));
             }
             
-            if (entity.getX() < 0 || entity.getX() > MAX_X) {
+            if ((entity.getX() < FLY_MIN_X && entity.getSpeedX() < 0) 
+                    || (entity.getX() + COOKIE_WIDTH > FLY_MAX_X && entity.getSpeedX() > 0)) {
                 entity.setSpeedX(entity.getSpeedX() * -1);
             }
-            if (entity.getY() < 0 || entity.getY() > MAX_Y) {
+            if ((entity.getY() < FLY_MIN_Y && entity.getSpeedY() < 0) 
+                    || (entity.getY() + COOKIE_HEIGHT > FLY_MAX_Y && entity.getSpeedY() > 0)) {
                 entity.setSpeedY(entity.getSpeedY() * -1);
             }
         }
@@ -87,8 +95,8 @@ public class GameImageDrawHelper implements IAmountChangeEventListener {
     
     public void addBeeEntity() {
         GameEntity entity = new GameEntity();
-        entity.setX(50);
-        entity.setY(50);
+        entity.setX((FLY_MAX_X - FLY_MIN_X) / 2);
+        entity.setY((FLY_MAX_Y - FLY_MIN_Y) / 2);
         entity.setRandomMove(true);
         entity.setRandomMoveCount(0);
         checkRandomeMoveSpeedChange(entity);
@@ -96,8 +104,8 @@ public class GameImageDrawHelper implements IAmountChangeEventListener {
     }
     
     @Override
-    public void onResourceChange() {
-        int beeNum = parent.game.getModelContext().getStorageManager().getResourceNum(ResourceType.WORKER_BEE);
+    public void onResourceChange(boolean fromLoad) {
+        int beeNum = parent.game.getModelContext().getStorageManager().getResourceNum(ResourceType.BEE);
         int drawBeeNum = (int) Math.min(MAX_DRAW_BEE_NUM, Math.ceil(Math.log(beeNum)));
         while (beeEntities.size() > drawBeeNum) {
             beeEntities.remove();

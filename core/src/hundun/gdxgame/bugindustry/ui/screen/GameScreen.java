@@ -28,7 +28,7 @@ import hundun.gdxgame.bugindustry.ui.other.PopupInfoBoard;
 import hundun.gdxgame.bugindustry.ui.other.PopupInfoBoard;
 import hundun.gdxgame.bugindustry.ui.other.StorageInfoBoard;
 import hundun.gdxgame.bugindustry.ui.other.AchievementMaskBoard;
-import hundun.gdxgame.bugindustry.ui.other.ConstructionInfoBorad;
+import hundun.gdxgame.bugindustry.ui.other.ConstructionInfoBoard;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -46,7 +46,7 @@ public class GameScreen extends BaseScreen {
     public TextureRegionDrawable maskBackgroundDrawable;
     
     StorageInfoBoard storageInfoTable;
-    ConstructionInfoBorad constructionInfoBorad;
+    ConstructionInfoBoard constructionInfoBoard;
     //Table backTable;
     Label clockLabel;
     PopupInfoBoard popUpInfoBoard;
@@ -71,7 +71,7 @@ public class GameScreen extends BaseScreen {
         this.area = area;
         
         
-        constructionInfoBorad.onGameAreaChange(last, area);
+        constructionInfoBoard.onGameAreaChange(last, area);
         areaChangeButtonL.onGameAreaChange(last, area);
         areaChangeButtonR.onGameAreaChange(last, area);
     }
@@ -113,8 +113,8 @@ public class GameScreen extends BaseScreen {
         storageInfoTable = new StorageInfoBoard(this);
         stage.addActor(storageInfoTable);
         
-        constructionInfoBorad = new ConstructionInfoBorad(this);
-        stage.addActor(constructionInfoBorad);
+        constructionInfoBoard = new ConstructionInfoBoard(this);
+        stage.addActor(constructionInfoBoard);
         
         achievementMaskBoard = new AchievementMaskBoard(this);
         stage.addActor(achievementMaskBoard);
@@ -150,8 +150,9 @@ public class GameScreen extends BaseScreen {
         
         stage.act();
         
-        
-        gameImageDrawHelper.drawAll();
+        if (game.drawGameImageAndPlayAudio) {
+            gameImageDrawHelper.drawAll();
+        }
         
         stage.draw();
     }
@@ -160,7 +161,7 @@ public class GameScreen extends BaseScreen {
         clockCount++;
         clockLabel.setText("LogicFrame: " + clockCount);
         
-        constructionInfoBorad.onLogicFrame();
+        constructionInfoBoard.onLogicFrame();
     }
 
     public void showAndUpdateGuideInfo(String text) {

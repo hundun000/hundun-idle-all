@@ -20,18 +20,13 @@ public class BaseClickGatherConstruction extends BaseConstruction {
     
     @Override
     public void onClick() {
-        for (ConstructionOuputRule rule : baseOutputRules) {
-            boolean success = true;
-            if (success) {
-                int sumAmout = rule.getAmount() * 1;
-                game.getModelContext().getStorageManager().addResourceNum(rule.getResourceType(), sumAmout);
-            }
-        }
+        
+        game.getModelContext().getStorageManager().modifyAllResourceNum(modifiedOutputGainMap, true);
     }
     
     @Override
     public boolean canClick() {
-        return true;
+        return canOutput();
     }
     
     @Override
@@ -44,25 +39,30 @@ public class BaseClickGatherConstruction extends BaseConstruction {
         // do nothing
     }
     
-    @Override
-    public void updateModifiedValues() {
-        Gdx.app.log(this.getClass().getSimpleName(), "updateCurrentCache called");
-        this.modifiedOutputMap = baseOutputRules.stream()
-                .collect(Collectors.toMap(
-                        rule -> rule.getResourceType(), 
-                        rule -> rule.getAmount() * 1
-                        ));
-        this.modifiedOutputDescription = 
-                "AutoOutput: "
-                + modifiedOutputMap.entrySet().stream()
-                .map(entry -> entry.getKey().getShowName() + "x" + entry.getValue())
-                .collect(Collectors.joining(", "))
-                + "; ";
-    }
     
     @Override
     protected String getDetailDescroptionDynamicPart() {
-        return modifiedOutputDescription;
+        StringBuilder builder = new StringBuilder();
+        if (modifiedOuputCostDescription != null) {
+            builder.append("ClickCost: ").append(modifiedOuputCostDescription).append("\n");
+        }
+        builder.append("ClickGain: ").append(modifiedOutputGainDescription).append("\n");
+        return builder.toString();
+    }
+
+    @Override
+    protected int calculateModifiedUpgradeCost(int baseValue, int level) {
+        return baseValue;
+    }
+
+    @Override
+    protected int calculateModifiedOutput(int baseValue, int level) {
+        return baseValue;
+    }
+
+    @Override
+    protected int calculateModifiedOutputCost(int baseValue, int level) {
+        throw new UnsupportedOperationException();
     }
 
 }

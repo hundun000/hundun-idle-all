@@ -5,7 +5,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
@@ -23,7 +25,10 @@ public class ConstructionView extends VerticalGroup implements ILogicFrameListen
     GameScreen parent;
     BaseConstruction model;
     Label constructionNameLabel;
-    TextButton textButton;
+    TextButton clickEffectButton;
+    
+    HorizontalGroup changeWorkingLevelGroup;
+
     
     public ConstructionView(GameScreen parent, int index) {
         super();
@@ -33,16 +38,16 @@ public class ConstructionView extends VerticalGroup implements ILogicFrameListen
         constructionNameLabel.setSize(100, 50);
         this.addActor(constructionNameLabel);
         
-        this.textButton = new TextButton("", parent.game.getButtonSkin());
-        textButton.addListener(new ClickListener() {
+        this.clickEffectButton = new TextButton("", parent.game.getButtonSkin());
+        clickEffectButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("ConstructionView", "clicked");
                 model.onClick();
             } 
         });
-        textButton.setSize(100, 50);
-        this.addActor(textButton);
+        clickEffectButton.setSize(100, 50);
+        this.addActor(clickEffectButton);
         
         this.setBounds(10 + 120 * index, 10, 120, 60);
         this.setTouchable(Touchable.enabled);
@@ -61,11 +66,64 @@ public class ConstructionView extends VerticalGroup implements ILogicFrameListen
                 super.exit(event, x, y, pointer, toActor);
             }
         });
+        
+    }
+    
+    private void clearType() {
+        if (changeWorkingLevelGroup != null) {
+            this.removeActor(changeWorkingLevelGroup);
+            changeWorkingLevelGroup = null;
+        }
+    }
+    
+    private void initAsNormalType() {
+        clearType();
+        
+        this.debugAll();
+    }
+    
+    
+    private void initAsChangeWorkingLevelType() {
+        clearType();
+        
+        this.changeWorkingLevelGroup = new HorizontalGroup();
+        
+        TextButton upWorkingLevelButton = new TextButton("+", parent.game.getButtonSkin());
+        upWorkingLevelButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.log("ConstructionView", "up clicked");
+                model.changeWorkingLevel(1);
+            } 
+        });
+        upWorkingLevelButton.setSize(50, 50);
+        changeWorkingLevelGroup.addActor(upWorkingLevelButton);
+        
+        TextButton downWorkingLevelButton = new TextButton("-", parent.game.getButtonSkin());
+        downWorkingLevelButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.log("ConstructionView", "down clicked");
+                model.changeWorkingLevel(-1);
+            } 
+        });
+        downWorkingLevelButton.setSize(50, 50);
+        changeWorkingLevelGroup.addActor(downWorkingLevelButton);
+        
+        this.addActor(changeWorkingLevelGroup);
+        
         this.debugAll();
     }
     
     public void setModel(BaseConstruction model) {
         this.model = model;
+        if (model != null) {
+            if (model.isWorkingLevelChangable()) {
+                initAsChangeWorkingLevelType();
+            } else {
+                initAsNormalType();
+            }
+        }
     }
 
     @Override
@@ -73,20 +131,20 @@ public class ConstructionView extends VerticalGroup implements ILogicFrameListen
         // ------ update show-state ------
         if (model == null) {
             setVisible(false);
-            textButton.setVisible(false);
+            //textButton.setVisible(false);
             //Gdx.app.log("ConstructionView", this.hashCode() + " no model");
             return;
         } else {
             setVisible(true);
-            textButton.setVisible(true);
+            //textButton.setVisible(true);
             //Gdx.app.log("ConstructionView", model.getName() + " set to its view");
         }
         // ------ update text ------
         constructionNameLabel.setText(model.getName());
-        textButton.setText(model.getButtonDescroption());
+        clickEffectButton.setText(model.getButtonDescroption());
 
         boolean clickable = model.canClick();
-        textButton.setTouchable(clickable ? Touchable.enabled : Touchable.disabled);
+        clickEffectButton.setTouchable(clickable ? Touchable.enabled : Touchable.disabled);
         
         // ------ update model ------
         model.onLogicFrame();

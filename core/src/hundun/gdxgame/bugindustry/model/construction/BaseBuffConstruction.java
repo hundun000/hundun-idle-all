@@ -37,9 +37,7 @@ public class BaseBuffConstruction extends BaseConstruction {
             return;
         }
         Map<ResourceType, Integer> upgradeCostRule = modifiedUpgradeCostMap;
-        for (var entry : upgradeCostRule.entrySet()) {
-            game.getModelContext().getStorageManager().addResourceNum(entry.getKey(), -1 * entry.getValue());
-        }
+        game.getModelContext().getStorageManager().modifyAllResourceNum(upgradeCostRule, false);
         saveData.setLevel(saveData.getLevel() + 1);
         game.getModelContext().getBuffManager().addBuffAmout(buffId, 1);
         updateModifiedValues();
@@ -57,27 +55,28 @@ public class BaseBuffConstruction extends BaseConstruction {
 
     @Override
     protected String getDetailDescroptionDynamicPart() {
-        return modifiedUpgradeCostDescription;
+        StringBuilder builder = new StringBuilder();
+        builder.append("EnhanceCost: ").append(modifiedUpgradeCostDescription).append("\n");
+        return builder.toString();
+    }
+
+
+    @Override
+    protected int calculateModifiedUpgradeCost(int baseValue, int level) {
+        return (int)(
+                baseValue
+                * Math.pow(upgradeCostLevelUpArg, level)
+                );
     }
 
     @Override
-    public void updateModifiedValues() {
-        Gdx.app.log(this.getClass().getSimpleName(), "updateCurrentCache called");
-        this.modifiedUpgradeCostMap = baseUpgradeCostMap.entrySet().stream()
-                .collect(Collectors.toMap(
-                        entry -> entry.getKey(), 
-                        entry -> (int)(
-                                entry.getValue() 
-                                * Math.pow(upgradeCostLevelUpArg, saveData.getLevel())
-                                )
-                        )
-                );
-        this.modifiedUpgradeCostDescription = 
-                "EnhanceCost: "
-                + modifiedUpgradeCostMap.entrySet().stream()
-                .map(entry -> entry.getKey().getShowName() + "x" + entry.getValue())
-                .collect(Collectors.joining(", "))
-                + "; ";
+    protected int calculateModifiedOutput(int baseValue, int level) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected int calculateModifiedOutputCost(int baseValue, int level) {
+        throw new UnsupportedOperationException();
     }
 
 }
