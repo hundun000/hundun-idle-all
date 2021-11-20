@@ -23,12 +23,13 @@ import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.bugindustry.model.AchievementPrototype;
 import hundun.gdxgame.bugindustry.model.GameArea;
 import hundun.gdxgame.bugindustry.ui.other.GameAreaChangeButton;
+import hundun.gdxgame.bugindustry.ui.other.GameAreaControlBoard;
 import hundun.gdxgame.bugindustry.ui.other.GameImageDrawHelper;
 import hundun.gdxgame.bugindustry.ui.other.PopupInfoBoard;
 import hundun.gdxgame.bugindustry.ui.other.PopupInfoBoard;
 import hundun.gdxgame.bugindustry.ui.other.StorageInfoBoard;
 import hundun.gdxgame.bugindustry.ui.other.AchievementMaskBoard;
-import hundun.gdxgame.bugindustry.ui.other.ConstructionInfoBoard;
+import hundun.gdxgame.bugindustry.ui.other.ConstructionControlBoard;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -46,12 +47,13 @@ public class GameScreen extends BaseScreen {
     public TextureRegionDrawable maskBackgroundDrawable;
     
     StorageInfoBoard storageInfoTable;
-    ConstructionInfoBoard constructionInfoBoard;
+    ConstructionControlBoard constructionControlBoard;
     //Table backTable;
     Label clockLabel;
     PopupInfoBoard popUpInfoBoard;
-    GameAreaChangeButton areaChangeButtonL;
-    GameAreaChangeButton areaChangeButtonR;
+//    GameAreaChangeButton areaChangeButtonL;
+//    GameAreaChangeButton areaChangeButtonR;
+    GameAreaControlBoard gameAreaControlBoard;
     AchievementMaskBoard achievementMaskBoard;
     GameImageDrawHelper gameImageDrawHelper;
     int clockCount = 0;
@@ -66,14 +68,13 @@ public class GameScreen extends BaseScreen {
         
     }
     
-    public void setAreaAndNotifyChildren(GameArea area) {
+    public void setAreaAndNotifyChildren(GameArea current) {
         GameArea last = this.area;
-        this.area = area;
+        this.area = current;
         
         
-        constructionInfoBoard.onGameAreaChange(last, area);
-        areaChangeButtonL.onGameAreaChange(last, area);
-        areaChangeButtonR.onGameAreaChange(last, area);
+        constructionControlBoard.onGameAreaChange(last, current);
+        gameAreaControlBoard.onGameAreaChange(last, current);
     }
     
 
@@ -96,10 +97,13 @@ public class GameScreen extends BaseScreen {
         //backTable = new Table();
         //backTable.setBackground(tableBackgroundDrawable2);
         //backTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        areaChangeButtonL = GameAreaChangeButton.create(this, "GameAreaChangeButton_L.png", false);
-        stage.addActor(areaChangeButtonL);
-        areaChangeButtonR = GameAreaChangeButton.create(this, "GameAreaChangeButton_R.png", true);
-        stage.addActor(areaChangeButtonR);
+//        areaChangeButtonL = GameAreaChangeButton.create(this, "GameAreaChangeButton_L.png", false);
+//        stage.addActor(areaChangeButtonL);
+//        areaChangeButtonR = GameAreaChangeButton.create(this, "GameAreaChangeButton_R.png", true);
+//        stage.addActor(areaChangeButtonR);
+        
+        gameAreaControlBoard = new GameAreaControlBoard(this);
+        stage.addActor(gameAreaControlBoard);
         
         clockLabel = new Label("", game.getButtonSkin());
         clockLabel.setBounds(0, Gdx.graphics.getHeight() - 10 - 50, 200, 50);
@@ -113,15 +117,15 @@ public class GameScreen extends BaseScreen {
         storageInfoTable = new StorageInfoBoard(this);
         stage.addActor(storageInfoTable);
         
-        constructionInfoBoard = new ConstructionInfoBoard(this);
-        stage.addActor(constructionInfoBoard);
+        constructionControlBoard = new ConstructionControlBoard(this);
+        stage.addActor(constructionControlBoard);
         
         achievementMaskBoard = new AchievementMaskBoard(this);
         stage.addActor(achievementMaskBoard);
         
         
         gameImageDrawHelper = new GameImageDrawHelper(this, stage.getCamera());
-//        gameImageDrawHelper.addBeeEntity();
+        gameImageDrawHelper.addBeeEntity();
 //        gameImageDrawHelper.addBeeEntity();
 //        gameImageDrawHelper.addBeeEntity();
     }
@@ -161,7 +165,7 @@ public class GameScreen extends BaseScreen {
         clockCount++;
         clockLabel.setText("LogicFrame: " + clockCount);
         
-        constructionInfoBoard.onLogicFrame();
+        constructionControlBoard.onLogicFrame();
     }
 
     public void showAndUpdateGuideInfo(String text) {

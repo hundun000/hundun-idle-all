@@ -45,7 +45,7 @@ public class GameImageDrawHelper implements IAmountChangeEventListener {
         FLY_MAX_X = Gdx.graphics.getWidth();
         FLY_MIN_X = 0;
         FLY_MAX_Y = Gdx.graphics.getHeight() - (StorageInfoBoard.BOARD_HEIGHT + StorageInfoBoard.BOARD_DISTANCE_TO_FRAME_TOP);
-        FLY_MIN_Y = ConstructionInfoBoard.BOARD_DISTANCE_TO_FRAME + ConstructionInfoBoard.BOARD_HEIGHT;
+        FLY_MIN_Y = ConstructionControlBoard.BOARD_DISTANCE_TO_FRAME + ConstructionControlBoard.BOARD_HEIGHT;
         
         parent.game.getEventManager().registerListener(this);
     }

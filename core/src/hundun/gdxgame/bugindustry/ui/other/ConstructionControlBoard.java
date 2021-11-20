@@ -33,7 +33,7 @@ import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
  * @author hundun
  * Created on 2021/11/05
  */
-public class ConstructionInfoBoard extends Table implements ILogicFrameListener, IGameAreaChangeListener {
+public class ConstructionControlBoard extends Table implements ILogicFrameListener, IGameAreaChangeListener {
     
     public static int BOARD_DISTANCE_TO_FRAME = 10;
     public static int BOARD_HEIGHT = 100;
@@ -42,7 +42,7 @@ public class ConstructionInfoBoard extends Table implements ILogicFrameListener,
     /**
      * 显示在当前screen的Construction集合。以ConstructionView形式存在。
      */
-    List<ConstructionView> constructionViews = new ArrayList<>();
+    List<ConstructionControlNode> constructionControlNodes = new ArrayList<>();
     Set<BaseConstruction> allConstructionModels = new HashSet<>();
     /**
      * 后台运行。不显示在当前screen，但也需要结算逻辑帧的Construction。
@@ -72,14 +72,14 @@ public class ConstructionInfoBoard extends Table implements ILogicFrameListener,
         areaShownConstructions.values().forEach(item -> allConstructionModels.addAll(item));
     }
     
-    public ConstructionInfoBoard(GameScreen parent) {
+    public ConstructionControlBoard(GameScreen parent) {
         this.parent = parent;
         this.setBackground(parent.tableBackgroundDrawable);
         this.setBounds(BOARD_DISTANCE_TO_FRAME, BOARD_DISTANCE_TO_FRAME, Gdx.graphics.getWidth() - BOARD_DISTANCE_TO_FRAME * 2, BOARD_HEIGHT);
         
         for (int i = 0; i < NUM; i++) {
-            var constructionView = new ConstructionView(parent, i);
-            constructionViews.add(constructionView);
+            var constructionView = new ConstructionControlNode(parent, i);
+            constructionControlNodes.add(constructionView);
             this.addActor(constructionView);
         }
         
@@ -90,7 +90,7 @@ public class ConstructionInfoBoard extends Table implements ILogicFrameListener,
 
     @Override
     public void onLogicFrame() {
-        constructionViews.forEach(item -> item.onLogicFrame());
+        constructionControlNodes.forEach(item -> item.onLogicFrame());
         backgroundConstructionModels.forEach(item -> item.onLogicFrame());
     }
 
@@ -104,9 +104,9 @@ public class ConstructionInfoBoard extends Table implements ILogicFrameListener,
         for (int i = 0; i < NUM; i++) {
             if (i < newConstructions.size()) {
                 backgroundConstructionModels.remove(newConstructions.get(i));
-                constructionViews.get(i).setModel(newConstructions.get(i));
+                constructionControlNodes.get(i).setModel(newConstructions.get(i));
             } else {
-                constructionViews.get(i).setModel(null);
+                constructionControlNodes.get(i).setModel(null);
             }
         }
         Gdx.app.log("ConstructionInfoBorad", "Constructions change to: " + newConstructions.stream().map(construction -> construction.getName()).collect(Collectors.joining(",")));

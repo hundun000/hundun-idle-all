@@ -25,7 +25,7 @@ public class BaseClickGatherConstruction extends BaseConstruction {
     }
     
     @Override
-    public boolean canClick() {
+    public boolean canClickEffect() {
         return canOutput();
     }
     

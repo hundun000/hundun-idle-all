@@ -44,7 +44,7 @@ public class BaseBuffConstruction extends BaseConstruction {
     }
 
     @Override
-    public boolean canClick() {
+    public boolean canClickEffect() {
         return canUpgrade();
     }
 

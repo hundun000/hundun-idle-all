@@ -6,7 +6,8 @@ package hundun.gdxgame.bugindustry.model;
 public enum GameArea {
     BEE_FARM,
     BEE_BUFF,
-    FOREST_FARM
+    FOREST_FARM,
+    SHOP,
     ;
     
     

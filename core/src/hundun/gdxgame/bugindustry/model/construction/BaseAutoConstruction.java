@@ -26,7 +26,7 @@ public class BaseAutoConstruction extends BaseConstruction {
     /**
      * 影响升级后下一级费用，详见具体公式
      */
-    protected final double upgradeCostLevelUpArg = 2.0;
+    protected final double upgradeCostLevelUpArg = 1.1;
     
 
     
@@ -56,11 +56,14 @@ public class BaseAutoConstruction extends BaseConstruction {
         Map<ResourceType, Integer> upgradeCostRule = modifiedUpgradeCostMap;
         game.getModelContext().getStorageManager().modifyAllResourceNum(upgradeCostRule, false);
         saveData.setLevel(saveData.getLevel() + 1);
+        if (!workingLevelChangable) {
+            saveData.setWorkingLevel(saveData.getLevel());
+        }
         updateModifiedValues();
     }
 
     @Override
-    public boolean canClick() {
+    public boolean canClickEffect() {
         return canUpgrade();
     }
     

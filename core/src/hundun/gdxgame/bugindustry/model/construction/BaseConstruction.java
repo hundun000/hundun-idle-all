@@ -48,14 +48,14 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
     protected String modifiedOutputGainDescription;
     
     /**
-     * output行为所需要支付的费用
+     * output行为所需要支付的费用; 无费用时为null
      */
     protected Map<ResourceType, Integer> baseOutputCostMap;
     protected Map<ResourceType, Integer> modifiedOutputCostMap;
     protected String modifiedOuputCostDescription;
     
     /**
-     * 升级所需要支付的费用
+     * 升级所需要支付的费用; 无发升级时为null
      */
     protected Map<ResourceType, Integer> baseUpgradeCostMap;
     protected Map<ResourceType, Integer> modifiedUpgradeCostMap;
@@ -77,7 +77,7 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
     
     public abstract void onClick();
     
-    public abstract boolean canClick();
+    public abstract boolean canClickEffect();
     
     public abstract String getButtonDescroption();
     
@@ -199,9 +199,9 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
         if (canChangeWorkingLevel(delta)) {
             saveData.setWorkingLevel(saveData.getWorkingLevel() + delta);
             updateModifiedValues();
-            Gdx.app.log(this.name, "changeWorkingLevel " + delta + " success to " + saveData.getWorkingLevel());
+            Gdx.app.log(this.name, "changeWorkingLevel delta = " + delta + ", success to " + saveData.getWorkingLevel());
         } else {
-            Gdx.app.log(this.name, "changeWorkingLevel " + delta + " but cannot!");
+            Gdx.app.log(this.name, "changeWorkingLevel delta = " + delta + ", but cannot!");
         }
     }
 }
