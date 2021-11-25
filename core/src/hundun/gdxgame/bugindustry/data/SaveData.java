@@ -14,6 +14,7 @@ import lombok.Data;
 @Data
 public class SaveData {
     Map<ResourceType, Integer> ownResoueces;
+    Set<ResourceType> unlockedResourceTypes;
     Map<BuffId, Integer> buffAmounts;
     Map<String, ConstructionSaveData> constructionSaveDataMap;
     Set<String> unlockedAchievementNames;

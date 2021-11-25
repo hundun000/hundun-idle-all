@@ -94,7 +94,7 @@ public class MenuScreen extends BaseScreen {
         table.add(buttonIntoSettingScreen).height(BUTTON_SMALL_HEIGHT).fill().row();
         
         
-        table.debugAll();
+        //table.debugAll();
     }
     
     public void show() {

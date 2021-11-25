@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.JsonWriter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import hundun.gdxgame.bugindustry.data.SaveData;
+import hundun.gdxgame.bugindustry.model.GameDictionary;
 import hundun.gdxgame.bugindustry.model.ModelContext;
 import hundun.gdxgame.bugindustry.model.construction.ConstructionFactory;
 import hundun.gdxgame.bugindustry.model.manager.AchievementManager;
@@ -51,6 +52,8 @@ public class BugIndustryGame extends Game {
     private EventManager eventManager;
     @Getter
     private AudioPlayManager audioPlayManager;
+    @Getter
+    private GameDictionary gameDictionary;
     
     @Getter
     private Skin buttonSkin;
@@ -94,6 +97,8 @@ public class BugIndustryGame extends Game {
 	
 	
 	private void initContexts() {
+	    this.gameDictionary = new GameDictionary();
+	    
 	    this.screenContext = new ScreenContext();
         screenContext.setMenuScreen(new MenuScreen(this));
         screenContext.setGameBeeScreen(new GameScreen(this));

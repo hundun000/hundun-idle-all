@@ -53,6 +53,7 @@ public class SaveUtils {
         
         SaveData saveData = new SaveData();
         saveData.setOwnResoueces(modelContext.getStorageManager().getOwnResoueces());
+        saveData.setUnlockedResourceTypes(modelContext.getStorageManager().getUnlockedResourceTypes());
         saveData.setBuffAmounts(modelContext.getBuffManager().getBuffAmounts());
         saveData.setUnlockedAchievementNames(modelContext.getAchievementManager().getUnlockedAchievementNames());
         Map<String, ConstructionSaveData> map = new HashMap<>();
@@ -95,6 +96,7 @@ public class SaveUtils {
         }
         
         modelContext.getStorageManager().setOwnResoueces(saveData.getOwnResoueces());
+        modelContext.getStorageManager().setUnlockedResourceTypes(saveData.getUnlockedResourceTypes());
         modelContext.getBuffManager().setBuffAmounts(saveData.getBuffAmounts());
         modelContext.getAchievementManager().setUnlockedAchievementNames(saveData.getUnlockedAchievementNames());
         Map<String, ConstructionSaveData> map = saveData.getConstructionSaveDataMap();

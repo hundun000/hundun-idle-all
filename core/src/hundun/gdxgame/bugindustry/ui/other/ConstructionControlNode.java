@@ -8,11 +8,13 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 
 import hundun.gdxgame.bugindustry.model.construction.BaseConstruction;
 import hundun.gdxgame.bugindustry.ui.ILogicFrameListener;
@@ -26,6 +28,10 @@ public class ConstructionControlNode extends Table implements ILogicFrameListene
     GameScreen parent;
     BaseConstruction model;
     Label constructionNameLabel;
+    TextButton upWorkingLevelButton;
+    TextButton downWorkingLevelButton;
+    Label workingLevelLabel;
+    
     TextButton clickEffectButton;
     
     Table changeWorkingLevelGroup;
@@ -61,7 +67,7 @@ public class ConstructionControlNode extends Table implements ILogicFrameListene
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (model != null) {
-                    parent.showAndUpdateGuideInfo(model.getDetailDescroption());
+                    parent.showAndUpdateGuideInfo(model);
                 }
                 Gdx.app.log(ConstructionControlNode.class.getSimpleName(), "exit event");
                 super.clicked(event, x, y);
@@ -70,7 +76,7 @@ public class ConstructionControlNode extends Table implements ILogicFrameListene
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 if (model != null && pointer == -1) {
-                    parent.showAndUpdateGuideInfo(model.getDetailDescroption());
+                    parent.showAndUpdateGuideInfo(model);
                 }
                 super.enter(event, x, y, pointer, fromActor);
             }
@@ -87,7 +93,7 @@ public class ConstructionControlNode extends Table implements ILogicFrameListene
         
         this.changeWorkingLevelGroup = new Table();
         
-        TextButton upWorkingLevelButton = new TextButton("+", parent.game.getButtonSkin());
+        this.upWorkingLevelButton = new TextButton("+", parent.game.getButtonSkin());
         upWorkingLevelButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -96,9 +102,13 @@ public class ConstructionControlNode extends Table implements ILogicFrameListene
             } 
         });
         //upWorkingLevelButton.setSize(50, 50);
-        changeWorkingLevelGroup.add(upWorkingLevelButton).size(CHILD_WIDTH / 2, CHILD_HEIGHT);
+        changeWorkingLevelGroup.add(upWorkingLevelButton).size(CHILD_WIDTH / 4, CHILD_HEIGHT);
         
-        TextButton downWorkingLevelButton = new TextButton("-", parent.game.getButtonSkin());
+        this.workingLevelLabel = new Label("", parent.game.getButtonSkin());
+        workingLevelLabel.setAlignment(Align.center);
+        changeWorkingLevelGroup.add(workingLevelLabel).size(CHILD_WIDTH / 2, CHILD_HEIGHT);
+        
+        this.downWorkingLevelButton = new TextButton("-", parent.game.getButtonSkin());
         downWorkingLevelButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -107,21 +117,22 @@ public class ConstructionControlNode extends Table implements ILogicFrameListene
             } 
         });
         //downWorkingLevelButton.setSize(50, 50);
-        changeWorkingLevelGroup.add(downWorkingLevelButton).size(CHILD_WIDTH / 2, CHILD_HEIGHT);
+        changeWorkingLevelGroup.add(downWorkingLevelButton).size(CHILD_WIDTH / 4, CHILD_HEIGHT);
         
         
         //initAsNormalStyle();
         
-        this.debug();
-        
+        //this.debug();
+        this.add(constructionNameLabel).size(CHILD_WIDTH, CHILD_HEIGHT).row();
+        this.add(clickEffectButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
+        this.add(changeWorkingLevelGroup).size(CHILD_WIDTH, CHILD_HEIGHT);
     }
     
 
     private void initAsNormalStyle() {
-        clearChildren();
-        
-        this.add(constructionNameLabel).size(CHILD_WIDTH, CHILD_HEIGHT).row();
-        this.add(clickEffectButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
+
+        this.upWorkingLevelButton.setVisible(false);
+        this.downWorkingLevelButton.setVisible(false);
         
         //changeWorkingLevelGroup.setVisible(false);
         
@@ -133,11 +144,10 @@ public class ConstructionControlNode extends Table implements ILogicFrameListene
         //clearStyle();
         
         //changeWorkingLevelGroup.setVisible(true);
-        clearChildren();
+        this.upWorkingLevelButton.setVisible(true);
+        this.downWorkingLevelButton.setVisible(true);
         
-        this.add(constructionNameLabel).size(CHILD_WIDTH, CHILD_HEIGHT).row();
-        this.add(clickEffectButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
-        this.add(changeWorkingLevelGroup).size(CHILD_WIDTH, CHILD_HEIGHT);
+        
         
     }
     
@@ -168,14 +178,15 @@ public class ConstructionControlNode extends Table implements ILogicFrameListene
         // ------ update text ------
         constructionNameLabel.setText(model.getName());
         clickEffectButton.setText(model.getButtonDescroption());
-
+        workingLevelLabel.setText(model.getWorkingLevelDescroption());
+        
         // ------ update clickable-state ------
         boolean canClickEffect = model.canClickEffect();
         //clickEffectButton.setTouchable(clickable ? Touchable.enabled : Touchable.disabled);
         
         
         if (canClickEffect) {
-            clickEffectButton.getLabel().setColor(Color.BLACK);
+            clickEffectButton.getLabel().setColor(Color.WHITE);
         } else {
             clickEffectButton.setDisabled(true);
             clickEffectButton.getLabel().setColor(Color.RED);

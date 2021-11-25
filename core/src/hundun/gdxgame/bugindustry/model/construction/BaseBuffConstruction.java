@@ -50,7 +50,7 @@ public class BaseBuffConstruction extends BaseConstruction {
 
     @Override
     public String getButtonDescroption() {
-        return "Enhance(lv." + saveData.getLevel() + ")";
+        return "Enhance";
     }
 
     @Override
@@ -77,6 +77,11 @@ public class BaseBuffConstruction extends BaseConstruction {
     @Override
     protected int calculateModifiedOutputCost(int baseValue, int level) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String getWorkingLevelDescroption() {
+        return "lv." + saveData.getWorkingLevel() + "";
     }
 
 }

@@ -65,4 +65,9 @@ public class BaseClickGatherConstruction extends BaseConstruction {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public String getWorkingLevelDescroption() {
+        return "";
+    }
+
 }

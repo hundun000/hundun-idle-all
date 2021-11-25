@@ -44,21 +44,27 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
      * 对于Click型，即为基础点击收益；对于Auto型，即为基础自动收益；
      */
     protected List<ConstructionOuputRule> baseOutputGainRules;
+    @Getter
     protected Map<ResourceType, Integer> modifiedOutputGainMap;
+    @Getter
     protected String modifiedOutputGainDescription;
     
     /**
      * output行为所需要支付的费用; 无费用时为null
      */
     protected Map<ResourceType, Integer> baseOutputCostMap;
+    @Getter
     protected Map<ResourceType, Integer> modifiedOutputCostMap;
+    @Getter
     protected String modifiedOuputCostDescription;
     
     /**
      * 升级所需要支付的费用; 无发升级时为null
      */
     protected Map<ResourceType, Integer> baseUpgradeCostMap;
+    @Getter
     protected Map<ResourceType, Integer> modifiedUpgradeCostMap;
+    @Getter
     protected String modifiedUpgradeCostDescription;
     
     
@@ -91,6 +97,8 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
     
     protected abstract String getDetailDescroptionDynamicPart();
 
+    public abstract String getWorkingLevelDescroption();
+    
     /**
      * 重新计算各个数值的加成后的结果
      */

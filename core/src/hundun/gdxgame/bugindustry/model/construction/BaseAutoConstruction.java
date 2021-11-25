@@ -70,11 +70,8 @@ public class BaseAutoConstruction extends BaseConstruction {
     @Override
     public String getButtonDescroption() {
         String des;
-        if (workingLevelChangable) {
-            des = "Upgrade(" + saveData.getWorkingLevel() + "/" + saveData.getLevel() + ")";
-        } else {
-            des = "Upgrade(" + saveData.getWorkingLevel() + ")";
-        }
+        des = "Upgrade";
+
         return des;
     }
     
@@ -129,6 +126,15 @@ public class BaseAutoConstruction extends BaseConstruction {
     @Override
     protected int calculateModifiedOutputCost(int baseValue, int level) {
         return baseValue * level;
+    }
+
+    @Override
+    public String getWorkingLevelDescroption() {
+        if (workingLevelChangable) {
+            return "lv." + saveData.getWorkingLevel() + "/" + saveData.getLevel();
+        } else {
+            return "lv." + saveData.getWorkingLevel() + "";
+        }
     }
 
     

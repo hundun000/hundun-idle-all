@@ -22,7 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.bugindustry.model.AchievementPrototype;
 import hundun.gdxgame.bugindustry.model.GameArea;
-import hundun.gdxgame.bugindustry.ui.other.GameAreaChangeButton;
+import hundun.gdxgame.bugindustry.model.construction.BaseConstruction;
 import hundun.gdxgame.bugindustry.ui.other.GameAreaControlBoard;
 import hundun.gdxgame.bugindustry.ui.other.GameImageDrawHelper;
 import hundun.gdxgame.bugindustry.ui.other.PopupInfoBoard;
@@ -168,14 +168,14 @@ public class GameScreen extends BaseScreen {
         constructionControlBoard.onLogicFrame();
     }
 
-    public void showAndUpdateGuideInfo(String text) {
+    public void showAndUpdateGuideInfo(BaseConstruction model) {
         popUpInfoBoard.setVisible(true);
-        popUpInfoBoard.setText(text);
+        popUpInfoBoard.update(model);
     }
     
     public void hideAndCleanGuideInfo() {
         popUpInfoBoard.setVisible(false);
-        popUpInfoBoard.setText("GUIDE_TEXT");
+        //popUpInfoBoard.setText("GUIDE_TEXT");
     }
 
     @Override

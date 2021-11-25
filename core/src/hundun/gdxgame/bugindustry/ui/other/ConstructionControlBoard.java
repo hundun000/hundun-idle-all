@@ -45,7 +45,7 @@ public class ConstructionControlBoard extends Table implements ILogicFrameListen
     List<ConstructionControlNode> constructionControlNodes = new ArrayList<>();
     Set<BaseConstruction> allConstructionModels = new HashSet<>();
     /**
-     * 后台运行。不显示在当前screen，但也需要结算逻辑帧的Construction。
+     * 后台运行。即不显示在当前screen，但也需要结算逻辑帧的Construction集合。
      */
     Set<BaseConstruction> backgroundConstructionModels = new HashSet<>();
     
@@ -65,10 +65,11 @@ public class ConstructionControlBoard extends Table implements ILogicFrameListen
                 modelContext.getConstructionFactory().getConstruction(ConstructionId.HONEY_BUFF_PROVIDER)
                 ));
         areaShownConstructions.put(GameArea.FOREST_FARM, Arrays.asList(
-                modelContext.getConstructionFactory().getConstruction(ConstructionId.WOOD_GATHER_HOUSE),
-                modelContext.getConstructionFactory().getConstruction(ConstructionId.WOOD_SELL_HOUSE)
+                modelContext.getConstructionFactory().getConstruction(ConstructionId.WOOD_GATHER_HOUSE)
                 ));
-        
+        areaShownConstructions.put(GameArea.SHOP, Arrays.asList(
+                modelContext.getConstructionFactory().getConstruction(ConstructionId.HONEY_SELL_HOUSE)
+                ));
         areaShownConstructions.values().forEach(item -> allConstructionModels.addAll(item));
     }
     

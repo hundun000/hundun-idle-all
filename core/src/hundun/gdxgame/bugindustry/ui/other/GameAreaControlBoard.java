@@ -43,6 +43,7 @@ public class GameAreaControlBoard extends Table implements IGameAreaChangeListen
         initButtonMap(GameArea.BEE_FARM);
         initButtonMap(GameArea.FOREST_FARM);
         initButtonMap(GameArea.BEE_BUFF);
+        initButtonMap(GameArea.SHOP);
         rebuildChild(null);
         this.debugAll();
     }

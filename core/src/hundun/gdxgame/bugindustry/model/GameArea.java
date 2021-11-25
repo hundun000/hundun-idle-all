@@ -9,29 +9,4 @@ public enum GameArea {
     FOREST_FARM,
     SHOP,
     ;
-    
-    
-
-    public GameArea switchFarmAndBuff() {
-        switch (this) {
-            case BEE_FARM:
-                return BEE_BUFF;
-            case BEE_BUFF:
-                return BEE_FARM;    
-            default:
-                return null;
-        }
-    }
-
-    public GameArea switchCatogory() {
-        switch (this) {
-            case BEE_FARM:
-            case BEE_BUFF:
-                return FOREST_FARM;
-            case FOREST_FARM:
-                return BEE_FARM;
-            default:
-                return null;
-        }
-    }
 }
