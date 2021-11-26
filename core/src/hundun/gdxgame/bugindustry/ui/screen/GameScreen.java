@@ -23,13 +23,12 @@ import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.bugindustry.model.AchievementPrototype;
 import hundun.gdxgame.bugindustry.model.GameArea;
 import hundun.gdxgame.bugindustry.model.construction.BaseConstruction;
-import hundun.gdxgame.bugindustry.ui.other.GameAreaControlBoard;
-import hundun.gdxgame.bugindustry.ui.other.GameImageDrawHelper;
-import hundun.gdxgame.bugindustry.ui.other.PopupInfoBoard;
-import hundun.gdxgame.bugindustry.ui.other.PopupInfoBoard;
-import hundun.gdxgame.bugindustry.ui.other.StorageInfoBoard;
-import hundun.gdxgame.bugindustry.ui.other.AchievementMaskBoard;
-import hundun.gdxgame.bugindustry.ui.other.ConstructionControlBoard;
+import hundun.gdxgame.bugindustry.ui.component.AchievementMaskBoard;
+import hundun.gdxgame.bugindustry.ui.component.ConstructionControlBoard;
+import hundun.gdxgame.bugindustry.ui.component.GameAreaControlBoard;
+import hundun.gdxgame.bugindustry.ui.component.GameImageDrawHelper;
+import hundun.gdxgame.bugindustry.ui.component.PopupInfoBoard;
+import hundun.gdxgame.bugindustry.ui.component.StorageInfoBoard;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -125,7 +124,7 @@ public class GameScreen extends BaseScreen {
         
         
         gameImageDrawHelper = new GameImageDrawHelper(this, stage.getCamera());
-        gameImageDrawHelper.addBeeEntity();
+//        gameImageDrawHelper.addBeeEntity();
 //        gameImageDrawHelper.addBeeEntity();
 //        gameImageDrawHelper.addBeeEntity();
     }

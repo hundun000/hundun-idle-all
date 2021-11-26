@@ -34,7 +34,7 @@ import lombok.Getter;
 
 public class BugIndustryGame extends Game {
     public boolean debugMode = true;
-    public boolean drawGameImageAndPlayAudio = false;
+    public boolean drawGameImageAndPlayAudio = true;
     
     public static final int LOGIC_WIDTH = 640;
     public static final int LOGIC_HEIGHT = 480;

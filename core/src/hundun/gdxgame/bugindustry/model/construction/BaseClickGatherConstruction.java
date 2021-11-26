@@ -14,8 +14,10 @@ import hundun.gdxgame.bugindustry.data.ConstructionOuputRule;
 public class BaseClickGatherConstruction extends BaseConstruction {
 
     public BaseClickGatherConstruction(BugIndustryGame game, ConstructionId id) {
-        super(game, ConstructionType.CLICK_GATHER, id);
-        
+        super(game, id);
+        this.outputCostDescriptionStart = null;
+        this.outputGainDescriptionStart = null;
+        this.upgradeCostDescriptionStart = "EnhanceCost";
     }
     
     @Override

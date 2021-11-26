@@ -23,8 +23,7 @@ import lombok.Setter;
 
 public abstract class BaseConstruction implements ILogicFrameListener, IAmountChangeEventListener {
     protected final int MAX_LEVEL = 10;
-    @Getter
-    protected final ConstructionType type;
+
     protected Random random = new Random();
     protected final BugIndustryGame game;
     @Setter
@@ -46,8 +45,9 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
     protected List<ConstructionOuputRule> baseOutputGainRules;
     @Getter
     protected Map<ResourceType, Integer> modifiedOutputGainMap;
-    @Getter
     protected String modifiedOutputGainDescription;
+    @Getter
+    protected String outputGainDescriptionStart;
     
     /**
      * output行为所需要支付的费用; 无费用时为null
@@ -55,8 +55,9 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
     protected Map<ResourceType, Integer> baseOutputCostMap;
     @Getter
     protected Map<ResourceType, Integer> modifiedOutputCostMap;
-    @Getter
     protected String modifiedOuputCostDescription;
+    @Getter
+    protected String outputCostDescriptionStart;
     
     /**
      * 升级所需要支付的费用; 无发升级时为null
@@ -64,14 +65,14 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
     protected Map<ResourceType, Integer> baseUpgradeCostMap;
     @Getter
     protected Map<ResourceType, Integer> modifiedUpgradeCostMap;
-    @Getter
     protected String modifiedUpgradeCostDescription;
+    @Getter
+    protected String upgradeCostDescriptionStart;
     
     
     
-    public BaseConstruction(BugIndustryGame game, ConstructionType type, ConstructionId id) {
+    public BaseConstruction(BugIndustryGame game, ConstructionId id) {
         this.game = game;
-        this.type = type;
         this.saveData = new ConstructionSaveData();
         this.id = id;
         
@@ -91,10 +92,12 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
     protected abstract int calculateModifiedOutput(int baseValue, int level);
     protected abstract int calculateModifiedOutputCost(int baseValue, int level);
     
+    @Deprecated
     public String getDetailDescroption() {
         return detailDescroptionConstPart + "\n" + getDetailDescroptionDynamicPart();
     }
     
+    @Deprecated
     protected abstract String getDetailDescroptionDynamicPart();
 
     public abstract String getWorkingLevelDescroption();
@@ -109,7 +112,7 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
             this.modifiedUpgradeCostMap = baseUpgradeCostMap.entrySet().stream()
                     .collect(Collectors.toMap(
                             entry -> entry.getKey(), 
-                            entry -> calculateModifiedUpgradeCost(entry.getValue(), saveData.getWorkingLevel())
+                            entry -> calculateModifiedUpgradeCost(entry.getValue(), saveData.getLevel())
                             )
                     );
             this.modifiedUpgradeCostDescription = 

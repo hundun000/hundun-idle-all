@@ -1,4 +1,4 @@
-package hundun.gdxgame.bugindustry.ui.other;
+package hundun.gdxgame.bugindustry.ui.component;
 
 import java.util.ArrayList;
 import java.util.Arrays;

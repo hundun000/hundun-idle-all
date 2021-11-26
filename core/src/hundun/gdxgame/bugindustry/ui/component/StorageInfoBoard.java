@@ -1,4 +1,4 @@
-package hundun.gdxgame.bugindustry.ui.other;
+package hundun.gdxgame.bugindustry.ui.component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,7 +40,7 @@ public class StorageInfoBoard extends Table {
 //    List<ResourceType> farmAreaShownResources;
     List<ResourceType> shownOrders;
     Set<ResourceType> shownTypes = new HashSet<>();
-    List<StorageInfoNode> nodes = new ArrayList<>();
+    List<ResourceAmountPairNode> nodes = new ArrayList<>();
     
     private void initData() {
         //areaShownResources = new HashMap<>();
@@ -91,7 +91,7 @@ public class StorageInfoBoard extends Table {
         for (int i = 0; i < shownOrders.size(); i++) {
             ResourceType resourceType = shownOrders.get(i);
             if (shownTypes.contains(resourceType)) {
-                StorageInfoNode node = new StorageInfoNode(parent.game, resourceType);
+                ResourceAmountPairNode node = new ResourceAmountPairNode(parent.game, resourceType);
                 nodes.add(node);
                 shownTypes.add(resourceType);
                 var cell = this.add(node).width(NODE_WIDTH).height(NODE_HEIGHT);

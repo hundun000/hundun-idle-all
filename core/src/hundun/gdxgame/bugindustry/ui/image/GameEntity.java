@@ -1,4 +1,4 @@
-package hundun.gdxgame.bugindustry.ui;
+package hundun.gdxgame.bugindustry.ui.image;
 
 import lombok.Data;
 

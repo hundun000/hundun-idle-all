@@ -1,4 +1,4 @@
-package hundun.gdxgame.bugindustry.ui.other;
+package hundun.gdxgame.bugindustry.ui.component;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

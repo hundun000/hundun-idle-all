@@ -1,4 +1,4 @@
-package hundun.gdxgame.bugindustry.ui.other;
+package hundun.gdxgame.bugindustry.ui.component;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -25,19 +25,21 @@ public class GameAreaControlBoard extends Table implements IGameAreaChangeListen
     GameScreen parent;
     Map<GameArea, TextButton> buttons = new LinkedHashMap<>();
     
-    final int FULL_CELL_WIDTH = 100;
-    final int SHORT_CELL_WIDTH = 75;
-    final int CELL_HEIGHT = 50;
-    final int Y = ConstructionControlBoard.BOARD_DISTANCE_TO_FRAME + ConstructionControlBoard.BOARD_HEIGHT;
-    final int HEIGHT = Gdx.graphics.getHeight() - (StorageInfoBoard.BOARD_DISTANCE_TO_FRAME_TOP + StorageInfoBoard.BOARD_HEIGHT) - Y;
+    static final int FULL_CELL_WIDTH = 100;
+    static final int SHORT_CELL_WIDTH = 75;
+    static final int CELL_HEIGHT = 50;
+    public static final int WIDTH = FULL_CELL_WIDTH;
+    public static final int Y = ConstructionControlBoard.BOARD_DISTANCE_TO_FRAME + ConstructionControlBoard.BOARD_HEIGHT + 5;
+    static final int HEIGHT = Gdx.graphics.getHeight() - (StorageInfoBoard.BOARD_DISTANCE_TO_FRAME_TOP + StorageInfoBoard.BOARD_HEIGHT) - Y;
+    public static final int X = Gdx.graphics.getWidth() - WIDTH - 5;
     
     public GameAreaControlBoard(GameScreen parent) {
         super();
         this.parent = parent;
         this.setBounds(
-                Gdx.graphics.getWidth() - FULL_CELL_WIDTH - 5, 
+                X, 
                 Y, 
-                FULL_CELL_WIDTH, 
+                WIDTH, 
                 HEIGHT);
         
         initButtonMap(GameArea.BEE_FARM);

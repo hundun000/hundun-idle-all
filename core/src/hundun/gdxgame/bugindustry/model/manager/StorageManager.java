@@ -65,6 +65,7 @@ public class StorageManager {
             unlockedResourceTypes.add(entry.getKey());
             ownResoueces.merge(entry.getKey(), (plus ? 1 : -1 ) * entry.getValue(), (oldValue, newValue) -> oldValue + newValue);
         }
+        game.getEventManager().notifyResourceAmountChange(false);
     }
     
 //    public void addResourceNum(ResourceType key, int add) {

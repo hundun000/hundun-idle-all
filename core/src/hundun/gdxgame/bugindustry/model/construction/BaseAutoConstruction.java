@@ -19,11 +19,6 @@ import hundun.gdxgame.bugindustry.model.ResourceType;
 public class BaseAutoConstruction extends BaseConstruction {
     
     /**
-     * 影响升级后生产量，详见具体公式
-     */
-    protected final double autoOuputSuccessRateLevelUpArg = 4.0;
-    
-    /**
      * 影响升级后下一级费用，详见具体公式
      */
     protected final double upgradeCostLevelUpArg = 1.1;
@@ -33,8 +28,22 @@ public class BaseAutoConstruction extends BaseConstruction {
     protected int autoOutputProgress = 0;
     protected static final int AUTO_OUPUT_MAX_PROGRESS = 30;
     
-    public BaseAutoConstruction(BugIndustryGame game, ConstructionId id) {
-        super(game, ConstructionType.AUTO_OUTPUT, id);
+    public BaseAutoConstruction(BugIndustryGame game, ConstructionId id,
+            boolean workingLevelChangable
+            ) {
+        super(game, id);
+        this.workingLevelChangable = workingLevelChangable;
+        
+        if (workingLevelChangable) {
+            this.outputCostDescriptionStart = "Sell";
+            this.outputGainDescriptionStart = "Gain";
+            this.upgradeCostDescriptionStart = "AddSpeedCost";
+        } else {
+            this.outputCostDescriptionStart = "AutoCost";
+            this.outputGainDescriptionStart = "AutoGain";
+            this.upgradeCostDescriptionStart = "UpgradeCost";
+        }
+        
     }
     
     @Override
@@ -70,7 +79,12 @@ public class BaseAutoConstruction extends BaseConstruction {
     @Override
     public String getButtonDescroption() {
         String des;
-        des = "Upgrade";
+        if (workingLevelChangable) {
+            des = "Add speed";
+        } else {
+            des = "Upgrade";
+        }
+        
 
         return des;
     }
@@ -131,9 +145,9 @@ public class BaseAutoConstruction extends BaseConstruction {
     @Override
     public String getWorkingLevelDescroption() {
         if (workingLevelChangable) {
-            return "lv." + saveData.getWorkingLevel() + "/" + saveData.getLevel();
+            return saveData.getWorkingLevel() + "/" + saveData.getLevel();
         } else {
-            return "lv." + saveData.getWorkingLevel() + "";
+            return "lv. " + saveData.getWorkingLevel() + "";
         }
     }
 

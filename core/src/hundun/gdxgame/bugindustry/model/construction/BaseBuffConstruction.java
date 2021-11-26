@@ -22,8 +22,11 @@ public class BaseBuffConstruction extends BaseConstruction {
     private final BuffId buffId;
     
     public BaseBuffConstruction(BugIndustryGame game, BuffId buffId, ConstructionId id) {
-        super(game, ConstructionType.BUFF, id);
+        super(game, id);
         this.buffId = buffId;
+        this.outputCostDescriptionStart = null;
+        this.outputGainDescriptionStart = null;
+        this.upgradeCostDescriptionStart = "EnhanceCost";
     }
 
     @Override

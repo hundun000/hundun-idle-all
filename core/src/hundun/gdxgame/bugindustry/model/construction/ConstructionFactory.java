@@ -51,7 +51,7 @@ public class ConstructionFactory {
         }
         // auto
         {
-            BaseConstruction construction = new BaseAutoConstruction(game, ConstructionId.SMALL_BEEHIVE);
+            BaseConstruction construction = new BaseAutoConstruction(game, ConstructionId.SMALL_BEEHIVE, false);
             construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
             construction.detailDescroptionConstPart = "Auto gain some honey";
             construction.baseOutputGainRules = Arrays.asList(
@@ -77,7 +77,7 @@ public class ConstructionFactory {
         }
         // sell
         {
-            BaseConstruction construction = new BaseAutoConstruction(game, ConstructionId.HONEY_SELL_HOUSE);
+            BaseConstruction construction = new BaseAutoConstruction(game, ConstructionId.HONEY_SELL_HOUSE, true);
             construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
             construction.detailDescroptionConstPart = "Auto sell honey";
             construction.baseOutputCostMap = Map.of(
@@ -90,7 +90,6 @@ public class ConstructionFactory {
                     ResourceType.COIN, 300,
                     ResourceType.WOOD, 300
                     );
-            construction.workingLevelChangable = true;
             register(construction);
         }
     }

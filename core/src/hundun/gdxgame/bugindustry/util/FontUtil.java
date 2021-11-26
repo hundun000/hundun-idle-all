@@ -62,4 +62,5 @@ public class FontUtil {
 //        parameter.size = 8;
 //        KOMIKA_8 = generator.generateFont(parameter);
     }
+    
 }
