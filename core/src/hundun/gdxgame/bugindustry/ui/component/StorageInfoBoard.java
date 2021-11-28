@@ -50,9 +50,8 @@ public class StorageInfoBoard extends Table {
                 ResourceType.HARD_WOOD,
                 ResourceType.BEE,
                 ResourceType.HONEY,
-                ResourceType.GOOD_HONEY,
-                ResourceType.BERTTER_HONEY,
-                ResourceType.BEST_HONEY
+                ResourceType.BEEWAX,
+                ResourceType.QUEEN_BEE
                 );
         
 //        areaShownResources.put(GameArea.BEE_FARM, farmAreaShownResources);

@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -79,6 +80,8 @@ public class GameScreen extends BaseScreen {
 
     
     private void initChildren() {
+        Image backgroundImage = new Image(game.getTextureManager().getBackgroundTexture());
+        stage.addActor(backgroundImage);
         
         tableBackgroundPixmap = new Pixmap(1,1, Pixmap.Format.RGB565);
         tableBackgroundPixmap.setColor(0.8f, 0.8f, 0.8f, 1.0f);
@@ -152,12 +155,13 @@ public class GameScreen extends BaseScreen {
         }
         
         stage.act();
+        stage.draw();
         
         if (game.drawGameImageAndPlayAudio) {
             gameImageDrawHelper.drawAll();
         }
         
-        stage.draw();
+        
     }
 
     private void onLogicFrame() {

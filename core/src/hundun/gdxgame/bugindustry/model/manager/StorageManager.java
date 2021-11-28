@@ -36,11 +36,17 @@ public class StorageManager {
     public StorageManager(BugIndustryGame game) {
         this.game = game;
         
-        Texture texture = new Texture(Gdx.files.internal("resourceIcons.png"));
-        TextureRegion[][] regions = TextureRegion.split(texture, 32, 32);
+        Texture texture = new Texture(Gdx.files.internal("item.png"));
+        TextureRegion[][] regions = TextureRegion.split(texture, 16, 16);
         defaultIcon = regions[0][0];
         textureRegionMap.put(ResourceType.COIN, regions[0][1]);
-        
+        textureRegionMap.put(ResourceType.WOOD, regions[0][2]);
+        textureRegionMap.put(ResourceType.HARD_WOOD, regions[0][3]);
+        textureRegionMap.put(ResourceType.BEE, regions[0][4]);
+        textureRegionMap.put(ResourceType.HONEY, regions[0][5]);
+        textureRegionMap.put(ResourceType.BEEWAX, regions[0][6]);
+        textureRegionMap.put(ResourceType.QUEEN_BEE, regions[0][7]);
+        textureRegionMap.put(ResourceType.WIN_THE_GAME, regions[0][8]);
     }
     
     public String getResourceDescription(ResourceType key) {

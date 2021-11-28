@@ -1,5 +1,8 @@
 package hundun.gdxgame.bugindustry.ui.image;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 import lombok.Data;
 
 /**
@@ -8,8 +11,11 @@ import lombok.Data;
  */
 @Data
 public class GameEntity {
+    Texture texture;
     float x;
     float y;
+    int drawWidth;
+    int drawHeight;
     boolean randomMove;
     int randomMoveCount;
     float speedX;

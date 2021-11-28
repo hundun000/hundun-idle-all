@@ -11,10 +11,10 @@ public enum ResourceType {
     WOOD("wood"),
     HARD_WOOD("hard-wood"),
     HONEY("honey"),
-    GOOD_HONEY("good-honey"),
-    BERTTER_HONEY("better-honey"),
-    BEST_HONEY("best-honey"),
+    BEEWAX("beewax"),
+    QUEEN_BEE("queen-bee"),
     BEE("bee"),
+    WIN_THE_GAME("win"),
     ;
     @Getter
     private final String showName;

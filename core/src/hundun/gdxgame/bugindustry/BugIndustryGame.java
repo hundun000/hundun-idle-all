@@ -25,6 +25,7 @@ import hundun.gdxgame.bugindustry.model.manager.AudioPlayManager;
 import hundun.gdxgame.bugindustry.model.manager.BuffManager;
 import hundun.gdxgame.bugindustry.model.manager.EventManager;
 import hundun.gdxgame.bugindustry.model.manager.StorageManager;
+import hundun.gdxgame.bugindustry.model.manager.TextureManager;
 import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
 import hundun.gdxgame.bugindustry.ui.screen.MenuScreen;
 import hundun.gdxgame.bugindustry.ui.screen.ScreenContext;
@@ -35,7 +36,7 @@ import lombok.Getter;
 public class BugIndustryGame extends Game {
     public boolean debugMode = true;
     public boolean drawGameImageAndPlayAudio = true;
-    
+    public static int scale = 1;
     public static final int LOGIC_WIDTH = 640;
     public static final int LOGIC_HEIGHT = 480;
     public static final int GRID_SIZE = 64;
@@ -54,6 +55,8 @@ public class BugIndustryGame extends Game {
     private AudioPlayManager audioPlayManager;
     @Getter
     private GameDictionary gameDictionary;
+    @Getter
+    private TextureManager textureManager;
     
     @Getter
     private Skin buttonSkin;
@@ -67,8 +70,8 @@ public class BugIndustryGame extends Game {
 	    
 		this.batch = new SpriteBatch();
 		this.font = FontUtil.KOMIKA;
-		//this.buttonSkin = new Skin(Gdx.files.internal("skins/orange/skin/uiskin.json"));
-		this.buttonSkin = new Skin(Gdx.files.internal("skins/default/skin/uiskin.json"));
+		this.buttonSkin = new Skin(Gdx.files.internal("skins/orange/skin/uiskin.json"));
+		//this.buttonSkin = new Skin(Gdx.files.internal("skins/default/skin/uiskin.json"));
 		initContexts();
 		
 		//loadAndHookSave();
@@ -98,7 +101,7 @@ public class BugIndustryGame extends Game {
 	
 	private void initContexts() {
 	    this.gameDictionary = new GameDictionary();
-	    
+	    this.textureManager = new TextureManager();
 	    this.screenContext = new ScreenContext();
         screenContext.setMenuScreen(new MenuScreen(this));
         screenContext.setGameBeeScreen(new GameScreen(this));

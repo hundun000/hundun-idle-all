@@ -32,7 +32,7 @@ public class GameImageDrawHelper implements IAmountChangeEventListener {
     GameScreen parent;
     GameEntityFactory gameEntityFactory;
     
-    private Texture beeTexture;
+    
     
     //private Queue<GameEntity> beeEntities = new ConcurrentLinkedQueue<>();
     
@@ -41,7 +41,7 @@ public class GameImageDrawHelper implements IAmountChangeEventListener {
     
     public GameImageDrawHelper(GameScreen parent, Camera camera) {
         this.parent = parent;
-        this.beeTexture = new Texture(Gdx.files.internal("cookie.png"));
+        
         this.gameEntityFactory = new GameEntityFactory();
         parent.game.getEventManager().registerListener(this);
     }
@@ -58,7 +58,7 @@ public class GameImageDrawHelper implements IAmountChangeEventListener {
                 gameEntityFactory.checkRandomeMoveSpeedChange(entity);
                 positionChange(entity);
                 
-                parent.game.getBatch().draw(beeTexture, entity.getX(), entity.getY(), gameEntityFactory.COOKIE_WIDTH, gameEntityFactory.COOKIE_HEIGHT);
+                parent.game.getBatch().draw(entity.getTexture(), entity.getX(), entity.getY(), entity.getDrawWidth(), entity.getDrawHeight());
                 
             });
         }
@@ -85,17 +85,18 @@ public class GameImageDrawHelper implements IAmountChangeEventListener {
     
     private void checkEntityList(ResourceType type) {
         int resourceNum = parent.game.getModelContext().getStorageManager().getResourceNum(type);
-        int drawBeeNum = (int) Math.min(MAX_DRAW_BEE_NUM, Math.ceil(Math.log(resourceNum)));
+        int drawBeeNum = (int) Math.min(MAX_DRAW_BEE_NUM, resourceNum > 0 ? Math.ceil(Math.log(resourceNum)) : 0);
         gameEntitiesOfTypes.computeIfAbsent(type, k -> new ConcurrentLinkedQueue<>());
         Queue<GameEntity> gameEntities = gameEntitiesOfTypes.get(type);
         while (gameEntities.size() > drawBeeNum) {
-            Gdx.app.log(this.getClass().getSimpleName(), "checkEntityList " + type + " remove");
+            Gdx.app.log(this.getClass().getSimpleName(), "checkEntityList " + type + " remove for " + gameEntities.size() + " -> " + drawBeeNum);
             gameEntities.remove();
         }
         while (gameEntities.size() < drawBeeNum) {
-            GameEntity gameEntity = gameEntityFactory.newEntity(type);
+            int newIndex = gameEntities.size();
+            GameEntity gameEntity = gameEntityFactory.newEntity(type, newIndex);
             gameEntities.add(gameEntity);
-            Gdx.app.log(this.getClass().getSimpleName(), "checkEntityList " + type + " new");
+            Gdx.app.log(this.getClass().getSimpleName(), "checkEntityList " + type + " new for " + gameEntities.size() + " -> " + drawBeeNum);
         }
     }
     

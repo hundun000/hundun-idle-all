@@ -6,11 +6,11 @@ import hundun.gdxgame.bugindustry.BugIndustryGame;
 
 public class BugIndustryDesktopLauncher {
 	public static void main (String[] arg) {
-		double scale = 1;
+		
 	    
 	    LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = (int) (BugIndustryGame.LOGIC_WIDTH * scale);
-		config.height = (int) (BugIndustryGame.LOGIC_HEIGHT * scale);
+		config.width = (int) (BugIndustryGame.LOGIC_WIDTH * BugIndustryGame.scale);
+		config.height = (int) (BugIndustryGame.LOGIC_HEIGHT * BugIndustryGame.scale);
 		new LwjglApplication(new BugIndustryGame(), config);
 	}
 }

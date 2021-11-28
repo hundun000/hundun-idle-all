@@ -178,7 +178,7 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
     
     
     protected boolean canUpgrade() {
-        if (saveData.getLevel() >= MAX_LEVEL) {
+        if (saveData.getLevel() >= MAX_LEVEL || modifiedUpgradeCostMap == null) {
             return false;
         }
         Map<ResourceType, Integer> upgradeCostRule = modifiedUpgradeCostMap;

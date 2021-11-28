@@ -70,7 +70,7 @@ public class ConstructionFactory {
             construction.detailDescroptionConstPart = "speed up gain honey.";
             construction.baseUpgradeCostMap = (
                     Map.of(
-                            ResourceType.BEST_HONEY, 1
+                            ResourceType.QUEEN_BEE, 1
                             )
                     );
             register(construction);
