@@ -28,7 +28,7 @@ public class ResourceAmountPairNode extends HorizontalGroup {
         super();
         this.game = game;
         this.resourceType = resourceType;
-        TextureRegion textureRegion = game.getModelContext().getStorageManager().getResourceIcon(resourceType);
+        TextureRegion textureRegion = game.getTextureManager().getResourceIcon(resourceType);
         this.image = new Image(textureRegion);
         this.addActor(image);
         this.label = new Label("", game.getButtonSkin());

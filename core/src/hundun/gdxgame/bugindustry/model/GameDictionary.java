@@ -12,13 +12,13 @@ public class GameDictionary {
     public String constructionIdToShowName(ConstructionId constructionId) {
         switch (constructionId) {
         case WOOD_GATHER_HOUSE:
-            return "hand gather";
+            return "free wood";
         case WOOD_AUTO_CUTTER:
             return "feller";
         case BEE_GATHER_HOUSE:
-            return "hand gather";
+            return "free bee";
         case SMALL_BEEHIVE:
-            return "feller";
+            return "small beehive";
         case HONEY_SELL_HOUSE:
             return "honey selling";
         case HONEY_BUFF_PROVIDER:

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -17,7 +18,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.Layout;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import hundun.gdxgame.bugindustry.BugIndustryGame;
@@ -25,6 +28,7 @@ import hundun.gdxgame.bugindustry.model.AchievementPrototype;
 import hundun.gdxgame.bugindustry.model.GameArea;
 import hundun.gdxgame.bugindustry.model.construction.BaseConstruction;
 import hundun.gdxgame.bugindustry.ui.component.AchievementMaskBoard;
+import hundun.gdxgame.bugindustry.ui.component.BackgroundImageBox;
 import hundun.gdxgame.bugindustry.ui.component.ConstructionControlBoard;
 import hundun.gdxgame.bugindustry.ui.component.GameAreaControlBoard;
 import hundun.gdxgame.bugindustry.ui.component.GameImageDrawHelper;
@@ -49,6 +53,8 @@ public class GameScreen extends BaseScreen {
     StorageInfoBoard storageInfoTable;
     ConstructionControlBoard constructionControlBoard;
     //Table backTable;
+    //Image backgroundImage;
+    BackgroundImageBox backgroundImageBox;
     Label clockLabel;
     PopupInfoBoard popUpInfoBoard;
 //    GameAreaChangeButton areaChangeButtonL;
@@ -72,7 +78,8 @@ public class GameScreen extends BaseScreen {
         GameArea last = this.area;
         this.area = current;
         
-        
+        //this.backgroundImage.setDrawable(new SpriteDrawable(new Sprite(game.getTextureManager().getBackgroundTexture(current))));
+        backgroundImageBox.onGameAreaChange(last, current);
         constructionControlBoard.onGameAreaChange(last, current);
         gameAreaControlBoard.onGameAreaChange(last, current);
     }
@@ -80,8 +87,11 @@ public class GameScreen extends BaseScreen {
 
     
     private void initChildren() {
-        Image backgroundImage = new Image(game.getTextureManager().getBackgroundTexture());
-        stage.addActor(backgroundImage);
+//        this.backgroundImage = new Image(game.getTextureManager().getBackgroundTexture(GameArea.BEE_BUFF));
+//        stage.addActor(backgroundImage);
+        
+        this.backgroundImageBox = new BackgroundImageBox(this);
+        stage.addActor(backgroundImageBox);
         
         tableBackgroundPixmap = new Pixmap(1,1, Pixmap.Format.RGB565);
         tableBackgroundPixmap.setColor(0.8f, 0.8f, 0.8f, 1.0f);

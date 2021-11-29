@@ -23,7 +23,29 @@ import lombok.Setter;
 
 public abstract class BaseConstruction implements ILogicFrameListener, IAmountChangeEventListener {
     protected final int MAX_LEVEL = 10;
-
+    private static final String descriptionMaxLevelPlaceholder = "{lv}";
+    private static final String descriptionWorkingLevelPlaceholder = "{workingLv}";
+    
+    public static final DescriptionPackage WORKING_LEVEL_AUTO_DESCRIPTION_PACKAGE = new DescriptionPackage(
+            "AutoCost", "AutoGain", "UpgradeCost", "Upgrade", 
+            descriptionWorkingLevelPlaceholder + "/" + descriptionMaxLevelPlaceholder);
+    
+    public static final DescriptionPackage MAX_LEVEL_AUTO_DESCRIPTION_PACKAGE = new DescriptionPackage(
+            "AutoCost", "AutoGain", "UpgradeCost", "Upgrade", 
+            "lv." + descriptionMaxLevelPlaceholder);
+    
+    public static final DescriptionPackage SELLING_DESCRIPTION_PACKAGE = new DescriptionPackage(
+            "Sell", "Gain", "UpgradeCost", "Upgrade", 
+            descriptionWorkingLevelPlaceholder + "/" + descriptionMaxLevelPlaceholder);
+    
+    public static final DescriptionPackage BUFF_DESCRIPTION_PACKAGE = new DescriptionPackage(
+            null, null, "EnhanceCost", "Enhance", 
+            "lv." + descriptionMaxLevelPlaceholder);
+    
+    public static final DescriptionPackage GATHER_DESCRIPTION_PACKAGE = new DescriptionPackage(
+            null, null, null, "Gather", 
+            "");
+    
     protected Random random = new Random();
     protected final BugIndustryGame game;
     @Setter
@@ -38,6 +60,9 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
     protected String detailDescroptionConstPart;
     @Getter
     protected boolean workingLevelChangable;
+    @Setter
+    @Getter
+    protected DescriptionPackage descriptionPackage;
     
     /**
      * 对于Click型，即为基础点击收益；对于Auto型，即为基础自动收益；
@@ -46,8 +71,8 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
     @Getter
     protected Map<ResourceType, Integer> modifiedOutputGainMap;
     protected String modifiedOutputGainDescription;
-    @Getter
-    protected String outputGainDescriptionStart;
+//    @Getter
+//    protected String outputGainDescriptionStart;
     
     /**
      * output行为所需要支付的费用; 无费用时为null
@@ -56,8 +81,8 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
     @Getter
     protected Map<ResourceType, Integer> modifiedOutputCostMap;
     protected String modifiedOuputCostDescription;
-    @Getter
-    protected String outputCostDescriptionStart;
+//    @Getter
+//    protected String outputCostDescriptionStart;
     
     /**
      * 升级所需要支付的费用; 无发升级时为null
@@ -66,8 +91,8 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
     @Getter
     protected Map<ResourceType, Integer> modifiedUpgradeCostMap;
     protected String modifiedUpgradeCostDescription;
-    @Getter
-    protected String upgradeCostDescriptionStart;
+//    @Getter
+//    protected String upgradeCostDescriptionStart;
     
     
     
@@ -86,21 +111,20 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
     
     public abstract boolean canClickEffect();
     
-    public abstract String getButtonDescroption();
+    public String getButtonDescroption() {
+        return descriptionPackage.getButtonDescroption();
+    }
     
     protected abstract int calculateModifiedUpgradeCost(int baseValue, int level);
     protected abstract int calculateModifiedOutput(int baseValue, int level);
     protected abstract int calculateModifiedOutputCost(int baseValue, int level);
-    
-    @Deprecated
-    public String getDetailDescroption() {
-        return detailDescroptionConstPart + "\n" + getDetailDescroptionDynamicPart();
-    }
-    
-    @Deprecated
-    protected abstract String getDetailDescroptionDynamicPart();
 
-    public abstract String getWorkingLevelDescroption();
+    public String getWorkingLevelDescroption() {
+        return descriptionPackage.levelDescroption
+                .replace(descriptionMaxLevelPlaceholder, String.valueOf(saveData.getLevel()))
+                .replace(descriptionWorkingLevelPlaceholder, String.valueOf(saveData.getWorkingLevel()))
+                ;
+    }
     
     /**
      * 重新计算各个数值的加成后的结果

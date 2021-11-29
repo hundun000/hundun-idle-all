@@ -24,9 +24,6 @@ public class BaseBuffConstruction extends BaseConstruction {
     public BaseBuffConstruction(BugIndustryGame game, BuffId buffId, ConstructionId id) {
         super(game, id);
         this.buffId = buffId;
-        this.outputCostDescriptionStart = null;
-        this.outputGainDescriptionStart = null;
-        this.upgradeCostDescriptionStart = "EnhanceCost";
     }
 
     @Override
@@ -51,18 +48,6 @@ public class BaseBuffConstruction extends BaseConstruction {
         return canUpgrade();
     }
 
-    @Override
-    public String getButtonDescroption() {
-        return "Enhance";
-    }
-
-    @Override
-    protected String getDetailDescroptionDynamicPart() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("EnhanceCost: ").append(modifiedUpgradeCostDescription).append("\n");
-        return builder.toString();
-    }
-
 
     @Override
     protected int calculateModifiedUpgradeCost(int baseValue, int level) {
@@ -82,9 +67,5 @@ public class BaseBuffConstruction extends BaseConstruction {
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public String getWorkingLevelDescroption() {
-        return "lv." + saveData.getWorkingLevel() + "";
-    }
 
 }

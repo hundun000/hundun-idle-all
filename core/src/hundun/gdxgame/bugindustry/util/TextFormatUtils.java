@@ -29,8 +29,11 @@ public class TextFormatUtils {
       Long divideBy = e.getKey();
       String suffix = e.getValue();
 
-      long truncated = value / (divideBy / 10); //the number part of the output times 10
-      boolean hasDecimal = truncated < 100 && (truncated / 10d) != (truncated / 10);
-      return hasDecimal ? (truncated / 10d) + suffix : (truncated / 10) + suffix;
+      int decimalBase = 1000;
+      double decimalBaseDouble = 1000d;
+      
+      long truncated = value / (divideBy / decimalBase); //the number part of the output times 10
+      boolean hasDecimal = true;//truncated < 100 && (truncated / 10d) != (truncated / 10);
+      return hasDecimal ? ((truncated / decimalBaseDouble) + suffix) : ((truncated / decimalBase) + suffix);
     }
 }

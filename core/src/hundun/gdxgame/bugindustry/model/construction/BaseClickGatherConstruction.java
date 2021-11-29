@@ -15,9 +15,6 @@ public class BaseClickGatherConstruction extends BaseConstruction {
 
     public BaseClickGatherConstruction(BugIndustryGame game, ConstructionId id) {
         super(game, id);
-        this.outputCostDescriptionStart = null;
-        this.outputGainDescriptionStart = null;
-        this.upgradeCostDescriptionStart = "EnhanceCost";
     }
     
     @Override
@@ -31,26 +28,12 @@ public class BaseClickGatherConstruction extends BaseConstruction {
         return canOutput();
     }
     
-    @Override
-    public String getButtonDescroption() {
-        return "Gather";
-    }
     
     @Override
     public void onLogicFrame() {
         // do nothing
     }
-    
-    
-    @Override
-    protected String getDetailDescroptionDynamicPart() {
-        StringBuilder builder = new StringBuilder();
-        if (modifiedOuputCostDescription != null) {
-            builder.append("ClickCost: ").append(modifiedOuputCostDescription).append("\n");
-        }
-        builder.append("ClickGain: ").append(modifiedOutputGainDescription).append("\n");
-        return builder.toString();
-    }
+
 
     @Override
     protected int calculateModifiedUpgradeCost(int baseValue, int level) {
@@ -67,9 +50,5 @@ public class BaseClickGatherConstruction extends BaseConstruction {
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public String getWorkingLevelDescroption() {
-        return "";
-    }
 
 }

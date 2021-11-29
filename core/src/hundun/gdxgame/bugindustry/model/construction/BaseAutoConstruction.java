@@ -11,6 +11,8 @@ import com.badlogic.gdx.Gdx;
 import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.bugindustry.data.ConstructionOuputRule;
 import hundun.gdxgame.bugindustry.model.ResourceType;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 /**
  * @author hundun
@@ -24,6 +26,8 @@ public class BaseAutoConstruction extends BaseConstruction {
     protected final double upgradeCostLevelUpArg = 1.1;
     
 
+
+
     
     protected int autoOutputProgress = 0;
     protected static final int AUTO_OUPUT_MAX_PROGRESS = 30;
@@ -32,18 +36,7 @@ public class BaseAutoConstruction extends BaseConstruction {
             boolean workingLevelChangable
             ) {
         super(game, id);
-        this.workingLevelChangable = workingLevelChangable;
-        
-        if (workingLevelChangable) {
-            this.outputCostDescriptionStart = "Sell";
-            this.outputGainDescriptionStart = "Gain";
-            this.upgradeCostDescriptionStart = "AddSpeedCost";
-        } else {
-            this.outputCostDescriptionStart = "AutoCost";
-            this.outputGainDescriptionStart = "AutoGain";
-            this.upgradeCostDescriptionStart = "UpgradeCost";
-        }
-        
+        this.workingLevelChangable = workingLevelChangable; 
     }
     
     @Override
@@ -76,18 +69,7 @@ public class BaseAutoConstruction extends BaseConstruction {
         return canUpgrade();
     }
     
-    @Override
-    public String getButtonDescroption() {
-        String des;
-        if (workingLevelChangable) {
-            des = "Add speed";
-        } else {
-            des = "Upgrade";
-        }
-        
-
-        return des;
-    }
+    
     
     
     
@@ -112,16 +94,6 @@ public class BaseAutoConstruction extends BaseConstruction {
         game.getModelContext().getStorageManager().modifyAllResourceNum(modifiedOutputGainMap, true);
     }
     
-    @Override
-    protected String getDetailDescroptionDynamicPart() {
-        StringBuilder builder = new StringBuilder();
-        if (modifiedOuputCostDescription != null) {
-            builder.append("AutoCost: ").append(modifiedOuputCostDescription).append("\n");
-        }
-        builder.append("AutoGain: ").append(modifiedOutputGainDescription).append("\n");
-        builder.append("UpgradeCost: ").append(modifiedUpgradeCostDescription).append("\n");
-        return builder.toString();
-    }
 
     @Override
     protected int calculateModifiedUpgradeCost(int baseValue, int level) {
@@ -142,14 +114,6 @@ public class BaseAutoConstruction extends BaseConstruction {
         return baseValue * level;
     }
 
-    @Override
-    public String getWorkingLevelDescroption() {
-        if (workingLevelChangable) {
-            return saveData.getWorkingLevel() + "/" + saveData.getLevel();
-        } else {
-            return "lv. " + saveData.getWorkingLevel() + "";
-        }
-    }
 
     
 

@@ -70,8 +70,13 @@ public class BugIndustryGame extends Game {
 	    
 		this.batch = new SpriteBatch();
 		this.font = FontUtil.KOMIKA;
-		this.buttonSkin = new Skin(Gdx.files.internal("skins/orange/skin/uiskin.json"));
-		//this.buttonSkin = new Skin(Gdx.files.internal("skins/default/skin/uiskin.json"));
+		
+		if (drawGameImageAndPlayAudio) {
+		    this.buttonSkin = new Skin(Gdx.files.internal("skins/orange/skin/uiskin.json"));
+		} else {
+		    this.buttonSkin = new Skin(Gdx.files.internal("skins/default/skin/uiskin.json"));
+		}
+		
 		initContexts();
 		
 		//loadAndHookSave();

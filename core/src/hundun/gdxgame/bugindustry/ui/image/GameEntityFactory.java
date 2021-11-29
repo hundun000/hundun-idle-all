@@ -2,9 +2,13 @@ package hundun.gdxgame.bugindustry.ui.image;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
+import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.bugindustry.model.ResourceType;
+import hundun.gdxgame.bugindustry.model.construction.ConstructionId;
 import hundun.gdxgame.bugindustry.ui.component.ConstructionControlBoard;
 import hundun.gdxgame.bugindustry.ui.component.GameAreaControlBoard;
 import hundun.gdxgame.bugindustry.ui.component.StorageInfoBoard;
@@ -26,27 +30,36 @@ public class GameEntityFactory {
     int baseY;
     //TextureRegion textureRegion;
     
-    private Texture beeTexture;
-    private Texture beehiveTexture;
+    //private Texture beeTexture;
+    //private Texture beehiveTexture;
     
-    public GameEntityFactory() {
+    BugIndustryGame game;
+    
+    public GameEntityFactory(BugIndustryGame game) {
+        this.game = game;
+        
         FLY_MAX_X = Gdx.graphics.getWidth() - GameAreaControlBoard.WIDTH;
         FLY_MIN_X = 0;
         FLY_MAX_Y = Gdx.graphics.getHeight() - (StorageInfoBoard.BOARD_HEIGHT + StorageInfoBoard.BOARD_DISTANCE_TO_FRAME_TOP);
         FLY_MIN_Y = FLY_MAX_Y - 200;
         
-        this.beeTexture = new Texture(Gdx.files.internal("bee.png"));
+        
         //this.beehiveTexture = new Texture(Gdx.files.internal("beehive.png"));
     }
     
-    public GameEntity newEntity(ResourceType type, int index) {
-        // FIXME
+    public GameEntity newConstructionEntity(ConstructionId id, int index) {
+        switch (id) {
+            case SMALL_BEEHIVE:
+                return newBeehiveEntity(index);
+            default:
+                break;
+        }
         return newBeeEntity();
     }
     
     public GameEntity newBeehiveEntity(int index) {
         GameEntity entity = new GameEntity();
-        entity.setTexture(beehiveTexture);
+        entity.setTexture(new Sprite(game.getTextureManager().getConstructionTexture(ConstructionId.SMALL_BEEHIVE)));
         entity.setX(300 - 30 * index);
         entity.setY(300 - 30 * index);
         entity.setDrawWidth(64);
@@ -58,7 +71,7 @@ public class GameEntityFactory {
     
     public GameEntity newBeeEntity() {
         GameEntity entity = new GameEntity();
-        entity.setTexture(beeTexture);
+        entity.setTexture(new Sprite(game.getTextureManager().getBeeTexture()));
         entity.setX((FLY_MAX_X - FLY_MIN_X) / 2);
         entity.setY((FLY_MAX_Y - FLY_MIN_Y) / 2);
         entity.setDrawWidth(64);
@@ -89,6 +102,9 @@ public class GameEntityFactory {
                     || (entity.getY() + entity.getDrawHeight() > FLY_MAX_Y && entity.getSpeedY() > 0)) {
                 entity.setSpeedY(entity.getSpeedY() * -1);
             }
+            
+            entity.setTextureFlipX(entity.getSpeedX() < 0);
+
         }
     }
     

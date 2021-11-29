@@ -31,8 +31,9 @@ public class PopupInfoBoard extends Table {
         
         add(new Label(model.getDetailDescroptionConstPart(), parent.game.getButtonSkin())).row();
         
-        if (model.getOutputCostDescriptionStart() != null && model.getModifiedOutputCostMap() != null) {
-            add(new Label(model.getOutputCostDescriptionStart(), parent.game.getButtonSkin()));
+        String outputCostDescriptionStart = model.getDescriptionPackage().getOutputCostDescriptionStart();
+        if (outputCostDescriptionStart != null && model.getModifiedOutputCostMap() != null) {
+            add(new Label(outputCostDescriptionStart, parent.game.getButtonSkin()));
             for (var entry : model.getModifiedOutputCostMap().entrySet()) {
                 var node = new ResourceAmountPairNode(parent.game, entry.getKey());
                 node.update(entry.getValue());
@@ -41,8 +42,9 @@ public class PopupInfoBoard extends Table {
             this.row();
         }
         
-        if (model.getOutputGainDescriptionStart() != null && model.getModifiedOutputGainMap() != null) {
-            add(new Label(model.getOutputGainDescriptionStart(), parent.game.getButtonSkin()));
+        String outputGainDescriptionStart = model.getDescriptionPackage().getOutputGainDescriptionStart();
+        if (outputGainDescriptionStart != null && model.getModifiedOutputGainMap() != null) {
+            add(new Label(outputGainDescriptionStart, parent.game.getButtonSkin()));
             for (var entry : model.getModifiedOutputGainMap().entrySet()) {
                 var node = new ResourceAmountPairNode(parent.game, entry.getKey());
                 node.update(entry.getValue());
@@ -51,8 +53,9 @@ public class PopupInfoBoard extends Table {
             this.row();
         }
 
-        if (model.getUpgradeCostDescriptionStart() != null && model.getModifiedUpgradeCostMap() != null) {
-            add(new Label(model.getUpgradeCostDescriptionStart(), parent.game.getButtonSkin()));
+        String upgradeCostGainDescriptionStart = model.getDescriptionPackage().getUpgradeCostDescriptionStart();
+        if (upgradeCostGainDescriptionStart != null && model.getModifiedUpgradeCostMap() != null) {
+            add(new Label(upgradeCostGainDescriptionStart, parent.game.getButtonSkin()));
             for (var entry : model.getModifiedUpgradeCostMap().entrySet()) {
                 var node = new ResourceAmountPairNode(parent.game, entry.getKey());
                 node.update(entry.getValue());

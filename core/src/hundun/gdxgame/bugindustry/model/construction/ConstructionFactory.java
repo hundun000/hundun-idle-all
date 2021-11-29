@@ -31,6 +31,7 @@ public class ConstructionFactory {
             BaseConstruction construction = new BaseClickGatherConstruction(game, ConstructionId.WOOD_GATHER_HOUSE);
             construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
             construction.detailDescroptionConstPart = "Free gain wood";
+            construction.descriptionPackage = BaseConstruction.GATHER_DESCRIPTION_PACKAGE;
             construction.baseOutputGainRules = Arrays.asList(
                     new ConstructionOuputRule(ResourceType.WOOD, 100)
                     );
@@ -44,6 +45,7 @@ public class ConstructionFactory {
             BaseConstruction construction = new BaseClickGatherConstruction(game, ConstructionId.BEE_GATHER_HOUSE);
             construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
             construction.detailDescroptionConstPart = "Free gain bee";
+            construction.descriptionPackage = BaseConstruction.GATHER_DESCRIPTION_PACKAGE;
             construction.baseOutputGainRules = Arrays.asList(
                     new ConstructionOuputRule(ResourceType.BEE, 1)
                     );
@@ -54,6 +56,7 @@ public class ConstructionFactory {
             BaseConstruction construction = new BaseAutoConstruction(game, ConstructionId.SMALL_BEEHIVE, false);
             construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
             construction.detailDescroptionConstPart = "Auto gain some honey";
+            construction.descriptionPackage = BaseConstruction.MAX_LEVEL_AUTO_DESCRIPTION_PACKAGE;
             construction.baseOutputGainRules = Arrays.asList(
                     new ConstructionOuputRule(ResourceType.HONEY, 1)
                     );
@@ -68,6 +71,7 @@ public class ConstructionFactory {
             BaseConstruction construction = new BaseBuffConstruction(game, BuffId.BUFF_HONEY, ConstructionId.HONEY_BUFF_PROVIDER);
             construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
             construction.detailDescroptionConstPart = "speed up gain honey.";
+            construction.descriptionPackage = BaseConstruction.BUFF_DESCRIPTION_PACKAGE;
             construction.baseUpgradeCostMap = (
                     Map.of(
                             ResourceType.QUEEN_BEE, 1
@@ -80,6 +84,7 @@ public class ConstructionFactory {
             BaseConstruction construction = new BaseAutoConstruction(game, ConstructionId.HONEY_SELL_HOUSE, true);
             construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
             construction.detailDescroptionConstPart = "Auto sell honey";
+            construction.descriptionPackage = BaseConstruction.SELLING_DESCRIPTION_PACKAGE;
             construction.baseOutputCostMap = Map.of(
                     ResourceType.HONEY, 1
                     );
