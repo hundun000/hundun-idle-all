@@ -74,12 +74,10 @@ public class GameImageDrawHelper implements IAmountChangeEventListener {
                 gameEntityFactory.checkRandomeMoveSpeedChange(entity);
                 positionChange(entity);
                 
-                parent.game.getBatch().draw(entity.getTexture(), entity.getX(), entity.getY(), entity.getDrawWidth(), entity.getDrawHeight());
+                parent.game.getBatch().draw(entity.getTexture(), entity.getX(), entity.getY(), (entity.isTextureFlipX() ? -1 : 1) * entity.getDrawWidth(), entity.getDrawHeight());
                 
             });
         }
-
-        
         
         parent.game.getBatch().end();
     }
@@ -110,7 +108,7 @@ public class GameImageDrawHelper implements IAmountChangeEventListener {
     private void checkBeeEntityList() {
         ResourceType type = ResourceType.BEE;
         long resourceNum = parent.game.getModelContext().getStorageManager().getResourceNum(type);
-        int drawNum = (int) Math.min(MAX_DRAW_BEE_NUM, resourceNum > 0 ? Math.ceil(Math.log(resourceNum)) : 0);
+        int drawNum = (int) Math.min(MAX_DRAW_BEE_NUM, resourceNum);
         
         Queue<GameEntity> gameEntities = beeQueue;
         while (gameEntities.size() > drawNum) {
@@ -128,7 +126,7 @@ public class GameImageDrawHelper implements IAmountChangeEventListener {
     private void checkEntityList(ConstructionId type) {
         BaseConstruction construction = parent.game.getModelContext().getConstructionFactory().getConstruction(type);
         int resourceNum = construction.getSaveData().getWorkingLevel();
-        int drawNum = (int) Math.min(construction.getMAX_DRAW_NUM(), resourceNum > 1 ? Math.ceil(Math.log(resourceNum)) : resourceNum);
+        int drawNum = (int) Math.min(construction.getMAX_DRAW_NUM(), resourceNum);
         gameEntitiesOfTypes.computeIfAbsent(type, k -> new ConcurrentLinkedQueue<>());
         Queue<GameEntity> gameEntities = gameEntitiesOfTypes.get(type);
         while (gameEntities.size() > drawNum) {

@@ -1,5 +1,7 @@
 ## custom
 /desktop/save.json
+/release-prepare/*
+!/release-prepare/packr-config.json
 
 ## Java
 

@@ -35,8 +35,8 @@ import hundun.gdxgame.bugindustry.util.SaveUtils;
 import lombok.Getter;
 
 public class BugIndustryGame extends Game {
-    public boolean debugMode = true;
-    public boolean drawGameImageAndPlayAudio = false;
+    public boolean debugMode = false;
+    public boolean drawGameImageAndPlayAudio = true;
     public static int scale = 1;
     public static final int LOGIC_WIDTH = 640;
     public static final int LOGIC_HEIGHT = 480;

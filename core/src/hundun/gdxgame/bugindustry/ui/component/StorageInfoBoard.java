@@ -28,7 +28,7 @@ import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
  */
 public class StorageInfoBoard extends Table {
     
-    public static int BOARD_DISTANCE_TO_FRAME_TOP = 50;
+    public static int BOARD_DISTANCE_TO_FRAME_TOP = 10;
     public static int BOARD_DISTANCE_TO_FRAME_SIDE = 10;
     public static int BOARD_HEIGHT = 60;
     private static int NODE_HEIGHT = 25;
@@ -78,7 +78,9 @@ public class StorageInfoBoard extends Table {
         
         initData();
         rebuildCells();
-        this.debug();
+        if (parent.game.debugMode) {
+            this.debugAll();
+        }
     }
     
     

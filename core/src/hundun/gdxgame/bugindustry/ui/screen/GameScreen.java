@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -22,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.bugindustry.model.AchievementPrototype;
@@ -69,9 +71,11 @@ public class GameScreen extends BaseScreen {
     @Getter
     GameArea area;
     
+    Stage backStage;
+    
     public GameScreen(BugIndustryGame game) {
         super(game);
-        
+        backStage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
     }
     
     public void setAreaAndNotifyChildren(GameArea current) {
@@ -91,7 +95,7 @@ public class GameScreen extends BaseScreen {
 //        stage.addActor(backgroundImage);
         
         this.backgroundImageBox = new BackgroundImageBox(this);
-        stage.addActor(backgroundImageBox);
+        backStage.addActor(backgroundImageBox);
         
         tableBackgroundPixmap = new Pixmap(1,1, Pixmap.Format.RGB565);
         tableBackgroundPixmap.setColor(0.8f, 0.8f, 0.8f, 1.0f);
@@ -117,11 +121,7 @@ public class GameScreen extends BaseScreen {
         gameAreaControlBoard = new GameAreaControlBoard(this);
         stage.addActor(gameAreaControlBoard);
         
-        clockLabel = new Label("", game.getButtonSkin());
-        clockLabel.setBounds(0, Gdx.graphics.getHeight() - 10 - 50, 200, 50);
-        stage.addActor(clockLabel);
-        //backTable.debugAll();
-        //stage.addActor(backTable);
+        
         
         popUpInfoBoard = new PopupInfoBoard(this);
         stage.addActor(popUpInfoBoard);
@@ -140,6 +140,15 @@ public class GameScreen extends BaseScreen {
 //        gameImageDrawHelper.addBeeEntity();
 //        gameImageDrawHelper.addBeeEntity();
 //        gameImageDrawHelper.addBeeEntity();
+        
+        clockLabel = new Label("", game.getButtonSkin());
+        clockLabel.setBounds(0, Gdx.graphics.getHeight() - 10 - 50, 200, 50);
+        if (game.debugMode) {
+            stage.addActor(clockLabel);
+        }
+        
+        //backTable.debugAll();
+        //stage.addActor(backTable);
     }
 
     @Override
@@ -165,12 +174,12 @@ public class GameScreen extends BaseScreen {
         }
         
         stage.act();
-        stage.draw();
         
+        backStage.draw();
         if (game.drawGameImageAndPlayAudio) {
             gameImageDrawHelper.drawAll();
         }
-        
+        stage.draw();
         
     }
 

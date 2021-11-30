@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
@@ -40,11 +41,14 @@ public class MenuScreen extends BaseScreen {
 
     private void initScene2d() {
         
+        Image backImage = new Image(game.getTextureManager().getMenuTexture());
+        stage.addActor(backImage);
+        
         table = new Table();
-        table.setBounds((Gdx.graphics.getWidth() - BUTTON_WIDTH)/2, 0, BUTTON_WIDTH, Gdx.graphics.getHeight());
+        table.setBounds((Gdx.graphics.getWidth() - BUTTON_WIDTH)/2, 0, BUTTON_WIDTH, Gdx.graphics.getHeight() / 2);
         stage.addActor(table);
         
-        buttonContinueGame = new TextButton("ContinueGame", game.getButtonSkin());
+        buttonContinueGame = new TextButton("Continue Game", game.getButtonSkin());
         //buttonContinueGame.setSize(100, 100);
         //buttonContinueGame.setPosition(0, 0);
         buttonContinueGame.addListener(new InputListener(){
@@ -69,7 +73,7 @@ public class MenuScreen extends BaseScreen {
         
         
         
-        buttonNewGame = new TextButton("NewGame", game.getButtonSkin());
+        buttonNewGame = new TextButton("New Game", game.getButtonSkin());
         buttonNewGame.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {

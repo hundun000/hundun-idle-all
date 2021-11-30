@@ -34,7 +34,7 @@ public class AchievementManager implements IAmountChangeEventListener {
     }
     
     private void initPrototypes() {
-        addPrototype(new AchievementPrototype("Game win", "Own 100 Honey",
+        addPrototype(new AchievementPrototype("Game win", "You win the game!",
                 null,
                 Map.of(ResourceType.WIN_TROPHY, 1)
                 ));

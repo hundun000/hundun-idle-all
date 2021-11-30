@@ -36,7 +36,7 @@ public class GameAreaControlBoard extends Table implements IGameAreaChangeListen
     public static final int WIDTH = FULL_CELL_WIDTH;
     public static final int Y = ConstructionControlBoard.BOARD_DISTANCE_TO_FRAME + ConstructionControlBoard.BOARD_HEIGHT + 5;
     static final int HEIGHT = Gdx.graphics.getHeight() - (StorageInfoBoard.BOARD_DISTANCE_TO_FRAME_TOP + StorageInfoBoard.BOARD_HEIGHT) - Y;
-    public static final int X = Gdx.graphics.getWidth() - WIDTH - 5;
+    public static final int X = Gdx.graphics.getWidth() - WIDTH;
     
     public GameAreaControlBoard(GameScreen parent) {
         super();

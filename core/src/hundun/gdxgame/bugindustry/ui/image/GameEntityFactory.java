@@ -28,7 +28,7 @@ public class GameEntityFactory {
     public int TREE_MIN_Y;
     public int TREE_MAX_Y;
     
-    public float FLY_UNION_SPEED = 3;
+    public float FLY_UNION_SPEED = 2;
 
     
     ResourceType type;
@@ -45,51 +45,81 @@ public class GameEntityFactory {
         this.game = game;
         
         FLY_MAX_X = Gdx.graphics.getWidth() - GameAreaControlBoard.WIDTH;
-        FLY_MIN_X = 0;
+        FLY_MIN_X = BEE_WIDTH;
         FLY_MAX_Y = Gdx.graphics.getHeight() - (StorageInfoBoard.BOARD_HEIGHT + StorageInfoBoard.BOARD_DISTANCE_TO_FRAME_TOP);
         FLY_MIN_Y = FLY_MAX_Y - 200;
         
-        
+        TREE_MAX_X = Gdx.graphics.getWidth() - GameAreaControlBoard.WIDTH - scale * Construction_WIDTH;
+        TREE_MIN_X = 0;
+        TREE_MAX_Y = Gdx.graphics.getHeight() - (StorageInfoBoard.BOARD_HEIGHT + StorageInfoBoard.BOARD_DISTANCE_TO_FRAME_TOP) - scale * Construction_HEIGHT;
+        TREE_MIN_Y = TREE_MAX_Y - 100;
         //this.beehiveTexture = new Texture(Gdx.files.internal("beehive.png"));
+        Gdx.app.log(this.getClass().getSimpleName(), "TREE_MAX_Y = " + TREE_MAX_Y + ", TREE_MIN_Y = " + TREE_MIN_Y);
     }
     
     public GameEntity newConstructionEntity(ConstructionId id, int index) {
         switch (id) {
             case WOOD_SELL_HOUSE:
+                return newConstructionEntity(
+                        ConstructionEntity_BASE_X + 0 * ConstructionEntity_BASE_X_PAD - ConstructionEntity_X_PAD * index,
+                        ConstructionEntity_BASE_Y - ConstructionEntity_Y_PAD * index,
+                        false,
+                        id);
             case SMALL_BEEHIVE:
                 return newConstructionEntity(
                         ConstructionEntity_BASE_X + 0 * ConstructionEntity_BASE_X_PAD - ConstructionEntity_X_PAD * index,
                         ConstructionEntity_BASE_Y - ConstructionEntity_Y_PAD * index,
+                        true,
                         id);
-            case BEE_SELL_HOUSE:
+            case WOOD_BOARD_SELL_HOUSE:
+                return newConstructionEntity(
+                        ConstructionEntity_BASE_X + 1 * ConstructionEntity_BASE_X_PAD - ConstructionEntity_X_PAD * index,
+                        ConstructionEntity_BASE_Y - ConstructionEntity_Y_PAD * index,
+                        false,
+                        id); 
             case MID_BEEHIVE:
                 return newConstructionEntity(
                         ConstructionEntity_BASE_X + 1 * ConstructionEntity_BASE_X_PAD - ConstructionEntity_X_PAD * index,
                         ConstructionEntity_BASE_Y - ConstructionEntity_Y_PAD * index,
+                        true,
                         id); 
-            case HONEY_SELL_HOUSE:
+            case BEE_SELL_HOUSE:
+                return newConstructionEntity(
+                        ConstructionEntity_BASE_X + 2 * ConstructionEntity_BASE_X_PAD - ConstructionEntity_X_PAD * index,
+                        ConstructionEntity_BASE_Y - ConstructionEntity_Y_PAD * index,
+                        false,
+                        id); 
             case BIG_BEEHIVE:
                 return newConstructionEntity(
                         ConstructionEntity_BASE_X + 2 * ConstructionEntity_BASE_X_PAD - ConstructionEntity_X_PAD * index,
                         ConstructionEntity_BASE_Y - ConstructionEntity_Y_PAD * index,
+                        true,
                         id); 
-            case WOOD_BOARD_SELL_HOUSE:
+            case HONEY_SELL_HOUSE:
+                return newConstructionEntity(
+                        ConstructionEntity_BASE_X + 3 * ConstructionEntity_BASE_X_PAD,
+                        ConstructionEntity_BASE_Y - ConstructionEntity_Y_PAD * index,
+                        false,
+                        id);
             case QUEEN_BEEHIVE:
                 return newConstructionEntity(
                         ConstructionEntity_BASE_X + 3 * ConstructionEntity_BASE_X_PAD,
                         ConstructionEntity_BASE_Y - ConstructionEntity_Y_PAD * index,
+                        true,
                         id); 
             case BEEWAX_SELL_HOUSE:
                 return newConstructionEntity(
                         ConstructionEntity_BASE_X + 4 * ConstructionEntity_BASE_X_PAD,
                         ConstructionEntity_BASE_Y - ConstructionEntity_Y_PAD * index,
+                        false,
                         id); 
             case WOOD_KEEPING:
-                int randX = (int) (FLY_MIN_X + Math.random() * (FLY_MAX_X - FLY_MIN_X));
-                int randY = (int) (FLY_MIN_Y + Math.random() * (FLY_MAX_Y - FLY_MIN_Y));
+                int randX = (int) (TREE_MIN_X + Math.random() * (TREE_MAX_X - TREE_MIN_X));
+                int randY = (int) (TREE_MIN_Y + Math.random() * (TREE_MAX_Y - TREE_MIN_Y));
                 return newConstructionEntity(
                         randX,
                         randY,
+                        true,
                         id);
             default:
                 return null;
@@ -97,23 +127,33 @@ public class GameEntityFactory {
         }
         
     }
+    static final int scale = 2;
+    static final int BEE_WIDTH = 64;
+    static final int BEE_HEIGHT = 64;
+    static final int SELL_Construction_WIDTH = 48;
+    static final int SELL_Construction_HEIGHT = 32;
+    static final int Construction_WIDTH = 32;
+    static final int Construction_HEIGHT = 64;
     static final int ConstructionEntity_BASE_X = 80;
-    static final int ConstructionEntity_BASE_X_PAD = 80;
-    static final int ConstructionEntity_BASE_Y = 300;
+    static final int ConstructionEntity_BASE_X_PAD = 90;
+    static final int ConstructionEntity_BASE_Y = 250;
     static final int ConstructionEntity_X_PAD = 15;
     static final int ConstructionEntity_Y_PAD = 30;
-    private GameEntity newConstructionEntity(int x, int y, ConstructionId constructionId) {
-//        return newConstructionEntity(x, y, 64, 64, constructionId);
-//    }
-//    
-//    private GameEntity newConstructionEntity(int x, int y, int drawWidth, int drawHeight, ConstructionId constructionId) {
-//        
+    private GameEntity newConstructionEntity(int x, int y, boolean sizeType1, ConstructionId constructionId) {
+        return newConstructionEntity(x, y, 
+                scale * (sizeType1 ? Construction_WIDTH : SELL_Construction_WIDTH), 
+                scale * (sizeType1 ? SELL_Construction_HEIGHT : SELL_Construction_HEIGHT), 
+                constructionId);
+    }
+    
+    private GameEntity newConstructionEntity(int x, int y, int drawWidth, int drawHeight, ConstructionId constructionId) {
+        
         GameEntity entity = new GameEntity();
         entity.setTexture(new Sprite(game.getTextureManager().getConstructionTexture(constructionId)));
         entity.setX(x);
         entity.setY(y);
-        entity.setDrawWidth(entity.getTexture().getRegionWidth());
-        entity.setDrawHeight(entity.getTexture().getRegionHeight());
+        entity.setDrawWidth(drawWidth);
+        entity.setDrawHeight(drawHeight);
         entity.setRandomMove(false);
         return entity;
     }
@@ -124,8 +164,8 @@ public class GameEntityFactory {
         entity.setTexture(new Sprite(game.getTextureManager().getBeeTexture()));
         entity.setX((FLY_MAX_X - FLY_MIN_X) / 2);
         entity.setY((FLY_MAX_Y - FLY_MIN_Y) / 2);
-        entity.setDrawWidth(64);
-        entity.setDrawHeight(64);
+        entity.setDrawWidth(BEE_WIDTH);
+        entity.setDrawHeight(BEE_HEIGHT);
         entity.setRandomMove(true);
         entity.setRandomMoveCount(0);
         checkRandomeMoveSpeedChange(entity);

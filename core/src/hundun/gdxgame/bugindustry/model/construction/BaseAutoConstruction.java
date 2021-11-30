@@ -52,7 +52,7 @@ public class BaseAutoConstruction extends BaseConstruction {
 
     @Override
     public void onClick() {
-        if (!canUpgrade()) {
+        if (!canClickEffect()) {
             return;
         }
         Map<ResourceType, Long> upgradeCostRule = modifiedUpgradeCostMap;

@@ -32,6 +32,7 @@ public class PopupInfoBoard extends Table {
     private <T extends Actor> Container<T> wapperContainer(T content) {
         Container<T> container = new Container<T>(content);
         container.setBackground(parent.tableBackgroundDrawable);
+        container.fill(true);
         return container;
     }
     

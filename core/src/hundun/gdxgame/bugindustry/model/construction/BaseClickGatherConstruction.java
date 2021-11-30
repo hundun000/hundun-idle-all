@@ -19,7 +19,9 @@ public class BaseClickGatherConstruction extends BaseConstruction {
     
     @Override
     public void onClick() {
-        
+        if (!canClickEffect()) {
+            return;
+        }
         game.getModelContext().getStorageManager().modifyAllResourceNum(modifiedOutputGainMap, true);
     }
     

@@ -1,0 +1,14 @@
+{
+    "platform": "windows64",
+    "jdk": "ibm-semeru-open-jre_x64_windows_11.0.13_8_openj9-0.29.0.zip",
+    "executable": "bugindustry-1.0",
+    "classpath": [
+        "desktop-1.0.jar"
+    ],
+    "mainclass": "hundun.gdxgame.bugindustry.desktop.DesktopLauncher",
+    "vmargs": [
+       "Xmx1G"
+    ],
+    "minimizejre": "soft",
+    "output": "out"
+}

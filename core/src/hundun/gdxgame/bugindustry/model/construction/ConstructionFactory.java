@@ -50,6 +50,7 @@ public class ConstructionFactory {
                     ResourceType.COIN, 25,
                     ResourceType.WOOD, 5
                     );
+            construction.setMAX_DRAW_NUM(15);
             register(construction);
         }
         {

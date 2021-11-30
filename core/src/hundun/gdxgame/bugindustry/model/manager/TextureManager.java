@@ -13,8 +13,13 @@ import hundun.gdxgame.bugindustry.model.construction.ConstructionId;
 import lombok.Getter;
 
 public class TextureManager {
-    private Texture mainAreaBackgroundTexture;
+    private Texture beeAreaBackgroundTexture;
     private Texture shopAreaBackgroundTexture;
+    private Texture forestAreaBackgroundTexture;
+    @Getter
+    private Texture winTexture;
+    @Getter
+    private Texture menuTexture;
     private Map<ResourceType, TextureRegion> itemRegionMap = new HashMap<>();
     private Map<ConstructionId, TextureRegion> constructionRegionMap = new HashMap<>();
     private Map<GameArea, TextureRegion> gameAreaLeftPartRegionMap = new HashMap<>();
@@ -24,8 +29,11 @@ public class TextureManager {
     TextureRegion defaultIcon;
     
     public TextureManager() {
-        mainAreaBackgroundTexture = new Texture(Gdx.files.internal("640x480.png"));
+        beeAreaBackgroundTexture = new Texture(Gdx.files.internal("bee-area.png"));
         shopAreaBackgroundTexture = new Texture(Gdx.files.internal("shop-area.png"));
+        forestAreaBackgroundTexture = new Texture(Gdx.files.internal("forest-area.png"));
+        winTexture = new Texture(Gdx.files.internal("win.png"));
+        menuTexture = new Texture(Gdx.files.internal("menu.png"));
         this.beeTexture = new Texture(Gdx.files.internal("bee.png"));
         
         {
@@ -78,8 +86,10 @@ public class TextureManager {
         switch (gameArea) {
             case SHOP:
                 return shopAreaBackgroundTexture;
+            case FOREST_FARM:
+                return forestAreaBackgroundTexture;
             default:
-                return mainAreaBackgroundTexture;
+                return beeAreaBackgroundTexture;
         }
     }
     
