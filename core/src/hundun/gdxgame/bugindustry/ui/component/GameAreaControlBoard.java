@@ -5,11 +5,16 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import hundun.gdxgame.bugindustry.model.GameArea;
 import hundun.gdxgame.bugindustry.ui.IGameAreaChangeListener;
@@ -23,7 +28,7 @@ import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
 public class GameAreaControlBoard extends Table implements IGameAreaChangeListener {
 
     GameScreen parent;
-    Map<GameArea, TextButton> buttons = new LinkedHashMap<>();
+    Map<GameArea, Image> nodes = new LinkedHashMap<>();
     
     static final int FULL_CELL_WIDTH = 100;
     static final int SHORT_CELL_WIDTH = 75;
@@ -42,25 +47,29 @@ public class GameAreaControlBoard extends Table implements IGameAreaChangeListen
                 WIDTH, 
                 HEIGHT);
         
-        initButtonMap(GameArea.BEE_FARM);
-        initButtonMap(GameArea.FOREST_FARM);
-        initButtonMap(GameArea.BEE_BUFF);
-        initButtonMap(GameArea.SHOP);
+        initButtonMap(GameArea.BEE_FARM, false);
+        initButtonMap(GameArea.FOREST_FARM, false);
+        //initButtonMap(GameArea.BEE_BUFF);
+        initButtonMap(GameArea.SHOP, false);
         rebuildChild(null);
-        this.debugAll();
+        if (parent.game.debugMode) {
+            this.debugAll();
+        }
     }
     
-    private void initButtonMap(GameArea gameArea) {
-        TextButton textButton = new TextButton(gameArea.name(), parent.game.getButtonSkin());
+    private void initButtonMap(GameArea gameArea, boolean longVersion) {
+        Image node = new Image(new SpriteDrawable(new Sprite(parent.game.getTextureManager().getGameAreaTexture(gameArea, longVersion))));
+        //Button button = new TextButton(gameArea.name(), parent.game.getButtonSkin());
         //textButton.setSize(SHORT_CELL_WIDTH, CELL_HEIGHT);
-        textButton.addListener(new ClickListener() {
+        node.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 parent.setAreaAndNotifyChildren(gameArea);
             }
         });
-        buttons.put(gameArea, textButton);
+        nodes.put(gameArea, node);
+        this.add(node).width(FULL_CELL_WIDTH).height(CELL_HEIGHT).row();
     }
 
     @Override
@@ -77,13 +86,16 @@ public class GameAreaControlBoard extends Table implements IGameAreaChangeListen
     }
     
     private void rebuildChild(GameArea current) {
-        this.clear();
-        buttons.entrySet().forEach(entry -> {
+        
+        nodes.entrySet().forEach(entry -> {
             if (entry.getKey() == current) {
-                this.add(entry.getValue()).width(FULL_CELL_WIDTH).height(CELL_HEIGHT).right().row();
+                entry.getValue().setDrawable(new SpriteDrawable(new Sprite(parent.game.getTextureManager().getGameAreaTexture(entry.getKey(), true))));
+                //this.add(entry.getValue()).width(FULL_CELL_WIDTH).height(CELL_HEIGHT).colspan(2).row();
             } else {
-                this.add(entry.getValue()).width(SHORT_CELL_WIDTH).height(CELL_HEIGHT).right().row();
+                entry.getValue().setDrawable(new SpriteDrawable(new Sprite(parent.game.getTextureManager().getGameAreaTexture(entry.getKey(), false))));
+                //this.add(entry.getValue()).width(SHORT_CELL_WIDTH).height(CELL_HEIGHT).row();
             }
+            
         });
         
     }

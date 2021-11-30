@@ -9,12 +9,12 @@ import lombok.Getter;
 public enum ResourceType {
     COIN("coin"),
     WOOD("wood"),
-    HARD_WOOD("hard-wood"),
+    WOOD_BOARD("hard-wood"),
     HONEY("honey"),
     BEEWAX("beewax"),
     QUEEN_BEE("queen-bee"),
     BEE("bee"),
-    WIN_THE_GAME("win"),
+    WIN_TROPHY("win"),
     ;
     @Getter
     private final String showName;

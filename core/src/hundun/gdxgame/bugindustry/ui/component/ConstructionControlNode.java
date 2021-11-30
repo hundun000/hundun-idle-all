@@ -194,7 +194,7 @@ public class ConstructionControlNode extends Table implements ILogicFrameListene
         
         
         // ------ update model ------
-        model.onLogicFrame();
+        //model.onLogicFrame();
         
     }
     

@@ -47,7 +47,7 @@ public class StorageInfoBoard extends Table {
         shownOrders = Arrays.asList(
                 ResourceType.COIN,
                 ResourceType.WOOD,
-                ResourceType.HARD_WOOD,
+                ResourceType.WOOD_BOARD,
                 ResourceType.BEE,
                 ResourceType.HONEY,
                 ResourceType.BEEWAX,

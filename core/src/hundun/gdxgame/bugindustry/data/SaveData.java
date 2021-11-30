@@ -13,7 +13,7 @@ import lombok.Data;
  */
 @Data
 public class SaveData {
-    Map<ResourceType, Integer> ownResoueces;
+    Map<ResourceType, Long> ownResoueces;
     Set<ResourceType> unlockedResourceTypes;
     Map<BuffId, Integer> buffAmounts;
     Map<String, ConstructionSaveData> constructionSaveDataMap;

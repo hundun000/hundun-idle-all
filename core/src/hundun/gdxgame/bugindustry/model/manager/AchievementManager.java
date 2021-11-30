@@ -36,7 +36,7 @@ public class AchievementManager implements IAmountChangeEventListener {
     private void initPrototypes() {
         addPrototype(new AchievementPrototype("Game win", "Own 100 Honey",
                 null,
-                Map.of(ResourceType.WIN_THE_GAME, 1)
+                Map.of(ResourceType.WIN_TROPHY, 1)
                 ));
     }
     
@@ -49,7 +49,7 @@ public class AchievementManager implements IAmountChangeEventListener {
             return true;
         }
         for (var entry : requiredResources.entrySet()) {
-            int own = game.getModelContext().getStorageManager().getResourceNum(entry.getKey());
+            long own = game.getModelContext().getStorageManager().getResourceNum(entry.getKey());
             if (own < entry.getValue()) {
                 return false;
             }

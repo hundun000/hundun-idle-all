@@ -36,7 +36,7 @@ public class BaseBuffConstruction extends BaseConstruction {
         if (!canUpgrade()) {
             return;
         }
-        Map<ResourceType, Integer> upgradeCostRule = modifiedUpgradeCostMap;
+        Map<ResourceType, Long> upgradeCostRule = modifiedUpgradeCostMap;
         game.getModelContext().getStorageManager().modifyAllResourceNum(upgradeCostRule, false);
         saveData.setLevel(saveData.getLevel() + 1);
         game.getModelContext().getBuffManager().addBuffAmout(buffId, 1);
@@ -50,7 +50,7 @@ public class BaseBuffConstruction extends BaseConstruction {
 
 
     @Override
-    protected int calculateModifiedUpgradeCost(int baseValue, int level) {
+    protected long calculateModifiedUpgradeCost(int baseValue, int level) {
         return (int)(
                 baseValue
                 * Math.pow(upgradeCostLevelUpArg, level)
@@ -58,12 +58,12 @@ public class BaseBuffConstruction extends BaseConstruction {
     }
 
     @Override
-    protected int calculateModifiedOutput(int baseValue, int level) {
+    protected long calculateModifiedOutput(int baseValue, int level) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected int calculateModifiedOutputCost(int baseValue, int level) {
+    protected long calculateModifiedOutputCost(int baseValue, int level) {
         throw new UnsupportedOperationException();
     }
 

@@ -36,18 +36,18 @@ public class BaseClickGatherConstruction extends BaseConstruction {
 
 
     @Override
-    protected int calculateModifiedUpgradeCost(int baseValue, int level) {
+    protected long calculateModifiedUpgradeCost(int baseValue, int level) {
         return baseValue;
     }
 
     @Override
-    protected int calculateModifiedOutput(int baseValue, int level) {
+    protected long calculateModifiedOutput(int baseValue, int level) {
         return baseValue;
     }
 
     @Override
-    protected int calculateModifiedOutputCost(int baseValue, int level) {
-        throw new UnsupportedOperationException();
+    protected long calculateModifiedOutputCost(int baseValue, int level) {
+        return baseValue;
     }
 
 

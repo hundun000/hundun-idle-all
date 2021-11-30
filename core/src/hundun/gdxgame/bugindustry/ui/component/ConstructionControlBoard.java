@@ -43,35 +43,10 @@ public class ConstructionControlBoard extends Table implements ILogicFrameListen
      * 显示在当前screen的Construction集合。以ConstructionView形式存在。
      */
     List<ConstructionControlNode> constructionControlNodes = new ArrayList<>();
-    Set<BaseConstruction> allConstructionModels = new HashSet<>();
-    /**
-     * 后台运行。即不显示在当前screen，但也需要结算逻辑帧的Construction集合。
-     */
-    Set<BaseConstruction> backgroundConstructionModels = new HashSet<>();
-    
-    /**
-     * 根据GameArea显示不同的Construction集合
-     */
-    Map<GameArea, List<BaseConstruction>> areaShownConstructions; 
+
     int NUM = 5;
     
-    private void init(ModelContext modelContext) {
-        areaShownConstructions = new HashMap<>();
-        areaShownConstructions.put(GameArea.BEE_FARM, Arrays.asList(
-                modelContext.getConstructionFactory().getConstruction(ConstructionId.BEE_GATHER_HOUSE),
-                modelContext.getConstructionFactory().getConstruction(ConstructionId.SMALL_BEEHIVE)
-                ));
-        areaShownConstructions.put(GameArea.BEE_BUFF, Arrays.asList(
-                modelContext.getConstructionFactory().getConstruction(ConstructionId.HONEY_BUFF_PROVIDER)
-                ));
-        areaShownConstructions.put(GameArea.FOREST_FARM, Arrays.asList(
-                modelContext.getConstructionFactory().getConstruction(ConstructionId.WOOD_GATHER_HOUSE)
-                ));
-        areaShownConstructions.put(GameArea.SHOP, Arrays.asList(
-                modelContext.getConstructionFactory().getConstruction(ConstructionId.HONEY_SELL_HOUSE)
-                ));
-        areaShownConstructions.values().forEach(item -> allConstructionModels.addAll(item));
-    }
+
     
     public ConstructionControlBoard(GameScreen parent) {
         this.parent = parent;
@@ -86,32 +61,34 @@ public class ConstructionControlBoard extends Table implements ILogicFrameListen
         
         //this.debugAll();
         
-        init(parent.game.getModelContext());
+        //init(parent.game.getModelContext());
     }
 
     @Override
     public void onLogicFrame() {
         constructionControlNodes.forEach(item -> item.onLogicFrame());
-        backgroundConstructionModels.forEach(item -> item.onLogicFrame());
+        parent.game.getModelContext().getConstructionManager().logicFrameForAllConstructionModels();
+        
+        //backgroundConstructionModels.forEach(item -> item.onLogicFrame());
     }
 
 
     @Override
     public void onGameAreaChange(GameArea last, GameArea current) {
-        backgroundConstructionModels.clear();
-        backgroundConstructionModels.addAll(allConstructionModels);
+//        backgroundConstructionModels.clear();
+//        backgroundConstructionModels.addAll(allConstructionModels);
         
-        List<BaseConstruction> newConstructions = areaShownConstructions.get(current);
+        List<BaseConstruction> newConstructions = parent.game.getModelContext().getConstructionManager().getAreaShownConstructions(current);
         for (int i = 0; i < NUM; i++) {
             if (i < newConstructions.size()) {
-                backgroundConstructionModels.remove(newConstructions.get(i));
+                //backgroundConstructionModels.remove(newConstructions.get(i));
                 constructionControlNodes.get(i).setModel(newConstructions.get(i));
             } else {
                 constructionControlNodes.get(i).setModel(null);
             }
         }
         Gdx.app.log("ConstructionInfoBorad", "Constructions change to: " + newConstructions.stream().map(construction -> construction.getName()).collect(Collectors.joining(",")));
-        Gdx.app.log("ConstructionInfoBorad", "backgroundConstructionModels change to: " + backgroundConstructionModels.stream().map(construction -> construction.getName()).collect(Collectors.joining(",")));
+        //Gdx.app.log("ConstructionInfoBorad", "backgroundConstructionModels change to: " + backgroundConstructionModels.stream().map(construction -> construction.getName()).collect(Collectors.joining(",")));
         
 
     }

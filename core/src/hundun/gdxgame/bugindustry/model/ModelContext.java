@@ -4,6 +4,7 @@ import hundun.gdxgame.bugindustry.data.ConstructionSaveData;
 import hundun.gdxgame.bugindustry.model.construction.ConstructionFactory;
 import hundun.gdxgame.bugindustry.model.manager.AchievementManager;
 import hundun.gdxgame.bugindustry.model.manager.BuffManager;
+import hundun.gdxgame.bugindustry.model.manager.ConstructionManager;
 import hundun.gdxgame.bugindustry.model.manager.EventManager;
 import hundun.gdxgame.bugindustry.model.manager.StorageManager;
 import lombok.Data;
@@ -19,4 +20,5 @@ public class ModelContext {
     AchievementManager achievementManager;
     
     ConstructionFactory constructionFactory;
+    ConstructionManager constructionManager;
 }

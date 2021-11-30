@@ -22,6 +22,12 @@ public class GameEntityFactory {
     public float FLY_MAX_X;
     public float FLY_MIN_Y;
     public float FLY_MAX_Y;
+    
+    public int TREE_MIN_X;
+    public int TREE_MAX_X;
+    public int TREE_MIN_Y;
+    public int TREE_MAX_Y;
+    
     public float FLY_UNION_SPEED = 3;
 
     
@@ -49,21 +55,65 @@ public class GameEntityFactory {
     
     public GameEntity newConstructionEntity(ConstructionId id, int index) {
         switch (id) {
+            case WOOD_SELL_HOUSE:
             case SMALL_BEEHIVE:
-                return newBeehiveEntity(index);
+                return newConstructionEntity(
+                        ConstructionEntity_BASE_X + 0 * ConstructionEntity_BASE_X_PAD - ConstructionEntity_X_PAD * index,
+                        ConstructionEntity_BASE_Y - ConstructionEntity_Y_PAD * index,
+                        id);
+            case BEE_SELL_HOUSE:
+            case MID_BEEHIVE:
+                return newConstructionEntity(
+                        ConstructionEntity_BASE_X + 1 * ConstructionEntity_BASE_X_PAD - ConstructionEntity_X_PAD * index,
+                        ConstructionEntity_BASE_Y - ConstructionEntity_Y_PAD * index,
+                        id); 
+            case HONEY_SELL_HOUSE:
+            case BIG_BEEHIVE:
+                return newConstructionEntity(
+                        ConstructionEntity_BASE_X + 2 * ConstructionEntity_BASE_X_PAD - ConstructionEntity_X_PAD * index,
+                        ConstructionEntity_BASE_Y - ConstructionEntity_Y_PAD * index,
+                        id); 
+            case WOOD_BOARD_SELL_HOUSE:
+            case QUEEN_BEEHIVE:
+                return newConstructionEntity(
+                        ConstructionEntity_BASE_X + 3 * ConstructionEntity_BASE_X_PAD,
+                        ConstructionEntity_BASE_Y - ConstructionEntity_Y_PAD * index,
+                        id); 
+            case BEEWAX_SELL_HOUSE:
+                return newConstructionEntity(
+                        ConstructionEntity_BASE_X + 4 * ConstructionEntity_BASE_X_PAD,
+                        ConstructionEntity_BASE_Y - ConstructionEntity_Y_PAD * index,
+                        id); 
+            case WOOD_KEEPING:
+                int randX = (int) (FLY_MIN_X + Math.random() * (FLY_MAX_X - FLY_MIN_X));
+                int randY = (int) (FLY_MIN_Y + Math.random() * (FLY_MAX_Y - FLY_MIN_Y));
+                return newConstructionEntity(
+                        randX,
+                        randY,
+                        id);
             default:
-                break;
+                return null;
+                //throw new UnsupportedOperationException("fail newConstructionEntity for id = " + id);
         }
-        return newBeeEntity();
+        
     }
-    
-    public GameEntity newBeehiveEntity(int index) {
+    static final int ConstructionEntity_BASE_X = 80;
+    static final int ConstructionEntity_BASE_X_PAD = 80;
+    static final int ConstructionEntity_BASE_Y = 300;
+    static final int ConstructionEntity_X_PAD = 15;
+    static final int ConstructionEntity_Y_PAD = 30;
+    private GameEntity newConstructionEntity(int x, int y, ConstructionId constructionId) {
+//        return newConstructionEntity(x, y, 64, 64, constructionId);
+//    }
+//    
+//    private GameEntity newConstructionEntity(int x, int y, int drawWidth, int drawHeight, ConstructionId constructionId) {
+//        
         GameEntity entity = new GameEntity();
-        entity.setTexture(new Sprite(game.getTextureManager().getConstructionTexture(ConstructionId.SMALL_BEEHIVE)));
-        entity.setX(300 - 30 * index);
-        entity.setY(300 - 30 * index);
-        entity.setDrawWidth(64);
-        entity.setDrawHeight(64);
+        entity.setTexture(new Sprite(game.getTextureManager().getConstructionTexture(constructionId)));
+        entity.setX(x);
+        entity.setY(y);
+        entity.setDrawWidth(entity.getTexture().getRegionWidth());
+        entity.setDrawHeight(entity.getTexture().getRegionHeight());
         entity.setRandomMove(false);
         return entity;
     }

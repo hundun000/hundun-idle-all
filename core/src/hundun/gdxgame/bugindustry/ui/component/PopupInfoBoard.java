@@ -1,7 +1,9 @@
 package hundun.gdxgame.bugindustry.ui.component;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -26,45 +28,57 @@ public class PopupInfoBoard extends Table {
         this.setTouchable(Touchable.disabled);
     }
     
+    
+    private <T extends Actor> Container<T> wapperContainer(T content) {
+        Container<T> container = new Container<T>(content);
+        container.setBackground(parent.tableBackgroundDrawable);
+        return container;
+    }
+    
     private void rebuildCells(BaseConstruction model) {
         this.clearChildren();
         
-        add(new Label(model.getDetailDescroptionConstPart(), parent.game.getButtonSkin())).row();
+        add(wapperContainer(new Label(model.getDetailDescroptionConstPart(), parent.game.getButtonSkin())))
+            .colspan(3)
+            .left()
+            .row();
         
         String outputCostDescriptionStart = model.getDescriptionPackage().getOutputCostDescriptionStart();
         if (outputCostDescriptionStart != null && model.getModifiedOutputCostMap() != null) {
-            add(new Label(outputCostDescriptionStart, parent.game.getButtonSkin()));
+            add(wapperContainer(new Label(outputCostDescriptionStart, parent.game.getButtonSkin())));
             for (var entry : model.getModifiedOutputCostMap().entrySet()) {
                 var node = new ResourceAmountPairNode(parent.game, entry.getKey());
                 node.update(entry.getValue());
-                this.add(node).height(NODE_HEIGHT).width(NODE_WIDTH);
+                this.add(wapperContainer(node)).height(NODE_HEIGHT).width(NODE_WIDTH);
             }
             this.row();
         }
         
         String outputGainDescriptionStart = model.getDescriptionPackage().getOutputGainDescriptionStart();
         if (outputGainDescriptionStart != null && model.getModifiedOutputGainMap() != null) {
-            add(new Label(outputGainDescriptionStart, parent.game.getButtonSkin()));
+            add(wapperContainer(new Label(outputGainDescriptionStart, parent.game.getButtonSkin())));
             for (var entry : model.getModifiedOutputGainMap().entrySet()) {
                 var node = new ResourceAmountPairNode(parent.game, entry.getKey());
                 node.update(entry.getValue());
-                this.add(node).height(NODE_HEIGHT).width(NODE_WIDTH);
+                this.add(wapperContainer(node)).height(NODE_HEIGHT).width(NODE_WIDTH);
             }
             this.row();
         }
 
         String upgradeCostGainDescriptionStart = model.getDescriptionPackage().getUpgradeCostDescriptionStart();
         if (upgradeCostGainDescriptionStart != null && model.getModifiedUpgradeCostMap() != null) {
-            add(new Label(upgradeCostGainDescriptionStart, parent.game.getButtonSkin()));
+            add(wapperContainer(new Label(upgradeCostGainDescriptionStart, parent.game.getButtonSkin())));
             for (var entry : model.getModifiedUpgradeCostMap().entrySet()) {
                 var node = new ResourceAmountPairNode(parent.game, entry.getKey());
                 node.update(entry.getValue());
-                this.add(node).height(NODE_HEIGHT).width(NODE_WIDTH);
+                this.add(wapperContainer(node)).height(NODE_HEIGHT).width(NODE_WIDTH);
             }
             this.row();
         }
         
-        this.debug();
+        if (parent.game.debugMode) {
+            this.debug();
+        }
     }
     
 

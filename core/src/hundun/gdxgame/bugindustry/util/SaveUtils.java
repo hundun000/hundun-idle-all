@@ -15,6 +15,7 @@ import hundun.gdxgame.bugindustry.data.ConstructionSaveData;
 import hundun.gdxgame.bugindustry.data.SaveData;
 import hundun.gdxgame.bugindustry.model.ModelContext;
 import hundun.gdxgame.bugindustry.model.construction.BaseConstruction;
+import hundun.gdxgame.bugindustry.model.construction.ConstructionId;
 
 /**
  * @author hundun
@@ -25,11 +26,16 @@ public class SaveUtils {
     static File saveFile;
     private static ObjectMapper objectMapper;
     
+    private static Map<ConstructionId, Integer> constructionStarterLevelMap;
+    
     public static void init(File saveFile) {
         SaveUtils.saveFile = saveFile;
         SaveUtils.objectMapper = new ObjectMapper()
                 .enable(SerializationFeature.INDENT_OUTPUT)
                 ;
+        
+        constructionStarterLevelMap = new HashMap<>();
+        constructionStarterLevelMap.put(ConstructionId.WOOD_SELL_HOUSE, 1);
     }
     
     private static void appendConstructionSaveData(Map<String, ConstructionSaveData> map, BaseConstruction construction) {
@@ -38,6 +44,11 @@ public class SaveUtils {
     
     private static void loadConstructionSaveData(Map<String, ConstructionSaveData> map, BaseConstruction construction) {
         construction.setSaveData(map.getOrDefault(construction.getSaveDataKey(), new ConstructionSaveData()));
+        construction.updateModifiedValues();
+    }
+    
+    private static void setStarterConstructionSaveData(BaseConstruction construction) {
+        construction.getSaveData().setLevel(constructionStarterLevelMap.getOrDefault(construction.getId(), 0));
         construction.updateModifiedValues();
     }
     
@@ -79,6 +90,17 @@ public class SaveUtils {
     public static boolean hasSave() {
         return saveFile.exists();
     }
+    
+    /**
+     * 作为新存档，也需要修改ModelContext
+     */
+    public static void newSaveStarter(ModelContext modelContext) {
+        var constructions = modelContext.getConstructionFactory().getConstructions();
+        for (BaseConstruction construction : constructions) {
+            setStarterConstructionSaveData(construction);
+        }
+    }
+    
     
     public static void load(ModelContext modelContext) {
         

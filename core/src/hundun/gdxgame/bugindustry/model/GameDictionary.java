@@ -13,7 +13,7 @@ public class GameDictionary {
         switch (constructionId) {
         case WOOD_GATHER_HOUSE:
             return "free wood";
-        case WOOD_AUTO_CUTTER:
+        case WOOD_KEEPING:
             return "feller";
         case BEE_GATHER_HOUSE:
             return "free bee";

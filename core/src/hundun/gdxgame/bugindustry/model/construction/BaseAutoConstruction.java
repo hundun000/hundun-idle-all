@@ -55,7 +55,7 @@ public class BaseAutoConstruction extends BaseConstruction {
         if (!canUpgrade()) {
             return;
         }
-        Map<ResourceType, Integer> upgradeCostRule = modifiedUpgradeCostMap;
+        Map<ResourceType, Long> upgradeCostRule = modifiedUpgradeCostMap;
         game.getModelContext().getStorageManager().modifyAllResourceNum(upgradeCostRule, false);
         saveData.setLevel(saveData.getLevel() + 1);
         if (!workingLevelChangable) {
@@ -96,7 +96,7 @@ public class BaseAutoConstruction extends BaseConstruction {
     
 
     @Override
-    protected int calculateModifiedUpgradeCost(int baseValue, int level) {
+    protected long calculateModifiedUpgradeCost(int baseValue, int level) {
         return (int)(
                 baseValue
                 * (1 + 2 * level)
@@ -105,12 +105,12 @@ public class BaseAutoConstruction extends BaseConstruction {
     }
     
     @Override
-    protected int calculateModifiedOutput(int baseValue, int level) {
+    protected long calculateModifiedOutput(int baseValue, int level) {
         return baseValue * level;
     }
 
     @Override
-    protected int calculateModifiedOutputCost(int baseValue, int level) {
+    protected long calculateModifiedOutputCost(int baseValue, int level) {
         return baseValue * level;
     }
 

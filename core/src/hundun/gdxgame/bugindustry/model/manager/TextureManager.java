@@ -17,6 +17,8 @@ public class TextureManager {
     private Texture shopAreaBackgroundTexture;
     private Map<ResourceType, TextureRegion> itemRegionMap = new HashMap<>();
     private Map<ConstructionId, TextureRegion> constructionRegionMap = new HashMap<>();
+    private Map<GameArea, TextureRegion> gameAreaLeftPartRegionMap = new HashMap<>();
+    private Map<GameArea, TextureRegion> gameAreaRightPartRegionMap = new HashMap<>();
     @Getter
     private Texture beeTexture;
     TextureRegion defaultIcon;
@@ -25,18 +27,19 @@ public class TextureManager {
         mainAreaBackgroundTexture = new Texture(Gdx.files.internal("640x480.png"));
         shopAreaBackgroundTexture = new Texture(Gdx.files.internal("shop-area.png"));
         this.beeTexture = new Texture(Gdx.files.internal("bee.png"));
+        
         {
             Texture texture = new Texture(Gdx.files.internal("item.png"));
             TextureRegion[][] regions = TextureRegion.split(texture, 16, 16);
             defaultIcon = regions[0][0];
             itemRegionMap.put(ResourceType.COIN, regions[0][1]);
             itemRegionMap.put(ResourceType.WOOD, regions[0][2]);
-            itemRegionMap.put(ResourceType.HARD_WOOD, regions[0][3]);
+            itemRegionMap.put(ResourceType.WOOD_BOARD, regions[0][3]);
             itemRegionMap.put(ResourceType.BEE, regions[0][4]);
             itemRegionMap.put(ResourceType.HONEY, regions[0][5]);
             itemRegionMap.put(ResourceType.BEEWAX, regions[0][6]);
             itemRegionMap.put(ResourceType.QUEEN_BEE, regions[0][7]);
-            itemRegionMap.put(ResourceType.WIN_THE_GAME, regions[0][8]);
+            //itemRegionMap.put(ResourceType.WIN_THE_GAME, regions[0][8]);
         }
         
         {
@@ -45,8 +48,28 @@ public class TextureManager {
             constructionRegionMap.put(ConstructionId.SMALL_BEEHIVE, regions[0][0]);
             constructionRegionMap.put(ConstructionId.MID_BEEHIVE, regions[0][1]);
             constructionRegionMap.put(ConstructionId.BIG_BEEHIVE, regions[0][2]);
-            constructionRegionMap.put(ConstructionId.KING_BEEHIVE, regions[0][3]);
-            constructionRegionMap.put(ConstructionId.WOOD_AUTO_CUTTER, regions[0][4]);
+            constructionRegionMap.put(ConstructionId.QUEEN_BEEHIVE, regions[0][3]);
+            constructionRegionMap.put(ConstructionId.WOOD_KEEPING, regions[0][4]);
+        }
+        
+        {
+            Texture texture = new Texture(Gdx.files.internal("selling.png"));
+            TextureRegion[][] regions = TextureRegion.split(texture, 48, 32);
+            constructionRegionMap.put(ConstructionId.WOOD_SELL_HOUSE, regions[0][0]);
+            constructionRegionMap.put(ConstructionId.WOOD_BOARD_SELL_HOUSE, regions[0][1]);
+            constructionRegionMap.put(ConstructionId.BEE_SELL_HOUSE, regions[0][2]);
+            constructionRegionMap.put(ConstructionId.HONEY_SELL_HOUSE, regions[0][3]);
+            constructionRegionMap.put(ConstructionId.BEEWAX_SELL_HOUSE, regions[0][4]);
+        }
+        {
+            Texture texture = new Texture(Gdx.files.internal("gameAreaIcons.png"));
+            TextureRegion[][] regions = TextureRegion.split(texture, 100, 50);
+            gameAreaLeftPartRegionMap.put(GameArea.BEE_FARM, regions[0][0]);
+            gameAreaLeftPartRegionMap.put(GameArea.FOREST_FARM, regions[1][0]);
+            gameAreaLeftPartRegionMap.put(GameArea.SHOP, regions[2][0]);
+            gameAreaRightPartRegionMap.put(GameArea.BEE_FARM, regions[0][1]);
+            gameAreaRightPartRegionMap.put(GameArea.FOREST_FARM, regions[1][1]);
+            gameAreaRightPartRegionMap.put(GameArea.SHOP, regions[2][1]);
         }
         
     }
@@ -66,5 +89,14 @@ public class TextureManager {
     
     public TextureRegion getConstructionTexture(ConstructionId key) {
         return constructionRegionMap.getOrDefault(key, defaultIcon);
+    }
+    
+    public TextureRegion getGameAreaTexture(GameArea key, boolean longVersion) {
+        if (longVersion) {
+            return gameAreaLeftPartRegionMap.getOrDefault(key, defaultIcon);
+        } else {
+            return gameAreaRightPartRegionMap.getOrDefault(key, defaultIcon);
+        }
+        
     }
 }

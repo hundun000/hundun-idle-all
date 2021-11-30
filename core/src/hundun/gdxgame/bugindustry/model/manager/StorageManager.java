@@ -25,7 +25,7 @@ public class StorageManager {
     BugIndustryGame game;
     @Getter
     @Setter
-    Map<ResourceType, Integer> ownResoueces = new HashMap<>();
+    Map<ResourceType, Long> ownResoueces = new HashMap<>();
     @Getter
     @Setter
     Set<ResourceType> unlockedResourceTypes = new HashSet<>();
@@ -39,12 +39,12 @@ public class StorageManager {
     }
     
     public String getResourceDescription(ResourceType key) {
-        int amount = getResourceNum(key);
+        long amount = getResourceNum(key);
         return key.getShowName() + ": " + amount;
     }
     
-    public int getResourceNum(ResourceType key) {
-        return ownResoueces.getOrDefault(key, 0);
+    public long getResourceNum(ResourceType key) {
+        return ownResoueces.getOrDefault(key, 0L);
     }
     
 
@@ -52,7 +52,7 @@ public class StorageManager {
     /**
      * @param plus ture: plus the map; false: minus the map;
      */
-    public void modifyAllResourceNum(Map<ResourceType, Integer> map, boolean plus) {
+    public void modifyAllResourceNum(Map<ResourceType, Long> map, boolean plus) {
         Gdx.app.log(this.getClass().getSimpleName(), (plus ? "plus" : "minus") + ": " + map);
         for (var entry : map.entrySet()) {
             unlockedResourceTypes.add(entry.getKey());

@@ -22,7 +22,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 public abstract class BaseConstruction implements ILogicFrameListener, IAmountChangeEventListener {
-    protected final int MAX_LEVEL = 10;
+    
+    protected int MAX_LEVEL = 99;
+    @Setter
+    @Getter
+    protected int MAX_DRAW_NUM = 5;
     private static final String descriptionMaxLevelPlaceholder = "{lv}";
     private static final String descriptionWorkingLevelPlaceholder = "{workingLv}";
     
@@ -44,6 +48,10 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
     
     public static final DescriptionPackage GATHER_DESCRIPTION_PACKAGE = new DescriptionPackage(
             null, null, null, "Gather", 
+            "");
+    
+    public static final DescriptionPackage WIN_DESCRIPTION_PACKAGE = new DescriptionPackage(
+            null, null, "Pay", "Win", 
             "");
     
     protected Random random = new Random();
@@ -69,7 +77,7 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
      */
     protected List<ConstructionOuputRule> baseOutputGainRules;
     @Getter
-    protected Map<ResourceType, Integer> modifiedOutputGainMap;
+    protected Map<ResourceType, Long> modifiedOutputGainMap;
     protected String modifiedOutputGainDescription;
 //    @Getter
 //    protected String outputGainDescriptionStart;
@@ -79,7 +87,7 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
      */
     protected Map<ResourceType, Integer> baseOutputCostMap;
     @Getter
-    protected Map<ResourceType, Integer> modifiedOutputCostMap;
+    protected Map<ResourceType, Long> modifiedOutputCostMap;
     protected String modifiedOuputCostDescription;
 //    @Getter
 //    protected String outputCostDescriptionStart;
@@ -89,7 +97,7 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
      */
     protected Map<ResourceType, Integer> baseUpgradeCostMap;
     @Getter
-    protected Map<ResourceType, Integer> modifiedUpgradeCostMap;
+    protected Map<ResourceType, Long> modifiedUpgradeCostMap;
     protected String modifiedUpgradeCostDescription;
 //    @Getter
 //    protected String upgradeCostDescriptionStart;
@@ -115,9 +123,9 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
         return descriptionPackage.getButtonDescroption();
     }
     
-    protected abstract int calculateModifiedUpgradeCost(int baseValue, int level);
-    protected abstract int calculateModifiedOutput(int baseValue, int level);
-    protected abstract int calculateModifiedOutputCost(int baseValue, int level);
+    protected abstract long calculateModifiedUpgradeCost(int baseValue, int level);
+    protected abstract long calculateModifiedOutput(int baseValue, int level);
+    protected abstract long calculateModifiedOutputCost(int baseValue, int level);
 
     public String getWorkingLevelDescroption() {
         return descriptionPackage.levelDescroption
@@ -190,9 +198,9 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
             return true;
         }
         
-        Map<ResourceType, Integer> ouputCostRule = modifiedOutputCostMap;
+        Map<ResourceType, Long> ouputCostRule = modifiedOutputCostMap;
         for (var entry : ouputCostRule.entrySet()) {
-            int own = game.getModelContext().getStorageManager().getResourceNum(entry.getKey());
+            long own = game.getModelContext().getStorageManager().getResourceNum(entry.getKey());
             if (own < entry.getValue()) {
                 return false;
             }
@@ -205,9 +213,9 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
         if (saveData.getLevel() >= MAX_LEVEL || modifiedUpgradeCostMap == null) {
             return false;
         }
-        Map<ResourceType, Integer> upgradeCostRule = modifiedUpgradeCostMap;
+        Map<ResourceType, Long> upgradeCostRule = modifiedUpgradeCostMap;
         for (var entry : upgradeCostRule.entrySet()) {
-            int own = game.getModelContext().getStorageManager().getResourceNum(entry.getKey());
+            long own = game.getModelContext().getStorageManager().getResourceNum(entry.getKey());
             if (own < entry.getValue()) {
                 return false;
             }

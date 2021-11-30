@@ -35,7 +35,7 @@ public class ResourceAmountPairNode extends HorizontalGroup {
         this.addActor(label);
     }
     
-    public void update(int amout) {
+    public void update(long amout) {
         label.setText(
                 TextFormatUtils.format(amout)
                 );

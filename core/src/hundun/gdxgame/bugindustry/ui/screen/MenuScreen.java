@@ -60,7 +60,11 @@ public class MenuScreen extends BaseScreen {
             }
         });
         if (SaveUtils.hasSave()) {
-            table.add(buttonContinueGame).height(BUTTON_BIG_HEIGHT).fill().row();
+            table.add(buttonContinueGame)
+                .height(BUTTON_BIG_HEIGHT)
+                .fill()
+                .pad(10)
+                .row();
         }
         
         
@@ -78,20 +82,28 @@ public class MenuScreen extends BaseScreen {
                 return true;
             }
         });
-        table.add(buttonNewGame).height(SaveUtils.hasSave() ? BUTTON_SMALL_HEIGHT : BUTTON_BIG_HEIGHT).fill().row();
+        table.add(buttonNewGame)
+            .height(SaveUtils.hasSave() ? BUTTON_SMALL_HEIGHT : BUTTON_BIG_HEIGHT)
+            .fill()
+            .pad(10)
+            .row();
         
-        buttonIntoSettingScreen = new TextButton("intoSettingScreen", game.getButtonSkin());
-        buttonIntoSettingScreen.addListener(new InputListener(){
-            @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(game.getScreenContext().getGameBeeScreen());
-            }
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-        });
-        table.add(buttonIntoSettingScreen).height(BUTTON_SMALL_HEIGHT).fill().row();
+//        buttonIntoSettingScreen = new TextButton("intoSettingScreen", game.getButtonSkin());
+//        buttonIntoSettingScreen.addListener(new InputListener(){
+//            @Override
+//            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//                game.setScreen(game.getScreenContext().getGameBeeScreen());
+//            }
+//            @Override
+//            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+//                return true;
+//            }
+//        });
+//        table.add(buttonIntoSettingScreen)
+//            .height(BUTTON_SMALL_HEIGHT)
+//            .fill()
+//            .pad(10)
+//            .row();
         
         
         //table.debugAll();
