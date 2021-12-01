@@ -1,15 +1,10 @@
 package hundun.gdxgame.bugindustry.ui.image;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-
 import hundun.gdxgame.bugindustry.BugIndustryGame;
-import hundun.gdxgame.bugindustry.model.construction.ConstructionId;
-import hundun.gdxgame.bugindustry.model.resource.ResourceType;
-import hundun.gdxgame.bugindustry.ui.component.ConstructionControlBoard;
+import hundun.gdxgame.bugindustry.ConstructionId;
+import hundun.gdxgame.bugindustry.ResourceType;
 import hundun.gdxgame.bugindustry.ui.component.GameAreaControlBoard;
 import hundun.gdxgame.bugindustry.ui.component.StorageInfoBoard;
 
@@ -57,63 +52,63 @@ public class GameEntityFactory {
         Gdx.app.log(this.getClass().getSimpleName(), "TREE_MAX_Y = " + TREE_MAX_Y + ", TREE_MIN_Y = " + TREE_MIN_Y);
     }
     
-    public GameEntity newConstructionEntity(ConstructionId id, int index) {
+    public GameEntity newConstructionEntity(String id, int index) {
         switch (id) {
-            case WOOD_SELL_HOUSE:
+            case ConstructionId.WOOD_SELL_HOUSE:
                 return newConstructionEntity(
                         ConstructionEntity_BASE_X + 0 * ConstructionEntity_BASE_X_PAD - ConstructionEntity_X_PAD * index,
                         ConstructionEntity_BASE_Y - ConstructionEntity_Y_PAD * index,
                         false,
                         id);
-            case SMALL_BEEHIVE:
+            case ConstructionId.SMALL_BEEHIVE:
                 return newConstructionEntity(
                         ConstructionEntity_BASE_X + 0 * ConstructionEntity_BASE_X_PAD - ConstructionEntity_X_PAD * index,
                         ConstructionEntity_BASE_Y - ConstructionEntity_Y_PAD * index,
                         true,
                         id);
-            case WOOD_BOARD_SELL_HOUSE:
+            case ConstructionId.WOOD_BOARD_SELL_HOUSE:
                 return newConstructionEntity(
                         ConstructionEntity_BASE_X + 1 * ConstructionEntity_BASE_X_PAD - ConstructionEntity_X_PAD * index,
                         ConstructionEntity_BASE_Y - ConstructionEntity_Y_PAD * index,
                         false,
                         id); 
-            case MID_BEEHIVE:
+            case ConstructionId.MID_BEEHIVE:
                 return newConstructionEntity(
                         ConstructionEntity_BASE_X + 1 * ConstructionEntity_BASE_X_PAD - ConstructionEntity_X_PAD * index,
                         ConstructionEntity_BASE_Y - ConstructionEntity_Y_PAD * index,
                         true,
                         id); 
-            case BEE_SELL_HOUSE:
+            case ConstructionId.BEE_SELL_HOUSE:
                 return newConstructionEntity(
                         ConstructionEntity_BASE_X + 2 * ConstructionEntity_BASE_X_PAD - ConstructionEntity_X_PAD * index,
                         ConstructionEntity_BASE_Y - ConstructionEntity_Y_PAD * index,
                         false,
                         id); 
-            case BIG_BEEHIVE:
+            case ConstructionId.BIG_BEEHIVE:
                 return newConstructionEntity(
                         ConstructionEntity_BASE_X + 2 * ConstructionEntity_BASE_X_PAD - ConstructionEntity_X_PAD * index,
                         ConstructionEntity_BASE_Y - ConstructionEntity_Y_PAD * index,
                         true,
                         id); 
-            case HONEY_SELL_HOUSE:
+            case ConstructionId.HONEY_SELL_HOUSE:
                 return newConstructionEntity(
                         ConstructionEntity_BASE_X + 3 * ConstructionEntity_BASE_X_PAD,
                         ConstructionEntity_BASE_Y - ConstructionEntity_Y_PAD * index,
                         false,
                         id);
-            case QUEEN_BEEHIVE:
+            case ConstructionId.QUEEN_BEEHIVE:
                 return newConstructionEntity(
                         ConstructionEntity_BASE_X + 3 * ConstructionEntity_BASE_X_PAD,
                         ConstructionEntity_BASE_Y - ConstructionEntity_Y_PAD * index,
                         true,
                         id); 
-            case BEEWAX_SELL_HOUSE:
+            case ConstructionId.BEEWAX_SELL_HOUSE:
                 return newConstructionEntity(
                         ConstructionEntity_BASE_X + 4 * ConstructionEntity_BASE_X_PAD,
                         ConstructionEntity_BASE_Y - ConstructionEntity_Y_PAD * index,
                         false,
                         id); 
-            case WOOD_KEEPING:
+            case ConstructionId.WOOD_KEEPING:
                 int randX = (int) (TREE_MIN_X + Math.random() * (TREE_MAX_X - TREE_MIN_X));
                 int randY = (int) (TREE_MIN_Y + Math.random() * (TREE_MAX_Y - TREE_MIN_Y));
                 return newConstructionEntity(
@@ -139,14 +134,14 @@ public class GameEntityFactory {
     static final int ConstructionEntity_BASE_Y = 250;
     static final int ConstructionEntity_X_PAD = 15;
     static final int ConstructionEntity_Y_PAD = 30;
-    private GameEntity newConstructionEntity(int x, int y, boolean sizeType1, ConstructionId constructionId) {
+    private GameEntity newConstructionEntity(int x, int y, boolean sizeType1, String constructionId) {
         return newConstructionEntity(x, y, 
                 scale * (sizeType1 ? Construction_WIDTH : SELL_Construction_WIDTH), 
                 scale * (sizeType1 ? SELL_Construction_HEIGHT : SELL_Construction_HEIGHT), 
                 constructionId);
     }
     
-    private GameEntity newConstructionEntity(int x, int y, int drawWidth, int drawHeight, ConstructionId constructionId) {
+    private GameEntity newConstructionEntity(int x, int y, int drawWidth, int drawHeight, String constructionId) {
         
         GameEntity entity = new GameEntity();
         entity.setTexture(new Sprite(game.getTextureManager().getConstructionTexture(constructionId)));

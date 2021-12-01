@@ -14,25 +14,26 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
-import hundun.gdxgame.bugindustry.model.GameArea;
-import hundun.gdxgame.bugindustry.ui.IGameAreaChangeListener;
+import hundun.gdxgame.bugindustry.GameArea;
 import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
+import hundun.gdxgame.idleframe.IGameAreaChangeListener;
 
 public class BackgroundImageBox extends Container<Image> implements IGameAreaChangeListener{
     GameScreen parent;
-    Map<GameArea, Drawable> imageMap = new HashMap<>(); 
+    Map<String, Drawable> imageMap = new HashMap<>(); 
     
     public BackgroundImageBox(GameScreen parent) {
         this.parent = parent;
         this.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         
-        for (GameArea gameArea : GameArea.values()) {
+        
+        for (String gameArea : GameArea.values) {
             imageMap.put(gameArea, new SpriteDrawable(new Sprite(parent.game.getTextureManager().getBackgroundTexture(gameArea))));
         }
     }
 
     @Override
-    public void onGameAreaChange(GameArea last, GameArea current) {
+    public void onGameAreaChange(String last, String current) {
         if (parent.game.drawGameImageAndPlayAudio) {
             Drawable image = imageMap.get(current);
             this.setBackground(image);

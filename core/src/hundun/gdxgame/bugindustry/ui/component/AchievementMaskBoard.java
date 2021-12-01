@@ -3,17 +3,15 @@ package hundun.gdxgame.bugindustry.ui.component;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
-import hundun.gdxgame.bugindustry.model.AchievementPrototype;
 import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
+import hundun.gdxgame.idleframe.model.AchievementPrototype;
 
 /**
  * @author hundun

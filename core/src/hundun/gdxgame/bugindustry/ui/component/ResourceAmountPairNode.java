@@ -4,11 +4,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
-
 import hundun.gdxgame.bugindustry.BugIndustryGame;
-import hundun.gdxgame.bugindustry.model.resource.ResourceType;
-import hundun.gdxgame.bugindustry.util.TextFormatUtils;
+import hundun.gdxgame.idleframe.util.TextFormatUtils;
 import lombok.Getter;
 
 /**
@@ -19,12 +16,12 @@ public class ResourceAmountPairNode extends HorizontalGroup {
     
     BugIndustryGame game;
     @Getter
-    ResourceType resourceType;
+    String resourceType;
     
     Image image;
     Label label;
     
-    public ResourceAmountPairNode(BugIndustryGame game, ResourceType resourceType) {
+    public ResourceAmountPairNode(BugIndustryGame game, String resourceType) {
         super();
         this.game = game;
         this.resourceType = resourceType;

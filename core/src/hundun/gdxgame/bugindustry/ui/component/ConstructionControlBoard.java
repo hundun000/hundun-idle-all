@@ -1,33 +1,15 @@
 package hundun.gdxgame.bugindustry.ui.component;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-
-import hundun.gdxgame.bugindustry.BugIndustryGame;
-import hundun.gdxgame.bugindustry.model.GameArea;
-import hundun.gdxgame.bugindustry.model.ModelContext;
-import hundun.gdxgame.bugindustry.model.construction.BaseConstruction;
-import hundun.gdxgame.bugindustry.model.construction.ConstructionId;
-import hundun.gdxgame.bugindustry.model.resource.ResourceType;
-import hundun.gdxgame.bugindustry.ui.IGameAreaChangeListener;
-import hundun.gdxgame.bugindustry.ui.ILogicFrameListener;
 import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
+import hundun.gdxgame.idleframe.IGameAreaChangeListener;
+import hundun.gdxgame.idleframe.ILogicFrameListener;
+import hundun.gdxgame.idleframe.model.construction.BaseConstruction;
 
 /**
  * @author hundun
@@ -74,7 +56,7 @@ public class ConstructionControlBoard extends Table implements ILogicFrameListen
 
 
     @Override
-    public void onGameAreaChange(GameArea last, GameArea current) {
+    public void onGameAreaChange(String last, String current) {
 //        backgroundConstructionModels.clear();
 //        backgroundConstructionModels.addAll(allConstructionModels);
         

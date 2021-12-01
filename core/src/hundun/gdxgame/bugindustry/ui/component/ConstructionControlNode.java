@@ -4,21 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
-import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 
-import hundun.gdxgame.bugindustry.model.construction.BaseConstruction;
-import hundun.gdxgame.bugindustry.ui.ILogicFrameListener;
 import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
+import hundun.gdxgame.idleframe.ILogicFrameListener;
+import hundun.gdxgame.idleframe.model.construction.BaseConstruction;
 
 /**
  * @author hundun

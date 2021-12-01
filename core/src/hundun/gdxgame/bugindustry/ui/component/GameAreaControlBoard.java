@@ -1,6 +1,5 @@
 package hundun.gdxgame.bugindustry.ui.component;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -10,21 +9,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-import hundun.gdxgame.bugindustry.model.GameArea;
-import hundun.gdxgame.bugindustry.ui.IGameAreaChangeListener;
-import hundun.gdxgame.bugindustry.ui.ILogicFrameListener;
+import hundun.gdxgame.bugindustry.GameArea;
 import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
+import hundun.gdxgame.idleframe.IGameAreaChangeListener;
 
 /**
  * @author hundun
@@ -33,7 +27,7 @@ import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
 public class GameAreaControlBoard extends Table implements IGameAreaChangeListener {
 
     GameScreen parent;
-    Map<GameArea, Image> nodes = new LinkedHashMap<>();
+    Map<String, Image> nodes = new LinkedHashMap<>();
     
     static final int FULL_CELL_WIDTH = 100;
     static final int SHORT_CELL_WIDTH = 75;
@@ -62,7 +56,7 @@ public class GameAreaControlBoard extends Table implements IGameAreaChangeListen
         }
     }
     
-    private void initButtonMap(GameArea gameArea, boolean longVersion) {
+    private void initButtonMap(String gameArea, boolean longVersion) {
         Image node = new Image(getDrawable(gameArea, longVersion));
         //Button button = new TextButton(gameArea.name(), parent.game.getButtonSkin());
         //textButton.setSize(SHORT_CELL_WIDTH, CELL_HEIGHT);
@@ -77,7 +71,7 @@ public class GameAreaControlBoard extends Table implements IGameAreaChangeListen
         this.add(node).width(FULL_CELL_WIDTH).height(CELL_HEIGHT).row();
     }
     
-    private Drawable getDrawable(GameArea gameArea, boolean longVersion) {
+    private Drawable getDrawable(String gameArea, boolean longVersion) {
         if (parent.game.drawGameImageAndPlayAudio) {
             return new SpriteDrawable(new Sprite(parent.game.getTextureManager().getGameAreaTexture(gameArea, longVersion)));
         } else {
@@ -89,11 +83,11 @@ public class GameAreaControlBoard extends Table implements IGameAreaChangeListen
     }
 
     @Override
-    public void onGameAreaChange(GameArea last, GameArea current) {
+    public void onGameAreaChange(String last, String current) {
         rebuildChild(current);
     }
     
-    private void rebuildChild(GameArea current) {
+    private void rebuildChild(String current) {
         
         nodes.entrySet().forEach(entry -> {
             if (entry.getKey() == current) {

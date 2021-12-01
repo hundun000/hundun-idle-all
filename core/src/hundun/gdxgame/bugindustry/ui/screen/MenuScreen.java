@@ -1,20 +1,16 @@
 package hundun.gdxgame.bugindustry.ui.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.utils.Array;
-
 import hundun.gdxgame.bugindustry.BugIndustryGame;
-import hundun.gdxgame.bugindustry.util.SaveUtils;
+import hundun.gdxgame.idleframe.util.SaveUtils;
+
 
 
 public class MenuScreen extends BaseScreen {
@@ -96,6 +92,7 @@ public class MenuScreen extends BaseScreen {
         
     }
     
+    @Override
     public void show() {
         Gdx.input.setInputProcessor(uiStage);
         

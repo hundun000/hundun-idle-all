@@ -2,24 +2,14 @@ package hundun.gdxgame.bugindustry.ui.component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
-import hundun.gdxgame.bugindustry.model.GameArea;
-import hundun.gdxgame.bugindustry.model.resource.ResourceType;
-import hundun.gdxgame.bugindustry.ui.ILogicFrameListener;
+import hundun.gdxgame.bugindustry.ResourceType;
 import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
 
 /**
@@ -38,8 +28,8 @@ public class StorageInfoBoard extends Table {
     
 //    Map<GameArea, List<ResourceType>> areaShownResources; 
 //    List<ResourceType> farmAreaShownResources;
-    List<ResourceType> shownOrders;
-    Set<ResourceType> shownTypes = new HashSet<>();
+    List<String> shownOrders;
+    Set<String> shownTypes = new HashSet<>();
     List<ResourceAmountPairNode> nodes = new ArrayList<>();
     
     private void initData() {
@@ -90,7 +80,7 @@ public class StorageInfoBoard extends Table {
         nodes.clear();
         
         for (int i = 0; i < shownOrders.size(); i++) {
-            ResourceType resourceType = shownOrders.get(i);
+            String resourceType = shownOrders.get(i);
             if (shownTypes.contains(resourceType)) {
                 ResourceAmountPairNode node = new ResourceAmountPairNode(parent.game, resourceType);
                 nodes.add(node);

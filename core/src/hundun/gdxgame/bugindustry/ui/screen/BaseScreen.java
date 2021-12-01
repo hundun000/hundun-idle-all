@@ -1,14 +1,9 @@
 package hundun.gdxgame.bugindustry.ui.screen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-
 import hundun.gdxgame.bugindustry.BugIndustryGame;
 import lombok.AllArgsConstructor;
 
