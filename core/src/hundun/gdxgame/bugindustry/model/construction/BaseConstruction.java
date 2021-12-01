@@ -13,9 +13,10 @@ import java.util.stream.Collectors;
 import com.badlogic.gdx.Gdx;
 
 import hundun.gdxgame.bugindustry.BugIndustryGame;
-import hundun.gdxgame.bugindustry.data.ConstructionOuputRule;
 import hundun.gdxgame.bugindustry.data.ConstructionSaveData;
-import hundun.gdxgame.bugindustry.model.ResourceType;
+import hundun.gdxgame.bugindustry.model.resource.ResourcePair;
+import hundun.gdxgame.bugindustry.model.resource.ResourcePack;
+import hundun.gdxgame.bugindustry.model.resource.ResourceType;
 import hundun.gdxgame.bugindustry.ui.IAmountChangeEventListener;
 import hundun.gdxgame.bugindustry.ui.ILogicFrameListener;
 import lombok.Getter;
@@ -42,16 +43,16 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
             "Sell", "Gain", "UpgradeCost", "Upgrade", 
             descriptionWorkingLevelPlaceholder + "/" + descriptionMaxLevelPlaceholder);
     
-    public static final DescriptionPackage BUFF_DESCRIPTION_PACKAGE = new DescriptionPackage(
-            null, null, "EnhanceCost", "Enhance", 
-            "lv." + descriptionMaxLevelPlaceholder);
+//    public static final DescriptionPackage BUFF_DESCRIPTION_PACKAGE = new DescriptionPackage(
+//            null, null, "EnhanceCost", "Enhance", 
+//            "lv." + descriptionMaxLevelPlaceholder);
     
     public static final DescriptionPackage GATHER_DESCRIPTION_PACKAGE = new DescriptionPackage(
-            null, null, null, "Gather", 
+            null, "Gain", null, "Gather", 
             "");
     
     public static final DescriptionPackage WIN_DESCRIPTION_PACKAGE = new DescriptionPackage(
-            null, null, "Pay", "Win", 
+            null, "Gain", "Pay", "Win", 
             "");
     
     protected Random random = new Random();
@@ -68,41 +69,48 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
     protected String detailDescroptionConstPart;
     @Getter
     protected boolean workingLevelChangable;
-    @Setter
+
     @Getter
     protected DescriptionPackage descriptionPackage;
     
     /**
      * 对于Click型，即为基础点击收益；对于Auto型，即为基础自动收益；
      */
-    protected List<ConstructionOuputRule> baseOutputGainRules;
     @Getter
-    protected Map<ResourceType, Long> modifiedOutputGainMap;
-    protected String modifiedOutputGainDescription;
-//    @Getter
-//    protected String outputGainDescriptionStart;
+    protected ResourcePack outputGainPack;
     
     /**
      * output行为所需要支付的费用; 无费用时为null
      */
-    protected Map<ResourceType, Integer> baseOutputCostMap;
     @Getter
-    protected Map<ResourceType, Long> modifiedOutputCostMap;
-    protected String modifiedOuputCostDescription;
-//    @Getter
-//    protected String outputCostDescriptionStart;
+    protected ResourcePack outputCostPack;
+
     
     /**
-     * 升级所需要支付的费用; 无发升级时为null
+     * 升级所需要支付的费用; 无法升级时为null
      */
-    protected Map<ResourceType, Integer> baseUpgradeCostMap;
     @Getter
-    protected Map<ResourceType, Long> modifiedUpgradeCostMap;
-    protected String modifiedUpgradeCostDescription;
+    protected ResourcePack upgradeCostPack;
+    
+//    protected Map<ResourceType, Integer> baseUpgradeCostMap;
+//    @Getter
+//    protected Map<ResourceType, Long> modifiedUpgradeCostMap;
+//    protected String modifiedUpgradeCostDescription;
 //    @Getter
 //    protected String upgradeCostDescriptionStart;
     
-    
+
+    public void updateDescription() {
+        if (outputCostPack != null) {
+            outputCostPack.setDescriptionStart(descriptionPackage.getOutputCostDescriptionStart());
+        }
+        if (outputGainPack != null) {
+            outputGainPack.setDescriptionStart(descriptionPackage.getOutputGainDescriptionStart());
+        }
+        if (upgradeCostPack != null) {
+            upgradeCostPack.setDescriptionStart(descriptionPackage.getUpgradeCostDescriptionStart());
+        }
+    }
     
     public BaseConstruction(BugIndustryGame game, ConstructionId id) {
         this.game = game;
@@ -123,9 +131,9 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
         return descriptionPackage.getButtonDescroption();
     }
     
-    protected abstract long calculateModifiedUpgradeCost(int baseValue, int level);
-    protected abstract long calculateModifiedOutput(int baseValue, int level);
-    protected abstract long calculateModifiedOutputCost(int baseValue, int level);
+    protected abstract long calculateModifiedUpgradeCost(long baseValue, int level);
+    protected abstract long calculateModifiedOutput(long baseValue, int level);
+    protected abstract long calculateModifiedOutputCost(long baseValue, int level);
 
     public String getWorkingLevelDescroption() {
         return descriptionPackage.levelDescroption
@@ -140,45 +148,55 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
     public void updateModifiedValues() {
         Gdx.app.log(this.name, "updateCurrentCache called");
         // --------------
-        if (this.baseUpgradeCostMap != null) {
-            this.modifiedUpgradeCostMap = baseUpgradeCostMap.entrySet().stream()
-                    .collect(Collectors.toMap(
-                            entry -> entry.getKey(), 
-                            entry -> calculateModifiedUpgradeCost(entry.getValue(), saveData.getLevel())
-                            )
-                    );
-            this.modifiedUpgradeCostDescription = 
-                    modifiedUpgradeCostMap.entrySet().stream()
-                    .map(entry -> entry.getKey().getShowName() + "x" + entry.getValue())
+        if (upgradeCostPack != null) {
+            upgradeCostPack.setModifiedValues(
+                    upgradeCostPack.getBaseValues().stream()
+                        .map(pair -> {
+                                var newAmout = calculateModifiedUpgradeCost(pair.getAmount(), saveData.getWorkingLevel());
+                                return new ResourcePair(pair.getType(), newAmout);
+                            })
+                        .collect(Collectors.toList())
+            );
+            this.upgradeCostPack.setModifiedValuesDescription(
+                    upgradeCostPack.getModifiedValues().stream()
+                    .map(pair -> pair.getType().getShowName() + "x" + pair.getAmount())
                     .collect(Collectors.joining(", "))
-                    + "; ";
+                    + "; "
+            );
         }
         // --------------
-        if (this.baseOutputGainRules != null) {
-            this.modifiedOutputGainMap = baseOutputGainRules.stream()
-                    .collect(Collectors.toMap(
-                            rule -> rule.getResourceType(), 
-                            rule -> calculateModifiedOutput(rule.getAmount(), saveData.getWorkingLevel())
-                            )
-                    );
-            this.modifiedOutputGainDescription = 
-                    modifiedOutputGainMap.entrySet().stream()
-                    .map(entry -> entry.getKey().getShowName() + "x" + entry.getValue())
+        if (outputGainPack != null) {
+            outputGainPack.setModifiedValues(
+                    outputGainPack.getBaseValues().stream()
+                        .map(pair -> {
+                                var newAmout = calculateModifiedOutput(pair.getAmount(), saveData.getWorkingLevel());
+                                return new ResourcePair(pair.getType(), newAmout);
+                            })
+                        .collect(Collectors.toList())
+            );
+            this.outputGainPack.setModifiedValuesDescription(
+                    outputGainPack.getModifiedValues().stream()
+                    .map(pair -> pair.getType().getShowName() + "x" + pair.getAmount())
                     .collect(Collectors.joining(", "))
-                    + "; ";
+                    + "; "
+            );
         }
         // --------------
-        if (this.baseOutputCostMap != null) {
-            this.modifiedOutputCostMap = baseOutputCostMap.entrySet().stream()
-                    .collect(Collectors.toMap(
-                            entry -> entry.getKey(), 
-                            entry -> calculateModifiedOutputCost(entry.getValue(), saveData.getWorkingLevel())
-                            ));
-            this.modifiedOuputCostDescription = 
-                    modifiedOutputCostMap.entrySet().stream()
-                    .map(entry -> entry.getKey().getShowName() + "x" + entry.getValue())
+        if (outputCostPack != null) {
+            outputCostPack.setModifiedValues(
+                    outputCostPack.getBaseValues().stream()
+                        .map(pair -> {
+                                var newAmout = calculateModifiedOutputCost(pair.getAmount(), saveData.getWorkingLevel());
+                                return new ResourcePair(pair.getType(), newAmout);
+                            })
+                        .collect(Collectors.toList())
+            );
+            this.outputCostPack.setModifiedValuesDescription(
+                    outputCostPack.getModifiedValues().stream()
+                    .map(pair -> pair.getType().getShowName() + "x" + pair.getAmount())
                     .collect(Collectors.joining(", "))
-                    + "; ";
+                    + "; "
+            );
         }
         
     };
@@ -194,33 +212,22 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
     }
     
     protected boolean canOutput() {
-        if (modifiedOutputCostMap == null) {
+        if (outputCostPack == null) {
             return true;
         }
         
-        Map<ResourceType, Long> ouputCostRule = modifiedOutputCostMap;
-        for (var entry : ouputCostRule.entrySet()) {
-            long own = game.getModelContext().getStorageManager().getResourceNum(entry.getKey());
-            if (own < entry.getValue()) {
-                return false;
-            }
-        }
-        return true;
+        var compareTarget = outputCostPack.getModifiedValues();
+        return game.getModelContext().getStorageManager().isEnough(compareTarget);
     }
     
     
     protected boolean canUpgrade() {
-        if (saveData.getLevel() >= MAX_LEVEL || modifiedUpgradeCostMap == null) {
+        if (saveData.getLevel() >= MAX_LEVEL || upgradeCostPack == null) {
             return false;
         }
-        Map<ResourceType, Long> upgradeCostRule = modifiedUpgradeCostMap;
-        for (var entry : upgradeCostRule.entrySet()) {
-            long own = game.getModelContext().getStorageManager().getResourceNum(entry.getKey());
-            if (own < entry.getValue()) {
-                return false;
-            }
-        }
-        return true;
+        
+        var compareTarget = upgradeCostPack.getModifiedValues();
+        return game.getModelContext().getStorageManager().isEnough(compareTarget);
     }
     
     public String getSaveDataKey() {

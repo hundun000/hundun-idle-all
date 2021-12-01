@@ -5,6 +5,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 import hundun.gdxgame.bugindustry.BugIndustryGame;
@@ -17,14 +19,14 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public abstract class BaseScreen implements Screen {
     public final BugIndustryGame game;
-    protected final OrthographicCamera camera;
-    protected final Stage stage;
+    //protected final OrthographicCamera camera;
+    protected final Stage uiStage;
     
     public BaseScreen(BugIndustryGame game) {
         this.game = game;
-        this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        var viewport = new StretchViewport(camera.viewportWidth, camera.viewportHeight, camera);
-        this.stage = new Stage(viewport, game.getBatch());
+        var camera = new OrthographicCamera(game.LOGIC_WIDTH, game.LOGIC_HEIGHT);
+        var viewport = new FitViewport(game.LOGIC_WIDTH, game.LOGIC_HEIGHT, camera);
+        this.uiStage = new Stage(viewport, game.getBatch());
     }
     
     
@@ -39,6 +41,6 @@ public abstract class BaseScreen implements Screen {
     
     @Override
     public void resize(int width, int height) {
-        camera.setToOrtho(false, width, height);
+        this.uiStage.getViewport().update(width, height, true);
     }
 }

@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import hundun.gdxgame.bugindustry.model.construction.BaseConstruction;
+import hundun.gdxgame.bugindustry.model.resource.ResourcePack;
 import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
 
 /**
@@ -44,41 +45,26 @@ public class PopupInfoBoard extends Table {
             .left()
             .row();
         
-        String outputCostDescriptionStart = model.getDescriptionPackage().getOutputCostDescriptionStart();
-        if (outputCostDescriptionStart != null && model.getModifiedOutputCostMap() != null) {
-            add(wapperContainer(new Label(outputCostDescriptionStart, parent.game.getButtonSkin())));
-            for (var entry : model.getModifiedOutputCostMap().entrySet()) {
-                var node = new ResourceAmountPairNode(parent.game, entry.getKey());
-                node.update(entry.getValue());
-                this.add(wapperContainer(node)).height(NODE_HEIGHT).width(NODE_WIDTH);
-            }
-            this.row();
-        }
+        buildOnePack(model.getOutputCostPack());
         
-        String outputGainDescriptionStart = model.getDescriptionPackage().getOutputGainDescriptionStart();
-        if (outputGainDescriptionStart != null && model.getModifiedOutputGainMap() != null) {
-            add(wapperContainer(new Label(outputGainDescriptionStart, parent.game.getButtonSkin())));
-            for (var entry : model.getModifiedOutputGainMap().entrySet()) {
-                var node = new ResourceAmountPairNode(parent.game, entry.getKey());
-                node.update(entry.getValue());
-                this.add(wapperContainer(node)).height(NODE_HEIGHT).width(NODE_WIDTH);
-            }
-            this.row();
-        }
-
-        String upgradeCostGainDescriptionStart = model.getDescriptionPackage().getUpgradeCostDescriptionStart();
-        if (upgradeCostGainDescriptionStart != null && model.getModifiedUpgradeCostMap() != null) {
-            add(wapperContainer(new Label(upgradeCostGainDescriptionStart, parent.game.getButtonSkin())));
-            for (var entry : model.getModifiedUpgradeCostMap().entrySet()) {
-                var node = new ResourceAmountPairNode(parent.game, entry.getKey());
-                node.update(entry.getValue());
-                this.add(wapperContainer(node)).height(NODE_HEIGHT).width(NODE_WIDTH);
-            }
-            this.row();
-        }
+        buildOnePack(model.getOutputGainPack());
+        
+        buildOnePack(model.getUpgradeCostPack());
         
         if (parent.game.debugMode) {
             this.debug();
+        }
+    }
+    
+    private void buildOnePack(ResourcePack pack) {
+        if (pack != null && pack.getModifiedValues() != null) {
+            add(wapperContainer(new Label(pack.getDescriptionStart(), parent.game.getButtonSkin())));
+            for (var entry : pack.getModifiedValues()) {
+                var node = new ResourceAmountPairNode(parent.game, entry.getType());
+                node.update(entry.getAmount());
+                this.add(wapperContainer(node)).height(NODE_HEIGHT).width(NODE_WIDTH);
+            }
+            this.row();
         }
     }
     

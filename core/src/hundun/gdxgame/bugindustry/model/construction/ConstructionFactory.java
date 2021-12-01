@@ -1,13 +1,16 @@
 package hundun.gdxgame.bugindustry.model.construction;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import hundun.gdxgame.bugindustry.BugIndustryGame;
-import hundun.gdxgame.bugindustry.data.ConstructionOuputRule;
-import hundun.gdxgame.bugindustry.model.ResourceType;
+import hundun.gdxgame.bugindustry.model.resource.ResourcePack;
+import hundun.gdxgame.bugindustry.model.resource.ResourcePair;
+import hundun.gdxgame.bugindustry.model.resource.ResourceType;
 
 /**
  * @author hundun
@@ -32,9 +35,10 @@ public class ConstructionFactory {
             construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
             construction.detailDescroptionConstPart = "Click gain some wood";
             construction.descriptionPackage = BaseConstruction.GATHER_DESCRIPTION_PACKAGE;
-            construction.baseOutputGainRules = Arrays.asList(
-                    new ConstructionOuputRule(ResourceType.WOOD, 1)
+            construction.outputGainPack = toPack(Map.of(
+                    ResourceType.WOOD, 1)
                     );
+            construction.updateDescription();
             register(construction);
         }
         // auto
@@ -43,14 +47,15 @@ public class ConstructionFactory {
             construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
             construction.detailDescroptionConstPart = "Auto gain some wood";
             construction.descriptionPackage = BaseConstruction.MAX_LEVEL_AUTO_DESCRIPTION_PACKAGE;
-            construction.baseOutputGainRules = Arrays.asList(
-                    new ConstructionOuputRule(ResourceType.WOOD, 1)
+            construction.outputGainPack = toPack(Map.of(
+                    ResourceType.WOOD, 1)
                     );
-            construction.baseUpgradeCostMap = Map.of(
+            construction.upgradeCostPack = toPack(Map.of(
                     ResourceType.COIN, 25,
                     ResourceType.WOOD, 5
-                    );
+                    ));
             construction.setMAX_DRAW_NUM(15);
+            construction.updateDescription();
             register(construction);
         }
         {
@@ -58,15 +63,16 @@ public class ConstructionFactory {
             construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
             construction.detailDescroptionConstPart = "Auto use wood make wood-board";
             construction.descriptionPackage = BaseConstruction.WORKING_LEVEL_AUTO_DESCRIPTION_PACKAGE;
-            construction.baseOutputCostMap = Map.of(
+            construction.outputCostPack = toPack(Map.of(
                     ResourceType.WOOD, 50
+                    ));
+            construction.outputGainPack = toPack(Map.of(
+                    ResourceType.WOOD_BOARD, 1)
                     );
-            construction.baseOutputGainRules = Arrays.asList(
-                    new ConstructionOuputRule(ResourceType.WOOD_BOARD, 1)
-                    );
-            construction.baseUpgradeCostMap = Map.of(
+            construction.upgradeCostPack = toPack(Map.of(
                     ResourceType.COIN, 500
-                    );
+                    ));
+            construction.updateDescription();
             register(construction);
         } 
         // win
@@ -75,14 +81,23 @@ public class ConstructionFactory {
             construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
             construction.detailDescroptionConstPart = "Get a trophy and win the game";
             construction.descriptionPackage = BaseConstruction.WIN_DESCRIPTION_PACKAGE;
-            construction.baseOutputCostMap = Map.of(
+            construction.outputCostPack = toPack(Map.of(
                     ResourceType.QUEEN_BEE, 500
+                    ));
+            construction.outputGainPack = toPack(Map.of(
+                    ResourceType.WIN_TROPHY, 1)
                     );
-            construction.baseOutputGainRules = Arrays.asList(
-                    new ConstructionOuputRule(ResourceType.WIN_TROPHY, 1)
-                    );
+            construction.updateDescription();
             register(construction);
         }
+    }
+    
+    private ResourcePack toPack(Map<ResourceType, Integer> map) {
+        ResourcePack pack = new ResourcePack();
+        List<ResourcePair> pairs = new ArrayList<>(map.size());
+        map.entrySet().forEach(entry -> pairs.add(new ResourcePair(entry.getKey(), (long)entry.getValue())));
+        pack.setBaseValues(pairs);
+        return pack;
     }
     
     private void initShop() {
@@ -91,15 +106,16 @@ public class ConstructionFactory {
             construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
             construction.detailDescroptionConstPart = "Auto sell wood";
             construction.descriptionPackage = BaseConstruction.SELLING_DESCRIPTION_PACKAGE;
-            construction.baseOutputCostMap = Map.of(
+            construction.outputCostPack = toPack(Map.of(
                     ResourceType.WOOD, 1
+                    ));
+            construction.outputGainPack = toPack(Map.of(
+                    ResourceType.COIN, 5)
                     );
-            construction.baseOutputGainRules = Arrays.asList(
-                    new ConstructionOuputRule(ResourceType.COIN, 5)
-                    );
-            construction.baseUpgradeCostMap = Map.of(
+            construction.upgradeCostPack = toPack(Map.of(
                     ResourceType.COIN, 50
-                    );
+                    ));
+            construction.updateDescription();
             register(construction);
         }
         {
@@ -107,15 +123,16 @@ public class ConstructionFactory {
             construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
             construction.detailDescroptionConstPart = "Auto sell wood-board";
             construction.descriptionPackage = BaseConstruction.SELLING_DESCRIPTION_PACKAGE;
-            construction.baseOutputCostMap = Map.of(
+            construction.outputCostPack = toPack(Map.of(
                     ResourceType.WOOD_BOARD, 1
+                    ));
+            construction.outputGainPack = toPack(Map.of(
+                    ResourceType.COIN, 300)
                     );
-            construction.baseOutputGainRules = Arrays.asList(
-                    new ConstructionOuputRule(ResourceType.COIN, 300)
-                    );
-            construction.baseUpgradeCostMap = Map.of(
+            construction.upgradeCostPack = toPack(Map.of(
                     ResourceType.COIN, 500
-                    );
+                    ));
+            construction.updateDescription();
             register(construction);
         }
         {
@@ -123,15 +140,16 @@ public class ConstructionFactory {
             construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
             construction.detailDescroptionConstPart = "Auto sell bee";
             construction.descriptionPackage = BaseConstruction.SELLING_DESCRIPTION_PACKAGE;
-            construction.baseOutputCostMap = Map.of(
+            construction.outputCostPack = toPack(Map.of(
                     ResourceType.BEE, 1
+                    ));
+            construction.outputGainPack = toPack(Map.of(
+                    ResourceType.COIN, 5)
                     );
-            construction.baseOutputGainRules = Arrays.asList(
-                    new ConstructionOuputRule(ResourceType.COIN, 5)
-                    );
-            construction.baseUpgradeCostMap = Map.of(
+            construction.upgradeCostPack = toPack(Map.of(
                     ResourceType.COIN, 50
-                    );
+                    ));
+            construction.updateDescription();
             register(construction);
         }
         {
@@ -139,15 +157,16 @@ public class ConstructionFactory {
             construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
             construction.detailDescroptionConstPart = "Auto sell honey";
             construction.descriptionPackage = BaseConstruction.SELLING_DESCRIPTION_PACKAGE;
-            construction.baseOutputCostMap = Map.of(
+            construction.outputCostPack = toPack(Map.of(
                     ResourceType.HONEY, 1
+                    ));
+            construction.outputGainPack = toPack(Map.of(
+                    ResourceType.COIN, 10)
                     );
-            construction.baseOutputGainRules = Arrays.asList(
-                    new ConstructionOuputRule(ResourceType.COIN, 10)
-                    );
-            construction.baseUpgradeCostMap = Map.of(
+            construction.upgradeCostPack = toPack(Map.of(
                     ResourceType.COIN, 100
-                    );
+                    ));
+            construction.updateDescription();
             register(construction);
         }
         {
@@ -155,15 +174,16 @@ public class ConstructionFactory {
             construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
             construction.detailDescroptionConstPart = "Auto sell beewax";
             construction.descriptionPackage = BaseConstruction.SELLING_DESCRIPTION_PACKAGE;
-            construction.baseOutputCostMap = Map.of(
+            construction.outputCostPack = toPack(Map.of(
                     ResourceType.HONEY, 1
+                    ));
+            construction.outputGainPack = toPack(Map.of(
+                    ResourceType.COIN, 100)
                     );
-            construction.baseOutputGainRules = Arrays.asList(
-                    new ConstructionOuputRule(ResourceType.COIN, 100)
-                    );
-            construction.baseUpgradeCostMap = Map.of(
+            construction.upgradeCostPack = toPack(Map.of(
                     ResourceType.COIN, 1000
-                    );
+                    ));
+            construction.updateDescription();
             register(construction);
         }
         
@@ -180,9 +200,10 @@ public class ConstructionFactory {
             construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
             construction.detailDescroptionConstPart = "Click gain bee";
             construction.descriptionPackage = BaseConstruction.GATHER_DESCRIPTION_PACKAGE;
-            construction.baseOutputGainRules = Arrays.asList(
-                    new ConstructionOuputRule(ResourceType.BEE, 1)
+            construction.outputGainPack = toPack(Map.of(
+                    ResourceType.BEE, 1)
                     );
+            construction.updateDescription();
             register(construction);
         }
         // auto
@@ -191,14 +212,15 @@ public class ConstructionFactory {
             construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
             construction.detailDescroptionConstPart = "Auto gain honey";
             construction.descriptionPackage = BaseConstruction.MAX_LEVEL_AUTO_DESCRIPTION_PACKAGE;
-            construction.baseOutputGainRules = Arrays.asList(
-                    new ConstructionOuputRule(ResourceType.HONEY, 1)
+            construction.outputGainPack = toPack(Map.of(
+                    ResourceType.HONEY, 1)
                     );
-            construction.baseUpgradeCostMap = Map.of(
+            construction.upgradeCostPack = toPack(Map.of(
                     ResourceType.COIN, 50, 
                     ResourceType.WOOD, 5, 
                     ResourceType.BEE, 3
-                    );
+                    ));
+            construction.updateDescription();
             register(construction);
         }
         {
@@ -206,16 +228,17 @@ public class ConstructionFactory {
             construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
             construction.detailDescroptionConstPart = "Auto gain bee and honey";
             construction.descriptionPackage = BaseConstruction.MAX_LEVEL_AUTO_DESCRIPTION_PACKAGE;
-            construction.baseOutputGainRules = Arrays.asList(
-                    new ConstructionOuputRule(ResourceType.BEE, 1),
-                    new ConstructionOuputRule(ResourceType.HONEY, 3)
+            construction.outputGainPack = toPack(Map.of(
+                    ResourceType.BEE, 1,
+                    ResourceType.HONEY, 3)
                     );
-            construction.baseUpgradeCostMap = Map.of(
+            construction.upgradeCostPack = toPack(Map.of(
                     ResourceType.COIN, 200,
                     ResourceType.WOOD, 15, 
                     ResourceType.BEE, 5,
                     ResourceType.HONEY, 5
-                    );
+                    ));
+            construction.updateDescription();
             register(construction);
         }
         {
@@ -223,18 +246,19 @@ public class ConstructionFactory {
             construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
             construction.detailDescroptionConstPart = "Auto gain bee, honey and beewax";
             construction.descriptionPackage = BaseConstruction.MAX_LEVEL_AUTO_DESCRIPTION_PACKAGE;
-            construction.baseOutputGainRules = Arrays.asList(
-                    new ConstructionOuputRule(ResourceType.BEE, 1),
-                    new ConstructionOuputRule(ResourceType.HONEY, 3),
-                    new ConstructionOuputRule(ResourceType.BEEWAX, 3)
+            construction.outputGainPack = toPack(Map.of(
+                    ResourceType.BEE, 1,
+                    ResourceType.HONEY, 3,
+                    ResourceType.BEEWAX, 3)
                     );
-            construction.baseUpgradeCostMap = Map.of(
+            construction.upgradeCostPack = toPack(Map.of(
                     ResourceType.COIN, 500,
                     ResourceType.WOOD, 30, 
                     ResourceType.WOOD_BOARD, 5, 
                     ResourceType.BEE, 10,
                     ResourceType.HONEY, 10
-                    );
+                    ));
+            construction.updateDescription();
             register(construction);
         }
         {
@@ -242,31 +266,19 @@ public class ConstructionFactory {
             construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
             construction.detailDescroptionConstPart = "Auto gain queen-bee";
             construction.descriptionPackage = BaseConstruction.MAX_LEVEL_AUTO_DESCRIPTION_PACKAGE;
-            construction.baseOutputGainRules = Arrays.asList(
-                    new ConstructionOuputRule(ResourceType.QUEEN_BEE, 1)
+            construction.outputGainPack = toPack(Map.of(
+                    ResourceType.QUEEN_BEE, 1)
                     );
-            construction.baseUpgradeCostMap = Map.of(
+            construction.upgradeCostPack = toPack(Map.of(
                     ResourceType.COIN, 5000,
                     ResourceType.WOOD_BOARD, 50, 
                     ResourceType.BEE, 100,
                     ResourceType.HONEY, 50,
                     ResourceType.BEEWAX, 10
-                    );
+                    ));
+            construction.updateDescription();
             register(construction);
         }
-//        // buff
-//        {
-//            BaseConstruction construction = new BaseBuffConstruction(game, BuffId.BUFF_HONEY, ConstructionId.HONEY_BUFF_PROVIDER);
-//            construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
-//            construction.detailDescroptionConstPart = "speed up gain honey.";
-//            construction.descriptionPackage = BaseConstruction.BUFF_DESCRIPTION_PACKAGE;
-//            construction.baseUpgradeCostMap = (
-//                    Map.of(
-//                            ResourceType.QUEEN_BEE, 1
-//                            )
-//                    );
-//            register(construction);
-//        }
         
     }
     

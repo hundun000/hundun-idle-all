@@ -1,4 +1,4 @@
-package hundun.gdxgame.bugindustry.model;
+package hundun.gdxgame.bugindustry.model.resource;
 /**
  * @author hundun
  * Created on 2021/11/05

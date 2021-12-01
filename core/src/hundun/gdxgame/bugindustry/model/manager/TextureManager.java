@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import hundun.gdxgame.bugindustry.model.GameArea;
-import hundun.gdxgame.bugindustry.model.ResourceType;
 import hundun.gdxgame.bugindustry.model.construction.ConstructionId;
+import hundun.gdxgame.bugindustry.model.resource.ResourceType;
 import lombok.Getter;
 
 public class TextureManager {

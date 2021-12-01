@@ -7,10 +7,10 @@ import hundun.gdxgame.bugindustry.BugIndustryGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		
-	    
+	    BugIndustryGame game = new BugIndustryGame();
 	    LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = (int) (BugIndustryGame.LOGIC_WIDTH * BugIndustryGame.scale);
-		config.height = (int) (BugIndustryGame.LOGIC_HEIGHT * BugIndustryGame.scale);
-		new LwjglApplication(new BugIndustryGame(), config);
+		config.width = (int) (game.LOGIC_WIDTH * BugIndustryGame.desktopScale);
+		config.height = (int) (game.LOGIC_HEIGHT * BugIndustryGame.desktopScale);
+		new LwjglApplication(game, config);
 	}
 }

@@ -1,12 +1,14 @@
 package hundun.gdxgame.bugindustry.model.construction;
 
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.badlogic.gdx.Gdx;
 
 import hundun.gdxgame.bugindustry.BugIndustryGame;
-import hundun.gdxgame.bugindustry.model.ResourceType;
+import hundun.gdxgame.bugindustry.model.resource.ResourcePair;
+import hundun.gdxgame.bugindustry.model.resource.ResourceType;
 
 /**
  * @author hundun
@@ -36,7 +38,7 @@ public class BaseBuffConstruction extends BaseConstruction {
         if (!canUpgrade()) {
             return;
         }
-        Map<ResourceType, Long> upgradeCostRule = modifiedUpgradeCostMap;
+        List<ResourcePair> upgradeCostRule = upgradeCostPack.getModifiedValues();
         game.getModelContext().getStorageManager().modifyAllResourceNum(upgradeCostRule, false);
         saveData.setLevel(saveData.getLevel() + 1);
         game.getModelContext().getBuffManager().addBuffAmout(buffId, 1);
@@ -50,7 +52,7 @@ public class BaseBuffConstruction extends BaseConstruction {
 
 
     @Override
-    protected long calculateModifiedUpgradeCost(int baseValue, int level) {
+    protected long calculateModifiedUpgradeCost(long baseValue, int level) {
         return (int)(
                 baseValue
                 * Math.pow(upgradeCostLevelUpArg, level)
@@ -58,12 +60,12 @@ public class BaseBuffConstruction extends BaseConstruction {
     }
 
     @Override
-    protected long calculateModifiedOutput(int baseValue, int level) {
+    protected long calculateModifiedOutput(long baseValue, int level) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected long calculateModifiedOutputCost(int baseValue, int level) {
+    protected long calculateModifiedOutputCost(long baseValue, int level) {
         throw new UnsupportedOperationException();
     }
 

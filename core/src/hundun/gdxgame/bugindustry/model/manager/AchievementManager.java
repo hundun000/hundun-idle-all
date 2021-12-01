@@ -13,8 +13,8 @@ import com.badlogic.gdx.Gdx;
 
 import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.bugindustry.model.AchievementPrototype;
-import hundun.gdxgame.bugindustry.model.ResourceType;
 import hundun.gdxgame.bugindustry.model.construction.BuffId;
+import hundun.gdxgame.bugindustry.model.resource.ResourceType;
 import hundun.gdxgame.bugindustry.ui.IAmountChangeEventListener;
 import lombok.Getter;
 import lombok.Setter;
@@ -49,7 +49,7 @@ public class AchievementManager implements IAmountChangeEventListener {
             return true;
         }
         for (var entry : requiredResources.entrySet()) {
-            long own = game.getModelContext().getStorageManager().getResourceNum(entry.getKey());
+            long own = game.getModelContext().getStorageManager().getResourceNumOrZero(entry.getKey());
             if (own < entry.getValue()) {
                 return false;
             }

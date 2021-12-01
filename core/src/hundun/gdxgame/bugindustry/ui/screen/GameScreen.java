@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.bugindustry.model.AchievementPrototype;
@@ -71,11 +72,11 @@ public class GameScreen extends BaseScreen {
     @Getter
     GameArea area;
     
-    Stage backStage;
+    Stage backUiStage;
     
     public GameScreen(BugIndustryGame game) {
         super(game);
-        backStage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+        backUiStage = new Stage(new FitViewport(game.LOGIC_WIDTH, game.LOGIC_HEIGHT, uiStage.getCamera()));
     }
     
     public void setAreaAndNotifyChildren(GameArea current) {
@@ -95,7 +96,7 @@ public class GameScreen extends BaseScreen {
 //        stage.addActor(backgroundImage);
         
         this.backgroundImageBox = new BackgroundImageBox(this);
-        backStage.addActor(backgroundImageBox);
+        backUiStage.addActor(backgroundImageBox);
         
         tableBackgroundPixmap = new Pixmap(1,1, Pixmap.Format.RGB565);
         tableBackgroundPixmap.setColor(0.8f, 0.8f, 0.8f, 1.0f);
@@ -119,24 +120,24 @@ public class GameScreen extends BaseScreen {
 //        stage.addActor(areaChangeButtonR);
         
         gameAreaControlBoard = new GameAreaControlBoard(this);
-        stage.addActor(gameAreaControlBoard);
+        uiStage.addActor(gameAreaControlBoard);
         
         
         
         popUpInfoBoard = new PopupInfoBoard(this);
-        stage.addActor(popUpInfoBoard);
+        uiStage.addActor(popUpInfoBoard);
         
         storageInfoTable = new StorageInfoBoard(this);
-        stage.addActor(storageInfoTable);
+        uiStage.addActor(storageInfoTable);
         
         constructionControlBoard = new ConstructionControlBoard(this);
-        stage.addActor(constructionControlBoard);
+        uiStage.addActor(constructionControlBoard);
         
         achievementMaskBoard = new AchievementMaskBoard(this);
-        stage.addActor(achievementMaskBoard);
+        uiStage.addActor(achievementMaskBoard);
         
         
-        gameImageDrawHelper = new GameImageDrawHelper(this, stage.getCamera());
+        gameImageDrawHelper = new GameImageDrawHelper(this, uiStage.getCamera());
 //        gameImageDrawHelper.addBeeEntity();
 //        gameImageDrawHelper.addBeeEntity();
 //        gameImageDrawHelper.addBeeEntity();
@@ -144,7 +145,7 @@ public class GameScreen extends BaseScreen {
         clockLabel = new Label("", game.getButtonSkin());
         clockLabel.setBounds(0, Gdx.graphics.getHeight() - 10 - 50, 200, 50);
         if (game.debugMode) {
-            stage.addActor(clockLabel);
+            uiStage.addActor(clockLabel);
         }
         
         //backTable.debugAll();
@@ -153,8 +154,9 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(stage);
-
+        Gdx.input.setInputProcessor(uiStage);
+        game.getBatch().setProjectionMatrix(uiStage.getViewport().getCamera().combined);
+        
         initChildren();
         
         setAreaAndNotifyChildren(GameArea.BEE_FARM);
@@ -173,13 +175,13 @@ public class GameScreen extends BaseScreen {
             }
         }
         
-        stage.act();
+        uiStage.act();
         
-        backStage.draw();
+        backUiStage.draw();
         if (game.drawGameImageAndPlayAudio) {
             gameImageDrawHelper.drawAll();
         }
-        stage.draw();
+        uiStage.draw();
         
     }
 

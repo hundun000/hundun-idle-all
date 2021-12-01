@@ -14,9 +14,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import hundun.gdxgame.bugindustry.model.GameArea;
-import hundun.gdxgame.bugindustry.model.ResourceType;
 import hundun.gdxgame.bugindustry.model.construction.BaseConstruction;
 import hundun.gdxgame.bugindustry.model.construction.ConstructionId;
+import hundun.gdxgame.bugindustry.model.resource.ResourceType;
 import hundun.gdxgame.bugindustry.ui.IAmountChangeEventListener;
 import hundun.gdxgame.bugindustry.ui.image.GameEntity;
 import hundun.gdxgame.bugindustry.ui.image.GameEntityFactory;
@@ -107,7 +107,7 @@ public class GameImageDrawHelper implements IAmountChangeEventListener {
     
     private void checkBeeEntityList() {
         ResourceType type = ResourceType.BEE;
-        long resourceNum = parent.game.getModelContext().getStorageManager().getResourceNum(type);
+        long resourceNum = parent.game.getModelContext().getStorageManager().getResourceNumOrZero(type);
         int drawNum = (int) Math.min(MAX_DRAW_BEE_NUM, resourceNum);
         
         Queue<GameEntity> gameEntities = beeQueue;

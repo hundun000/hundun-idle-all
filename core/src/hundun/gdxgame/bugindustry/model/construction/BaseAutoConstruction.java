@@ -9,8 +9,7 @@ import java.util.stream.Collectors;
 import com.badlogic.gdx.Gdx;
 
 import hundun.gdxgame.bugindustry.BugIndustryGame;
-import hundun.gdxgame.bugindustry.data.ConstructionOuputRule;
-import hundun.gdxgame.bugindustry.model.ResourceType;
+import hundun.gdxgame.bugindustry.model.resource.ResourceType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -55,7 +54,7 @@ public class BaseAutoConstruction extends BaseConstruction {
         if (!canClickEffect()) {
             return;
         }
-        Map<ResourceType, Long> upgradeCostRule = modifiedUpgradeCostMap;
+        var upgradeCostRule = upgradeCostPack.getModifiedValues();
         game.getModelContext().getStorageManager().modifyAllResourceNum(upgradeCostRule, false);
         saveData.setLevel(saveData.getLevel() + 1);
         if (!workingLevelChangable) {
@@ -88,15 +87,15 @@ public class BaseAutoConstruction extends BaseConstruction {
             return;
         }
         Gdx.app.log(this.id.name(), "AutoOutput");
-        if (modifiedOutputCostMap != null) {
-            game.getModelContext().getStorageManager().modifyAllResourceNum(modifiedOutputCostMap, false);
+        if (outputCostPack != null) {
+            game.getModelContext().getStorageManager().modifyAllResourceNum(outputCostPack.getModifiedValues(), false);
         }
-        game.getModelContext().getStorageManager().modifyAllResourceNum(modifiedOutputGainMap, true);
+        game.getModelContext().getStorageManager().modifyAllResourceNum(outputGainPack.getModifiedValues(), true);
     }
     
 
     @Override
-    protected long calculateModifiedUpgradeCost(int baseValue, int level) {
+    protected long calculateModifiedUpgradeCost(long baseValue, int level) {
         return (int)(
                 baseValue
                 * (1 + 2 * level)
@@ -105,12 +104,12 @@ public class BaseAutoConstruction extends BaseConstruction {
     }
     
     @Override
-    protected long calculateModifiedOutput(int baseValue, int level) {
+    protected long calculateModifiedOutput(long baseValue, int level) {
         return baseValue * level;
     }
 
     @Override
-    protected long calculateModifiedOutputCost(int baseValue, int level) {
+    protected long calculateModifiedOutputCost(long baseValue, int level) {
         return baseValue * level;
     }
 

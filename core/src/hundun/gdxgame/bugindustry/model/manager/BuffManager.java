@@ -8,8 +8,8 @@ import java.util.Map;
 import com.badlogic.gdx.graphics.g3d.environment.AmbientCubemap;
 
 import hundun.gdxgame.bugindustry.BugIndustryGame;
-import hundun.gdxgame.bugindustry.model.ResourceType;
 import hundun.gdxgame.bugindustry.model.construction.BuffId;
+import hundun.gdxgame.bugindustry.model.resource.ResourceType;
 import hundun.gdxgame.bugindustry.ui.IAmountChangeEventListener;
 import lombok.Data;
 import lombok.Getter;

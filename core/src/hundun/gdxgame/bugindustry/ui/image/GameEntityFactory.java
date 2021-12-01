@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import hundun.gdxgame.bugindustry.BugIndustryGame;
-import hundun.gdxgame.bugindustry.model.ResourceType;
 import hundun.gdxgame.bugindustry.model.construction.ConstructionId;
+import hundun.gdxgame.bugindustry.model.resource.ResourceType;
 import hundun.gdxgame.bugindustry.ui.component.ConstructionControlBoard;
 import hundun.gdxgame.bugindustry.ui.component.GameAreaControlBoard;
 import hundun.gdxgame.bugindustry.ui.component.StorageInfoBoard;

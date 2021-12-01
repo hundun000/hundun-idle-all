@@ -5,7 +5,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -14,7 +17,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import hundun.gdxgame.bugindustry.model.GameArea;
 import hundun.gdxgame.bugindustry.ui.IGameAreaChangeListener;
@@ -58,7 +63,7 @@ public class GameAreaControlBoard extends Table implements IGameAreaChangeListen
     }
     
     private void initButtonMap(GameArea gameArea, boolean longVersion) {
-        Image node = new Image(new SpriteDrawable(new Sprite(parent.game.getTextureManager().getGameAreaTexture(gameArea, longVersion))));
+        Image node = new Image(getDrawable(gameArea, longVersion));
         //Button button = new TextButton(gameArea.name(), parent.game.getButtonSkin());
         //textButton.setSize(SHORT_CELL_WIDTH, CELL_HEIGHT);
         node.addListener(new ClickListener() {
@@ -71,17 +76,20 @@ public class GameAreaControlBoard extends Table implements IGameAreaChangeListen
         nodes.put(gameArea, node);
         this.add(node).width(FULL_CELL_WIDTH).height(CELL_HEIGHT).row();
     }
+    
+    private Drawable getDrawable(GameArea gameArea, boolean longVersion) {
+        if (parent.game.drawGameImageAndPlayAudio) {
+            return new SpriteDrawable(new Sprite(parent.game.getTextureManager().getGameAreaTexture(gameArea, longVersion)));
+        } else {
+            Pixmap pixmap = new Pixmap(FULL_CELL_WIDTH, CELL_HEIGHT, Pixmap.Format.RGB565);
+            pixmap.setColor(0.8f, 0.8f, 0.8f, 1.0f);
+            pixmap.fillRectangle(longVersion ? 0 : FULL_CELL_WIDTH - SHORT_CELL_WIDTH , 0, longVersion ? FULL_CELL_WIDTH : SHORT_CELL_WIDTH, CELL_HEIGHT);;
+            return new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
+        }
+    }
 
     @Override
     public void onGameAreaChange(GameArea last, GameArea current) {
-//        buttons.entrySet().forEach(entry -> {
-//            if (entry.getKey() == current) {
-//                entry.getValue().setWidth(FULL_CELL_WIDTH);
-//            } else {
-//                entry.getValue().setWidth(SHORT_CELL_WIDTH);
-//            }
-//            //this.getCell(entry.getValue()).right();
-//        });
         rebuildChild(current);
     }
     
@@ -89,10 +97,10 @@ public class GameAreaControlBoard extends Table implements IGameAreaChangeListen
         
         nodes.entrySet().forEach(entry -> {
             if (entry.getKey() == current) {
-                entry.getValue().setDrawable(new SpriteDrawable(new Sprite(parent.game.getTextureManager().getGameAreaTexture(entry.getKey(), true))));
+                entry.getValue().setDrawable(getDrawable(entry.getKey(), true));
                 //this.add(entry.getValue()).width(FULL_CELL_WIDTH).height(CELL_HEIGHT).colspan(2).row();
             } else {
-                entry.getValue().setDrawable(new SpriteDrawable(new Sprite(parent.game.getTextureManager().getGameAreaTexture(entry.getKey(), false))));
+                entry.getValue().setDrawable(getDrawable(entry.getKey(), false));
                 //this.add(entry.getValue()).width(SHORT_CELL_WIDTH).height(CELL_HEIGHT).row();
             }
             

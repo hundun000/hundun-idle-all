@@ -18,7 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import hundun.gdxgame.bugindustry.model.GameArea;
-import hundun.gdxgame.bugindustry.model.ResourceType;
+import hundun.gdxgame.bugindustry.model.resource.ResourceType;
 import hundun.gdxgame.bugindustry.ui.ILogicFrameListener;
 import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
 
@@ -125,7 +125,7 @@ public class StorageInfoBoard extends Table {
             rebuildCells();
         }
         
-        nodes.stream().forEach(node -> node.update(parent.game.getModelContext().getStorageManager().getResourceNum(node.getResourceType())));
+        nodes.stream().forEach(node -> node.update(parent.game.getModelContext().getStorageManager().getResourceNumOrZero(node.getResourceType())));
     }
 
     @Override

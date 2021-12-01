@@ -3,8 +3,8 @@ package hundun.gdxgame.bugindustry.data;
 import java.util.Map;
 import java.util.Set;
 
-import hundun.gdxgame.bugindustry.model.ResourceType;
 import hundun.gdxgame.bugindustry.model.construction.BuffId;
+import hundun.gdxgame.bugindustry.model.resource.ResourceType;
 import lombok.Data;
 
 /**

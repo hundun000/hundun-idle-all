@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 import com.badlogic.gdx.Gdx;
 
 import hundun.gdxgame.bugindustry.BugIndustryGame;
-import hundun.gdxgame.bugindustry.data.ConstructionOuputRule;
 
 /**
  * @author hundun
@@ -22,7 +21,7 @@ public class BaseClickGatherConstruction extends BaseConstruction {
         if (!canClickEffect()) {
             return;
         }
-        game.getModelContext().getStorageManager().modifyAllResourceNum(modifiedOutputGainMap, true);
+        game.getModelContext().getStorageManager().modifyAllResourceNum(outputGainPack.getModifiedValues(), true);
     }
     
     @Override
@@ -38,17 +37,17 @@ public class BaseClickGatherConstruction extends BaseConstruction {
 
 
     @Override
-    protected long calculateModifiedUpgradeCost(int baseValue, int level) {
+    protected long calculateModifiedUpgradeCost(long baseValue, int level) {
         return baseValue;
     }
 
     @Override
-    protected long calculateModifiedOutput(int baseValue, int level) {
+    protected long calculateModifiedOutput(long baseValue, int level) {
         return baseValue;
     }
 
     @Override
-    protected long calculateModifiedOutputCost(int baseValue, int level) {
+    protected long calculateModifiedOutputCost(long baseValue, int level) {
         return baseValue;
     }
 

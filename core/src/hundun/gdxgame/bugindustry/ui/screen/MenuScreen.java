@@ -42,11 +42,13 @@ public class MenuScreen extends BaseScreen {
     private void initScene2d() {
         
         Image backImage = new Image(game.getTextureManager().getMenuTexture());
-        stage.addActor(backImage);
+        if (game.drawGameImageAndPlayAudio) {
+            uiStage.addActor(backImage);
+        }
         
         table = new Table();
         table.setBounds((Gdx.graphics.getWidth() - BUTTON_WIDTH)/2, 0, BUTTON_WIDTH, Gdx.graphics.getHeight() / 2);
-        stage.addActor(table);
+        uiStage.addActor(table);
         
         buttonContinueGame = new TextButton("Continue Game", game.getButtonSkin());
         //buttonContinueGame.setSize(100, 100);
@@ -92,47 +94,13 @@ public class MenuScreen extends BaseScreen {
             .pad(10)
             .row();
         
-//        buttonIntoSettingScreen = new TextButton("intoSettingScreen", game.getButtonSkin());
-//        buttonIntoSettingScreen.addListener(new InputListener(){
-//            @Override
-//            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-//                game.setScreen(game.getScreenContext().getGameBeeScreen());
-//            }
-//            @Override
-//            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-//                return true;
-//            }
-//        });
-//        table.add(buttonIntoSettingScreen)
-//            .height(BUTTON_SMALL_HEIGHT)
-//            .fill()
-//            .pad(10)
-//            .row();
-        
-        
-        //table.debugAll();
     }
     
     public void show() {
-        Gdx.input.setInputProcessor(stage);
+        Gdx.input.setInputProcessor(uiStage);
         
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//        menu.setOnAction(s -> {
-//            switch (s) {
-//                case "Play":
-//                    //game.setScreen(game.getScreenContext().getGameScreen());
-//                    break;
-//                case "Settings":
-//                    //game.setScreen(game.getScreenContext().getSettingsScreen());
-//                    break;
-//                case "Credits":
-//                    //game.setScreen(game.getScreenContext().getCreditsScreen());
-//                    break;
-//                case "Exit":
-//                    //game.setScreen(game.getScreenContext().getExitScreen());
-//                    break;
-//            }
-//        });
+        game.getBatch().setProjectionMatrix(uiStage.getViewport().getCamera().combined);
+
     }
 
     @Override
@@ -140,20 +108,12 @@ public class MenuScreen extends BaseScreen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
-        game.getBatch().setProjectionMatrix(camera.combined);
-        game.getBatch().begin();
+        
 
-//        game.getFont().draw(game.getBatch(), menuText, camera.viewportWidth / 2f - (menuText.width / 2f),
-//                camera.viewportHeight - 50);
-//
-//        menu.render(game.getBatch(), true, true, camera.viewportWidth / 2f,
-//                camera.viewportHeight - 100, 0, -30);
-
-        game.getBatch().end();
         
         
-        stage.act();
-        stage.draw();
+        uiStage.act();
+        uiStage.draw();
     }
 
 

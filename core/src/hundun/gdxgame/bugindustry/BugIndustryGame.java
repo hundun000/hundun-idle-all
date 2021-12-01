@@ -36,10 +36,10 @@ import lombok.Getter;
 
 public class BugIndustryGame extends Game {
     public boolean debugMode = false;
-    public boolean drawGameImageAndPlayAudio = true;
-    public static int scale = 1;
-    public static final int LOGIC_WIDTH = 640;
-    public static final int LOGIC_HEIGHT = 480;
+    public boolean drawGameImageAndPlayAudio = false;
+    public static final int desktopScale = 1;
+    public final int LOGIC_WIDTH = 640;
+    public final int LOGIC_HEIGHT = 480;
     public static final int GRID_SIZE = 64;
     
     @Getter

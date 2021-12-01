@@ -3,6 +3,7 @@ package hundun.gdxgame.bugindustry.model;
 import java.util.Map;
 
 import hundun.gdxgame.bugindustry.model.construction.BuffId;
+import hundun.gdxgame.bugindustry.model.resource.ResourceType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
