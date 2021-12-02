@@ -1,3 +1,5 @@
+This project created in [Game Off 2021](https://itch.io/jam/game-off-2021/rate/1299345) for the theme `BUG`
+
 ## BugIndustry
 
 A clicker game. 

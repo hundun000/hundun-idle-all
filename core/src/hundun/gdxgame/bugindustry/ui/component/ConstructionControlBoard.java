@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
-import hundun.gdxgame.idleframe.IGameAreaChangeListener;
-import hundun.gdxgame.idleframe.ILogicFrameListener;
+import hundun.gdxgame.idleframe.listener.IGameAreaChangeListener;
+import hundun.gdxgame.idleframe.listener.ILogicFrameListener;
 import hundun.gdxgame.idleframe.model.construction.BaseConstruction;
 
 /**

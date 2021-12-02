@@ -14,6 +14,6 @@ import lombok.Data;
 @Data
 public class ChildGameConfig {
     Map<String, List<String>> areaShownConstructionIds;
-    BaseConstructionFactory constructionFactory;
+    List<BaseConstruction> constructions;
     Map<String, Integer> constructionStarterLevelMap;
 }

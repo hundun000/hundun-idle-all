@@ -1,9 +1,10 @@
-package hundun.gdxgame.bugindustry;
+package hundun.gdxgame.bugindustry.logic;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.model.construction.BaseAutoConstruction;
 import hundun.gdxgame.idleframe.model.construction.BaseClickGatherConstruction;
@@ -16,19 +17,20 @@ import hundun.gdxgame.idleframe.model.resource.ResourcePair;
  * @author hundun
  * Created on 2021/11/16
  */
-public class BugIndustryConstructionFactory extends BaseConstructionFactory {
+public class ConstructionsLoader {
+    BugIndustryGame game;
+    List<BaseConstruction> constructions = new ArrayList<>();
     
-
-    public BugIndustryConstructionFactory(BaseIdleGame game) {
+    public ConstructionsLoader(BugIndustryGame game) {
         this.game = game;
         
     }
     
-    @Override
-    public void lazyInit() {
+    public List<BaseConstruction> load() {
         initWood();
         initBee();
         initShop();
+        return constructions;
     }
     
     private void initWood() {
@@ -42,7 +44,7 @@ public class BugIndustryConstructionFactory extends BaseConstructionFactory {
                     ResourceType.WOOD, 1)
                     );
             construction.updateDescription();
-            register(construction);
+            constructions.add(construction);
         }
         // auto
         {
@@ -59,7 +61,7 @@ public class BugIndustryConstructionFactory extends BaseConstructionFactory {
                     ));
             construction.setMAX_DRAW_NUM(15);
             construction.updateDescription();
-            register(construction);
+            constructions.add(construction);
         }
         {
             BaseConstruction construction = new BaseAutoConstruction(game, ConstructionId.WOOD_BOARD_MAKER, true);
@@ -76,7 +78,7 @@ public class BugIndustryConstructionFactory extends BaseConstructionFactory {
                     ResourceType.COIN, 500
                     ));
             construction.updateDescription();
-            register(construction);
+            constructions.add(construction);
         } 
         // win
         {
@@ -91,7 +93,7 @@ public class BugIndustryConstructionFactory extends BaseConstructionFactory {
                     ResourceType.WIN_TROPHY, 1)
                     );
             construction.updateDescription();
-            register(construction);
+            constructions.add(construction);
         }
     }
     
@@ -119,7 +121,7 @@ public class BugIndustryConstructionFactory extends BaseConstructionFactory {
                     ResourceType.COIN, 50
                     ));
             construction.updateDescription();
-            register(construction);
+            constructions.add(construction);
         }
         {
             BaseConstruction construction = new BaseAutoConstruction(game, ConstructionId.WOOD_BOARD_SELL_HOUSE, true);
@@ -136,7 +138,7 @@ public class BugIndustryConstructionFactory extends BaseConstructionFactory {
                     ResourceType.COIN, 500
                     ));
             construction.updateDescription();
-            register(construction);
+            constructions.add(construction);
         }
         {
             BaseConstruction construction = new BaseAutoConstruction(game, ConstructionId.BEE_SELL_HOUSE, true);
@@ -153,7 +155,7 @@ public class BugIndustryConstructionFactory extends BaseConstructionFactory {
                     ResourceType.COIN, 50
                     ));
             construction.updateDescription();
-            register(construction);
+            constructions.add(construction);
         }
         {
             BaseConstruction construction = new BaseAutoConstruction(game, ConstructionId.HONEY_SELL_HOUSE, true);
@@ -170,7 +172,7 @@ public class BugIndustryConstructionFactory extends BaseConstructionFactory {
                     ResourceType.COIN, 100
                     ));
             construction.updateDescription();
-            register(construction);
+            constructions.add(construction);
         }
         {
             BaseConstruction construction = new BaseAutoConstruction(game, ConstructionId.BEEWAX_SELL_HOUSE, true);
@@ -187,7 +189,7 @@ public class BugIndustryConstructionFactory extends BaseConstructionFactory {
                     ResourceType.COIN, 1000
                     ));
             construction.updateDescription();
-            register(construction);
+            constructions.add(construction);
         }
         
         
@@ -207,7 +209,7 @@ public class BugIndustryConstructionFactory extends BaseConstructionFactory {
                     ResourceType.BEE, 1)
                     );
             construction.updateDescription();
-            register(construction);
+            constructions.add(construction);
         }
         // auto
         {
@@ -224,7 +226,7 @@ public class BugIndustryConstructionFactory extends BaseConstructionFactory {
                     ResourceType.BEE, 3
                     ));
             construction.updateDescription();
-            register(construction);
+            constructions.add(construction);
         }
         {
             BaseConstruction construction = new BaseAutoConstruction(game, ConstructionId.MID_BEEHIVE, false);
@@ -242,7 +244,7 @@ public class BugIndustryConstructionFactory extends BaseConstructionFactory {
                     ResourceType.HONEY, 5
                     ));
             construction.updateDescription();
-            register(construction);
+            constructions.add(construction);
         }
         {
             BaseConstruction construction = new BaseAutoConstruction(game, ConstructionId.BIG_BEEHIVE, false);
@@ -262,7 +264,7 @@ public class BugIndustryConstructionFactory extends BaseConstructionFactory {
                     ResourceType.HONEY, 10
                     ));
             construction.updateDescription();
-            register(construction);
+            constructions.add(construction);
         }
         {
             BaseConstruction construction = new BaseAutoConstruction(game, ConstructionId.QUEEN_BEEHIVE, false);
@@ -280,7 +282,7 @@ public class BugIndustryConstructionFactory extends BaseConstructionFactory {
                     ResourceType.BEEWAX, 10
                     ));
             construction.updateDescription();
-            register(construction);
+            constructions.add(construction);
         }
         
     }

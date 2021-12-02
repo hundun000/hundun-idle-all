@@ -29,11 +29,16 @@ public class SaveUtils {
     
     private static Map<String, Integer> constructionStarterLevelMap;
     
-    public static void init(File saveFile, Map<String, Integer> constructionStarterLevelMap) {
+    public static void init(File saveFile) {
         SaveUtils.saveFile = saveFile;
         SaveUtils.objectMapper = new ObjectMapper()
                 .enable(SerializationFeature.INDENT_OUTPUT)
                 ;
+        
+    }
+    
+    public static void lazyInit(Map<String, Integer> constructionStarterLevelMap) {
+
         SaveUtils.constructionStarterLevelMap = constructionStarterLevelMap;
 
     }

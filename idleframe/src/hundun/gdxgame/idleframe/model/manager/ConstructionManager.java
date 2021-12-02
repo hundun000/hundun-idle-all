@@ -21,10 +21,10 @@ public class ConstructionManager {
     BaseIdleGame game;
     
     
-    public ConstructionManager(BaseIdleGame game, Map<String, List<String>> areaShownConstructionIds) {
+    public ConstructionManager(BaseIdleGame game) {
         this.game = game;
         
-        init(game.getModelContext(), areaShownConstructionIds);
+        
     }
     
     
@@ -42,7 +42,7 @@ public class ConstructionManager {
      */
     Map<String, List<BaseConstruction>> areaShownConstructions; 
     
-    private void init(ModelContext modelContext, Map<String, List<String>> areaShownConstructionIds) {
+    public void lazyInit(ModelContext modelContext, Map<String, List<String>> areaShownConstructionIds) {
         areaShownConstructions = new HashMap<>();
         if (areaShownConstructionIds != null) {
             for (var entry : areaShownConstructionIds.entrySet()) {

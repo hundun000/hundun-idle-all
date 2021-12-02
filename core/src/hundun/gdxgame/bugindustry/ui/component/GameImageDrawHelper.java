@@ -8,12 +8,13 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
-import hundun.gdxgame.bugindustry.GameArea;
-import hundun.gdxgame.bugindustry.ResourceType;
+
+import hundun.gdxgame.bugindustry.logic.GameArea;
+import hundun.gdxgame.bugindustry.logic.ResourceType;
 import hundun.gdxgame.bugindustry.ui.image.GameEntity;
 import hundun.gdxgame.bugindustry.ui.image.GameEntityFactory;
 import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
-import hundun.gdxgame.idleframe.IAmountChangeEventListener;
+import hundun.gdxgame.idleframe.listener.IAmountChangeEventListener;
 import hundun.gdxgame.idleframe.model.construction.BaseConstruction;
 
 /**

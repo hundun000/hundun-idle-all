@@ -14,9 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
-import hundun.gdxgame.bugindustry.GameArea;
+import hundun.gdxgame.bugindustry.logic.GameArea;
 import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
-import hundun.gdxgame.idleframe.IGameAreaChangeListener;
+import hundun.gdxgame.idleframe.listener.IGameAreaChangeListener;
 
 public class BackgroundImageBox extends Container<Image> implements IGameAreaChangeListener{
     GameScreen parent;

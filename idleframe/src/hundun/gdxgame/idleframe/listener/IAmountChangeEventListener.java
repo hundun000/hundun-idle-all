@@ -1,4 +1,4 @@
-package hundun.gdxgame.idleframe;
+package hundun.gdxgame.idleframe.listener;
 
 
 /**

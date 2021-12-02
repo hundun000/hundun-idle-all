@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import hundun.gdxgame.bugindustry.BugIndustryGame;
-import hundun.gdxgame.bugindustry.GameArea;
+import hundun.gdxgame.bugindustry.logic.GameArea;
 import hundun.gdxgame.bugindustry.ui.component.AchievementMaskBoard;
 import hundun.gdxgame.bugindustry.ui.component.BackgroundImageBox;
 import hundun.gdxgame.bugindustry.ui.component.ConstructionControlBoard;

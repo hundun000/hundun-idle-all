@@ -12,7 +12,7 @@ import java.util.Set;
 import com.badlogic.gdx.Gdx;
 
 import hundun.gdxgame.idleframe.BaseIdleGame;
-import hundun.gdxgame.idleframe.IAmountChangeEventListener;
+import hundun.gdxgame.idleframe.listener.IAmountChangeEventListener;
 import hundun.gdxgame.idleframe.model.AchievementPrototype;
 import lombok.Getter;
 import lombok.Setter;

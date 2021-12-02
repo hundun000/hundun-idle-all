@@ -18,9 +18,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import hundun.gdxgame.idleframe.data.ChildGameConfig;
 import hundun.gdxgame.idleframe.data.SaveData;
-import hundun.gdxgame.idleframe.model.GameDictionary;
 import hundun.gdxgame.idleframe.model.ModelContext;
-
+import hundun.gdxgame.idleframe.model.construction.BaseConstructionFactory;
 import hundun.gdxgame.idleframe.model.manager.AchievementManager;
 import hundun.gdxgame.idleframe.model.manager.AudioPlayManager;
 import hundun.gdxgame.idleframe.model.manager.BuffManager;
@@ -31,14 +30,14 @@ import hundun.gdxgame.idleframe.util.FontUtil;
 import hundun.gdxgame.idleframe.util.SaveUtils;
 import lombok.Getter;
 
-public class BaseIdleGame extends Game {
+public abstract class BaseIdleGame extends Game {
     public boolean debugMode = false;
     public boolean drawGameImageAndPlayAudio = true;
     public static final int desktopScale = 1;
     public final int LOGIC_WIDTH = 640;
     public final int LOGIC_HEIGHT = 480;
     public static final int GRID_SIZE = 64;
-    private ChildGameConfig childGameConfig;
+    //private ChildGameConfig childGameConfig;
     
     @Getter
     private SpriteBatch batch;
@@ -51,19 +50,18 @@ public class BaseIdleGame extends Game {
     private EventManager eventManager;
     @Getter
     private AudioPlayManager audioPlayManager;
-    @Getter
-    private GameDictionary gameDictionary;
+
 
     
     @Getter
     private Skin buttonSkin;
     
-    private SaveUtils saveUtils;
     
 	@Override
 	public void create () {
 	    FontUtil.init();
-	    SaveUtils.init(Gdx.files.internal("save.json").file(), childGameConfig.getConstructionStarterLevelMap());
+	    SaveUtils.init(Gdx.files.internal("save.json").file());
+        
 	    
 		this.batch = new SpriteBatch();
 		this.font = FontUtil.KOMIKA;
@@ -75,9 +73,7 @@ public class BaseIdleGame extends Game {
 		}
 		
 		initContexts();
-		
-
-		
+		contextsLazyInit();
 	}
 
 	
@@ -101,21 +97,24 @@ public class BaseIdleGame extends Game {
 	
 	
 	
-	private void initContexts() {
+	protected void initContexts() {
 	    
-	    this.gameDictionary = new GameDictionary();
+	    
         this.modelContext = new ModelContext();
         this.eventManager = new EventManager();
         
         modelContext.setStorageManager(new StorageManager(this));
         modelContext.setBuffManager(new BuffManager(this));
-        childGameConfig.getConstructionFactory().lazyInit();
-        modelContext.setConstructionFactory(childGameConfig.getConstructionFactory());
+        
+        modelContext.setConstructionFactory(new BaseConstructionFactory());
         modelContext.setAchievementManager(new AchievementManager(this));
-        modelContext.setConstructionManager(new ConstructionManager(this, childGameConfig.getAreaShownConstructionIds()));
+        modelContext.setConstructionManager(new ConstructionManager(this));
         
         this.audioPlayManager = new AudioPlayManager(this);
+        
+        
 	}
+
 
 	
 	@Override
@@ -126,7 +125,15 @@ public class BaseIdleGame extends Game {
 	}
 
 
-    protected void lazyInit(ChildGameConfig childGameConfig) {
-        this.childGameConfig = childGameConfig;
+    private void contextsLazyInit() {
+        ChildGameConfig childGameConfig = getChildGameConfig();
+        
+        SaveUtils.lazyInit(childGameConfig.getConstructionStarterLevelMap());
+        
+        
+        modelContext.getConstructionFactory().lazyInit(childGameConfig.getConstructions());
+        modelContext.getConstructionManager().lazyInit(modelContext, childGameConfig.getAreaShownConstructionIds());
     }
+    
+    protected abstract ChildGameConfig getChildGameConfig();
 }

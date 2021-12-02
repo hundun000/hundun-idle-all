@@ -1,4 +1,4 @@
-package hundun.gdxgame.bugindustry;
+package hundun.gdxgame.bugindustry.logic;
 
 import java.util.HashMap;
 import java.util.Map;

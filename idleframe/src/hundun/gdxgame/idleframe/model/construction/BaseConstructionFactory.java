@@ -15,12 +15,14 @@ import hundun.gdxgame.idleframe.model.resource.ResourcePair;
  * @author hundun
  * Created on 2021/11/16
  */
-public abstract class BaseConstructionFactory {
+public class BaseConstructionFactory {
     
     Map<String, BaseConstruction> constructions = new HashMap<>();
     protected BaseIdleGame game;
 
-    public abstract void lazyInit();
+    public void lazyInit(List<BaseConstruction> constructions) {
+        constructions.forEach(item -> register(item));
+    }
     
     protected void register(BaseConstruction construction) {
         constructions.put(construction.getId(), construction);

@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 
-import hundun.gdxgame.idleframe.IAmountChangeEventListener;
+import hundun.gdxgame.idleframe.listener.IAmountChangeEventListener;
 import hundun.gdxgame.idleframe.model.AchievementPrototype;
 
 

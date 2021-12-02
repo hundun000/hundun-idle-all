@@ -3,8 +3,8 @@ package hundun.gdxgame.bugindustry.ui.image;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import hundun.gdxgame.bugindustry.BugIndustryGame;
-import hundun.gdxgame.bugindustry.ConstructionId;
-import hundun.gdxgame.bugindustry.ResourceType;
+import hundun.gdxgame.bugindustry.logic.ConstructionId;
+import hundun.gdxgame.bugindustry.logic.ResourceType;
 import hundun.gdxgame.bugindustry.ui.component.GameAreaControlBoard;
 import hundun.gdxgame.bugindustry.ui.component.StorageInfoBoard;
 
