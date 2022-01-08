@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.badlogic.gdx.Gdx;
 
 import hundun.gdxgame.idleframe.BaseIdleGame;
+import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleframe.model.resource.ResourcePair;
 
 /**
@@ -37,7 +38,7 @@ public class BaseBuffConstruction extends BaseConstruction {
         if (!canUpgrade()) {
             return;
         }
-        List<ResourcePair> upgradeCostRule = upgradeCostPack.getModifiedValues();
+        List<ResourcePair> upgradeCostRule = upgradeComponent.getUpgradeCostPack().getModifiedValues();
         game.getModelContext().getStorageManager().modifyAllResourceNum(upgradeCostRule, false);
         saveData.setLevel(saveData.getLevel() + 1);
         game.getModelContext().getBuffManager().addBuffAmout(buffId, 1);

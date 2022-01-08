@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import hundun.gdxgame.idleframe.BaseIdleGame;
+import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleframe.model.resource.ResourcePack;
 import hundun.gdxgame.idleframe.model.resource.ResourcePair;
 

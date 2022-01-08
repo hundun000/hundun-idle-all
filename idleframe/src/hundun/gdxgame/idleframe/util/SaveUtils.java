@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import hundun.gdxgame.idleframe.data.ConstructionSaveData;
 import hundun.gdxgame.idleframe.data.SaveData;
 import hundun.gdxgame.idleframe.model.ModelContext;
-import hundun.gdxgame.idleframe.model.construction.BaseConstruction;
+import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
 
 
 /**

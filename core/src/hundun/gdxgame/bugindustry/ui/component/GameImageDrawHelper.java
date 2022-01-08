@@ -15,7 +15,8 @@ import hundun.gdxgame.bugindustry.ui.image.GameEntity;
 import hundun.gdxgame.bugindustry.ui.image.GameEntityFactory;
 import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
 import hundun.gdxgame.idleframe.listener.IAmountChangeEventListener;
-import hundun.gdxgame.idleframe.model.construction.BaseConstruction;
+import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
+
 
 /**
  * @author hundun
@@ -49,7 +50,7 @@ public class GameImageDrawHelper implements IAmountChangeEventListener {
         parent.game.getBatch().begin();
         
         
-        var shownConstructions = parent.game.getModelContext().getConstructionManager().getAreaShownConstructions(parent.getArea());
+        var shownConstructions = parent.game.getModelContext().getConstructionManager().getAreaShownConstructionsOrEmpty(parent.getArea());
         for (BaseConstruction shownConstruction : shownConstructions) {
             if (gameEntitiesOfTypes.containsKey(shownConstruction.getId())) {
                 Queue<GameEntity> queue = gameEntitiesOfTypes.get(shownConstruction.getId());
@@ -91,7 +92,7 @@ public class GameImageDrawHelper implements IAmountChangeEventListener {
     @Override
     public void onResourceChange(boolean fromLoad) {
         String gameArea = parent.getArea();
-        List<BaseConstruction> shownConstructions = parent.game.getModelContext().getConstructionManager().getAreaShownConstructions(gameArea);
+        List<BaseConstruction> shownConstructions = parent.game.getModelContext().getConstructionManager().getAreaShownConstructionsOrEmpty(gameArea);
         if (parent.getArea() == GameArea.BEE_FARM) {
             checkBeeEntityList();
         }

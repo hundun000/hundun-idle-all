@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import com.badlogic.gdx.Gdx;
 
 import hundun.gdxgame.idleframe.BaseIdleGame;
+import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -30,11 +31,9 @@ public class BaseAutoConstruction extends BaseConstruction {
     protected int autoOutputProgress = 0;
     protected static final int AUTO_OUPUT_MAX_PROGRESS = 30;
     
-    public BaseAutoConstruction(BaseIdleGame game, String id,
-            boolean workingLevelChangable
+    public BaseAutoConstruction(BaseIdleGame game, String id
             ) {
-        super(game, id);
-        this.workingLevelChangable = workingLevelChangable; 
+        super(game, id); 
     }
     
     @Override
@@ -53,10 +52,10 @@ public class BaseAutoConstruction extends BaseConstruction {
         if (!canClickEffect()) {
             return;
         }
-        var upgradeCostRule = upgradeCostPack.getModifiedValues();
+        var upgradeCostRule = upgradeComponent.getUpgradeCostPack().getModifiedValues();
         game.getModelContext().getStorageManager().modifyAllResourceNum(upgradeCostRule, false);
         saveData.setLevel(saveData.getLevel() + 1);
-        if (!workingLevelChangable) {
+        if (!levelComponent.isWorkingLevelChangable()) {
             saveData.setWorkingLevel(saveData.getLevel());
         }
         updateModifiedValues();
@@ -66,9 +65,6 @@ public class BaseAutoConstruction extends BaseConstruction {
     public boolean canClickEffect() {
         return canUpgrade();
     }
-    
-    
-    
     
     
     @Override
@@ -86,10 +82,10 @@ public class BaseAutoConstruction extends BaseConstruction {
             return;
         }
         Gdx.app.log(this.id, "AutoOutput");
-        if (outputCostPack != null) {
-            game.getModelContext().getStorageManager().modifyAllResourceNum(outputCostPack.getModifiedValues(), false);
+        if (outputComponent.hasCost()) {
+            game.getModelContext().getStorageManager().modifyAllResourceNum(outputComponent.getOutputCostPack().getModifiedValues(), false);
         }
-        game.getModelContext().getStorageManager().modifyAllResourceNum(outputGainPack.getModifiedValues(), true);
+        game.getModelContext().getStorageManager().modifyAllResourceNum(outputComponent.getOutputGainPack().getModifiedValues(), true);
     }
     
 

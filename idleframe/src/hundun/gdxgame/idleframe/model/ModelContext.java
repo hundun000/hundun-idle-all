@@ -6,6 +6,7 @@ import hundun.gdxgame.idleframe.model.manager.AchievementManager;
 import hundun.gdxgame.idleframe.model.manager.BuffManager;
 import hundun.gdxgame.idleframe.model.manager.ConstructionManager;
 import hundun.gdxgame.idleframe.model.manager.EventManager;
+import hundun.gdxgame.idleframe.model.manager.GameEntityManager;
 import hundun.gdxgame.idleframe.model.manager.StorageManager;
 import lombok.Data;
 
@@ -21,4 +22,5 @@ public class ModelContext {
     
     BaseConstructionFactory constructionFactory;
     ConstructionManager constructionManager;
+    GameEntityManager gameEntityManager;
 }

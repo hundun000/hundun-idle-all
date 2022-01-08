@@ -1,4 +1,4 @@
-package hundun.gdxgame.idleframe.model.construction;
+package hundun.gdxgame.idleframe.model.construction.base;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

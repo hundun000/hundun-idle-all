@@ -10,10 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.idleframe.util.SaveUtils;
+import hundun.gdxgame.idlestarter.BaseScreen;
 
 
 
-public class MenuScreen extends BaseScreen {
+public class MenuScreen extends BaseScreen<BugIndustryGame> {
 
     
 //    private MenuComponent<String> menu;

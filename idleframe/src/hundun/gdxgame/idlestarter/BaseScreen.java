@@ -1,23 +1,23 @@
-package hundun.gdxgame.bugindustry.ui.screen;
+package hundun.gdxgame.idlestarter;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import hundun.gdxgame.bugindustry.BugIndustryGame;
-import lombok.AllArgsConstructor;
+
+import hundun.gdxgame.idleframe.BaseIdleGame;
 
 /**
  * @author hundun
  * Created on 2021/11/02
+ * @param <T_GAME>
  */
-@AllArgsConstructor
-public abstract class BaseScreen implements Screen {
-    public final BugIndustryGame game;
-    //protected final OrthographicCamera camera;
+public abstract class BaseScreen<T_GAME extends BaseIdleGame> implements Screen {
+    public final T_GAME game;
     protected final Stage uiStage;
     
-    public BaseScreen(BugIndustryGame game) {
+    public BaseScreen(T_GAME game) {
         this.game = game;
         var camera = new OrthographicCamera(game.LOGIC_WIDTH, game.LOGIC_HEIGHT);
         var viewport = new FitViewport(game.LOGIC_WIDTH, game.LOGIC_HEIGHT, camera);

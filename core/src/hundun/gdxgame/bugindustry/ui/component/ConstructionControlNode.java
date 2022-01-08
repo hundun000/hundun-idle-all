@@ -12,7 +12,8 @@ import com.badlogic.gdx.utils.Align;
 
 import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
 import hundun.gdxgame.idleframe.listener.ILogicFrameListener;
-import hundun.gdxgame.idleframe.model.construction.BaseConstruction;
+import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
+
 
 /**
  * @author hundun
@@ -92,7 +93,7 @@ public class ConstructionControlNode extends Table implements ILogicFrameListene
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log(ConstructionControlNode.class.getSimpleName(), "up clicked");
-                model.changeWorkingLevel(1);
+                model.getLevelComponent().changeWorkingLevel(1);
             } 
         });
         //upWorkingLevelButton.setSize(50, 50);
@@ -107,7 +108,7 @@ public class ConstructionControlNode extends Table implements ILogicFrameListene
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("ConstructionView", "down clicked");
-                model.changeWorkingLevel(-1);
+                model.getLevelComponent().changeWorkingLevel(-1);
             } 
         });
         //downWorkingLevelButton.setSize(50, 50);
@@ -148,7 +149,7 @@ public class ConstructionControlNode extends Table implements ILogicFrameListene
     public void setModel(BaseConstruction model) {
         this.model = model;
         if (model != null) {
-            if (model.isWorkingLevelChangable()) {
+            if (model.getLevelComponent().isWorkingLevelChangable()) {
                 initAsChangeWorkingLevelStyle();
             } else {
                 initAsNormalStyle();
@@ -172,7 +173,7 @@ public class ConstructionControlNode extends Table implements ILogicFrameListene
         // ------ update text ------
         constructionNameLabel.setText(model.getName());
         clickEffectButton.setText(model.getButtonDescroption());
-        workingLevelLabel.setText(model.getWorkingLevelDescroption());
+        workingLevelLabel.setText(model.getLevelComponent().getWorkingLevelDescroption());
         
         // ------ update clickable-state ------
         boolean canClickEffect = model.canClickEffect();

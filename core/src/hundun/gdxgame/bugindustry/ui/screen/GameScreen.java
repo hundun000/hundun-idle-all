@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import hundun.gdxgame.bugindustry.BugIndustryGame;
@@ -19,15 +18,15 @@ import hundun.gdxgame.bugindustry.ui.component.GameImageDrawHelper;
 import hundun.gdxgame.bugindustry.ui.component.PopupInfoBoard;
 import hundun.gdxgame.bugindustry.ui.component.StorageInfoBoard;
 import hundun.gdxgame.idleframe.model.AchievementPrototype;
-import hundun.gdxgame.idleframe.model.construction.BaseConstruction;
-import lombok.Getter;
+import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
+import hundun.gdxgame.idlestarter.BasePlayScreen;
 
 /**
  * @author hundun
  * Created on 2021/11/02
  */
-public class GameScreen extends BaseScreen {
-    private static final float LOGIC_FRAME_LENGTH = 1 / 30f; 
+public class GameScreen extends BasePlayScreen<BugIndustryGame> {
+ 
     public Pixmap tableBackgroundPixmap;
     public TextureRegionDrawable tableBackgroundDrawable;
     public Pixmap tableBackgroundPixmap2;
@@ -35,44 +34,35 @@ public class GameScreen extends BaseScreen {
     public Pixmap maskBackgroundPixmap;
     public TextureRegionDrawable maskBackgroundDrawable;
     
-    StorageInfoBoard storageInfoTable;
-    ConstructionControlBoard constructionControlBoard;
+    private StorageInfoBoard storageInfoTable;
+    private ConstructionControlBoard constructionControlBoard;
     //Table backTable;
     //Image backgroundImage;
-    BackgroundImageBox backgroundImageBox;
-    Label clockLabel;
-    PopupInfoBoard popUpInfoBoard;
+    private BackgroundImageBox backgroundImageBox;
+
+    private PopupInfoBoard popUpInfoBoard;
 //    GameAreaChangeButton areaChangeButtonL;
 //    GameAreaChangeButton areaChangeButtonR;
-    GameAreaControlBoard gameAreaControlBoard;
-    AchievementMaskBoard achievementMaskBoard;
-    GameImageDrawHelper gameImageDrawHelper;
-    int clockCount = 0;
-    private float logicFramAccumulator;
-    boolean logicFramePause;
+    private GameAreaControlBoard gameAreaControlBoard;
+    private AchievementMaskBoard achievementMaskBoard;
+    private GameImageDrawHelper gameImageDrawHelper;
 
-    @Getter
-    String area;
     
-    Stage backUiStage;
+    private Stage backUiStage;
     
     public GameScreen(BugIndustryGame game) {
         super(game);
         backUiStage = new Stage(new FitViewport(game.LOGIC_WIDTH, game.LOGIC_HEIGHT, uiStage.getCamera()));
     }
     
-    public void setAreaAndNotifyChildren(String current) {
-        String last = this.area;
-        this.area = current;
+    private void registerChildrenAsListener() {
+        logicFrameListeners.add(constructionControlBoard);
         
-        //this.backgroundImage.setDrawable(new SpriteDrawable(new Sprite(game.getTextureManager().getBackgroundTexture(current))));
-        backgroundImageBox.onGameAreaChange(last, current);
-        constructionControlBoard.onGameAreaChange(last, current);
-        gameAreaControlBoard.onGameAreaChange(last, current);
+        gameAreaChangeListeners.add(backgroundImageBox);
+        gameAreaChangeListeners.add(constructionControlBoard);
+        gameAreaChangeListeners.add(gameAreaControlBoard);
     }
-    
 
-    
     private void initChildren() {
 //        this.backgroundImage = new Image(game.getTextureManager().getBackgroundTexture(GameArea.BEE_BUFF));
 //        stage.addActor(backgroundImage);
@@ -123,12 +113,7 @@ public class GameScreen extends BaseScreen {
 //        gameImageDrawHelper.addBeeEntity();
 //        gameImageDrawHelper.addBeeEntity();
 //        gameImageDrawHelper.addBeeEntity();
-        
-        clockLabel = new Label("", game.getButtonSkin());
-        clockLabel.setBounds(0, Gdx.graphics.getHeight() - 10 - 50, 200, 50);
-        if (game.debugMode) {
-            uiStage.addActor(clockLabel);
-        }
+
         
         //backTable.debugAll();
         //stage.addActor(backTable);
@@ -140,22 +125,20 @@ public class GameScreen extends BaseScreen {
         game.getBatch().setProjectionMatrix(uiStage.getViewport().getCamera().combined);
         
         initChildren();
-        
+        registerChildrenAsListener();
+        // start area
         setAreaAndNotifyChildren(GameArea.BEE_FARM);
     }
+    
+    
+    
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        logicFramAccumulator += delta;
-        if (logicFramAccumulator >= LOGIC_FRAME_LENGTH) {
-            logicFramAccumulator -= LOGIC_FRAME_LENGTH;
-            if (!logicFramePause) {
-                onLogicFrame();
-            }
-        }
+        logicFrameCheck(delta);
         
         uiStage.act();
         
@@ -167,12 +150,7 @@ public class GameScreen extends BaseScreen {
         
     }
 
-    private void onLogicFrame() {
-        clockCount++;
-        clockLabel.setText("LogicFrame: " + clockCount);
-        
-        constructionControlBoard.onLogicFrame();
-    }
+
 
     public void showAndUpdateGuideInfo(BaseConstruction model) {
         popUpInfoBoard.setVisible(true);
@@ -194,13 +172,13 @@ public class GameScreen extends BaseScreen {
 
     public void hideAchievementMaskBoard() {
         achievementMaskBoard.setVisible(false);
-        logicFramePause = false;
+        setLogicFramePause(false);
     }
 
     public void onAchievementUnlock(AchievementPrototype prototype) {
         achievementMaskBoard.setAchievementPrototype(prototype);
         achievementMaskBoard.setVisible(true);
-        logicFramePause = true;
+        setLogicFramePause(true);
     }
 
 }

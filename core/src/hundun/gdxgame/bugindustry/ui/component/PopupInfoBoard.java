@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
-import hundun.gdxgame.idleframe.model.construction.BaseConstruction;
+import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleframe.model.resource.ResourcePack;
 
 /**
@@ -43,11 +43,11 @@ public class PopupInfoBoard extends Table {
             .left()
             .row();
         
-        buildOnePack(model.getOutputCostPack());
+        buildOnePack(model.getOutputComponent().getOutputCostPack());
         
-        buildOnePack(model.getOutputGainPack());
+        buildOnePack(model.getOutputComponent().getOutputGainPack());
         
-        buildOnePack(model.getUpgradeCostPack());
+        buildOnePack(model.getUpgradeComponent().getUpgradeCostPack());
         
         if (parent.game.debugMode) {
             this.debug();

@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import com.badlogic.gdx.Gdx;
 
 import hundun.gdxgame.idleframe.BaseIdleGame;
+import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
 
 
 /**
@@ -22,7 +23,7 @@ public class BaseClickGatherConstruction extends BaseConstruction {
         if (!canClickEffect()) {
             return;
         }
-        game.getModelContext().getStorageManager().modifyAllResourceNum(outputGainPack.getModifiedValues(), true);
+        game.getModelContext().getStorageManager().modifyAllResourceNum(outputComponent.getOutputGainPack().getModifiedValues(), true);
     }
     
     @Override

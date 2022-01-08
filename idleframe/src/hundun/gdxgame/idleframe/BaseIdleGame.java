@@ -25,6 +25,7 @@ import hundun.gdxgame.idleframe.model.manager.AudioPlayManager;
 import hundun.gdxgame.idleframe.model.manager.BuffManager;
 import hundun.gdxgame.idleframe.model.manager.ConstructionManager;
 import hundun.gdxgame.idleframe.model.manager.EventManager;
+import hundun.gdxgame.idleframe.model.manager.GameEntityManager;
 import hundun.gdxgame.idleframe.model.manager.StorageManager;
 import hundun.gdxgame.idleframe.util.FontUtil;
 import hundun.gdxgame.idleframe.util.SaveUtils;
@@ -34,10 +35,9 @@ public abstract class BaseIdleGame extends Game {
     public boolean debugMode = false;
     public boolean drawGameImageAndPlayAudio = true;
     public static final int desktopScale = 1;
-    public final int LOGIC_WIDTH = 640;
-    public final int LOGIC_HEIGHT = 480;
-    public static final int GRID_SIZE = 64;
-    //private ChildGameConfig childGameConfig;
+    public final int LOGIC_WIDTH;
+    public final int LOGIC_HEIGHT;
+
     
     @Getter
     private SpriteBatch batch;
@@ -56,6 +56,11 @@ public abstract class BaseIdleGame extends Game {
     @Getter
     private Skin buttonSkin;
     
+    
+    public BaseIdleGame(int LOGIC_WIDTH, int LOGIC_HEIGHT) {
+        this.LOGIC_WIDTH = LOGIC_WIDTH;
+        this.LOGIC_HEIGHT = LOGIC_HEIGHT;
+    }
     
 	@Override
 	public void create () {
@@ -109,6 +114,7 @@ public abstract class BaseIdleGame extends Game {
         modelContext.setConstructionFactory(new BaseConstructionFactory());
         modelContext.setAchievementManager(new AchievementManager(this));
         modelContext.setConstructionManager(new ConstructionManager(this));
+        modelContext.setGameEntityManager(new GameEntityManager(this));
         
         this.audioPlayManager = new AudioPlayManager(this);
         
@@ -132,7 +138,8 @@ public abstract class BaseIdleGame extends Game {
         
         
         modelContext.getConstructionFactory().lazyInit(childGameConfig.getConstructions());
-        modelContext.getConstructionManager().lazyInit(modelContext, childGameConfig.getAreaShownConstructionIds());
+        modelContext.getConstructionManager().lazyInit(childGameConfig.getAreaControlableConstructionIds());
+        modelContext.getGameEntityManager().lazyInit(childGameConfig.getAreaShowEntityConstructionIds(), childGameConfig.getAreaShowEntityResourceIds());
     }
     
     protected abstract ChildGameConfig getChildGameConfig();

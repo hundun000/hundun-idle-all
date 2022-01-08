@@ -9,7 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
 import hundun.gdxgame.idleframe.listener.IGameAreaChangeListener;
 import hundun.gdxgame.idleframe.listener.ILogicFrameListener;
-import hundun.gdxgame.idleframe.model.construction.BaseConstruction;
+import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
+
 
 /**
  * @author hundun
@@ -60,7 +61,7 @@ public class ConstructionControlBoard extends Table implements ILogicFrameListen
 //        backgroundConstructionModels.clear();
 //        backgroundConstructionModels.addAll(allConstructionModels);
         
-        List<BaseConstruction> newConstructions = parent.game.getModelContext().getConstructionManager().getAreaShownConstructions(current);
+        List<BaseConstruction> newConstructions = parent.game.getModelContext().getConstructionManager().getAreaShownConstructionsOrEmpty(current);
         for (int i = 0; i < NUM; i++) {
             if (i < newConstructions.size()) {
                 //backgroundConstructionModels.remove(newConstructions.get(i));
