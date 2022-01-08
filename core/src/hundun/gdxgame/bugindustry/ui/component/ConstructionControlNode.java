@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 
-import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
+import hundun.gdxgame.bugindustry.ui.screen.PlayScreen;
 import hundun.gdxgame.idleframe.listener.ILogicFrameListener;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
 
@@ -20,7 +20,7 @@ import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
  * Created on 2021/11/05
  */
 public class ConstructionControlNode extends Table implements ILogicFrameListener {
-    GameScreen parent;
+    PlayScreen parent;
     BaseConstruction model;
     Label constructionNameLabel;
     TextButton upWorkingLevelButton;
@@ -38,7 +38,7 @@ public class ConstructionControlNode extends Table implements ILogicFrameListene
     int CHILD_HEIGHT = 30;
     
     
-    public ConstructionControlNode(GameScreen parent, int index) {
+    public ConstructionControlNode(PlayScreen parent, int index) {
         super();
         this.parent = parent;
         

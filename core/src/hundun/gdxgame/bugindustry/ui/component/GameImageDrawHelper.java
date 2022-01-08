@@ -13,7 +13,7 @@ import hundun.gdxgame.bugindustry.logic.GameArea;
 import hundun.gdxgame.bugindustry.logic.ResourceType;
 import hundun.gdxgame.bugindustry.ui.image.GameEntity;
 import hundun.gdxgame.bugindustry.ui.image.GameEntityFactory;
-import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
+import hundun.gdxgame.bugindustry.ui.screen.PlayScreen;
 import hundun.gdxgame.idleframe.listener.IAmountChangeEventListener;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
 
@@ -29,7 +29,7 @@ public class GameImageDrawHelper implements IAmountChangeEventListener {
 
     
     
-    GameScreen parent;
+    PlayScreen parent;
     GameEntityFactory gameEntityFactory;
     
     
@@ -38,7 +38,7 @@ public class GameImageDrawHelper implements IAmountChangeEventListener {
     private Map<String, Queue<GameEntity>> gameEntitiesOfTypes = new ConcurrentHashMap<>();
     Queue<GameEntity> beeQueue = new ConcurrentLinkedQueue<>();
     
-    public GameImageDrawHelper(GameScreen parent, Camera camera) {
+    public GameImageDrawHelper(PlayScreen parent, Camera camera) {
         this.parent = parent;
         
         this.gameEntityFactory = new GameEntityFactory(parent.game);

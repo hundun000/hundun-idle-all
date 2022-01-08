@@ -10,7 +10,7 @@ import hundun.gdxgame.bugindustry.logic.BuiltinConstructionsLoader;
 import hundun.gdxgame.bugindustry.logic.GameArea;
 import hundun.gdxgame.bugindustry.logic.GameDictionary;
 import hundun.gdxgame.bugindustry.logic.TextureManager;
-import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
+import hundun.gdxgame.bugindustry.ui.screen.PlayScreen;
 import hundun.gdxgame.bugindustry.ui.screen.MenuScreen;
 import hundun.gdxgame.bugindustry.ui.screen.ScreenContext;
 import hundun.gdxgame.idleframe.BaseIdleGame;
@@ -57,7 +57,7 @@ public class BugIndustryGame extends BaseIdleGame {
         
         this.screenContext = new ScreenContext();
         screenContext.setMenuScreen(new MenuScreen(this));
-        screenContext.setGameBeeScreen(new GameScreen(this));
+        screenContext.setGameBeeScreen(new PlayScreen(this));
     }
     
 }

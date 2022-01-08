@@ -6,9 +6,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
-import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
+import hundun.gdxgame.bugindustry.ui.screen.PlayScreen;
+import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleframe.model.resource.ResourcePack;
+import hundun.gdxgame.idlestarter.BasePlayScreen;
+
 
 /**
  * @author hundun
@@ -18,19 +21,19 @@ public class PopupInfoBoard extends Table {
     private static int NODE_HEIGHT = 25;
     private static int NODE_WIDTH = 70;
     
-    GameScreen parent;
-
-    public PopupInfoBoard(GameScreen parent) {
+    PlayScreen parent;
+    
+    public PopupInfoBoard(PlayScreen parent) {
         //super("GUIDE_TEXT", parent.game.getButtonSkin());
         this.parent = parent;
-        this.setBounds(5, GameAreaControlBoard.Y, GameAreaControlBoard.X - 10, 120);
+        //this.setBounds(5, GameAreaControlBoard.Y, GameAreaControlBoard.X - 10, 120);
         this.setTouchable(Touchable.disabled);
     }
     
     
     private <T extends Actor> Container<T> wapperContainer(T content) {
         Container<T> container = new Container<T>(content);
-        container.setBackground(parent.tableBackgroundDrawable);
+        container.setBackground(BasePlayScreen.createBorderBoard(1, 1, 0.7f, 0));
         container.fill(true);
         return container;
     }

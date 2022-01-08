@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import hundun.gdxgame.bugindustry.logic.ResourceType;
-import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
+import hundun.gdxgame.bugindustry.ui.screen.PlayScreen;
 
 /**
  * @author hundun
@@ -53,9 +53,9 @@ public class StorageInfoBoard extends Table {
     }
     
     //Label mainLabel;
-    GameScreen parent;
+    PlayScreen parent;
     
-    public StorageInfoBoard(GameScreen parent) {
+    public StorageInfoBoard(PlayScreen parent) {
         this.parent = parent;
         this.setBackground(parent.tableBackgroundDrawable);
         this.setBounds(

@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
-import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
+import hundun.gdxgame.bugindustry.ui.screen.PlayScreen;
 import hundun.gdxgame.idleframe.model.AchievementPrototype;
 
 /**
@@ -19,10 +19,10 @@ import hundun.gdxgame.idleframe.model.AchievementPrototype;
  */
 public class AchievementMaskBoard extends Table {
 
-    GameScreen parent;
+    PlayScreen parent;
     Label label;
     
-    public AchievementMaskBoard(GameScreen parent) {
+    public AchievementMaskBoard(PlayScreen parent) {
         this.parent = parent;
         this.setBackground(new SpriteDrawable(new Sprite(parent.game.getTextureManager().getWinTexture())));
         this.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

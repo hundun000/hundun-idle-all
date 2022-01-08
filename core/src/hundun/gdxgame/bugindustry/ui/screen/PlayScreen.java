@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import hundun.gdxgame.bugindustry.BugIndustryGame;
@@ -25,7 +26,7 @@ import hundun.gdxgame.idlestarter.BasePlayScreen;
  * @author hundun
  * Created on 2021/11/02
  */
-public class GameScreen extends BasePlayScreen<BugIndustryGame> {
+public class PlayScreen extends BasePlayScreen<BugIndustryGame> {
  
     public Pixmap tableBackgroundPixmap;
     public TextureRegionDrawable tableBackgroundDrawable;
@@ -36,40 +37,22 @@ public class GameScreen extends BasePlayScreen<BugIndustryGame> {
     
     private StorageInfoBoard storageInfoTable;
     private ConstructionControlBoard constructionControlBoard;
-    //Table backTable;
-    //Image backgroundImage;
     private BackgroundImageBox backgroundImageBox;
 
     private PopupInfoBoard popUpInfoBoard;
-//    GameAreaChangeButton areaChangeButtonL;
-//    GameAreaChangeButton areaChangeButtonR;
     private GameAreaControlBoard gameAreaControlBoard;
     private AchievementMaskBoard achievementMaskBoard;
     private GameImageDrawHelper gameImageDrawHelper;
 
-    
+    Table uiRootTable;
+    Stage popupUiStage;
     private Stage backUiStage;
     
-    public GameScreen(BugIndustryGame game) {
+    public PlayScreen(BugIndustryGame game) {
         super(game);
+        popupUiStage = new Stage(new FitViewport(game.LOGIC_WIDTH, game.LOGIC_HEIGHT, uiStage.getCamera()));
         backUiStage = new Stage(new FitViewport(game.LOGIC_WIDTH, game.LOGIC_HEIGHT, uiStage.getCamera()));
-    }
     
-    private void registerChildrenAsListener() {
-        logicFrameListeners.add(constructionControlBoard);
-        
-        gameAreaChangeListeners.add(backgroundImageBox);
-        gameAreaChangeListeners.add(constructionControlBoard);
-        gameAreaChangeListeners.add(gameAreaControlBoard);
-    }
-
-    private void initChildren() {
-//        this.backgroundImage = new Image(game.getTextureManager().getBackgroundTexture(GameArea.BEE_BUFF));
-//        stage.addActor(backgroundImage);
-        
-        this.backgroundImageBox = new BackgroundImageBox(this);
-        backUiStage.addActor(backgroundImageBox);
-        
         tableBackgroundPixmap = new Pixmap(1,1, Pixmap.Format.RGB565);
         tableBackgroundPixmap.setColor(0.8f, 0.8f, 0.8f, 1.0f);
         tableBackgroundPixmap.fill();
@@ -83,40 +66,48 @@ public class GameScreen extends BasePlayScreen<BugIndustryGame> {
         maskBackgroundPixmap.fill();
         maskBackgroundDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(maskBackgroundPixmap)));
         
-        //backTable = new Table();
-        //backTable.setBackground(tableBackgroundDrawable2);
-        //backTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//        areaChangeButtonL = GameAreaChangeButton.create(this, "GameAreaChangeButton_L.png", false);
-//        stage.addActor(areaChangeButtonL);
-//        areaChangeButtonR = GameAreaChangeButton.create(this, "GameAreaChangeButton_R.png", true);
-//        stage.addActor(areaChangeButtonR);
-        
-        gameAreaControlBoard = new GameAreaControlBoard(this);
-        uiStage.addActor(gameAreaControlBoard);
-        
-        
-        
-        popUpInfoBoard = new PopupInfoBoard(this);
-        uiStage.addActor(popUpInfoBoard);
-        
-        storageInfoTable = new StorageInfoBoard(this);
-        uiStage.addActor(storageInfoTable);
-        
-        constructionControlBoard = new ConstructionControlBoard(this);
-        uiStage.addActor(constructionControlBoard);
-        
-        achievementMaskBoard = new AchievementMaskBoard(this);
-        uiStage.addActor(achievementMaskBoard);
-        
+    }
+    
+    private void initLogicChildren() {
         
         gameImageDrawHelper = new GameImageDrawHelper(this, uiStage.getCamera());
-//        gameImageDrawHelper.addBeeEntity();
-//        gameImageDrawHelper.addBeeEntity();
-//        gameImageDrawHelper.addBeeEntity();
-
         
-        //backTable.debugAll();
-        //stage.addActor(backTable);
+        
+        logicFrameListeners.add(constructionControlBoard);
+        
+        gameAreaChangeListeners.add(backgroundImageBox);
+        gameAreaChangeListeners.add(constructionControlBoard);
+        gameAreaChangeListeners.add(gameAreaControlBoard);
+    }
+
+    private void initUiRoot() {
+        uiRootTable = new Table();
+        uiRootTable.setSize(game.LOGIC_WIDTH, game.LOGIC_HEIGHT - 10);
+        uiStage.addActor(uiRootTable);
+        
+        
+        storageInfoTable = new StorageInfoBoard(this);
+        uiRootTable.add(storageInfoTable).height(storageInfoTable.getHeight()).row();
+        
+        gameAreaControlBoard = new GameAreaControlBoard(this, GameArea.values);
+        uiRootTable.add(gameAreaControlBoard).expand().right().row();
+
+        constructionControlBoard = new ConstructionControlBoard(this);
+        uiRootTable.add(constructionControlBoard).height(constructionControlBoard.getHeight());
+        
+        
+    }
+    
+    private void initBackUiAndPopupUi() {
+        
+        this.backgroundImageBox = new BackgroundImageBox(this);
+        backUiStage.addActor(backgroundImageBox);
+        
+        popUpInfoBoard = new PopupInfoBoard(this);
+        popupUiStage.addActor(popUpInfoBoard);
+
+        achievementMaskBoard = new AchievementMaskBoard(this);
+        popupUiStage.addActor(achievementMaskBoard);
     }
 
     @Override
@@ -124,8 +115,10 @@ public class GameScreen extends BasePlayScreen<BugIndustryGame> {
         Gdx.input.setInputProcessor(uiStage);
         game.getBatch().setProjectionMatrix(uiStage.getViewport().getCamera().combined);
         
-        initChildren();
-        registerChildrenAsListener();
+        initBackUiAndPopupUi();
+        initUiRoot();
+        initLogicChildren();
+        
         // start area
         setAreaAndNotifyChildren(GameArea.BEE_FARM);
     }
@@ -147,7 +140,7 @@ public class GameScreen extends BasePlayScreen<BugIndustryGame> {
             gameImageDrawHelper.drawAll();
         }
         uiStage.draw();
-        
+        popupUiStage.draw();
     }
 
 

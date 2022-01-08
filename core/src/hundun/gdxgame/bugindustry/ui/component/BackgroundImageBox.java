@@ -15,14 +15,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import hundun.gdxgame.bugindustry.logic.GameArea;
-import hundun.gdxgame.bugindustry.ui.screen.GameScreen;
+import hundun.gdxgame.bugindustry.ui.screen.PlayScreen;
 import hundun.gdxgame.idleframe.listener.IGameAreaChangeListener;
 
 public class BackgroundImageBox extends Container<Image> implements IGameAreaChangeListener{
-    GameScreen parent;
+    PlayScreen parent;
     Map<String, Drawable> imageMap = new HashMap<>(); 
     
-    public BackgroundImageBox(GameScreen parent) {
+    public BackgroundImageBox(PlayScreen parent) {
         this.parent = parent;
         this.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         
