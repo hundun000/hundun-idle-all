@@ -136,7 +136,7 @@ public abstract class BaseIdleGame extends Game {
     private void contextsLazyInit() {
         ChildGameConfig childGameConfig = getChildGameConfig();
         
-        SaveUtils.lazyInit(childGameConfig.getConstructionStarterLevelMap());
+        SaveUtils.lazyInit(childGameConfig.getConstructionStarterLevelMap(), childGameConfig.getConstructionStarterWorkingLevelMap());
         
         
         modelContext.getConstructionFactory().lazyInit(childGameConfig.getConstructions());

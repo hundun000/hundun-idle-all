@@ -28,6 +28,7 @@ public class SaveUtils {
     private static ObjectMapper objectMapper;
     
     private static Map<String, Integer> constructionStarterLevelMap;
+    private static Map<String, Boolean> constructionStarterWorkingLevelMap;
     
     public static void init(File saveFile) {
         SaveUtils.saveFile = saveFile;
@@ -37,10 +38,10 @@ public class SaveUtils {
         
     }
     
-    public static void lazyInit(Map<String, Integer> constructionStarterLevelMap) {
+    public static void lazyInit(Map<String, Integer> constructionStarterLevelMap, Map<String, Boolean> constructionStarterWorkingLevelMap) {
 
         SaveUtils.constructionStarterLevelMap = constructionStarterLevelMap;
-
+        SaveUtils.constructionStarterWorkingLevelMap = constructionStarterWorkingLevelMap;
     }
     
     private static void appendConstructionSaveData(Map<String, ConstructionSaveData> map, BaseConstruction construction) {
@@ -54,6 +55,9 @@ public class SaveUtils {
     
     private static void setStarterConstructionSaveData(BaseConstruction construction) {
         construction.getSaveData().setLevel(constructionStarterLevelMap.getOrDefault(construction.getId(), 0));
+        if (constructionStarterWorkingLevelMap.getOrDefault(construction.getId(), false)) {
+            construction.getSaveData().setWorkingLevel(constructionStarterLevelMap.getOrDefault(construction.getId(), 0));
+        }
         construction.updateModifiedValues();
     }
     

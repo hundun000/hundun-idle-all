@@ -43,8 +43,14 @@ public class GameImageDrawHelper<T_GAME extends BaseIdleGame> implements IAmount
         GameEntityManager manager = parent.game.getModelContext().getGameEntityManager();
         
         manager.allEntityMoveForFrame();
+        String gameArea = parent.getArea();
         
         for (var entry : manager.getGameEntitiesOfConstructionIds().entrySet()) {
+            boolean needDraw = manager.getAreaShowEntityConstructionIds().containsKey(gameArea) 
+                    && manager.getAreaShowEntityConstructionIds().get(gameArea).contains(entry.getKey());
+            if (!needDraw) {
+                continue;
+            }
             Queue<GameEntity> queue = entry.getValue();
             queue.forEach(entity -> {
                 parent.game.getBatch().draw(entity.getTexture(), entity.getX(), entity.getY(), (entity.isTextureFlipX() ? -1 : 1) * entity.getDrawWidth(), entity.getDrawHeight());
@@ -52,6 +58,11 @@ public class GameImageDrawHelper<T_GAME extends BaseIdleGame> implements IAmount
         }
         
         for (var entry : manager.getGameEntitiesOfResourceIds().entrySet()) {
+            boolean needDraw = manager.getAreaShowEntityResourceIds().containsKey(gameArea) 
+                    && manager.getAreaShowEntityResourceIds().get(gameArea).contains(entry.getKey());
+            if (!needDraw) {
+                continue;
+            }
             Queue<GameEntity> queue = entry.getValue();
             queue.forEach(entity -> {
                 parent.game.getBatch().draw(entity.getTexture(), entity.getX(), entity.getY(), (entity.isTextureFlipX() ? -1 : 1) * entity.getDrawWidth(), entity.getDrawHeight());

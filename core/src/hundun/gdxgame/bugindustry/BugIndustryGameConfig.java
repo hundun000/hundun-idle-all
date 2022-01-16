@@ -59,9 +59,11 @@ public class BugIndustryGameConfig extends ChildGameConfig {
         ));
         this.setAreaShowEntityResourceIds(areaShownResourceIds);
         
-        Map<String, Integer> constructionStarterLevelMap = Map.of(ConstructionId.WOOD_SELL_HOUSE, 1);
+        var constructionStarterLevelMap = Map.of(ConstructionId.WOOD_SELL_HOUSE, 1);
         this.setConstructionStarterLevelMap(constructionStarterLevelMap);
         
+        var constructionStarterWorkingLevelMap = Map.of(ConstructionId.WOOD_SELL_HOUSE, Boolean.FALSE);
+        this.setConstructionStarterWorkingLevelMap(constructionStarterWorkingLevelMap);
          
         Map<String, String> screenIdToFilePathMap = Map.of(
                 MenuScreen.class.getSimpleName(), "audio/Loop-Menu.wav",
