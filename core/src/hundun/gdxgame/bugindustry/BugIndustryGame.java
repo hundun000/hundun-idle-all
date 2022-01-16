@@ -33,7 +33,8 @@ public class BugIndustryGame extends BaseIdleGame {
     
     public BugIndustryGame() {
         super(640, 480);
-        drawGameImageAndPlayAudio = false;
+        this.skinFilePath = "skins/orange/skin/uiskin.json";
+        drawGameImageAndPlayAudio = true;
     }
     
     @Override
@@ -46,7 +47,7 @@ public class BugIndustryGame extends BaseIdleGame {
         super.create();
        
         setScreen(screenContext.getMenuScreen());
-        getAudioPlayManager().intoMenu();
+        getAudioPlayManager().intoScreen(MenuScreen.class.getSimpleName());
     }
     
     @Override

@@ -37,7 +37,8 @@ public abstract class BaseIdleGame extends Game {
     public static final int desktopScale = 1;
     public final int LOGIC_WIDTH;
     public final int LOGIC_HEIGHT;
-
+    protected String DEFAULT_SKIN_FILA_PATH = "skins/default/skin/uiskin.json";
+    protected String skinFilePath;
     
     @Getter
     private SpriteBatch batch;
@@ -71,11 +72,7 @@ public abstract class BaseIdleGame extends Game {
 		this.batch = new SpriteBatch();
 		this.font = FontUtil.KOMIKA;
 		
-		if (drawGameImageAndPlayAudio) {
-		    this.buttonSkin = new Skin(Gdx.files.internal("skins/orange/skin/uiskin.json"));
-		} else {
-		    this.buttonSkin = new Skin(Gdx.files.internal("skins/default/skin/uiskin.json"));
-		}
+		
 		
 		initContexts();
 		contextsLazyInit();
@@ -104,6 +101,11 @@ public abstract class BaseIdleGame extends Game {
 	
 	protected void initContexts() {
 	    
+	    if (drawGameImageAndPlayAudio && skinFilePath != null) {
+            this.buttonSkin = new Skin(Gdx.files.internal(skinFilePath));
+        } else {
+            this.buttonSkin = new Skin(Gdx.files.internal(DEFAULT_SKIN_FILA_PATH));
+        }
 	    
         this.modelContext = new ModelContext();
         this.eventManager = new EventManager();
@@ -140,6 +142,8 @@ public abstract class BaseIdleGame extends Game {
         modelContext.getConstructionFactory().lazyInit(childGameConfig.getConstructions());
         modelContext.getConstructionManager().lazyInit(childGameConfig.getAreaControlableConstructionIds());
         modelContext.getGameEntityManager().lazyInit(childGameConfig.getAreaShowEntityConstructionIds(), childGameConfig.getAreaShowEntityResourceIds());
+        audioPlayManager.lazyInit(childGameConfig.getScreenIdToFilePathMap());
+        
     }
     
     protected abstract ChildGameConfig getChildGameConfig();

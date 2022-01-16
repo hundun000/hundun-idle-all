@@ -22,4 +22,6 @@ public abstract class ChildGameConfig {
     //Map<String, List<String>> areaShownResourceIds;
     List<BaseConstruction> constructions;
     Map<String, Integer> constructionStarterLevelMap;
+    Map<String, String> screenIdToFilePathMap;
+    String skinFilePath;
 }

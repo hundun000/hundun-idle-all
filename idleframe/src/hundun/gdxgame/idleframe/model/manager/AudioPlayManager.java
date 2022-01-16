@@ -1,5 +1,9 @@
 package hundun.gdxgame.idleframe.model.manager;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.utils.Disableable;
@@ -16,31 +20,33 @@ public class AudioPlayManager implements Disposable {
     long currentBgmId;
     Sound currentBgmSound;
     
-    Sound menuBgmSound;
-    Sound gameBgmSound;
-    
     BaseIdleGame game;
+    
+    Map<String, Sound> screenIdToSoundMap = new HashMap<>();
     
     public AudioPlayManager(BaseIdleGame game) {
         this.game = game;
-        menuBgmSound = Gdx.audio.newSound(Gdx.files.internal("audio/Loop-Menu.wav"));
-        gameBgmSound = Gdx.audio.newSound(Gdx.files.internal("audio/forest.mp3"));
     }
     
-    public void intoMenu() {
-        if (game.drawGameImageAndPlayAudio) {
-            setScreenBgm(menuBgmSound);
+    public void lazyInit(Map<String, String> screenIdToFilePathMap) {
+        if (screenIdToFilePathMap != null) {
+            screenIdToFilePathMap.forEach((k, v) -> {
+                try {
+                    screenIdToSoundMap.put(k, Gdx.audio.newSound(Gdx.files.internal(v))); 
+                } catch (Exception e) {
+                    Gdx.app.log("AudioPlayManager", "init error for " + v + ": " + e.getMessage());
+                }
+            });
         }
-        
     }
     
-    public void intoGame() {
-        if (game.drawGameImageAndPlayAudio) {
-            setScreenBgm(gameBgmSound);
+    
+    public void intoScreen(String screenId) {
+        if (game.drawGameImageAndPlayAudio && screenIdToSoundMap.containsKey(screenId)) {
+            setScreenBgm(screenIdToSoundMap.get(screenId));
         }
-        
     }
-    
+
     
     private void setScreenBgm(Sound bgmSound) {
         if (currentBgmSound != null) {
@@ -52,7 +58,6 @@ public class AudioPlayManager implements Disposable {
 
     @Override
     public void dispose() {
-        menuBgmSound.dispose();
-        gameBgmSound.dispose();
+        screenIdToSoundMap.values().forEach(v -> v.dispose());
     }
 }

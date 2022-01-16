@@ -12,6 +12,8 @@ import hundun.gdxgame.bugindustry.logic.ConstructionId;
 import hundun.gdxgame.bugindustry.logic.BuiltinConstructionsLoader;
 import hundun.gdxgame.bugindustry.logic.GameArea;
 import hundun.gdxgame.bugindustry.logic.ResourceType;
+import hundun.gdxgame.bugindustry.ui.screen.MenuScreen;
+import hundun.gdxgame.bugindustry.ui.screen.PlayScreen;
 import hundun.gdxgame.idleframe.data.ChildGameConfig;
 import hundun.gdxgame.idlestarter.ConstructionsFileLoader;
 
@@ -59,5 +61,14 @@ public class BugIndustryGameConfig extends ChildGameConfig {
         
         Map<String, Integer> constructionStarterLevelMap = Map.of(ConstructionId.WOOD_SELL_HOUSE, 1);
         this.setConstructionStarterLevelMap(constructionStarterLevelMap);
+        
+         
+        Map<String, String> screenIdToFilePathMap = Map.of(
+                MenuScreen.class.getSimpleName(), "audio/Loop-Menu.wav",
+                PlayScreen.class.getSimpleName(), "audio/forest.mp3"
+                );
+        this.setScreenIdToFilePathMap(screenIdToFilePathMap);
+        
+        this.setSkinFilePath("skins/orange/skin/uiskin.json");
     }
 }
