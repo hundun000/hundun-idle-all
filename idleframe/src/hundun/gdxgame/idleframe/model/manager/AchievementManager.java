@@ -38,7 +38,7 @@ public class AchievementManager implements IAmountChangeEventListener {
 //                ));
     }
     
-    private void addPrototype(AchievementPrototype prototype) {
+    public void addPrototype(AchievementPrototype prototype) {
         prototypes.put(prototype.getName(), prototype);
     }
     

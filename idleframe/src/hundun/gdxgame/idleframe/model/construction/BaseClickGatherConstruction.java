@@ -23,6 +23,9 @@ public class BaseClickGatherConstruction extends BaseConstruction {
         if (!canClickEffect()) {
             return;
         }
+        if (outputComponent.hasCost()) {
+            game.getModelContext().getStorageManager().modifyAllResourceNum(outputComponent.getOutputCostPack().getModifiedValues(), false);
+        }
         game.getModelContext().getStorageManager().modifyAllResourceNum(outputComponent.getOutputGainPack().getModifiedValues(), true);
     }
     

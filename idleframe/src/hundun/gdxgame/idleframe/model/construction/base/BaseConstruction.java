@@ -44,11 +44,11 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
 
     
     public static final DescriptionPackage GATHER_DESCRIPTION_PACKAGE = new DescriptionPackage(
-            null, "Gain", null, "Gather", 
+            "Pay", "Gain", null, "Gather", 
             "");
     
     public static final DescriptionPackage WIN_DESCRIPTION_PACKAGE = new DescriptionPackage(
-            null, "Gain", "Pay", "Win", 
+            "Pay", "Gain", null, "Win", 
             "");
     
     protected Random random = new Random();
