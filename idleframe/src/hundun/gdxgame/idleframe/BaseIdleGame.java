@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
@@ -27,7 +28,9 @@ import hundun.gdxgame.idleframe.model.manager.ConstructionManager;
 import hundun.gdxgame.idleframe.model.manager.EventManager;
 import hundun.gdxgame.idleframe.model.manager.GameEntityManager;
 import hundun.gdxgame.idleframe.model.manager.StorageManager;
+import hundun.gdxgame.idleframe.model.manager.TextureManager;
 import hundun.gdxgame.idleframe.util.FontUtil;
+import hundun.gdxgame.idleframe.util.IGameDictionary;
 import hundun.gdxgame.idleframe.util.SaveUtils;
 import lombok.Getter;
 
@@ -51,8 +54,11 @@ public abstract class BaseIdleGame extends Game {
     private EventManager eventManager;
     @Getter
     private AudioPlayManager audioPlayManager;
-
-
+    
+    @Getter
+    protected TextureManager textureManager;
+    @Getter
+    protected IGameDictionary gameDictionary;
     
     @Getter
     private Skin buttonSkin;
@@ -78,6 +84,7 @@ public abstract class BaseIdleGame extends Game {
 		contextsLazyInit();
 	}
 
+	public abstract List<String> getGameAreaValues();
 	
 	public void loadAndHookSave(boolean load) {
 	    

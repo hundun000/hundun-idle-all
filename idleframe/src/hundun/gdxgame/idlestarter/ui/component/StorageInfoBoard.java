@@ -1,4 +1,4 @@
-package hundun.gdxgame.bugindustry.ui.component;
+package hundun.gdxgame.idlestarter.ui.component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,19 +8,21 @@ import java.util.Set;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Value;
 
-import hundun.gdxgame.bugindustry.logic.ResourceType;
-import hundun.gdxgame.bugindustry.ui.screen.PlayScreen;
+import hundun.gdxgame.idleframe.BaseIdleGame;
+import hundun.gdxgame.idlestarter.ui.BasePlayScreen;
 
 /**
  * @author hundun
  * Created on 2021/11/05
  */
-public class StorageInfoBoard extends Table {
+public class StorageInfoBoard<T_GAME extends BaseIdleGame> extends Table {
     
-    public static int BOARD_DISTANCE_TO_FRAME_TOP = 10;
-    public static int BOARD_DISTANCE_TO_FRAME_SIDE = 10;
-    public static int BOARD_HEIGHT = 60;
+    public static final int BOARD_BORDER_HEIGHT = 60;
+//    public static int BOARD_DISTANCE_TO_FRAME_TOP = 10;
+//    public static int BOARD_DISTANCE_TO_FRAME_SIDE = 10;
+//    public static int BOARD_HEIGHT = 60;
     private static int NODE_HEIGHT = 25;
     private static int NODE_WIDTH = 120;
     
@@ -30,44 +32,29 @@ public class StorageInfoBoard extends Table {
 //    List<ResourceType> farmAreaShownResources;
     List<String> shownOrders;
     Set<String> shownTypes = new HashSet<>();
-    List<ResourceAmountPairNode> nodes = new ArrayList<>();
+    BasePlayScreen<T_GAME> parent;
     
-    private void initData() {
-        //areaShownResources = new HashMap<>();
-        shownOrders = Arrays.asList(
-                ResourceType.COIN,
-                ResourceType.WOOD,
-                ResourceType.WOOD_BOARD,
-                ResourceType.BEE,
-                ResourceType.HONEY,
-                ResourceType.BEEWAX,
-                ResourceType.QUEEN_BEE
-                );
-        
-//        areaShownResources.put(GameArea.BEE_FARM, farmAreaShownResources);
-//        areaShownResources.put(GameArea.BEE_BUFF, farmAreaShownResources);
-//        areaShownResources.put(GameArea.FOREST_FARM, farmAreaShownResources);
-        
-        
-        
+    List<ResourceAmountPairNode<T_GAME>> nodes = new ArrayList<>();
+    
+    public void lazyInit(List<String> shownOrders) {
+        this.shownOrders = shownOrders;
+        rebuildCells();
     }
     
     //Label mainLabel;
-    PlayScreen parent;
     
-    public StorageInfoBoard(PlayScreen parent) {
+    
+    public StorageInfoBoard(BasePlayScreen<T_GAME> parent) {
         this.parent = parent;
-        this.setBackground(parent.tableBackgroundDrawable);
-        this.setBounds(
-                BOARD_DISTANCE_TO_FRAME_SIDE, 
-                Gdx.graphics.getHeight() - BOARD_DISTANCE_TO_FRAME_TOP - BOARD_HEIGHT, 
-                Gdx.graphics.getWidth() - 2 * BOARD_DISTANCE_TO_FRAME_SIDE, 
-                BOARD_HEIGHT);
+        this.setBackground(BasePlayScreen.createBorderBoard(100, 15, 0.7f, 2));
+//        this.setBounds(
+//                BOARD_DISTANCE_TO_FRAME_SIDE, 
+//                Gdx.graphics.getHeight() - BOARD_DISTANCE_TO_FRAME_TOP - BOARD_HEIGHT, 
+//                Gdx.graphics.getWidth() - 2 * BOARD_DISTANCE_TO_FRAME_SIDE, 
+//                BOARD_HEIGHT);
 //        this.mainLabel = new Label("", parent.game.getButtonSkin());
 //        this.add(mainLabel);
         
-        initData();
-        rebuildCells();
         if (parent.game.debugMode) {
             this.debugAll();
         }
@@ -82,7 +69,7 @@ public class StorageInfoBoard extends Table {
         for (int i = 0; i < shownOrders.size(); i++) {
             String resourceType = shownOrders.get(i);
             if (shownTypes.contains(resourceType)) {
-                ResourceAmountPairNode node = new ResourceAmountPairNode(parent.game, resourceType);
+                ResourceAmountPairNode<T_GAME> node = new ResourceAmountPairNode<T_GAME>(parent.game, resourceType);
                 nodes.add(node);
                 shownTypes.add(resourceType);
                 var cell = this.add(node).width(NODE_WIDTH).height(NODE_HEIGHT);

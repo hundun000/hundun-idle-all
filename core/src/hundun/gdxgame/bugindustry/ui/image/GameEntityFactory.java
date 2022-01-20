@@ -5,11 +5,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.bugindustry.logic.ConstructionId;
 import hundun.gdxgame.bugindustry.logic.ResourceType;
-import hundun.gdxgame.bugindustry.ui.component.GameAreaControlBoard;
-import hundun.gdxgame.bugindustry.ui.component.StorageInfoBoard;
+
 import hundun.gdxgame.idleframe.model.entity.GameEntity;
 import hundun.gdxgame.idleframe.model.entity.IGameEntityFactory;
 import hundun.gdxgame.idleframe.model.entity.RandomMoveEntity;
+import hundun.gdxgame.idlestarter.ui.component.GameAreaControlBoard;
+import hundun.gdxgame.idlestarter.ui.component.StorageInfoBoard;
 
 /**
  * @author hundun
@@ -45,12 +46,12 @@ public class GameEntityFactory implements IGameEntityFactory {
         
         FLY_MAX_X = Gdx.graphics.getWidth() - GameAreaControlBoard.WIDTH;
         FLY_MIN_X = BEE_WIDTH;
-        FLY_MAX_Y = Gdx.graphics.getHeight() - (StorageInfoBoard.BOARD_HEIGHT + StorageInfoBoard.BOARD_DISTANCE_TO_FRAME_TOP);
+        FLY_MAX_Y = Gdx.graphics.getHeight() - (StorageInfoBoard.BOARD_BORDER_HEIGHT);
         FLY_MIN_Y = FLY_MAX_Y - 200;
         
         TREE_MAX_X = Gdx.graphics.getWidth() - GameAreaControlBoard.WIDTH - scale * Construction_WIDTH;
         TREE_MIN_X = 0;
-        TREE_MAX_Y = Gdx.graphics.getHeight() - (StorageInfoBoard.BOARD_HEIGHT + StorageInfoBoard.BOARD_DISTANCE_TO_FRAME_TOP) - scale * Construction_HEIGHT;
+        TREE_MAX_Y = Gdx.graphics.getHeight() - (StorageInfoBoard.BOARD_BORDER_HEIGHT) - scale * Construction_HEIGHT;
         TREE_MIN_Y = TREE_MAX_Y - 100;
         //this.beehiveTexture = new Texture(Gdx.files.internal("beehive.png"));
         Gdx.app.log(this.getClass().getSimpleName(), "TREE_MAX_Y = " + TREE_MAX_Y + ", TREE_MIN_Y = " + TREE_MIN_Y);
@@ -160,7 +161,7 @@ public class GameEntityFactory implements IGameEntityFactory {
     
     private GameEntity newBeeEntity() {
         GameEntity entity = new RandomMoveEntity(FLY_MAX_X, FLY_MAX_X, FLY_MAX_X, FLY_MAX_X, FLY_MAX_X);
-        entity.setTexture(new Sprite(game.getTextureManager().getBeeTexture()));
+        entity.setTexture(new Sprite(game.getTextureManager().getResourceIcon(ResourceType.BEE)));
         entity.setX((FLY_MAX_X - FLY_MIN_X) / 2);
         entity.setY((FLY_MAX_Y - FLY_MIN_Y) / 2);
         entity.setDrawWidth(BEE_WIDTH);

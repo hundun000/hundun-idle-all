@@ -1,4 +1,4 @@
-package hundun.gdxgame.bugindustry.ui.component;
+package hundun.gdxgame.idlestarter.ui.component;
 
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,22 +13,23 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-import hundun.gdxgame.bugindustry.ui.screen.PlayScreen;
-import hundun.gdxgame.idlestarter.BasePlayScreen;
+import hundun.gdxgame.idleframe.BaseIdleGame;
+import hundun.gdxgame.idlestarter.ui.BasePlayScreen;
+
 
 /**
  * @author hundun
  * Created on 2021/12/06
  */
-public class GameAreaControlNode extends HorizontalGroup {
+public class GameAreaControlNode<T_GAME extends BaseIdleGame> extends HorizontalGroup {
     
-    PlayScreen parent;
+    BasePlayScreen<T_GAME> parent;
     Image image;
     Label label;
     boolean debugType;
     String gameArea;
     
-    public GameAreaControlNode(PlayScreen parent, String gameArea, boolean longVersion, boolean debugType) {
+    public GameAreaControlNode(BasePlayScreen<T_GAME> parent, String gameArea, boolean longVersion, boolean debugType) {
         this.parent = parent;
         this.debugType = debugType;
         this.gameArea = gameArea;

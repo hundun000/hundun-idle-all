@@ -7,32 +7,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import hundun.gdxgame.idleframe.model.manager.TextureManager;
 import lombok.Getter;
 
-public class TextureManager {
-    private Texture beeAreaBackgroundTexture;
-    private Texture shopAreaBackgroundTexture;
-    private Texture forestAreaBackgroundTexture;
-    @Getter
-    private Texture winTexture;
-    @Getter
-    private Texture menuTexture;
-    private Map<String, TextureRegion> itemRegionMap = new HashMap<>();
-    private Map<String, TextureRegion> constructionRegionMap = new HashMap<>();
-    private Map<String, TextureRegion> gameAreaLeftPartRegionMap = new HashMap<>();
-    private Map<String, TextureRegion> gameAreaRightPartRegionMap = new HashMap<>();
-    @Getter
-    private Texture beeTexture;
-    TextureRegion defaultIcon;
-    
-    public TextureManager() {
-        beeAreaBackgroundTexture = new Texture(Gdx.files.internal("bee-area.png"));
-        shopAreaBackgroundTexture = new Texture(Gdx.files.internal("shop-area.png"));
-        forestAreaBackgroundTexture = new Texture(Gdx.files.internal("forest-area.png"));
+public class BugTextureManager extends TextureManager {
+
+
+    public BugTextureManager() {
+
         winTexture = new Texture(Gdx.files.internal("win.png"));
         menuTexture = new Texture(Gdx.files.internal("menu.png"));
-        this.beeTexture = new Texture(Gdx.files.internal("bee.png"));
-        
+
         {
             Texture texture = new Texture(Gdx.files.internal("item.png"));
             TextureRegion[][] regions = TextureRegion.split(texture, 16, 16);
@@ -78,32 +63,5 @@ public class TextureManager {
         }
         
     }
-    
-    public Texture getBackgroundTexture(String gameArea) {
-        switch (gameArea) {
-            case GameArea.SHOP:
-                return shopAreaBackgroundTexture;
-            case GameArea.FOREST_FARM:
-                return forestAreaBackgroundTexture;
-            default:
-                return beeAreaBackgroundTexture;
-        }
-    }
-    
-    public TextureRegion getResourceIcon(String resourceType) {
-        return itemRegionMap.getOrDefault(resourceType, defaultIcon);
-    }
-    
-    public TextureRegion getConstructionTexture(String constructionId) {
-        return constructionRegionMap.getOrDefault(constructionId, defaultIcon);
-    }
-    
-    public TextureRegion getGameAreaTexture(String key, boolean longVersion) {
-        if (longVersion) {
-            return gameAreaLeftPartRegionMap.getOrDefault(key, defaultIcon);
-        } else {
-            return gameAreaRightPartRegionMap.getOrDefault(key, defaultIcon);
-        }
-        
-    }
+
 }

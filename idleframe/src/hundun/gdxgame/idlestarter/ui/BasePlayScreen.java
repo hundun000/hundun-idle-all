@@ -1,4 +1,4 @@
-package hundun.gdxgame.idlestarter;
+package hundun.gdxgame.idlestarter.ui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.listener.IGameAreaChangeListener;
 import hundun.gdxgame.idleframe.listener.ILogicFrameListener;
+import hundun.gdxgame.idleframe.model.AchievementPrototype;
+import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
+
+import hundun.gdxgame.idlestarter.ui.component.AchievementMaskBoard;
+import hundun.gdxgame.idlestarter.ui.component.PopupInfoBoard;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,6 +36,9 @@ public abstract class BasePlayScreen<T_GAME extends BaseIdleGame> extends BaseSc
     private boolean logicFramePause;
     @Getter
     private String area;
+    
+    protected AchievementMaskBoard<T_GAME> achievementMaskBoard;
+    protected PopupInfoBoard<T_GAME> popUpInfoBoard;
     
     protected List<ILogicFrameListener> logicFrameListeners = new ArrayList<>();
     protected List<IGameAreaChangeListener> gameAreaChangeListeners = new ArrayList<>();
@@ -63,6 +71,18 @@ public abstract class BasePlayScreen<T_GAME extends BaseIdleGame> extends BaseSc
         
     }
     
+    public void hideAchievementMaskBoard() {
+        achievementMaskBoard.setVisible(false);
+        setLogicFramePause(false);
+    }
+
+    public void onAchievementUnlock(AchievementPrototype prototype) {
+        achievementMaskBoard.setAchievementPrototype(prototype);
+        achievementMaskBoard.setVisible(true);
+        setLogicFramePause(true);
+    }
+    
+    
     public static Drawable createTwoColorBoard(int width, int height, float grayColor, int colorStartX) {
         Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGB565);
         pixmap.setColor(grayColor, grayColor, grayColor, 1.0f);
@@ -79,6 +99,16 @@ public abstract class BasePlayScreen<T_GAME extends BaseIdleGame> extends BaseSc
         pixmap.fillRectangle(borderWidth, borderWidth, width - borderWidth * 2, height - borderWidth * 2);
         Drawable drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
         return drawable;
+    }
+    
+    public void showAndUpdateGuideInfo(BaseConstruction model) {
+        popUpInfoBoard.setVisible(true);
+        popUpInfoBoard.update(model);
+    }
+    
+    public void hideAndCleanGuideInfo() {
+        popUpInfoBoard.setVisible(false);
+        //popUpInfoBoard.setText("GUIDE_TEXT");
     }
 
 }

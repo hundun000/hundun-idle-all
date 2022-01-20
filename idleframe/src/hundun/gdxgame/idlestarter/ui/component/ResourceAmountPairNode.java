@@ -1,28 +1,29 @@
-package hundun.gdxgame.bugindustry.ui.component;
+package hundun.gdxgame.idlestarter.ui.component;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import hundun.gdxgame.bugindustry.BugIndustryGame;
+
 import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.util.TextFormatUtils;
+import hundun.gdxgame.idlestarter.ui.BasePlayScreen;
 import lombok.Getter;
 
 /**
  * @author hundun
  * Created on 2021/11/25
  */
-public class ResourceAmountPairNode extends HorizontalGroup {
+public class ResourceAmountPairNode<T_GAME extends BaseIdleGame> extends HorizontalGroup {
     
-    BugIndustryGame game;
+    T_GAME game;
     @Getter
     String resourceType;
     
     Image image;
     Label label;
     
-    public ResourceAmountPairNode(BugIndustryGame game, String resourceType) {
+    public ResourceAmountPairNode(T_GAME game, String resourceType) {
         super();
         this.game = game;
         this.resourceType = resourceType;

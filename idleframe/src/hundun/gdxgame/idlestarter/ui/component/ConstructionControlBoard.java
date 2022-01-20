@@ -1,4 +1,4 @@
-package hundun.gdxgame.bugindustry.ui.component;
+package hundun.gdxgame.idlestarter.ui.component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,34 +15,33 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 
-import hundun.gdxgame.bugindustry.ui.screen.PlayScreen;
+import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.listener.IGameAreaChangeListener;
 import hundun.gdxgame.idleframe.listener.ILogicFrameListener;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
-import hundun.gdxgame.idlestarter.BasePlayScreen;
+import hundun.gdxgame.idlestarter.ui.BasePlayScreen;
+
 
 
 /**
  * @author hundun
  * Created on 2021/11/05
  */
-public class ConstructionControlBoard extends Table implements ILogicFrameListener, IGameAreaChangeListener {
+public class ConstructionControlBoard<T_GAME extends BaseIdleGame> extends Table implements ILogicFrameListener, IGameAreaChangeListener {
     
-    //public static int BOARD_DISTANCE_TO_FRAME = 10;
-    public static int BOARD_BORDER_HEIGHT = 180;
-    public static int LR_BUTTON_HEIGHT = 170;
-    public static int SCOLL_AREA_HEIGHT = 150;
-    //public static int BOARD_WIDTH = 100;
+
+    public static int BOARD_BORDER_HEIGHT = 120;
+    public static int LR_BUTTON_HEIGHT = BOARD_BORDER_HEIGHT;
+    public static int LR_BUTTON_WIDTH = 0;
+
     
-    //public static int NODE_CELL_WIDTH = 110;
-    
-    PlayScreen parent;
+    BasePlayScreen<T_GAME> parent;
     /**
      * 显示在当前screen的Construction集合。以ConstructionView形式存在。
      */
-    List<ConstructionControlNode> constructionControlNodes = new ArrayList<>();
+    List<ConstructionControlNode<T_GAME>> constructionControlNodes = new ArrayList<>();
 
-    int NUM_ALL = 7;
+    int NUM_ALL = 5;
     ImageButton leftButton;
     ImageButton rightButton;
     
@@ -50,16 +49,12 @@ public class ConstructionControlBoard extends Table implements ILogicFrameListen
     
 
     
-    public ConstructionControlBoard(PlayScreen parent) {
+    public ConstructionControlBoard(BasePlayScreen<T_GAME> parent) {
         
         this.parent = parent;
         
 
-//        ScrollPane scrollPane = new ScrollPane(initChild());
-//        //scrollPane.setSize(parent.game.LOGIC_WIDTH - 100, BOARD_HEIGHT);
-//        scrollPane.setFlickScroll(false);
-
-        leftButton = new ImageButton(BasePlayScreen.createBorderBoard(50, LR_BUTTON_HEIGHT, 0.8f, 3));
+        leftButton = new ImageButton(BasePlayScreen.createBorderBoard(LR_BUTTON_WIDTH, LR_BUTTON_HEIGHT, 0.8f, 3));
         leftButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -67,7 +62,7 @@ public class ConstructionControlBoard extends Table implements ILogicFrameListen
 
             }
         });
-        rightButton = new ImageButton(BasePlayScreen.createBorderBoard(50, LR_BUTTON_HEIGHT, 0.8f, 3));
+        rightButton = new ImageButton(BasePlayScreen.createBorderBoard(LR_BUTTON_WIDTH, LR_BUTTON_HEIGHT, 0.8f, 3));
         rightButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -101,18 +96,15 @@ public class ConstructionControlBoard extends Table implements ILogicFrameListen
         Table table = new Table();
         //this.setBounds(BOARD_DISTANCE_TO_FRAME, BOARD_DISTANCE_TO_FRAME, Gdx.graphics.getWidth() - BOARD_DISTANCE_TO_FRAME * 2, BOARD_HEIGHT);
         //table.setSize(parent.game.LOGIC_WIDTH - 10, BOARD_HEIGHT - 10);
-        table.setBackground(BasePlayScreen.createBorderBoard(10, 5, 0.7f, 1));
+        table.setBackground(BasePlayScreen.createBorderBoard(150, 50, 0.7f, 2));
         
         for (int i = 0; i < NUM_ALL; i++) {
-            var constructionView = new ConstructionControlNode(parent, i);
+            var constructionView = new ConstructionControlNode<T_GAME>(parent, i);
             constructionControlNodes.add(constructionView);
             var cell = table.add(constructionView).spaceRight(10);
-//            if (i % NUM_PER_ROW == NUM_PER_ROW - 1) {
-//                cell.row();
-//            }
         }
         //table.debugAll();
-        table.debugCell();
+        //table.debugCell();
         //table.debugTable();
         //table.setFillParent(true);
         return table;

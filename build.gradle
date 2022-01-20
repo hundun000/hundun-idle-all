@@ -65,7 +65,7 @@ project(":core") {
 
 
     dependencies {
-        implementation project(":idleframe")
+        api project(":idleframe")
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compileOnly 'org.projectlombok:lombok:1.18.4'
@@ -76,10 +76,21 @@ project(":core") {
 project(":idleframe") {
     apply plugin: "java-library"
     apply plugin: "maven"
-
-    task sourcesJar(type: Jar) {
-        from sourceSets.main.allJava
+    apply plugin: "maven-publish"
+    
+    task sourcesJar(type: Jar, dependsOn: classes) {
         classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+    
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+    
+    artifacts {
+        archives sourcesJar
+        archives javadocJar
     }
 
 

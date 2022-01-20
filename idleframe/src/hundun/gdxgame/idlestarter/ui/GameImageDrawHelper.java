@@ -1,4 +1,4 @@
-package hundun.gdxgame.idlestarter;
+package hundun.gdxgame.idlestarter.ui;
 
 import java.util.HashMap;
 import java.util.List;

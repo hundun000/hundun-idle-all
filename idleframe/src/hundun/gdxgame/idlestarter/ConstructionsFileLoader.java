@@ -26,7 +26,6 @@ import hundun.gdxgame.idlestarter.ConstructionsConfig.ConstructionNode;
 /**
  * @author hundun
  * Created on 2021/11/16
- * @param <T_ID>
  */
 public class ConstructionsFileLoader {
     private ObjectMapper objectMapper;

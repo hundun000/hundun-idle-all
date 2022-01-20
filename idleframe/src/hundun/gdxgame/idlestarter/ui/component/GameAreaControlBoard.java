@@ -1,4 +1,4 @@
-package hundun.gdxgame.bugindustry.ui.component;
+package hundun.gdxgame.idlestarter.ui.component;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,18 +17,18 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-import hundun.gdxgame.bugindustry.logic.GameArea;
-import hundun.gdxgame.bugindustry.ui.screen.PlayScreen;
+import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.listener.IGameAreaChangeListener;
+import hundun.gdxgame.idlestarter.ui.BasePlayScreen;
 
 /**
  * @author hundun
  * Created on 2021/11/20
  */
-public class GameAreaControlBoard extends Table implements IGameAreaChangeListener {
+public class GameAreaControlBoard<T_GAME extends BaseIdleGame> extends Table implements IGameAreaChangeListener {
 
-    PlayScreen parent;
-    Map<String, GameAreaControlNode> nodes = new LinkedHashMap<>();
+    BasePlayScreen<T_GAME> parent;
+    Map<String, GameAreaControlNode<T_GAME>> nodes = new LinkedHashMap<>();
     
     public static final int FULL_CELL_WIDTH = 100;
     public static final int SHORT_CELL_WIDTH = 75;
@@ -38,7 +38,7 @@ public class GameAreaControlBoard extends Table implements IGameAreaChangeListen
     static final int HEIGHT = 300;
     //public static final int X = 0;
     
-    public GameAreaControlBoard(PlayScreen parent, List<String> gameAreas) {
+    public GameAreaControlBoard(BasePlayScreen<T_GAME> parent, List<String> gameAreas) {
         super();
         this.parent = parent;
         this.setSize(
@@ -56,7 +56,7 @@ public class GameAreaControlBoard extends Table implements IGameAreaChangeListen
     }
     
     private void initButtonMap(String gameArea, boolean longVersion) {
-        GameAreaControlNode node = new GameAreaControlNode(parent, gameArea, longVersion, !parent.game.drawGameImageAndPlayAudio);
+        GameAreaControlNode<T_GAME> node = new GameAreaControlNode<T_GAME>(parent, gameArea, longVersion, !parent.game.drawGameImageAndPlayAudio);
         nodes.put(gameArea, node);
         this.add(node).row();
     }

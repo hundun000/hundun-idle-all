@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import hundun.gdxgame.bugindustry.logic.ConstructionId;
+import hundun.gdxgame.bugindustry.logic.BugGameDictionary;
+import hundun.gdxgame.bugindustry.logic.BugTextureManager;
 import hundun.gdxgame.bugindustry.logic.BuiltinConstructionsLoader;
 import hundun.gdxgame.bugindustry.logic.GameArea;
-import hundun.gdxgame.bugindustry.logic.GameDictionary;
-import hundun.gdxgame.bugindustry.logic.TextureManager;
 import hundun.gdxgame.bugindustry.ui.screen.PlayScreen;
 import hundun.gdxgame.bugindustry.ui.screen.MenuScreen;
 import hundun.gdxgame.bugindustry.ui.screen.ScreenContext;
@@ -21,20 +21,14 @@ import lombok.Getter;
 public class BugIndustryGame extends BaseIdleGame {
 
     @Getter
-    private TextureManager textureManager;
-    
-    @Getter
     private ScreenContext screenContext;
     
-    @Getter
-    private GameDictionary gameDictionary;
     
-    ;
     
     public BugIndustryGame() {
         super(640, 480);
         this.skinFilePath = "skins/orange/skin/uiskin.json";
-        drawGameImageAndPlayAudio = true;
+        drawGameImageAndPlayAudio = false;
     }
     
     @Override
@@ -54,12 +48,17 @@ public class BugIndustryGame extends BaseIdleGame {
     protected void initContexts() {
         super.initContexts();
         
-        this.gameDictionary = new GameDictionary();
-        this.textureManager = new TextureManager();
+        this.gameDictionary = new BugGameDictionary();
+        this.textureManager = new BugTextureManager();
         
         this.screenContext = new ScreenContext();
         screenContext.setMenuScreen(new MenuScreen(this));
         screenContext.setGameBeeScreen(new PlayScreen(this));
+    }
+
+    @Override
+    public List<String> getGameAreaValues() {
+        return GameArea.values;
     }
     
 }

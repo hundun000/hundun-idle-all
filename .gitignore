@@ -2,6 +2,7 @@
 /desktop/save.json
 /release-prepare/*
 !/release-prepare/packr-config.json
+/idleframe/build/
 
 ## Java
 

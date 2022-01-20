@@ -1,4 +1,6 @@
-package hundun.gdxgame.idlestarter;
+package hundun.gdxgame.idlestarter.ui;
+
+import java.util.List;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -16,6 +18,8 @@ import hundun.gdxgame.idleframe.BaseIdleGame;
 public abstract class BaseScreen<T_GAME extends BaseIdleGame> implements Screen {
     public final T_GAME game;
     protected final Stage uiStage;
+    
+    
     
     public BaseScreen(T_GAME game) {
         this.game = game;

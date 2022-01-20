@@ -1,6 +1,7 @@
-package hundun.gdxgame.bugindustry.ui.component;
+package hundun.gdxgame.idlestarter.ui.component;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -10,19 +11,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
-import hundun.gdxgame.bugindustry.ui.screen.PlayScreen;
+import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.model.AchievementPrototype;
+import hundun.gdxgame.idlestarter.ui.BasePlayScreen;
 
 /**
  * @author hundun
  * Created on 2021/11/12
  */
-public class AchievementMaskBoard extends Table {
+public class AchievementMaskBoard<T_GAME extends BaseIdleGame> extends Table {
 
-    PlayScreen parent;
+    BasePlayScreen<T_GAME> parent;
     Label label;
     
-    public AchievementMaskBoard(PlayScreen parent) {
+    public AchievementMaskBoard(BasePlayScreen<T_GAME> parent) {
         this.parent = parent;
         this.setBackground(new SpriteDrawable(new Sprite(parent.game.getTextureManager().getWinTexture())));
         this.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
