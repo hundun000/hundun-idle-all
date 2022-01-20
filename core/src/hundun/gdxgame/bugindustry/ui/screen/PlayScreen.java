@@ -30,51 +30,29 @@ import hundun.gdxgame.idlestarter.ui.component.StorageInfoBoard;
  * Created on 2021/11/02
  */
 public class PlayScreen extends BasePlayScreen<BugIndustryGame> {
- 
-    public Pixmap tableBackgroundPixmap;
-    public TextureRegionDrawable tableBackgroundDrawable;
-    public Pixmap tableBackgroundPixmap2;
-    public TextureRegionDrawable tableBackgroundDrawable2;
-    public Pixmap maskBackgroundPixmap;
-    public TextureRegionDrawable maskBackgroundDrawable;
     
     private StorageInfoBoard<BugIndustryGame> storageInfoTable;
     private ConstructionControlBoard<BugIndustryGame> constructionControlBoard;
     private BackgroundImageBox<BugIndustryGame> backgroundImageBox;
 
-    private PopupInfoBoard<BugIndustryGame> popUpInfoBoard;
     private GameAreaControlBoard<BugIndustryGame> gameAreaControlBoard;
-    private AchievementMaskBoard<BugIndustryGame> achievementMaskBoard;
     private GameImageDrawHelper<BugIndustryGame> gameImageDrawHelper;
 
     Table uiRootTable;
     Table popupRootTable;
-    Stage popupUiStage;
-    private Stage backUiStage;
+    
     
     public PlayScreen(BugIndustryGame game) {
         super(game);
         popupUiStage = new Stage(new FitViewport(game.LOGIC_WIDTH, game.LOGIC_HEIGHT, uiStage.getCamera()));
         backUiStage = new Stage(new FitViewport(game.LOGIC_WIDTH, game.LOGIC_HEIGHT, uiStage.getCamera()));
     
-        tableBackgroundPixmap = new Pixmap(1,1, Pixmap.Format.RGB565);
-        tableBackgroundPixmap.setColor(0.8f, 0.8f, 0.8f, 1.0f);
-        tableBackgroundPixmap.fill();
-        tableBackgroundDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(tableBackgroundPixmap)));
-        tableBackgroundPixmap2 = new Pixmap(1,1, Pixmap.Format.RGB565);
-        tableBackgroundPixmap2.setColor(0.75f, 0.75f, 0.75f, 1.0f);
-        tableBackgroundPixmap2.fill();
-        tableBackgroundDrawable2 = new TextureRegionDrawable(new TextureRegion(new Texture(tableBackgroundPixmap2)));
-        maskBackgroundPixmap = new Pixmap(1,1, Pixmap.Format.RGB565);
-        maskBackgroundPixmap.setColor(1f, 1f, 1f, 0.3f);
-        maskBackgroundPixmap.fill();
-        maskBackgroundDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(maskBackgroundPixmap)));
-        
+
     }
     
     private void initLogicChildren() {
         
-        gameImageDrawHelper = new GameImageDrawHelper<BugIndustryGame>(this, uiStage.getCamera(), new GameEntityFactory(game));
+        gameImageDrawHelper = new GameImageDrawHelper<>(this, uiStage.getCamera(), new GameEntityFactory(game));
         
         
         logicFrameListeners.add(constructionControlBoard);
@@ -159,9 +137,7 @@ public class PlayScreen extends BasePlayScreen<BugIndustryGame> {
 
     @Override
     public void dispose() {
-        tableBackgroundPixmap.dispose();
-        
-        tableBackgroundPixmap2.dispose();
+
 
     }
 
