@@ -3,14 +3,17 @@ package hundun.gdxgame.idlestarter.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import hundun.gdxgame.idleframe.BaseIdleGame;
+import hundun.gdxgame.idleframe.listener.IAchievementUnlockListener;
 import hundun.gdxgame.idleframe.listener.IGameAreaChangeListener;
 import hundun.gdxgame.idleframe.listener.ILogicFrameListener;
 import hundun.gdxgame.idleframe.model.AchievementPrototype;
@@ -26,7 +29,9 @@ import lombok.Setter;
  * Created on 2021/12/06
  * @param <T_GAME>
  */
-public abstract class BasePlayScreen<T_GAME extends BaseIdleGame> extends BaseScreen<T_GAME> {
+public abstract class BasePlayScreen<T_GAME extends BaseIdleGame> 
+        extends BaseScreen<T_GAME> 
+        implements IAchievementUnlockListener {
 
     private static final float LOGIC_FRAME_LENGTH = 1 / 30f; 
     private int clockCount = 0;
@@ -43,8 +48,12 @@ public abstract class BasePlayScreen<T_GAME extends BaseIdleGame> extends BaseSc
     protected List<ILogicFrameListener> logicFrameListeners = new ArrayList<>();
     protected List<IGameAreaChangeListener> gameAreaChangeListeners = new ArrayList<>();
     
+    protected Stage popupUiStage;
+    protected Stage backUiStage;
+    
     public BasePlayScreen(T_GAME game) {
         super(game);
+        game.getEventManager().registerListener(this);
     }
     
     protected void logicFrameCheck(float delta) {
@@ -72,13 +81,17 @@ public abstract class BasePlayScreen<T_GAME extends BaseIdleGame> extends BaseSc
     }
     
     public void hideAchievementMaskBoard() {
+        Gdx.app.log(this.getClass().getSimpleName(), "hideAchievementMaskBoard called");
         achievementMaskBoard.setVisible(false);
+        Gdx.input.setInputProcessor(uiStage);
         setLogicFramePause(false);
     }
 
     public void onAchievementUnlock(AchievementPrototype prototype) {
+        Gdx.app.log(this.getClass().getSimpleName(), "onAchievementUnlock called");
         achievementMaskBoard.setAchievementPrototype(prototype);
         achievementMaskBoard.setVisible(true);
+        Gdx.input.setInputProcessor(popupUiStage);
         setLogicFramePause(true);
     }
     

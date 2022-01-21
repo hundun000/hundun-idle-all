@@ -42,3 +42,6 @@ https://opengameart.org/content/backgrounds-3
 
 text-generate:
 https://cooltext.com/
+
+### For developer
+[![](https://jitpack.io/v/hundun000/BugIndustry.svg)](https://jitpack.io/#hundun000/BugIndustry)

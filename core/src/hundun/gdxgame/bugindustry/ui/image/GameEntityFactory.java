@@ -9,6 +9,7 @@ import hundun.gdxgame.bugindustry.logic.ResourceType;
 import hundun.gdxgame.idleframe.model.entity.GameEntity;
 import hundun.gdxgame.idleframe.model.entity.IGameEntityFactory;
 import hundun.gdxgame.idleframe.model.entity.RandomMoveEntity;
+import hundun.gdxgame.idlestarter.ui.StarterPlayScreenLayoutConst;
 import hundun.gdxgame.idlestarter.ui.component.GameAreaControlBoard;
 import hundun.gdxgame.idlestarter.ui.component.StorageInfoBoard;
 
@@ -44,14 +45,14 @@ public class GameEntityFactory implements IGameEntityFactory {
     public GameEntityFactory(BugIndustryGame game) {
         this.game = game;
         
-        FLY_MAX_X = Gdx.graphics.getWidth() - GameAreaControlBoard.WIDTH;
+        FLY_MAX_X = Gdx.graphics.getWidth();
         FLY_MIN_X = BEE_WIDTH;
-        FLY_MAX_Y = Gdx.graphics.getHeight() - (StorageInfoBoard.BOARD_BORDER_HEIGHT);
+        FLY_MAX_Y = Gdx.graphics.getHeight() - (StarterPlayScreenLayoutConst.STORAGE_BOARD_BORDER_HEIGHT);
         FLY_MIN_Y = FLY_MAX_Y - 200;
         
-        TREE_MAX_X = Gdx.graphics.getWidth() - GameAreaControlBoard.WIDTH - scale * Construction_WIDTH;
+        TREE_MAX_X = Gdx.graphics.getWidth() - scale * Construction_WIDTH;
         TREE_MIN_X = 0;
-        TREE_MAX_Y = Gdx.graphics.getHeight() - (StorageInfoBoard.BOARD_BORDER_HEIGHT) - scale * Construction_HEIGHT;
+        TREE_MAX_Y = Gdx.graphics.getHeight() - (StarterPlayScreenLayoutConst.STORAGE_BOARD_BORDER_HEIGHT) - scale * Construction_HEIGHT;
         TREE_MIN_Y = TREE_MAX_Y - 100;
         //this.beehiveTexture = new Texture(Gdx.files.internal("beehive.png"));
         Gdx.app.log(this.getClass().getSimpleName(), "TREE_MAX_Y = " + TREE_MAX_Y + ", TREE_MIN_Y = " + TREE_MIN_Y);

@@ -21,10 +21,10 @@ import hundun.gdxgame.idlestarter.ui.BasePlayScreen;
  * @author hundun
  * Created on 2021/12/06
  */
-public class GameAreaControlNode<T_GAME extends BaseIdleGame> extends HorizontalGroup {
+public class GameAreaControlNode<T_GAME extends BaseIdleGame> extends Image {
     
     BasePlayScreen<T_GAME> parent;
-    Image image;
+    //Image image;
     Label label;
     boolean debugType;
     String gameArea;
@@ -34,15 +34,15 @@ public class GameAreaControlNode<T_GAME extends BaseIdleGame> extends Horizontal
         this.debugType = debugType;
         this.gameArea = gameArea;
         
-        image = new Image(rebuildImage(longVersion));
-        image.addListener(new ClickListener() {
+        rebuildImage(longVersion);
+        this.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 parent.setAreaAndNotifyChildren(gameArea);
             }
         });
-        this.addActor(image);
+
     }
     
     private Drawable rebuildImage(boolean longVersion) {
@@ -50,13 +50,13 @@ public class GameAreaControlNode<T_GAME extends BaseIdleGame> extends Horizontal
             Drawable drawable = new SpriteDrawable(new Sprite(parent.game.getTextureManager().getGameAreaTexture(gameArea, longVersion)));
             return drawable;
         } else {
-            Drawable drawable = BasePlayScreen.createTwoColorBoard(GameAreaControlBoard.FULL_CELL_WIDTH, GameAreaControlBoard.CELL_HEIGHT, 0.8f, longVersion ? 0 : GameAreaControlBoard.FULL_CELL_WIDTH - GameAreaControlBoard.SHORT_CELL_WIDTH);
+            Drawable drawable = BasePlayScreen.createTwoColorBoard(5, 5, 0.8f, longVersion ? 0 : 2);
             return drawable;
         }
     }
     
     public void changeVersion(boolean longVersion) {
-        image.setDrawable(rebuildImage(longVersion));
+        this.setDrawable(rebuildImage(longVersion));
     }
 
 }

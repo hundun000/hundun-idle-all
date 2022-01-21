@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Value;
 
 import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idlestarter.ui.BasePlayScreen;
+import hundun.gdxgame.idlestarter.ui.StarterPlayScreenLayoutConst;
 
 /**
  * @author hundun
@@ -19,17 +20,11 @@ import hundun.gdxgame.idlestarter.ui.BasePlayScreen;
  */
 public class StorageInfoBoard<T_GAME extends BaseIdleGame> extends Table {
     
-    public static final int BOARD_BORDER_HEIGHT = 60;
-//    public static int BOARD_DISTANCE_TO_FRAME_TOP = 10;
-//    public static int BOARD_DISTANCE_TO_FRAME_SIDE = 10;
-//    public static int BOARD_HEIGHT = 60;
     private static int NODE_HEIGHT = 25;
     private static int NODE_WIDTH = 120;
     
     public static int NUM_NODE_PER_ROW = 5;
     
-//    Map<GameArea, List<ResourceType>> areaShownResources; 
-//    List<ResourceType> farmAreaShownResources;
     List<String> shownOrders;
     Set<String> shownTypes = new HashSet<>();
     BasePlayScreen<T_GAME> parent;
@@ -46,14 +41,11 @@ public class StorageInfoBoard<T_GAME extends BaseIdleGame> extends Table {
     
     public StorageInfoBoard(BasePlayScreen<T_GAME> parent) {
         this.parent = parent;
-        this.setBackground(BasePlayScreen.createBorderBoard(100, 15, 0.7f, 2));
-//        this.setBounds(
-//                BOARD_DISTANCE_TO_FRAME_SIDE, 
-//                Gdx.graphics.getHeight() - BOARD_DISTANCE_TO_FRAME_TOP - BOARD_HEIGHT, 
-//                Gdx.graphics.getWidth() - 2 * BOARD_DISTANCE_TO_FRAME_SIDE, 
-//                BOARD_HEIGHT);
-//        this.mainLabel = new Label("", parent.game.getButtonSkin());
-//        this.add(mainLabel);
+        this.setBackground(BasePlayScreen.createBorderBoard(
+                25, 
+                10,
+                0.7f, 1));
+
         
         if (parent.game.debugMode) {
             this.debugAll();

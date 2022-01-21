@@ -20,6 +20,7 @@ import hundun.gdxgame.idleframe.listener.IGameAreaChangeListener;
 import hundun.gdxgame.idleframe.listener.ILogicFrameListener;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idlestarter.ui.BasePlayScreen;
+import hundun.gdxgame.idlestarter.ui.StarterPlayScreenLayoutConst;
 
 
 
@@ -30,8 +31,8 @@ import hundun.gdxgame.idlestarter.ui.BasePlayScreen;
 public class ConstructionControlBoard<T_GAME extends BaseIdleGame> extends Table implements ILogicFrameListener, IGameAreaChangeListener {
     
 
-    public static int BOARD_BORDER_HEIGHT = 120;
-    public static int LR_BUTTON_HEIGHT = BOARD_BORDER_HEIGHT;
+    
+    public static int LR_BUTTON_HEIGHT = StarterPlayScreenLayoutConst.CONSTRUCION_BOARD_BORDER_HEIGHT;
     public static int LR_BUTTON_WIDTH = 0;
 
     
@@ -41,10 +42,11 @@ public class ConstructionControlBoard<T_GAME extends BaseIdleGame> extends Table
      */
     List<ConstructionControlNode<T_GAME>> constructionControlNodes = new ArrayList<>();
 
-    int NUM_ALL = 5;
+    static final int NUM_NODE_MIN = 5;
+    
     ImageButton leftButton;
     ImageButton rightButton;
-    
+    Table childTable;
     
     
 
@@ -52,7 +54,6 @@ public class ConstructionControlBoard<T_GAME extends BaseIdleGame> extends Table
     public ConstructionControlBoard(BasePlayScreen<T_GAME> parent) {
         
         this.parent = parent;
-        
 
         leftButton = new ImageButton(BasePlayScreen.createBorderBoard(LR_BUTTON_WIDTH, LR_BUTTON_HEIGHT, 0.8f, 3));
         leftButton.addListener(new ClickListener() {
@@ -71,43 +72,26 @@ public class ConstructionControlBoard<T_GAME extends BaseIdleGame> extends Table
             }
         });
         
-        Table childTable = initChild();
+        childTable = new Table();
+        childTable.setBackground(BasePlayScreen.createBorderBoard(150, 50, 0.7f, 2));
         ScrollPane scrollPane = new ScrollPane(childTable, parent.game.getButtonSkin());
-        //scrollPane.setSize(parent.game.LOGIC_WIDTH - 100, BOARD_HEIGHT);
-        //scrollPane.setHeight(SCOLL_AREA_HEIGHT);
-        //scrollPane.setFillParent(true);
-        //scrollPane.setFlickScroll(false);
-        //scrollPane.debug();
+
         this.add(leftButton);
         this.add(scrollPane).fill();
         this.add(rightButton);
         
-        //this.debugCell();
-        //this.debugTable();
-        //this.setSize(parent.game.LOGIC_WIDTH, BOARD_HEIGHT);
-        //this.add(initChild());
-        
-
-        
     }
     
-    private Table initChild() {
+    private void initChild(int currentNumNode) {
         constructionControlNodes.clear();
-        Table table = new Table();
-        //this.setBounds(BOARD_DISTANCE_TO_FRAME, BOARD_DISTANCE_TO_FRAME, Gdx.graphics.getWidth() - BOARD_DISTANCE_TO_FRAME * 2, BOARD_HEIGHT);
-        //table.setSize(parent.game.LOGIC_WIDTH - 10, BOARD_HEIGHT - 10);
-        table.setBackground(BasePlayScreen.createBorderBoard(150, 50, 0.7f, 2));
+        childTable.clearChildren();
         
-        for (int i = 0; i < NUM_ALL; i++) {
+        for (int i = 0; i < currentNumNode; i++) {
             var constructionView = new ConstructionControlNode<T_GAME>(parent, i);
             constructionControlNodes.add(constructionView);
-            var cell = table.add(constructionView).spaceRight(10);
+            childTable.add(constructionView).spaceRight(10);
         }
-        //table.debugAll();
-        //table.debugCell();
-        //table.debugTable();
-        //table.setFillParent(true);
-        return table;
+
     }
 
     @Override
@@ -121,25 +105,20 @@ public class ConstructionControlBoard<T_GAME extends BaseIdleGame> extends Table
 
     @Override
     public void onGameAreaChange(String last, String current) {
-//        backgroundConstructionModels.clear();
-//        backgroundConstructionModels.addAll(allConstructionModels);
-        
+
+
         List<BaseConstruction> newConstructions = parent.game.getModelContext().getConstructionManager().getAreaShownConstructionsOrEmpty(current);
-//        if (constructionControlNodes.size() != newConstructions.size()) {
-//            //this.add(leftButton);
-//            this.add(initChild(newConstructions.size())).expand();
-//            //this.add(rightButton);
-//        }
+
+        int currentNumNode = Math.max(NUM_NODE_MIN, newConstructions.size());
+        initChild(currentNumNode);
         
-        for (int i = 0; i < newConstructions.size() && i < NUM_ALL; i++) {
+        for (int i = 0; i < currentNumNode && i < newConstructions.size(); i++) {
             constructionControlNodes.get(i).setModel(newConstructions.get(i));
         }
-        for (int i = newConstructions.size(); i < NUM_ALL; i++) {
+        for (int i = newConstructions.size(); i < currentNumNode; i++) {
             constructionControlNodes.get(i).setModel(null);
         }
         Gdx.app.log("ConstructionInfoBorad", "Constructions change to: " + newConstructions.stream().map(construction -> construction.getName()).collect(Collectors.joining(",")));
-        //Gdx.app.log("ConstructionInfoBorad", "backgroundConstructionModels change to: " + backgroundConstructionModels.stream().map(construction -> construction.getName()).collect(Collectors.joining(",")));
-        
 
     }
     

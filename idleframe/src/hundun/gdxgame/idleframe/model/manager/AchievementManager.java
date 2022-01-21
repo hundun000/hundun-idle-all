@@ -79,7 +79,7 @@ public class AchievementManager implements IAmountChangeEventListener {
             boolean allMatched = resourceMatched && buffMatched;
             if (allMatched) {
                 unlockedAchievementNames.add(prototype.getName());
-                game.getEventManager().onAchievementUnlock(prototype);
+                game.getEventManager().notifyAchievementUnlock(prototype);
             }
         }
     }
