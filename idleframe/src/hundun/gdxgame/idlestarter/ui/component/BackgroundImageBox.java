@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.listener.IGameAreaChangeListener;
-import hundun.gdxgame.idlestarter.ui.BasePlayScreen;
+import hundun.gdxgame.idlestarter.ui.screen.play.BasePlayScreen;
 
 public class BackgroundImageBox<T_GAME extends BaseIdleGame> extends Container<Image> implements IGameAreaChangeListener{
     BasePlayScreen<T_GAME> parent;

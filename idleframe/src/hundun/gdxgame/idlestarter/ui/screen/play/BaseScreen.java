@@ -1,4 +1,4 @@
-package hundun.gdxgame.idlestarter.ui;
+package hundun.gdxgame.idlestarter.ui.screen.play;
 
 import java.util.List;
 

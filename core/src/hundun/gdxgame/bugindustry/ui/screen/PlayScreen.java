@@ -13,84 +13,63 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.bugindustry.logic.GameArea;
 import hundun.gdxgame.bugindustry.logic.ResourceType;
-import hundun.gdxgame.bugindustry.ui.image.GameEntityFactory;
+import hundun.gdxgame.bugindustry.ui.entity.GameEntityFactory;
 import hundun.gdxgame.idleframe.model.AchievementPrototype;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
-import hundun.gdxgame.idlestarter.ui.BasePlayScreen;
-import hundun.gdxgame.idlestarter.ui.GameImageDrawHelper;
-import hundun.gdxgame.idlestarter.ui.StarterPlayScreenLayoutConst;
+import hundun.gdxgame.idlestarter.model.entity.StarterGameEntityFactoryHelper;
 import hundun.gdxgame.idlestarter.ui.component.AchievementMaskBoard;
 import hundun.gdxgame.idlestarter.ui.component.BackgroundImageBox;
 import hundun.gdxgame.idlestarter.ui.component.ConstructionControlBoard;
 import hundun.gdxgame.idlestarter.ui.component.GameAreaControlBoard;
+import hundun.gdxgame.idlestarter.ui.component.GameImageDrawer;
 import hundun.gdxgame.idlestarter.ui.component.PopupInfoBoard;
 import hundun.gdxgame.idlestarter.ui.component.StorageInfoBoard;
+import hundun.gdxgame.idlestarter.ui.screen.play.BasePlayScreen;
+import hundun.gdxgame.idlestarter.ui.screen.play.PlayScreenLayoutConst;
 
 /**
  * @author hundun
  * Created on 2021/11/02
  */
 public class PlayScreen extends BasePlayScreen<BugIndustryGame> {
-    
-    private StorageInfoBoard<BugIndustryGame> storageInfoTable;
-    private ConstructionControlBoard<BugIndustryGame> constructionControlBoard;
-    private BackgroundImageBox<BugIndustryGame> backgroundImageBox;
 
-    private GameAreaControlBoard<BugIndustryGame> gameAreaControlBoard;
-    private GameImageDrawHelper<BugIndustryGame> gameImageDrawHelper;
-
-    Table uiRootTable;
-    Table popupRootTable;
-    
-    
     public PlayScreen(BugIndustryGame game) {
-        super(game);
-        popupUiStage = new Stage(new FitViewport(game.LOGIC_WIDTH, game.LOGIC_HEIGHT, uiStage.getCamera()));
-        backUiStage = new Stage(new FitViewport(game.LOGIC_WIDTH, game.LOGIC_HEIGHT, uiStage.getCamera()));
-    
-
+        super(game, GameArea.BEE_FARM, new PlayScreenLayoutConst());
     }
     
-    private void initLogicChildren() {
+    @Override
+    protected void lazyInitLogicContext() {
         
-        gameImageDrawHelper = new GameImageDrawHelper<>(this, uiStage.getCamera(), new GameEntityFactory(game));
-        
+        gameImageDrawer = new GameImageDrawer<>(this, uiStage.getCamera(), new GameEntityFactory(game, this, new StarterGameEntityFactoryHelper(game.getTextureManager())));
         
         logicFrameListeners.add(constructionControlBoard);
-        
         gameAreaChangeListeners.add(backgroundImageBox);
         gameAreaChangeListeners.add(constructionControlBoard);
         gameAreaChangeListeners.add(gameAreaControlBoard);
     }
 
-    private void initUiRoot() {
-        uiRootTable = new Table();
-        uiRootTable.setFillParent(true);
-        uiStage.addActor(uiRootTable);
-        
+    @Override
+    protected void lazyInitUiRootContext() {
         
         storageInfoTable = new StorageInfoBoard<BugIndustryGame>(this);
         storageInfoTable.lazyInit(ResourceType.VALUES_FOR_SHOW_ORDER);
-        uiRootTable.add(storageInfoTable).height(StarterPlayScreenLayoutConst.STORAGE_BOARD_BORDER_HEIGHT).row();
+        uiRootTable.add(storageInfoTable).height(layoutConst.STORAGE_BOARD_BORDER_HEIGHT).row();
         
         gameAreaControlBoard = new GameAreaControlBoard<BugIndustryGame>(this, GameArea.values);
         uiRootTable.add(gameAreaControlBoard).expand().right().row();
 
         constructionControlBoard = new ConstructionControlBoard<BugIndustryGame>(this);
-        uiRootTable.add(constructionControlBoard).height(StarterPlayScreenLayoutConst.CONSTRUCION_BOARD_BORDER_HEIGHT);
+        uiRootTable.add(constructionControlBoard).height(layoutConst.CONSTRUCION_BOARD_BORDER_HEIGHT);
         
         uiRootTable.debugCell();
     }
     
-    private void initBackUiAndPopupUi() {
+    @Override
+    protected void lazyInitBackUiAndPopupUiContent() {
         
         this.backgroundImageBox = new BackgroundImageBox<BugIndustryGame>(this);
         backUiStage.addActor(backgroundImageBox);
         
-        popupRootTable = new Table();
-        popupRootTable.setFillParent(true);
-        //popupRootTable.debug();
-        popupUiStage.addActor(popupRootTable);
         
         popUpInfoBoard = new PopupInfoBoard<BugIndustryGame>(this);
         popupRootTable.add(popUpInfoBoard).bottom().expand().row();
@@ -99,40 +78,6 @@ public class PlayScreen extends BasePlayScreen<BugIndustryGame> {
         
         achievementMaskBoard = new AchievementMaskBoard<BugIndustryGame>(this);
         popupUiStage.addActor(achievementMaskBoard);
-    }
-
-    @Override
-    public void show() {
-        Gdx.input.setInputProcessor(uiStage);
-        game.getBatch().setProjectionMatrix(uiStage.getViewport().getCamera().combined);
-        
-        initBackUiAndPopupUi();
-        initUiRoot();
-        initLogicChildren();
-        
-        // start area
-        setAreaAndNotifyChildren(GameArea.BEE_FARM);
-    }
-    
-    
-    
-
-    @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        logicFrameCheck(delta);
-        
-        uiStage.act();
-        
-        // ====== be careful of draw order ======
-        backUiStage.draw();
-        if (game.drawGameImageAndPlayAudio) {
-            gameImageDrawHelper.drawAll();
-        }
-        uiStage.draw();
-        popupUiStage.draw();
     }
 
 

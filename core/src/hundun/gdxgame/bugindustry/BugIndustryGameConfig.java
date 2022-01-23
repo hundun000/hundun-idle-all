@@ -12,7 +12,7 @@ import hundun.gdxgame.bugindustry.logic.ConstructionId;
 import hundun.gdxgame.bugindustry.logic.BuiltinConstructionsLoader;
 import hundun.gdxgame.bugindustry.logic.GameArea;
 import hundun.gdxgame.bugindustry.logic.ResourceType;
-import hundun.gdxgame.bugindustry.ui.screen.MenuScreen;
+import hundun.gdxgame.bugindustry.logic.ScreenId;
 import hundun.gdxgame.bugindustry.ui.screen.PlayScreen;
 import hundun.gdxgame.idleframe.data.ChildGameConfig;
 import hundun.gdxgame.idlestarter.ConstructionsFileLoader;
@@ -66,8 +66,8 @@ public class BugIndustryGameConfig extends ChildGameConfig {
         this.setConstructionStarterWorkingLevelMap(constructionStarterWorkingLevelMap);
          
         Map<String, String> screenIdToFilePathMap = Map.of(
-                MenuScreen.class.getSimpleName(), "audio/Loop-Menu.wav",
-                PlayScreen.class.getSimpleName(), "audio/forest.mp3"
+                ScreenId.MENU, "audio/Loop-Menu.wav",
+                ScreenId.PLAY, "audio/forest.mp3"
                 );
         this.setScreenIdToFilePathMap(screenIdToFilePathMap);
         

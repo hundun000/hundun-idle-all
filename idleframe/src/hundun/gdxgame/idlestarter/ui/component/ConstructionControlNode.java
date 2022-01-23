@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.Align;
 import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.listener.ILogicFrameListener;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
-import hundun.gdxgame.idlestarter.ui.BasePlayScreen;
+import hundun.gdxgame.idlestarter.ui.screen.play.BasePlayScreen;
 
 
 /**

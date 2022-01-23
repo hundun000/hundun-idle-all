@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import hundun.gdxgame.idleframe.BaseIdleGame;
-import hundun.gdxgame.idlestarter.ui.BasePlayScreen;
+import hundun.gdxgame.idlestarter.ui.screen.play.BasePlayScreen;
 
 
 /**

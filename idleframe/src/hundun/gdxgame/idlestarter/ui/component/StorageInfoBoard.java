@@ -11,8 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
 
 import hundun.gdxgame.idleframe.BaseIdleGame;
-import hundun.gdxgame.idlestarter.ui.BasePlayScreen;
-import hundun.gdxgame.idlestarter.ui.StarterPlayScreenLayoutConst;
+import hundun.gdxgame.idlestarter.ui.screen.play.BasePlayScreen;
+import hundun.gdxgame.idlestarter.ui.screen.play.PlayScreenLayoutConst;
 
 /**
  * @author hundun

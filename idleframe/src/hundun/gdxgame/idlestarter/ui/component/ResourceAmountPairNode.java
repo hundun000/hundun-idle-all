@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.util.TextFormatUtils;
-import hundun.gdxgame.idlestarter.ui.BasePlayScreen;
+import hundun.gdxgame.idlestarter.ui.screen.play.BasePlayScreen;
 import lombok.Getter;
 
 /**

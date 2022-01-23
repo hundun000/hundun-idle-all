@@ -19,8 +19,8 @@ import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.listener.IGameAreaChangeListener;
 import hundun.gdxgame.idleframe.listener.ILogicFrameListener;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
-import hundun.gdxgame.idlestarter.ui.BasePlayScreen;
-import hundun.gdxgame.idlestarter.ui.StarterPlayScreenLayoutConst;
+import hundun.gdxgame.idlestarter.ui.screen.play.BasePlayScreen;
+import hundun.gdxgame.idlestarter.ui.screen.play.PlayScreenLayoutConst;
 
 
 
@@ -32,8 +32,8 @@ public class ConstructionControlBoard<T_GAME extends BaseIdleGame> extends Table
     
 
     
-    public static int LR_BUTTON_HEIGHT = StarterPlayScreenLayoutConst.CONSTRUCION_BOARD_BORDER_HEIGHT;
-    public static int LR_BUTTON_WIDTH = 0;
+    public final int LR_BUTTON_HEIGHT;
+    public final int LR_BUTTON_WIDTH = 0;
 
     
     BasePlayScreen<T_GAME> parent;
@@ -55,6 +55,9 @@ public class ConstructionControlBoard<T_GAME extends BaseIdleGame> extends Table
         
         this.parent = parent;
 
+        this.LR_BUTTON_HEIGHT = parent.getLayoutConst().CONSTRUCION_BOARD_BORDER_HEIGHT;
+        
+        
         leftButton = new ImageButton(BasePlayScreen.createBorderBoard(LR_BUTTON_WIDTH, LR_BUTTON_HEIGHT, 0.8f, 3));
         leftButton.addListener(new ClickListener() {
             @Override

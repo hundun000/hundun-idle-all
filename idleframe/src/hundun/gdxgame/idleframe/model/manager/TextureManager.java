@@ -21,15 +21,15 @@ public abstract class TextureManager {
     protected Map<String, TextureRegion> constructionRegionMap = new HashMap<>();
     protected Map<String, TextureRegion> gameAreaLeftPartRegionMap = new HashMap<>();
     protected Map<String, TextureRegion> gameAreaRightPartRegionMap = new HashMap<>();
-    protected Map<String, Texture> gameAreaBackMap = new HashMap<>();
+    protected Map<String, TextureRegion> gameAreaBackMap = new HashMap<>();
 
     protected TextureRegion defaultIcon;
-
+    protected TextureRegion defaultAreaBack;
     
 
     
-    public Texture getBackgroundTexture(String gameArea) {
-        return gameAreaBackMap.getOrDefault(gameArea, defaultIcon.getTexture());
+    public TextureRegion getBackgroundTexture(String gameArea) {
+        return gameAreaBackMap.getOrDefault(gameArea, defaultAreaBack);
     }
     
     public TextureRegion getResourceIcon(String resourceType) {

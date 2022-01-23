@@ -19,8 +19,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.listener.IGameAreaChangeListener;
-import hundun.gdxgame.idlestarter.ui.BasePlayScreen;
-import hundun.gdxgame.idlestarter.ui.StarterPlayScreenLayoutConst;
+import hundun.gdxgame.idlestarter.ui.screen.play.BasePlayScreen;
+import hundun.gdxgame.idlestarter.ui.screen.play.PlayScreenLayoutConst;
 
 /**
  * @author hundun
@@ -52,7 +52,7 @@ public class GameAreaControlBoard<T_GAME extends BaseIdleGame> extends Table imp
     private void initButtonMap(String gameArea, boolean longVersion) {
         GameAreaControlNode<T_GAME> node = new GameAreaControlNode<T_GAME>(parent, gameArea, longVersion, !parent.game.drawGameImageAndPlayAudio);
         nodes.put(gameArea, node);
-        this.add(node).width(StarterPlayScreenLayoutConst.AREA_BOARD_BORDER_WIDTH).height(StarterPlayScreenLayoutConst.AREA_BOARD_CELL_HEIGHT).row();
+        this.add(node).width(parent.getLayoutConst().AREA_BOARD_BORDER_WIDTH).height(parent.getLayoutConst().AREA_BOARD_CELL_HEIGHT).row();
     }
     
     

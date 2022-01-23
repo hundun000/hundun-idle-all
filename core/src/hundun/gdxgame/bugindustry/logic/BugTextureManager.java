@@ -61,6 +61,14 @@ public class BugTextureManager extends TextureManager {
             gameAreaRightPartRegionMap.put(GameArea.FOREST_FARM, regions[1][1]);
             gameAreaRightPartRegionMap.put(GameArea.SHOP, regions[2][1]);
         }
+        {
+            Texture texture = new Texture(Gdx.files.internal("areas.png"));
+            TextureRegion[][] regions = TextureRegion.split(texture, 640, 480);
+            defaultAreaBack = regions[0][0];
+            gameAreaBackMap.put(GameArea.BEE_FARM, regions[0][1]);
+            gameAreaBackMap.put(GameArea.FOREST_FARM, regions[0][2]);
+            gameAreaBackMap.put(GameArea.SHOP, regions[0][3]);
+        }
         
     }
 

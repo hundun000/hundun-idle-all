@@ -5,20 +5,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+
 import hundun.gdxgame.bugindustry.logic.ConstructionId;
 import hundun.gdxgame.bugindustry.logic.BugGameDictionary;
 import hundun.gdxgame.bugindustry.logic.BugTextureManager;
 import hundun.gdxgame.bugindustry.logic.BuiltinConstructionsLoader;
 import hundun.gdxgame.bugindustry.logic.GameArea;
 import hundun.gdxgame.bugindustry.logic.ResourceType;
+import hundun.gdxgame.bugindustry.logic.ScreenId;
 import hundun.gdxgame.bugindustry.ui.screen.PlayScreen;
-import hundun.gdxgame.bugindustry.ui.screen.MenuScreen;
 import hundun.gdxgame.bugindustry.ui.screen.ScreenContext;
 import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.data.ChildGameConfig;
 import hundun.gdxgame.idleframe.model.AchievementPrototype;
 import hundun.gdxgame.idleframe.model.construction.BaseConstructionFactory;
-
+import hundun.gdxgame.idlestarter.ui.screen.menu.MenuScreen;
 import lombok.Getter;
 
 public class BugIndustryGame extends BaseIdleGame {
@@ -31,7 +34,7 @@ public class BugIndustryGame extends BaseIdleGame {
     public BugIndustryGame() {
         super(640, 480);
         this.skinFilePath = "skins/orange/skin/uiskin.json";
-        drawGameImageAndPlayAudio = true;
+        drawGameImageAndPlayAudio = false;
         debugMode = false;
     }
     
@@ -61,7 +64,33 @@ public class BugIndustryGame extends BaseIdleGame {
         this.textureManager = new BugTextureManager();
         
         this.screenContext = new ScreenContext();
-        screenContext.setMenuScreen(new MenuScreen(this));
+        screenContext.setMenuScreen(new MenuScreen<>(
+                this,
+                new InputListener(){
+                    @Override
+                    public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                        BugIndustryGame.this.loadAndHookSave(true);
+                        BugIndustryGame.this.setScreen(BugIndustryGame.this.getScreenContext().getGameBeeScreen());
+                        BugIndustryGame.this.getAudioPlayManager().intoScreen(ScreenId.PLAY);
+                    }
+                    @Override
+                    public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                        return true;
+                    }
+                },
+                new InputListener(){
+                    @Override
+                    public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                        BugIndustryGame.this.loadAndHookSave(false);
+                        BugIndustryGame.this.setScreen(BugIndustryGame.this.getScreenContext().getGameBeeScreen());
+                        BugIndustryGame.this.getAudioPlayManager().intoScreen(ScreenId.PLAY);
+                    }
+                    @Override
+                    public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                        return true;
+                    }
+                }
+        ));
         screenContext.setGameBeeScreen(new PlayScreen(this));
     }
 

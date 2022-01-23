@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleframe.model.resource.ResourcePack;
-import hundun.gdxgame.idlestarter.ui.BasePlayScreen;
+import hundun.gdxgame.idlestarter.ui.screen.play.BasePlayScreen;
 
 
 /**

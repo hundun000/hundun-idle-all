@@ -1,4 +1,4 @@
-package hundun.gdxgame.idlestarter.ui;
+package hundun.gdxgame.idlestarter.ui.component;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,13 +16,14 @@ import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleframe.model.entity.GameEntity;
 import hundun.gdxgame.idleframe.model.entity.IGameEntityFactory;
 import hundun.gdxgame.idleframe.model.manager.GameEntityManager;
+import hundun.gdxgame.idlestarter.ui.screen.play.BasePlayScreen;
 
 /**
  * @author hundun
  * Created on 2021/11/16
  * @param <T_GAME>
  */
-public class GameImageDrawHelper<T_GAME extends BaseIdleGame> implements IAmountChangeEventListener {
+public class GameImageDrawer<T_GAME extends BaseIdleGame> implements IAmountChangeEventListener {
     
     BasePlayScreen<T_GAME> parent;
     IGameEntityFactory gameEntityFactory;
@@ -30,7 +31,7 @@ public class GameImageDrawHelper<T_GAME extends BaseIdleGame> implements IAmount
     
     //private Queue<GameEntity> beeEntities = new ConcurrentLinkedQueue<>();
     
-    public GameImageDrawHelper(BasePlayScreen<T_GAME> parent, Camera camera, IGameEntityFactory gameEntityFactory) {
+    public GameImageDrawer(BasePlayScreen<T_GAME> parent, Camera camera, IGameEntityFactory gameEntityFactory) {
         this.parent = parent;
         
         this.gameEntityFactory = gameEntityFactory;

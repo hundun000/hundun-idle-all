@@ -1,16 +1,19 @@
-package hundun.gdxgame.idlestarter.ui;
+package hundun.gdxgame.idlestarter.ui.screen.play;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.listener.IAchievementUnlockListener;
@@ -18,9 +21,14 @@ import hundun.gdxgame.idleframe.listener.IGameAreaChangeListener;
 import hundun.gdxgame.idleframe.listener.ILogicFrameListener;
 import hundun.gdxgame.idleframe.model.AchievementPrototype;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
-
 import hundun.gdxgame.idlestarter.ui.component.AchievementMaskBoard;
+import hundun.gdxgame.idlestarter.ui.component.BackgroundImageBox;
+import hundun.gdxgame.idlestarter.ui.component.ConstructionControlBoard;
+import hundun.gdxgame.idlestarter.ui.component.GameAreaControlBoard;
+import hundun.gdxgame.idlestarter.ui.component.GameImageDrawer;
 import hundun.gdxgame.idlestarter.ui.component.PopupInfoBoard;
+import hundun.gdxgame.idlestarter.ui.component.StorageInfoBoard;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -36,24 +44,45 @@ public abstract class BasePlayScreen<T_GAME extends BaseIdleGame>
     private static final float LOGIC_FRAME_LENGTH = 1 / 30f; 
     private int clockCount = 0;
     private float logicFramAccumulator;
-    @Setter
-    @Getter
+    
+    @Setter(value = AccessLevel.PRIVATE)
+    @Getter(value = AccessLevel.PRIVATE)
     private boolean logicFramePause;
     @Getter
     private String area;
+    // ====== need child construct-init start ======
+    private final String startArea;
+    @Getter
+    protected final PlayScreenLayoutConst layoutConst;
+    // ====== need child construct-init end ======
     
+    
+    // ====== need child lazy-init start ======
     protected AchievementMaskBoard<T_GAME> achievementMaskBoard;
     protected PopupInfoBoard<T_GAME> popUpInfoBoard;
+    protected GameImageDrawer<T_GAME> gameImageDrawer;
+    protected StorageInfoBoard<T_GAME> storageInfoTable;
+    protected ConstructionControlBoard<T_GAME> constructionControlBoard;
+    protected BackgroundImageBox<T_GAME> backgroundImageBox;
+    protected GameAreaControlBoard<T_GAME> gameAreaControlBoard;
+    // ====== need child lazy-init end ======
     
     protected List<ILogicFrameListener> logicFrameListeners = new ArrayList<>();
     protected List<IGameAreaChangeListener> gameAreaChangeListeners = new ArrayList<>();
     
     protected Stage popupUiStage;
     protected Stage backUiStage;
+    protected Table uiRootTable;
+    protected Table popupRootTable;
     
-    public BasePlayScreen(T_GAME game) {
+    public BasePlayScreen(T_GAME game, String startArea, PlayScreenLayoutConst layoutConst) {
         super(game);
+        this.startArea = startArea;
+        this.layoutConst = layoutConst;
         game.getEventManager().registerListener(this);
+        popupUiStage = new Stage(new FitViewport(game.LOGIC_WIDTH, game.LOGIC_HEIGHT, uiStage.getCamera()));
+        backUiStage = new Stage(new FitViewport(game.LOGIC_WIDTH, game.LOGIC_HEIGHT, uiStage.getCamera()));
+    
     }
     
     protected void logicFrameCheck(float delta) {
@@ -123,5 +152,50 @@ public abstract class BasePlayScreen<T_GAME extends BaseIdleGame>
         popUpInfoBoard.setVisible(false);
         //popUpInfoBoard.setText("GUIDE_TEXT");
     }
+    
+    @Override
+    public void render(float delta) {
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        logicFrameCheck(delta);
+        
+        uiStage.act();
+        
+        // ====== be careful of draw order ======
+        backUiStage.draw();
+        if (game.drawGameImageAndPlayAudio) {
+            gameImageDrawer.drawAll();
+        }
+        uiStage.draw();
+        popupUiStage.draw();
+    }
+    
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(uiStage);
+        game.getBatch().setProjectionMatrix(uiStage.getViewport().getCamera().combined);
+        
+        popupRootTable = new Table();
+        popupRootTable.setFillParent(true);
+        popupUiStage.addActor(popupRootTable);
+        lazyInitBackUiAndPopupUiContent();
+        
+        uiRootTable = new Table();
+        uiRootTable.setFillParent(true);
+        uiStage.addActor(uiRootTable);
+        lazyInitUiRootContext();
+        
+        lazyInitLogicContext();
+        
+        // start area
+        setAreaAndNotifyChildren(startArea);
+    }
+
+    protected abstract void lazyInitLogicContext();
+
+    protected abstract void lazyInitUiRootContext();
+
+    protected abstract void lazyInitBackUiAndPopupUiContent();
 
 }

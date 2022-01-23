@@ -1,4 +1,4 @@
-package hundun.gdxgame.bugindustry.ui.screen;
+package hundun.gdxgame.idlestarter.ui.screen.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,13 +8,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import hundun.gdxgame.bugindustry.BugIndustryGame;
+
+import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.util.SaveUtils;
-import hundun.gdxgame.idlestarter.ui.BaseScreen;
+import hundun.gdxgame.idlestarter.ui.screen.play.BaseScreen;
 
 
 
-public class MenuScreen extends BaseScreen<BugIndustryGame> {
+public class MenuScreen<T_GAME extends BaseIdleGame> extends BaseScreen<T_GAME> {
 
     
 //    private MenuComponent<String> menu;
@@ -25,13 +26,17 @@ public class MenuScreen extends BaseScreen<BugIndustryGame> {
     int BUTTON_BIG_HEIGHT = 100;
     int BUTTON_SMALL_HEIGHT = 75;
     
+    final InputListener buttonContinueGameInputListener;
+    final InputListener buttonNewGameInputListener;
+    
     Button buttonContinueGame;
     Button buttonNewGame;
     Button buttonIntoSettingScreen;
     Table table;
-    public MenuScreen(BugIndustryGame game) {
+    public MenuScreen(T_GAME game, InputListener buttonContinueGameInputListener, InputListener buttonNewGameInputListener) {
         super(game);
-        
+        this.buttonContinueGameInputListener = buttonContinueGameInputListener;
+        this.buttonNewGameInputListener = buttonNewGameInputListener;
         initScene2d();
 
     }
@@ -50,18 +55,7 @@ public class MenuScreen extends BaseScreen<BugIndustryGame> {
         buttonContinueGame = new TextButton("Continue Game", game.getButtonSkin());
         //buttonContinueGame.setSize(100, 100);
         //buttonContinueGame.setPosition(0, 0);
-        buttonContinueGame.addListener(new InputListener(){
-            @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                game.loadAndHookSave(true);
-                game.setScreen(game.getScreenContext().getGameBeeScreen());
-                game.getAudioPlayManager().intoScreen(PlayScreen.class.getSimpleName());
-            }
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-        });
+        buttonContinueGame.addListener(buttonContinueGameInputListener);
         if (SaveUtils.hasSave()) {
             table.add(buttonContinueGame)
                 .height(BUTTON_BIG_HEIGHT)
@@ -73,18 +67,7 @@ public class MenuScreen extends BaseScreen<BugIndustryGame> {
         
         
         buttonNewGame = new TextButton("New Game", game.getButtonSkin());
-        buttonNewGame.addListener(new InputListener(){
-            @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                game.loadAndHookSave(false);
-                game.setScreen(game.getScreenContext().getGameBeeScreen());
-                game.getAudioPlayManager().intoScreen(PlayScreen.class.getSimpleName());
-            }
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-        });
+        buttonNewGame.addListener(buttonNewGameInputListener);
         table.add(buttonNewGame)
             .height(SaveUtils.hasSave() ? BUTTON_SMALL_HEIGHT : BUTTON_BIG_HEIGHT)
             .fill()

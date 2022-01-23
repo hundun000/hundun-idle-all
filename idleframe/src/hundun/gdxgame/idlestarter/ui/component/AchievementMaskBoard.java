@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.model.AchievementPrototype;
-import hundun.gdxgame.idlestarter.ui.BasePlayScreen;
+import hundun.gdxgame.idlestarter.ui.screen.play.BasePlayScreen;
 
 /**
  * @author hundun
