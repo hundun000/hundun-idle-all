@@ -31,8 +31,8 @@ public class BugIndustryGame extends BaseIdleGame {
     public BugIndustryGame() {
         super(640, 480);
         this.skinFilePath = "skins/orange/skin/uiskin.json";
-        drawGameImageAndPlayAudio = false;
-        debugMode = true;
+        drawGameImageAndPlayAudio = true;
+        debugMode = false;
     }
     
     @Override
