@@ -46,8 +46,6 @@ allprojects {
 }
 
 project(":desktop") {
-    apply plugin: "java-library"
-
 
     dependencies {
         implementation project(":core")
@@ -61,8 +59,6 @@ project(":desktop") {
 }
 
 project(":core") {
-    apply plugin: "java-library"
-
 
     dependencies {
         api project(":idleframe")
@@ -73,8 +69,9 @@ project(":core") {
     }
 }
 
+
+
 project(":idleframe") {
-    apply plugin: "java-library"
     apply plugin: "maven"
     apply plugin: "maven-publish"
     
@@ -101,5 +98,29 @@ project(":idleframe") {
         implementation group: 'org.jetbrains', name: 'annotations', version: '23.0.0'
         compileOnly 'org.projectlombok:lombok:1.18.4'
         annotationProcessor 'org.projectlombok:lombok:1.18.4'
+    }
+}
+
+project(":demo-core") {
+
+    dependencies {
+        api project(":idleframe")
+        api "com.badlogicgames.gdx:gdx:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        compileOnly 'org.projectlombok:lombok:1.18.4'
+        annotationProcessor 'org.projectlombok:lombok:1.18.4'
+    }
+}
+
+project(":demo-desktop") {
+
+    dependencies {
+        implementation project(":demo-core")
+        api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+                
+
     }
 }

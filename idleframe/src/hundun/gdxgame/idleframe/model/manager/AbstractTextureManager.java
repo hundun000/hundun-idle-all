@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import lombok.Getter;
 import lombok.Setter;
 
-public abstract class TextureManager {
+public abstract class AbstractTextureManager {
     
     @Getter
     protected Texture winTexture;

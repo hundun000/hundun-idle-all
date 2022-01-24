@@ -1,1 +1,1 @@
-include 'desktop', 'core', 'idleframe'
+include 'desktop', 'core', 'idleframe', 'demo-desktop', 'demo-core'

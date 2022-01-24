@@ -7,10 +7,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import hundun.gdxgame.idleframe.model.manager.TextureManager;
+import hundun.gdxgame.idleframe.model.manager.AbstractTextureManager;
 import lombok.Getter;
 
-public class BugTextureManager extends TextureManager {
+public class BugTextureManager extends AbstractTextureManager {
 
 
     public BugTextureManager() {

@@ -1,9 +1,17 @@
 ## custom
-/desktop/save.json
 /release-prepare/*
 !/release-prepare/packr-config.json
+
 /idleframe/build/
 /idleframe/bin/
+
+/desktop/save.json
+
+/demo-desktop/save.json
+/demo-core/bin/
+/demo-desktop/bin/
+/demo-core/build/
+/demo-desktop/build/
 
 ## Java
 

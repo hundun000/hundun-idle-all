@@ -28,7 +28,7 @@ import hundun.gdxgame.idleframe.model.manager.ConstructionManager;
 import hundun.gdxgame.idleframe.model.manager.EventManager;
 import hundun.gdxgame.idleframe.model.manager.GameEntityManager;
 import hundun.gdxgame.idleframe.model.manager.StorageManager;
-import hundun.gdxgame.idleframe.model.manager.TextureManager;
+import hundun.gdxgame.idleframe.model.manager.AbstractTextureManager;
 import hundun.gdxgame.idleframe.util.FontUtil;
 import hundun.gdxgame.idleframe.util.IGameDictionary;
 import hundun.gdxgame.idleframe.util.SaveUtils;
@@ -56,7 +56,7 @@ public abstract class BaseIdleGame extends Game {
     private AudioPlayManager audioPlayManager;
     
     @Getter
-    protected TextureManager textureManager;
+    protected AbstractTextureManager textureManager;
     @Getter
     protected IGameDictionary gameDictionary;
     
