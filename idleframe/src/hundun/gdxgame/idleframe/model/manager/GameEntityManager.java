@@ -11,8 +11,8 @@ import com.badlogic.gdx.Gdx;
 
 import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
+import hundun.gdxgame.idleframe.model.entity.BaseGameEntityFactory;
 import hundun.gdxgame.idleframe.model.entity.GameEntity;
-import hundun.gdxgame.idleframe.model.entity.IGameEntityFactory;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -57,7 +57,7 @@ public class GameEntityManager {
         }
     }
     
-    public void areaEntityCheckAmount(String gameArea, IGameEntityFactory gameEntityFactory) {
+    public void areaEntityCheckAmount(String gameArea, BaseGameEntityFactory gameEntityFactory) {
         List<String> shownConstructionIds = this.areaShowEntityConstructionIds.get(gameArea);
         if (shownConstructionIds != null) {
             for (String shownConstructionId : shownConstructionIds) {
@@ -81,7 +81,7 @@ public class GameEntityManager {
         }
     }
     
-    private void checkResourceEntityList(String resourceId, IGameEntityFactory gameEntityFactory) {
+    private void checkResourceEntityList(String resourceId, BaseGameEntityFactory gameEntityFactory) {
         long resourceNum = game.getModelContext().getStorageManager().getResourceNumOrZero(resourceId);
         int drawNum = gameEntityFactory.calculateResourceDrawNum(resourceId, resourceNum);
         
@@ -98,7 +98,7 @@ public class GameEntityManager {
         }
     }
     
-    private void checkConstructionEntityList(String id, IGameEntityFactory gameEntityFactory) {
+    private void checkConstructionEntityList(String id, BaseGameEntityFactory gameEntityFactory) {
         BaseConstruction construction = game.getModelContext().getConstructionFactory().getConstruction(id);
         int resourceNum = construction.getSaveData().getWorkingLevel();
         int MAX_DRAW_NUM = construction.getMAX_DRAW_NUM();

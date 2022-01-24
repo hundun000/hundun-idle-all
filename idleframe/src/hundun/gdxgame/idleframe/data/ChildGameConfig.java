@@ -6,7 +6,6 @@ import java.util.Map;
 
 import hundun.gdxgame.idleframe.model.construction.BaseConstructionFactory;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
-import hundun.gdxgame.idleframe.model.entity.IGameEntityFactory;
 import lombok.Data;
 import lombok.Getter;
 

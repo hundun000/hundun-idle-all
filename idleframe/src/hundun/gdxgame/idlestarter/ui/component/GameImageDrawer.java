@@ -13,8 +13,8 @@ import com.badlogic.gdx.graphics.Camera;
 import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.listener.IAmountChangeEventListener;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
+import hundun.gdxgame.idleframe.model.entity.BaseGameEntityFactory;
 import hundun.gdxgame.idleframe.model.entity.GameEntity;
-import hundun.gdxgame.idleframe.model.entity.IGameEntityFactory;
 import hundun.gdxgame.idleframe.model.manager.GameEntityManager;
 import hundun.gdxgame.idlestarter.ui.screen.play.BasePlayScreen;
 
@@ -26,12 +26,12 @@ import hundun.gdxgame.idlestarter.ui.screen.play.BasePlayScreen;
 public class GameImageDrawer<T_GAME extends BaseIdleGame> implements IAmountChangeEventListener {
     
     BasePlayScreen<T_GAME> parent;
-    IGameEntityFactory gameEntityFactory;
+    BaseGameEntityFactory gameEntityFactory;
     
     
     //private Queue<GameEntity> beeEntities = new ConcurrentLinkedQueue<>();
     
-    public GameImageDrawer(BasePlayScreen<T_GAME> parent, Camera camera, IGameEntityFactory gameEntityFactory) {
+    public GameImageDrawer(BasePlayScreen<T_GAME> parent, BaseGameEntityFactory gameEntityFactory) {
         this.parent = parent;
         
         this.gameEntityFactory = gameEntityFactory;

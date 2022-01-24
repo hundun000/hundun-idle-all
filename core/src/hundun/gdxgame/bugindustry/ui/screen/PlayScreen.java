@@ -13,10 +13,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.bugindustry.logic.GameArea;
 import hundun.gdxgame.bugindustry.logic.ResourceType;
-import hundun.gdxgame.bugindustry.ui.entity.GameEntityFactory;
+import hundun.gdxgame.bugindustry.ui.entity.BugGameEntityFactory;
 import hundun.gdxgame.idleframe.model.AchievementPrototype;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
-import hundun.gdxgame.idlestarter.model.entity.StarterGameEntityFactoryHelper;
 import hundun.gdxgame.idlestarter.ui.component.AchievementMaskBoard;
 import hundun.gdxgame.idlestarter.ui.component.BackgroundImageBox;
 import hundun.gdxgame.idlestarter.ui.component.ConstructionControlBoard;
@@ -34,13 +33,13 @@ import hundun.gdxgame.idlestarter.ui.screen.play.PlayScreenLayoutConst;
 public class PlayScreen extends BasePlayScreen<BugIndustryGame> {
 
     public PlayScreen(BugIndustryGame game) {
-        super(game, GameArea.BEE_FARM, new PlayScreenLayoutConst());
+        super(game, GameArea.BEE_FARM, new PlayScreenLayoutConst(game.LOGIC_WIDTH, game.LOGIC_HEIGHT));
     }
     
     @Override
     protected void lazyInitLogicContext() {
-        
-        gameImageDrawer = new GameImageDrawer<>(this, uiStage.getCamera(), new GameEntityFactory(game, this, new StarterGameEntityFactoryHelper(game.getTextureManager())));
+        BugGameEntityFactory bugGameEntityFactory = new BugGameEntityFactory(this.layoutConst, this);
+        gameImageDrawer = new GameImageDrawer<>(this, bugGameEntityFactory);
         
         logicFrameListeners.add(constructionControlBoard);
         gameAreaChangeListeners.add(backgroundImageBox);
