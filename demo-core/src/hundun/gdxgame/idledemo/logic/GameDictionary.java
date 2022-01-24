@@ -6,7 +6,7 @@ import hundun.gdxgame.idleframe.util.IGameDictionary;
  * @author hundun
  * Created on 2021/11/22
  */
-public class BugGameDictionary implements IGameDictionary {
+public class GameDictionary implements IGameDictionary {
 
     
     public String constructionIdToShowName(String constructionId) {

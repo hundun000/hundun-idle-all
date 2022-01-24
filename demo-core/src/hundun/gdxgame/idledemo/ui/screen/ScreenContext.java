@@ -1,6 +1,6 @@
 package hundun.gdxgame.idledemo.ui.screen;
 
-import hundun.gdxgame.idledemo.BugIndustryGame;
+import hundun.gdxgame.idledemo.IdleDemoGame;
 import hundun.gdxgame.idlestarter.ui.screen.menu.MenuScreen;
 import lombok.Data;
 
@@ -10,6 +10,6 @@ import lombok.Data;
  */
 @Data
 public class ScreenContext {
-    MenuScreen<BugIndustryGame> menuScreen;
+    MenuScreen<IdleDemoGame> menuScreen;
     PlayScreen gameBeeScreen;
 }

@@ -2,10 +2,7 @@ package hundun.gdxgame.idledemo.logic;
 
 
 
-/**
- * @author hundun
- * Created on 2021/12/02
- */
+
 public class ConstructionId {
 
     public static final String COOKIE_CLICK_PROVIDER = "ENUM_CSTR@COOKIE_CLICK_PROVIDER";

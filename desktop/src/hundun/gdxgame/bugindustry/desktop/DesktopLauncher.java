@@ -9,8 +9,8 @@ public class DesktopLauncher {
 		
 	    BugIndustryGame game = new BugIndustryGame();
 	    LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = (int) (game.LOGIC_WIDTH * BugIndustryGame.desktopScale);
-		config.height = (int) (game.LOGIC_HEIGHT * BugIndustryGame.desktopScale);
+		config.width = (int) (game.LOGIC_WIDTH * game.desktopScale);
+		config.height = (int) (game.LOGIC_HEIGHT * game.desktopScale);
 		new LwjglApplication(game, config);
 	}
 }

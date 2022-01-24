@@ -22,34 +22,34 @@ public class BugTextureManager extends AbstractTextureManager {
             Texture texture = new Texture(Gdx.files.internal("item.png"));
             TextureRegion[][] regions = TextureRegion.split(texture, 16, 16);
             defaultIcon = regions[0][0];
-            itemRegionMap.put(ResourceType.COIN, regions[0][1]);
-            itemRegionMap.put(ResourceType.WOOD, regions[0][2]);
-            itemRegionMap.put(ResourceType.WOOD_BOARD, regions[0][3]);
-            itemRegionMap.put(ResourceType.BEE, regions[0][4]);
-            itemRegionMap.put(ResourceType.HONEY, regions[0][5]);
-            itemRegionMap.put(ResourceType.BEEWAX, regions[0][6]);
-            itemRegionMap.put(ResourceType.QUEEN_BEE, regions[0][7]);
+            resourceIconMap.put(ResourceType.COIN, regions[0][1]);
+            resourceIconMap.put(ResourceType.WOOD, regions[0][2]);
+            resourceIconMap.put(ResourceType.WOOD_BOARD, regions[0][3]);
+            resourceIconMap.put(ResourceType.BEE, regions[0][4]);
+            resourceIconMap.put(ResourceType.HONEY, regions[0][5]);
+            resourceIconMap.put(ResourceType.BEEWAX, regions[0][6]);
+            resourceIconMap.put(ResourceType.QUEEN_BEE, regions[0][7]);
             //itemRegionMap.put(ResourceType.WIN_THE_GAME, regions[0][8]);
         }
         
         {
             Texture texture = new Texture(Gdx.files.internal("construction.png"));
             TextureRegion[][] regions = TextureRegion.split(texture, 16, 32);
-            constructionRegionMap.put(ConstructionId.SMALL_BEEHIVE, regions[0][0]);
-            constructionRegionMap.put(ConstructionId.MID_BEEHIVE, regions[0][1]);
-            constructionRegionMap.put(ConstructionId.BIG_BEEHIVE, regions[0][2]);
-            constructionRegionMap.put(ConstructionId.QUEEN_BEEHIVE, regions[0][3]);
-            constructionRegionMap.put(ConstructionId.WOOD_KEEPING, regions[0][4]);
+            constructionEntityMap.put(ConstructionId.SMALL_BEEHIVE, regions[0][0]);
+            constructionEntityMap.put(ConstructionId.MID_BEEHIVE, regions[0][1]);
+            constructionEntityMap.put(ConstructionId.BIG_BEEHIVE, regions[0][2]);
+            constructionEntityMap.put(ConstructionId.QUEEN_BEEHIVE, regions[0][3]);
+            constructionEntityMap.put(ConstructionId.WOOD_KEEPING, regions[0][4]);
         }
         
         {
             Texture texture = new Texture(Gdx.files.internal("selling.png"));
             TextureRegion[][] regions = TextureRegion.split(texture, 48, 32);
-            constructionRegionMap.put(ConstructionId.WOOD_SELL_HOUSE, regions[0][0]);
-            constructionRegionMap.put(ConstructionId.WOOD_BOARD_SELL_HOUSE, regions[0][1]);
-            constructionRegionMap.put(ConstructionId.BEE_SELL_HOUSE, regions[0][2]);
-            constructionRegionMap.put(ConstructionId.HONEY_SELL_HOUSE, regions[0][3]);
-            constructionRegionMap.put(ConstructionId.BEEWAX_SELL_HOUSE, regions[0][4]);
+            constructionEntityMap.put(ConstructionId.WOOD_SELL_HOUSE, regions[0][0]);
+            constructionEntityMap.put(ConstructionId.WOOD_BOARD_SELL_HOUSE, regions[0][1]);
+            constructionEntityMap.put(ConstructionId.BEE_SELL_HOUSE, regions[0][2]);
+            constructionEntityMap.put(ConstructionId.HONEY_SELL_HOUSE, regions[0][3]);
+            constructionEntityMap.put(ConstructionId.BEEWAX_SELL_HOUSE, regions[0][4]);
         }
         {
             Texture texture = new Texture(Gdx.files.internal("gameAreaIcons.png"));

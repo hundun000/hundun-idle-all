@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import hundun.gdxgame.idledemo.BugIndustryGame;
+import hundun.gdxgame.idledemo.IdleDemoGame;
 import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.model.construction.BaseAutoConstruction;
 import hundun.gdxgame.idleframe.model.construction.BaseClickGatherConstruction;
@@ -17,15 +17,12 @@ import hundun.gdxgame.idleframe.model.construction.base.UpgradeComponent;
 import hundun.gdxgame.idleframe.model.resource.ResourcePack;
 import hundun.gdxgame.idleframe.model.resource.ResourcePair;
 
-/**
- * @author hundun
- * Created on 2021/11/16
- */
+
 public class BuiltinConstructionsLoader {
-    BugIndustryGame game;
+    IdleDemoGame game;
     List<BaseConstruction> constructions = new ArrayList<>();
     
-    public BuiltinConstructionsLoader(BugIndustryGame game) {
+    public BuiltinConstructionsLoader(IdleDemoGame game) {
         this.game = game;
         
     }

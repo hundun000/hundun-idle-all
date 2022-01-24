@@ -15,6 +15,7 @@ import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.ScreenId;
 import hundun.gdxgame.idledemo.ui.screen.PlayScreen;
 import hundun.gdxgame.idleframe.data.ChildGameConfig;
+import hundun.gdxgame.idleframe.model.AchievementPrototype;
 import hundun.gdxgame.idlestarter.ConstructionsFileLoader;
 
 /**
@@ -23,7 +24,7 @@ import hundun.gdxgame.idlestarter.ConstructionsFileLoader;
  */
 public class IdleDemoGameConfig extends ChildGameConfig {
     
-    public IdleDemoGameConfig(BugIndustryGame game) {
+    public IdleDemoGameConfig(IdleDemoGame game) {
 
         BuiltinConstructionsLoader builtinConstructionsLoader = new BuiltinConstructionsLoader(game);
         this.setConstructions(builtinConstructionsLoader.load());
@@ -59,6 +60,12 @@ public class IdleDemoGameConfig extends ChildGameConfig {
                 );
         this.setScreenIdToFilePathMap(screenIdToFilePathMap);
         
-        this.setSkinFilePath("skins/orange/skin/uiskin.json");
+        var achievementPrototypes = Arrays.asList(
+                new AchievementPrototype("Game win", "You win the game!",
+                        null,
+                        Map.of(ResourceType.WIN_TROPHY, 1)
+                        )
+                );
+        this.setAchievementPrototypes(achievementPrototypes);
     }
 }

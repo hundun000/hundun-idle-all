@@ -15,6 +15,7 @@ import hundun.gdxgame.bugindustry.logic.ResourceType;
 import hundun.gdxgame.bugindustry.logic.ScreenId;
 import hundun.gdxgame.bugindustry.ui.screen.PlayScreen;
 import hundun.gdxgame.idleframe.data.ChildGameConfig;
+import hundun.gdxgame.idleframe.model.AchievementPrototype;
 import hundun.gdxgame.idlestarter.ConstructionsFileLoader;
 
 /**
@@ -71,6 +72,12 @@ public class BugIndustryGameConfig extends ChildGameConfig {
                 );
         this.setScreenIdToFilePathMap(screenIdToFilePathMap);
         
-        this.setSkinFilePath("skins/orange/skin/uiskin.json");
+        var achievementPrototypes = Arrays.asList(
+                new AchievementPrototype("Game win", "You win the game!",
+                        null,
+                        Map.of(ResourceType.WIN_TROPHY, 1)
+                        )
+                );
+        this.setAchievementPrototypes(achievementPrototypes);
     }
 }

@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import hundun.gdxgame.idledemo.BugIndustryGame;
+import hundun.gdxgame.idledemo.IdleDemoGame;
 import hundun.gdxgame.idledemo.logic.ConstructionId;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idleframe.BaseIdleGame;
@@ -26,7 +26,7 @@ public class GameEntityFactory extends BaseGameEntityFactory {
 
     public float RESOURCE_MAX_DRAW_NUM = 5;
     
-    public GameEntityFactory(PlayScreenLayoutConst layoutConst, BasePlayScreen<BugIndustryGame> parent) {
+    public GameEntityFactory(PlayScreenLayoutConst layoutConst, BasePlayScreen<IdleDemoGame> parent) {
         super(layoutConst, parent);
     }
     

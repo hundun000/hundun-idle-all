@@ -6,6 +6,7 @@ package hundun.gdxgame.idleframe.model.manager;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -27,17 +28,9 @@ public class AchievementManager implements IAmountChangeEventListener {
     
     public AchievementManager(BaseIdleGame game) {
         this.game = game;
-        initPrototypes();
         game.getEventManager().registerListener(this);
     }
-    
-    private void initPrototypes() {
-//        addPrototype(new AchievementPrototype("Game win", "You win the game!",
-//                null,
-//                Map.of(ResourceType.WIN_TROPHY, 1)
-//                ));
-    }
-    
+
     public void addPrototype(AchievementPrototype prototype) {
         prototypes.put(prototype.getName(), prototype);
     }
@@ -97,6 +90,10 @@ public class AchievementManager implements IAmountChangeEventListener {
         if (!fromLoad) {
             checkAllAchievementUnlock();
         }
+    }
+
+    public void lazyInit(List<AchievementPrototype> achievementPrototypes) {
+        achievementPrototypes.forEach(item -> addPrototype(item));
     }
     
     

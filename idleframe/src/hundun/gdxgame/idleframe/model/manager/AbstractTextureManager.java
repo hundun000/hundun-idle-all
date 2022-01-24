@@ -17,8 +17,9 @@ public abstract class AbstractTextureManager {
     
     @Getter
     protected Texture menuTexture;
-    protected Map<String, TextureRegion> itemRegionMap = new HashMap<>();
-    protected Map<String, TextureRegion> constructionRegionMap = new HashMap<>();
+    protected Map<String, TextureRegion> resourceIconMap = new HashMap<>();
+    protected Map<String, TextureRegion> resourceEntityMap = new HashMap<>();
+    protected Map<String, TextureRegion> constructionEntityMap = new HashMap<>();
     protected Map<String, TextureRegion> gameAreaLeftPartRegionMap = new HashMap<>();
     protected Map<String, TextureRegion> gameAreaRightPartRegionMap = new HashMap<>();
     protected Map<String, TextureRegion> gameAreaBackMap = new HashMap<>();
@@ -33,11 +34,15 @@ public abstract class AbstractTextureManager {
     }
     
     public TextureRegion getResourceIcon(String resourceType) {
-        return itemRegionMap.getOrDefault(resourceType, defaultIcon);
+        return resourceIconMap.getOrDefault(resourceType, defaultIcon);
     }
     
-    public TextureRegion getConstructionTexture(String constructionId) {
-        return constructionRegionMap.getOrDefault(constructionId, defaultIcon);
+    public TextureRegion getResourceEntity(String resourceType) {
+        return resourceEntityMap.getOrDefault(resourceType, defaultIcon);
+    }
+    
+    public TextureRegion getConstructionEntity(String constructionId) {
+        return constructionEntityMap.getOrDefault(constructionId, defaultIcon);
     }
     
     public TextureRegion getGameAreaTexture(String key, boolean longVersion) {

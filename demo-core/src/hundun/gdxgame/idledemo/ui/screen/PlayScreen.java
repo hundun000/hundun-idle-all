@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-import hundun.gdxgame.idledemo.BugIndustryGame;
+import hundun.gdxgame.idledemo.IdleDemoGame;
 import hundun.gdxgame.idledemo.logic.GameArea;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.ui.entity.GameEntityFactory;
@@ -31,9 +31,9 @@ import hundun.gdxgame.idlestarter.ui.screen.play.PlayScreenLayoutConst;
  * @author hundun
  * Created on 2021/11/02
  */
-public class PlayScreen extends BasePlayScreen<BugIndustryGame> {
+public class PlayScreen extends BasePlayScreen<IdleDemoGame> {
 
-    public PlayScreen(BugIndustryGame game) {
+    public PlayScreen(IdleDemoGame game) {
         super(game, GameArea.AREA_0, new PlayScreenLayoutConst(game.LOGIC_WIDTH, game.LOGIC_HEIGHT));
     }
     
@@ -51,14 +51,14 @@ public class PlayScreen extends BasePlayScreen<BugIndustryGame> {
     @Override
     protected void lazyInitUiRootContext() {
         
-        storageInfoTable = new StorageInfoBoard<BugIndustryGame>(this);
+        storageInfoTable = new StorageInfoBoard<IdleDemoGame>(this);
         storageInfoTable.lazyInit(ResourceType.VALUES_FOR_SHOW_ORDER);
         uiRootTable.add(storageInfoTable).height(layoutConst.STORAGE_BOARD_BORDER_HEIGHT).row();
         
-        gameAreaControlBoard = new GameAreaControlBoard<BugIndustryGame>(this, GameArea.values);
+        gameAreaControlBoard = new GameAreaControlBoard<IdleDemoGame>(this, GameArea.values);
         uiRootTable.add(gameAreaControlBoard).expand().right().row();
 
-        constructionControlBoard = new ConstructionControlBoard<BugIndustryGame>(this);
+        constructionControlBoard = new ConstructionControlBoard<IdleDemoGame>(this);
         uiRootTable.add(constructionControlBoard).height(layoutConst.CONSTRUCION_BOARD_BORDER_HEIGHT);
         
         uiRootTable.debugCell();
@@ -67,16 +67,16 @@ public class PlayScreen extends BasePlayScreen<BugIndustryGame> {
     @Override
     protected void lazyInitBackUiAndPopupUiContent() {
         
-        this.backgroundImageBox = new BackgroundImageBox<BugIndustryGame>(this);
+        this.backgroundImageBox = new BackgroundImageBox<IdleDemoGame>(this);
         backUiStage.addActor(backgroundImageBox);
         
         
-        popUpInfoBoard = new PopupInfoBoard<BugIndustryGame>(this);
+        popUpInfoBoard = new PopupInfoBoard<IdleDemoGame>(this);
         popupRootTable.add(popUpInfoBoard).bottom().expand().row();
         // empty image for hold the space
         popupRootTable.add(new Image()).height(game.LOGIC_HEIGHT / 4);
         
-        achievementMaskBoard = new AchievementMaskBoard<BugIndustryGame>(this);
+        achievementMaskBoard = new AchievementMaskBoard<IdleDemoGame>(this);
         popupUiStage.addActor(achievementMaskBoard);
     }
 

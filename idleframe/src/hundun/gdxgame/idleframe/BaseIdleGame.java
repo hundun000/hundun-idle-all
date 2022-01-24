@@ -37,7 +37,7 @@ import lombok.Getter;
 public abstract class BaseIdleGame extends Game {
     public boolean debugMode = false;
     public boolean drawGameImageAndPlayAudio = true;
-    public static final int desktopScale = 1;
+    public final int desktopScale = 1;
     public final int LOGIC_WIDTH;
     public final int LOGIC_HEIGHT;
     protected String DEFAULT_SKIN_FILA_PATH = "skins/default/skin/uiskin.json";
@@ -145,11 +145,12 @@ public abstract class BaseIdleGame extends Game {
         
         SaveUtils.lazyInit(childGameConfig.getConstructionStarterLevelMap(), childGameConfig.getConstructionStarterWorkingLevelMap());
         
-        
         modelContext.getConstructionFactory().lazyInit(childGameConfig.getConstructions());
         modelContext.getConstructionManager().lazyInit(childGameConfig.getAreaControlableConstructionIds());
         modelContext.getGameEntityManager().lazyInit(childGameConfig.getAreaShowEntityConstructionIds(), childGameConfig.getAreaShowEntityResourceIds());
+        modelContext.getAchievementManager().lazyInit(childGameConfig.getAchievementPrototypes());
         audioPlayManager.lazyInit(childGameConfig.getScreenIdToFilePathMap());
+        
         
     }
     

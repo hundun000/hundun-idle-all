@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import hundun.gdxgame.idleframe.model.AchievementPrototype;
 import hundun.gdxgame.idleframe.model.construction.BaseConstructionFactory;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
 import lombok.Data;
@@ -23,5 +24,6 @@ public abstract class ChildGameConfig {
     Map<String, Integer> constructionStarterLevelMap;
     Map<String, Boolean> constructionStarterWorkingLevelMap;
     Map<String, String> screenIdToFilePathMap;
-    String skinFilePath;
+    List<AchievementPrototype> achievementPrototypes;
+
 }
