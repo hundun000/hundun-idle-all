@@ -42,15 +42,22 @@ public class GameEntityManager {
         for (var entry : gameEntitiesOfConstructionIds.entrySet()) {
             Queue<GameEntity> queue = entry.getValue();
             queue.forEach(entity -> {
-                entity.checkRandomeMoveSpeedChange();
+                entity.checkMoveSpeedChange();
                 positionChange(entity);
             });
         }
         
         for (var entry : gameEntitiesOfResourceIds.entrySet()) {
             Queue<GameEntity> queue = entry.getValue();
+            queue.removeIf(entity -> {
+                boolean remove = entity.checkRemove();
+                if (remove) {
+                    Gdx.app.log(this.getClass().getSimpleName(), "entity removed by self check");
+                }
+                return remove;
+                });
             queue.forEach(entity -> {
-                entity.checkRandomeMoveSpeedChange();
+                entity.checkMoveSpeedChange();
                 positionChange(entity);
             });
 
@@ -75,7 +82,7 @@ public class GameEntityManager {
     }
     
     private void positionChange(GameEntity entity) {
-        if (entity.isRandomMove()) {
+        if (entity.isMoveable()) {
             entity.setX(entity.getX() + entity.getSpeedX());
             entity.setY(entity.getY() + entity.getSpeedY());
         }

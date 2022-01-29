@@ -33,8 +33,9 @@ public class IdleDemoGame extends BaseIdleGame {
     
     public IdleDemoGame() {
         super(640, 480);
-        this.skinFilePath = "skins/orange/skin/uiskin.json";
-        drawGameImageAndPlayAudio = false;
+        //this.skinFilePath = "skins/orange/skin/uiskin.json";
+        desktopScale = 2;
+        drawGameImageAndPlayAudio = true;
         debugMode = false;
     }
     

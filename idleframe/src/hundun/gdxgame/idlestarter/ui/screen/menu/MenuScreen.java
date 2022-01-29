@@ -49,7 +49,8 @@ public class MenuScreen<T_GAME extends BaseIdleGame> extends BaseScreen<T_GAME> 
         }
         
         table = new Table();
-        table.setBounds((Gdx.graphics.getWidth() - BUTTON_WIDTH)/2, 0, BUTTON_WIDTH, Gdx.graphics.getHeight() / 2);
+        table.setFillParent(true);
+        //table.setBounds((game.LOGIC_WIDTH - BUTTON_WIDTH)/2, 0, BUTTON_WIDTH, game.LOGIC_HEIGHT / 2);
         uiStage.addActor(table);
         
         buttonContinueGame = new TextButton("Continue Game", game.getButtonSkin());

@@ -1,4 +1,8 @@
 package hundun.gdxgame.idleframe.model.entity;
+
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * @author hundun
  * Created on 2021/12/04
@@ -10,7 +14,9 @@ public class RandomMoveEntity extends GameEntity {
     public float FLY_MIN_Y;
     public float FLY_MAX_Y;
     private double FLY_UNION_SPEED;
-    
+    @Setter
+    @Getter
+    int randomMoveCount;
     
     
     public RandomMoveEntity(float FLY_MIN_X, float FLY_MAX_X, float FLY_MIN_Y, float FLY_MAX_Y,
@@ -26,29 +32,28 @@ public class RandomMoveEntity extends GameEntity {
 
 
     @Override
-    public void checkRandomeMoveSpeedChange() {
-        if (this.isRandomMove()) {
-            if (this.getRandomMoveCount() > 0) {
-                this.setRandomMoveCount(this.getRandomMoveCount() - 1);
-            } else {
-                this.setRandomMoveCount(50 + (int) (Math.random() * 50));
-                double angle = Math.toRadians(Math.random() * 360);
-                double unionSpeed = FLY_UNION_SPEED;
-                this.setSpeedX((float) (unionSpeed * Math.cos(angle)));
-                this.setSpeedY((float) (unionSpeed * Math.sin(angle)));
-            }
-            
-            if ((this.getX() < FLY_MIN_X && this.getSpeedX() < 0) 
-                    || (this.getX() + this.getDrawWidth() > FLY_MAX_X && this.getSpeedX() > 0)) {
-                this.setSpeedX(this.getSpeedX() * -1);
-            }
-            if ((this.getY() < FLY_MIN_Y && this.getSpeedY() < 0) 
-                    || (this.getY() + this.getDrawHeight() > FLY_MAX_Y && this.getSpeedY() > 0)) {
-                this.setSpeedY(this.getSpeedY() * -1);
-            }
-            
-            this.setTextureFlipX(this.getSpeedX() < 0);
-
+    public void checkMoveSpeedChange() {
+        if (this.getRandomMoveCount() > 0) {
+            this.setRandomMoveCount(this.getRandomMoveCount() - 1);
+        } else {
+            this.setRandomMoveCount(50 + (int) (Math.random() * 50));
+            double angle = Math.toRadians(Math.random() * 360);
+            double unionSpeed = FLY_UNION_SPEED;
+            this.setSpeedX((float) (unionSpeed * Math.cos(angle)));
+            this.setSpeedY((float) (unionSpeed * Math.sin(angle)));
         }
+        
+        if ((this.getX() < FLY_MIN_X && this.getSpeedX() < 0) 
+                || (this.getX() + this.getDrawWidth() > FLY_MAX_X && this.getSpeedX() > 0)) {
+            this.setSpeedX(this.getSpeedX() * -1);
+        }
+        if ((this.getY() < FLY_MIN_Y && this.getSpeedY() < 0) 
+                || (this.getY() + this.getDrawHeight() > FLY_MAX_Y && this.getSpeedY() > 0)) {
+            this.setSpeedY(this.getSpeedY() * -1);
+        }
+        
+        this.setTextureFlipX(this.getSpeedX() < 0);
+
     }
+
 }

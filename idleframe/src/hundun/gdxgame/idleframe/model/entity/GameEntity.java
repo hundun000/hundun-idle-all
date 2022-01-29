@@ -17,12 +17,14 @@ public class GameEntity {
     float y;
     int drawWidth;
     int drawHeight;
-    boolean randomMove;
-    int randomMoveCount;
+    boolean moveable;
+    
     float speedX;
     float speedY;
     boolean textureFlipX;
     
-    public void checkRandomeMoveSpeedChange() {};
-    
+    public void checkMoveSpeedChange() {};
+    public boolean checkRemove() { 
+        return false;
+    };
 }

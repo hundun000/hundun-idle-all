@@ -24,12 +24,14 @@ public class BackgroundImageBox<T_GAME extends BaseIdleGame> extends Container<I
     
     public BackgroundImageBox(BasePlayScreen<T_GAME> parent) {
         this.parent = parent;
-        this.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        this.setFillParent(true);
+        //this.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         
         
         for (String gameArea : parent.game.getGameAreaValues()) {
             imageMap.put(gameArea, new SpriteDrawable(new Sprite(parent.game.getTextureManager().getBackgroundTexture(gameArea))));
         }
+        
     }
 
     @Override

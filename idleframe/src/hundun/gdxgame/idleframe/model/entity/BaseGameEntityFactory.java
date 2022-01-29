@@ -33,6 +33,26 @@ public abstract class BaseGameEntityFactory {
         this.parent = parent;
     }
     
+    protected GameEntity failingResourcEntity(String resourceId, int MIN_X, int MAX_X, int START_Y, int REMOVE_Y, double BASE_FAILING_SPEED, double FAILING_SPEED_RANDOM_RANGE) {
+        Sprite sprite = new Sprite(parent.game.getTextureManager().getResourceEntity(resourceId));
+        MAX_X = (int) (MAX_X - DEFAULT_RESOURCE_WIDTH_SCALE * sprite.getRegionWidth());
+        REMOVE_Y = (int) (REMOVE_Y + DEFAULT_RESOURCE_HEIGHT_SCALE * sprite.getRegionHeight());
+        int randX = (int) (MIN_X + Math.random() * (MAX_X - MIN_X));
+        double speed = BASE_FAILING_SPEED + Math.random() * FAILING_SPEED_RANDOM_RANGE;
+        
+        FailingEntity entity = new FailingEntity(REMOVE_Y);
+        entity.setTexture(sprite);
+        entity.setX(randX);
+        entity.setY(START_Y);
+        entity.setDrawWidth((int) (DEFAULT_RESOURCE_WIDTH_SCALE * entity.getTexture().getRegionWidth()));
+        entity.setDrawHeight((int) (DEFAULT_RESOURCE_HEIGHT_SCALE * entity.getTexture().getRegionHeight()));
+        entity.setMoveable(true);
+        entity.setSpeedY((float) (-1.0 * speed));
+        entity.checkMoveSpeedChange();
+        return entity;
+    }
+    
+    
     protected GameEntity randomMoveResourcEntity(String resourceId, int MIN_X, int MAX_X, int MIN_Y, int MAX_Y, double FLY_UNION_SPEED) {
         Sprite sprite = new Sprite(parent.game.getTextureManager().getResourceEntity(resourceId));
         MAX_X = (int) (MAX_X - DEFAULT_RESOURCE_WIDTH_SCALE * sprite.getRegionWidth());
@@ -44,9 +64,8 @@ public abstract class BaseGameEntityFactory {
         entity.setY((MAX_Y - MIN_Y) / 2);
         entity.setDrawWidth(entity.getTexture().getRegionWidth());
         entity.setDrawHeight(entity.getTexture().getRegionHeight());
-        entity.setRandomMove(true);
-        entity.setRandomMoveCount(0);
-        entity.checkRandomeMoveSpeedChange();
+        entity.setMoveable(true);
+        entity.checkMoveSpeedChange();
         return entity;
     }
     
@@ -87,7 +106,7 @@ public abstract class BaseGameEntityFactory {
         entity.setY(y);
         entity.setDrawWidth((int) (WIDTH_SCALE * entity.getTexture().getRegionWidth()));
         entity.setDrawHeight((int) (HEIGHT_SCALE * entity.getTexture().getRegionHeight()));
-        entity.setRandomMove(false);
+        entity.setMoveable(false);
         return entity;
     }
     

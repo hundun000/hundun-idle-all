@@ -42,7 +42,7 @@ public class ConstructionControlBoard<T_GAME extends BaseIdleGame> extends Table
      */
     List<ConstructionControlNode<T_GAME>> constructionControlNodes = new ArrayList<>();
 
-    static final int NUM_NODE_MIN = 5;
+    static final int NUM_NODE_MIN = 1;
     
     ImageButton leftButton;
     ImageButton rightButton;

@@ -24,7 +24,7 @@ public class GameEntityFactory extends BaseGameEntityFactory {
     
     public float FLY_UNION_SPEED = 2;
 
-    public float RESOURCE_MAX_DRAW_NUM = 5;
+    public float RESOURCE_MAX_DRAW_NUM = 15;
     
     public GameEntityFactory(PlayScreenLayoutConst layoutConst, BasePlayScreen<IdleDemoGame> parent) {
         super(layoutConst, parent);
@@ -62,6 +62,7 @@ public class GameEntityFactory extends BaseGameEntityFactory {
     public GameEntity newResourceEntity(String resourceId) {
         switch (resourceId) {
             case ResourceType.COOKIE:
+                //return this.failingResourcEntity(resourceId, layoutConst.EXPECTED_DRAW_MIN_X, layoutConst.EXPECTED_DRAW_MAX_X, layoutConst.EXPECTED_DRAW_MAX_Y, layoutConst.EXPECTED_DRAW_MIN_Y, FLY_UNION_SPEED, FLY_UNION_SPEED * 0.2);
                 return this.randomMoveResourcEntity(resourceId, layoutConst.EXPECTED_DRAW_MIN_X, layoutConst.EXPECTED_DRAW_MAX_X, layoutConst.EXPECTED_DRAW_MIN_Y, layoutConst.EXPECTED_DRAW_MAX_Y, FLY_UNION_SPEED);
             default:
                 return null;

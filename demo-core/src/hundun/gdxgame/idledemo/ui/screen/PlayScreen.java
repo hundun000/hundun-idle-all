@@ -34,7 +34,7 @@ import hundun.gdxgame.idlestarter.ui.screen.play.PlayScreenLayoutConst;
 public class PlayScreen extends BasePlayScreen<IdleDemoGame> {
 
     public PlayScreen(IdleDemoGame game) {
-        super(game, GameArea.AREA_0, new PlayScreenLayoutConst(game.LOGIC_WIDTH, game.LOGIC_HEIGHT));
+        super(game, GameArea.AREA_COOKIE, new PlayScreenLayoutConst(game.LOGIC_WIDTH, game.LOGIC_HEIGHT));
     }
     
     @Override
@@ -53,15 +53,17 @@ public class PlayScreen extends BasePlayScreen<IdleDemoGame> {
         
         storageInfoTable = new StorageInfoBoard<IdleDemoGame>(this);
         storageInfoTable.lazyInit(ResourceType.VALUES_FOR_SHOW_ORDER);
-        uiRootTable.add(storageInfoTable).height(layoutConst.STORAGE_BOARD_BORDER_HEIGHT).row();
+        uiRootTable.add(storageInfoTable).height(layoutConst.STORAGE_BOARD_BORDER_HEIGHT).fill().row();
         
         gameAreaControlBoard = new GameAreaControlBoard<IdleDemoGame>(this, GameArea.values);
         uiRootTable.add(gameAreaControlBoard).expand().right().row();
 
         constructionControlBoard = new ConstructionControlBoard<IdleDemoGame>(this);
-        uiRootTable.add(constructionControlBoard).height(layoutConst.CONSTRUCION_BOARD_BORDER_HEIGHT);
+        uiRootTable.add(constructionControlBoard).height(layoutConst.CONSTRUCION_BOARD_BORDER_HEIGHT).fill();
         
-        uiRootTable.debugCell();
+        if (game.debugMode) {
+            uiRootTable.debugCell();
+        }
     }
     
     @Override

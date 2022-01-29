@@ -30,12 +30,14 @@ public class IdleDemoGameConfig extends ChildGameConfig {
         this.setConstructions(builtinConstructionsLoader.load());
         
         Map<String, List<String>> areaShownConstructionIds = new HashMap<>(); 
-        areaShownConstructionIds.put(GameArea.AREA_0, Arrays.asList(
-                ConstructionId.COOKIE_CLICK_PROVIDER,
+        areaShownConstructionIds.put(GameArea.AREA_COOKIE, Arrays.asList(
+                ConstructionId.COOKIE_CLICK_PROVIDER
+        ));
+        areaShownConstructionIds.put(GameArea.AREA_BUILDING, Arrays.asList(
                 ConstructionId.COOKIE_AUTO_PROVIDER,
                 ConstructionId.COOKIE_SELLER
         ));
-        areaShownConstructionIds.put(GameArea.AREA_1, Arrays.asList(
+        areaShownConstructionIds.put(GameArea.AREA_WIN, Arrays.asList(
                 ConstructionId.WIN_PROVIDER
         ));
 
@@ -43,7 +45,7 @@ public class IdleDemoGameConfig extends ChildGameConfig {
         this.setAreaShowEntityConstructionIds(areaShownConstructionIds);
         
         Map<String, List<String>> areaShownResourceIds = new HashMap<>(); 
-        areaShownResourceIds.put(GameArea.AREA_0, Arrays.asList(
+        areaShownResourceIds.put(GameArea.AREA_COOKIE, Arrays.asList(
             ResourceType.COOKIE
         ));
         this.setAreaShowEntityResourceIds(areaShownResourceIds);
