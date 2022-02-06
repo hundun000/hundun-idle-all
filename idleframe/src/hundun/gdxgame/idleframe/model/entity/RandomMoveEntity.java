@@ -9,10 +9,10 @@ import lombok.Setter;
  */
 public class RandomMoveEntity extends GameEntity {
     
-    public float FLY_MIN_X;
-    public float FLY_MAX_X;
-    public float FLY_MIN_Y;
-    public float FLY_MAX_Y;
+    private float FLY_MIN_X;
+    private float FLY_MAX_X;
+    private float FLY_MIN_Y;
+    private float FLY_MAX_Y;
     private double FLY_UNION_SPEED;
     @Setter
     @Getter
@@ -32,7 +32,7 @@ public class RandomMoveEntity extends GameEntity {
 
 
     @Override
-    public void checkMoveSpeedChange() {
+    public void frameLogic() {
         if (this.getRandomMoveCount() > 0) {
             this.setRandomMoveCount(this.getRandomMoveCount() - 1);
         } else {

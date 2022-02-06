@@ -32,7 +32,7 @@ public class StorageManager {
     @Setter
     Set<String> unlockedResourceTypes = new HashSet<>();
     
-    
+    Map<String, Long> oneFrameDeltaResoueces = new HashMap<>();
     
     public StorageManager(BaseIdleGame game) {
         this.game = game;
@@ -55,21 +55,23 @@ public class StorageManager {
      * @param plus ture: plus the map; false: minus the map;
      */
     public void modifyAllResourceNum(Map<String, Long> map, boolean plus) {
-        Gdx.app.log(this.getClass().getSimpleName(), (plus ? "plus" : "minus") + ": " + map);
+        //Gdx.app.log(this.getClass().getSimpleName(), (plus ? "plus" : "minus") + ": " + map);
         for (var entry : map.entrySet()) {
             unlockedResourceTypes.add(entry.getKey());
             ownResoueces.merge(entry.getKey(), (plus ? 1 : -1 ) * entry.getValue(), (oldValue, newValue) -> oldValue + newValue);
+            oneFrameDeltaResoueces.merge(entry.getKey(), (plus ? 1 : -1 ) * entry.getValue(), (oldValue, newValue) -> oldValue + newValue);
         }
-        game.getEventManager().notifyResourceAmountChange(false);
+        //game.getEventManager().notifyResourceAmountChange(false);
     }
     
     public void modifyAllResourceNum(List<ResourcePair> packs, boolean plus) {
-        Gdx.app.log(this.getClass().getSimpleName(), (plus ? "plus" : "minus") + ": " + packs);
+        //Gdx.app.log(this.getClass().getSimpleName(), (plus ? "plus" : "minus") + ": " + packs);
         for (var pack : packs) {
             unlockedResourceTypes.add(pack.getType());
             ownResoueces.merge(pack.getType(), (plus ? 1 : -1 ) * pack.getAmount(), (oldValue, newValue) -> oldValue + newValue);
+            oneFrameDeltaResoueces.merge(pack.getType(), (plus ? 1 : -1 ) * pack.getAmount(), (oldValue, newValue) -> oldValue + newValue);
         }
-        game.getEventManager().notifyResourceAmountChange(false);
+        //game.getEventManager().notifyResourceAmountChange(false);
     }
     
     public boolean isEnough(List<ResourcePair> pairs) {
@@ -80,6 +82,14 @@ public class StorageManager {
             }
         }
         return true;
+    }
+    
+    public HashMap<String, Long> frameDeltaAmountClear() {
+        var temp = new HashMap<>(oneFrameDeltaResoueces);
+        oneFrameDeltaResoueces.clear();
+        Gdx.app.log(this.getClass().getSimpleName(), "frameDeltaAmountClear: " + temp);
+        game.getEventManager().notifyOneFrameResourceChange(temp);
+        return temp;
     }
     
 //    public void addResourceNum(String key, int add) {

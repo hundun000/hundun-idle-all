@@ -41,7 +41,8 @@ public abstract class BasePlayScreen<T_GAME extends BaseIdleGame>
         extends BaseScreen<T_GAME> 
         implements IAchievementUnlockListener {
 
-    private static final float LOGIC_FRAME_LENGTH = 1 / 30f; 
+    public static final int LOGIC_FRAME_PER_SECOND = 30; 
+    private static final float LOGIC_FRAME_LENGTH = 1f / LOGIC_FRAME_PER_SECOND; 
     private int clockCount = 0;
     private float logicFramAccumulator;
     
@@ -95,6 +96,7 @@ public abstract class BasePlayScreen<T_GAME extends BaseIdleGame>
                 for (ILogicFrameListener logicFrameListener : logicFrameListeners) {
                     logicFrameListener.onLogicFrame();
                 }
+                game.getModelContext().getStorageManager().frameDeltaAmountClear();
             }
         }
     }
@@ -165,7 +167,7 @@ public abstract class BasePlayScreen<T_GAME extends BaseIdleGame>
         // ====== be careful of draw order ======
         backUiStage.draw();
         if (game.drawGameImageAndPlayAudio) {
-            gameImageDrawer.drawAll();
+            gameImageDrawer.allEntitiesMoveForFrameAndDraw();
         }
         uiStage.draw();
         popupUiStage.draw();

@@ -18,12 +18,12 @@ public class GameEntity {
     int drawWidth;
     int drawHeight;
     boolean moveable;
-    
+    boolean hiden;
     float speedX;
     float speedY;
     boolean textureFlipX;
     
-    public void checkMoveSpeedChange() {};
+    public void frameLogic() {};
     public boolean checkRemove() { 
         return false;
     };

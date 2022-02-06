@@ -17,6 +17,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
+ * 管理GameEntity在内存中的数量，不负责绘制。
  * @author hundun
  * Created on 2021/12/04
  */
@@ -25,13 +26,15 @@ public class GameEntityManager {
     BaseIdleGame game;
     
     @Getter
-    private Map<String, Queue<GameEntity>> gameEntitiesOfConstructionIds = new ConcurrentHashMap<>();
+    private Map<String, Queue<GameEntity>> gameEntitiesOfConstructionIds = new HashMap<>();
     @Getter
-    private Map<String, Queue<GameEntity>> gameEntitiesOfResourceIds = new ConcurrentHashMap<>();
+    private Map<String, Queue<GameEntity>> gameEntitiesOfResourceIds = new HashMap<>();
     @Getter
-    private Map<String, List<String>> areaShowEntityConstructionIds;
+    private Map<String, List<String>> areaShowEntityByOwnAmountConstructionIds;
     @Getter
-    private Map<String, List<String>> areaShowEntityResourceIds;
+    private Map<String, List<String>> areaShowEntityByOwnAmountResourceIds;
+    @Getter
+    private Map<String, List<String>> areaShowEntityByChangeAmountResourceIds;
     
     public GameEntityManager(BaseIdleGame game) {
         super();
@@ -42,7 +45,7 @@ public class GameEntityManager {
         for (var entry : gameEntitiesOfConstructionIds.entrySet()) {
             Queue<GameEntity> queue = entry.getValue();
             queue.forEach(entity -> {
-                entity.checkMoveSpeedChange();
+                entity.frameLogic();
                 positionChange(entity);
             });
         }
@@ -57,26 +60,37 @@ public class GameEntityManager {
                 return remove;
                 });
             queue.forEach(entity -> {
-                entity.checkMoveSpeedChange();
+                entity.frameLogic();
                 positionChange(entity);
             });
 
         }
     }
     
-    public void areaEntityCheckAmount(String gameArea, BaseGameEntityFactory gameEntityFactory) {
-        List<String> shownConstructionIds = this.areaShowEntityConstructionIds.get(gameArea);
+    public void areaEntityCheckByOwnAmount(String gameArea, BaseGameEntityFactory gameEntityFactory) {
+        List<String> shownConstructionIds = this.areaShowEntityByOwnAmountConstructionIds.get(gameArea);
         if (shownConstructionIds != null) {
             for (String shownConstructionId : shownConstructionIds) {
-                checkConstructionEntityList(shownConstructionId, gameEntityFactory);
+                checkConstructionEntityByOwnAmount(shownConstructionId, gameEntityFactory);
             }
         }
         
-        
-        List<String> shownResourceIds = this.areaShowEntityResourceIds.get(gameArea);
+        List<String> shownResourceIds = this.areaShowEntityByOwnAmountResourceIds.get(gameArea);
         if (shownResourceIds != null) {
             for (String resourceId : shownResourceIds) {
-                checkResourceEntityList(resourceId, gameEntityFactory);
+                checkResourceEntityByOwnAmount(resourceId, gameEntityFactory);
+            }
+        }
+    }
+    
+    public void areaEntityCheckByChangeAmount(String gameArea, BaseGameEntityFactory gameEntityFactory, HashMap<String, Long> changeMap) {
+
+        List<String> shownResourceIds = this.areaShowEntityByChangeAmountResourceIds.get(gameArea);
+        if (shownResourceIds != null) {
+            for (String resourceId : shownResourceIds) {
+                if (changeMap.getOrDefault(resourceId, 0L) > 0) {
+                    addResourceEntityByChangeAmount(resourceId, gameEntityFactory, changeMap.get(resourceId).intValue());
+                }
             }
         }
     }
@@ -88,24 +102,37 @@ public class GameEntityManager {
         }
     }
     
-    private void checkResourceEntityList(String resourceId, BaseGameEntityFactory gameEntityFactory) {
+    private void checkResourceEntityByOwnAmount(String resourceId, BaseGameEntityFactory gameEntityFactory) {
         long resourceNum = game.getModelContext().getStorageManager().getResourceNumOrZero(resourceId);
         int drawNum = gameEntityFactory.calculateResourceDrawNum(resourceId, resourceNum);
         
         gameEntitiesOfResourceIds.computeIfAbsent(resourceId, k -> new ConcurrentLinkedQueue<>());
         Queue<GameEntity> gameEntities = gameEntitiesOfResourceIds.get(resourceId);
         while (gameEntities.size() > drawNum) {
-            Gdx.app.log(this.getClass().getSimpleName(), "checkEntityList " + resourceId + " remove for " + gameEntities.size() + " -> " + drawNum);
+            Gdx.app.log(this.getClass().getSimpleName(), "checkResourceEntityByOwnAmount " + resourceId + " remove for " + gameEntities.size() + " -> " + drawNum);
             gameEntities.remove();
         }
         while (gameEntities.size() < drawNum) {
-            GameEntity gameEntity = gameEntityFactory.newResourceEntity(resourceId);
+            int newIndex = gameEntities.size();
+            GameEntity gameEntity = gameEntityFactory.newResourceEntity(resourceId, newIndex);
             gameEntities.add(gameEntity);
-            Gdx.app.log(this.getClass().getSimpleName(), "checkEntityList " + resourceId + " new for " + gameEntities.size() + " -> " + drawNum);
+            Gdx.app.log(this.getClass().getSimpleName(), "checkResourceEntityByOwnAmount " + resourceId + " new for " + gameEntities.size() + " -> " + drawNum);
         }
     }
     
-    private void checkConstructionEntityList(String id, BaseGameEntityFactory gameEntityFactory) {
+    private void addResourceEntityByChangeAmount(String resourceId, BaseGameEntityFactory gameEntityFactory, int addAmount) {
+        int drawNum = addAmount;
+        
+        gameEntitiesOfResourceIds.computeIfAbsent(resourceId, k -> new ConcurrentLinkedQueue<>());
+        Queue<GameEntity> gameEntities = gameEntitiesOfResourceIds.get(resourceId);
+        for (int i = 0; i < drawNum; i++) {
+            GameEntity gameEntity = gameEntityFactory.newResourceEntity(resourceId, i);
+            gameEntities.add(gameEntity);
+            Gdx.app.log(this.getClass().getSimpleName(), "addResourceEntityByChangeAmount " + resourceId + " new for change:" + drawNum);
+        }
+    }
+    
+    private void checkConstructionEntityByOwnAmount(String id, BaseGameEntityFactory gameEntityFactory) {
         BaseConstruction construction = game.getModelContext().getConstructionFactory().getConstruction(id);
         int resourceNum = construction.getSaveData().getWorkingLevel();
         int MAX_DRAW_NUM = construction.getMAX_DRAW_NUM();
@@ -113,7 +140,7 @@ public class GameEntityManager {
         gameEntitiesOfConstructionIds.computeIfAbsent(id, k -> new ConcurrentLinkedQueue<>());
         Queue<GameEntity> gameEntities = gameEntitiesOfConstructionIds.get(id);
         while (gameEntities.size() > drawNum) {
-            Gdx.app.log(this.getClass().getSimpleName(), "checkEntityList " + id + " remove for " + gameEntities.size() + " -> " + drawNum);
+            Gdx.app.log(this.getClass().getSimpleName(), "checkConstructionEntityByOwnAmount " + id + " remove for " + gameEntities.size() + " -> " + drawNum);
             gameEntities.remove();
         }
         while (gameEntities.size() < drawNum) {
@@ -121,18 +148,20 @@ public class GameEntityManager {
             GameEntity gameEntity = gameEntityFactory.newConstructionEntity(id, newIndex);
             if (gameEntity != null) {
                 gameEntities.add(gameEntity);
-                Gdx.app.log(this.getClass().getSimpleName(), "checkEntityList " + id + " new for " + gameEntities.size() + " -> " + drawNum);
+                Gdx.app.log(this.getClass().getSimpleName(), "checkConstructionEntityByOwnAmount " + id + " new for " + gameEntities.size() + " -> " + drawNum);
             } else {
-                Gdx.app.log(this.getClass().getSimpleName(), "checkEntityList " + id + " , cannot create new entity.");
+                Gdx.app.log(this.getClass().getSimpleName(), "checkConstructionEntityByOwnAmount " + id + " , cannot create new entity.");
                 break;
             }
         }
     }
 
-    public void lazyInit(Map<String, List<String>> areaShowEntityConstructionIds,
-            Map<String, List<String>> areaShowEntityResourceIds) {
-        this.areaShowEntityConstructionIds = areaShowEntityConstructionIds;
-        this.areaShowEntityResourceIds = areaShowEntityResourceIds;
+    public void lazyInit(Map<String, List<String>> areaShowEntityByOwnAmountConstructionIds,
+            Map<String, List<String>> areaShowEntityByOwnAmountResourceIds,
+            Map<String, List<String>> areaShowEntityByChangeAmountResourceIds) {
+        this.areaShowEntityByOwnAmountConstructionIds = areaShowEntityByOwnAmountConstructionIds;
+        this.areaShowEntityByOwnAmountResourceIds = areaShowEntityByOwnAmountResourceIds;
+        this.areaShowEntityByChangeAmountResourceIds = areaShowEntityByChangeAmountResourceIds;
     }
 
 

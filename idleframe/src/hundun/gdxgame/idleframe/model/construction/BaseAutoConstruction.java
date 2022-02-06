@@ -10,6 +10,7 @@ import com.badlogic.gdx.Gdx;
 
 import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
+import hundun.gdxgame.idlestarter.ui.screen.play.BasePlayScreen;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -29,7 +30,8 @@ public class BaseAutoConstruction extends BaseConstruction {
 
     
     protected int autoOutputProgress = 0;
-    protected static final int AUTO_OUPUT_MAX_PROGRESS = 30;
+    protected static final int AUTO_OUPUT_SECOND_COUNT = 1;
+    protected static final int AUTO_OUPUT_LOGIC_FRAME_COUNT = AUTO_OUPUT_SECOND_COUNT * BasePlayScreen.LOGIC_FRAME_PER_SECOND;
     
     public BaseAutoConstruction(BaseIdleGame game, String id
             ) {
@@ -70,7 +72,7 @@ public class BaseAutoConstruction extends BaseConstruction {
     @Override
     public void onLogicFrame() {
         autoOutputProgress++;
-        if (autoOutputProgress >= AUTO_OUPUT_MAX_PROGRESS) {
+        if (autoOutputProgress >= AUTO_OUPUT_LOGIC_FRAME_COUNT) {
             autoOutputProgress = 0;
             tryAutoOutputOnce();
         }

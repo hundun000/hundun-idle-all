@@ -14,7 +14,7 @@ import com.badlogic.gdx.Gdx;
 
 import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.data.ConstructionSaveData;
-import hundun.gdxgame.idleframe.listener.IAmountChangeEventListener;
+import hundun.gdxgame.idleframe.listener.IBuffChangeListener;
 import hundun.gdxgame.idleframe.listener.ILogicFrameListener;
 import hundun.gdxgame.idleframe.model.resource.ResourcePack;
 import hundun.gdxgame.idleframe.model.resource.ResourcePair;
@@ -22,7 +22,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class BaseConstruction implements ILogicFrameListener, IAmountChangeEventListener {
+public abstract class BaseConstruction implements ILogicFrameListener, IBuffChangeListener {
     
     protected int MAX_LEVEL = 99;
     @Setter
@@ -125,7 +125,7 @@ public abstract class BaseConstruction implements ILogicFrameListener, IAmountCh
     };
     
     @Override
-    public void onBuffChange(boolean fromLoad) {
+    public void onBuffChange() {
         updateModifiedValues();
     }
     

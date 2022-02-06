@@ -22,6 +22,8 @@ import hundun.gdxgame.idlestarter.ui.screen.play.PlayScreenLayoutConst;
  */
 public class GameEntityFactory extends BaseGameEntityFactory {
     
+    private static final int HIDEN_FRAME_RANGE = 5;
+
     public float FLY_UNION_SPEED = 2;
 
     public float RESOURCE_MAX_DRAW_NUM = 15;
@@ -59,11 +61,13 @@ public class GameEntityFactory extends BaseGameEntityFactory {
     }
 
     @Override
-    public GameEntity newResourceEntity(String resourceId) {
+    public GameEntity newResourceEntity(String resourceId, int index) {
         switch (resourceId) {
+            case ResourceType.COIN: 
+                return this.columnStableConstructionEntity(resourceId, index, 0);
             case ResourceType.COOKIE:
-                //return this.failingResourcEntity(resourceId, layoutConst.EXPECTED_DRAW_MIN_X, layoutConst.EXPECTED_DRAW_MAX_X, layoutConst.EXPECTED_DRAW_MAX_Y, layoutConst.EXPECTED_DRAW_MIN_Y, FLY_UNION_SPEED, FLY_UNION_SPEED * 0.2);
-                return this.randomMoveResourcEntity(resourceId, layoutConst.EXPECTED_DRAW_MIN_X, layoutConst.EXPECTED_DRAW_MAX_X, layoutConst.EXPECTED_DRAW_MIN_Y, layoutConst.EXPECTED_DRAW_MAX_Y, FLY_UNION_SPEED);
+                return this.failingResourcEntity(resourceId, layoutConst.EXPECTED_DRAW_MIN_X, layoutConst.EXPECTED_DRAW_MAX_X, layoutConst.EXPECTED_DRAW_MAX_Y, layoutConst.EXPECTED_DRAW_MIN_Y, FLY_UNION_SPEED, FLY_UNION_SPEED * 0.2, HIDEN_FRAME_RANGE);
+                //return this.randomMoveResourcEntity(resourceId, layoutConst.EXPECTED_DRAW_MIN_X, layoutConst.EXPECTED_DRAW_MAX_X, layoutConst.EXPECTED_DRAW_MIN_Y, layoutConst.EXPECTED_DRAW_MAX_Y, FLY_UNION_SPEED);
             default:
                 return null;
         }

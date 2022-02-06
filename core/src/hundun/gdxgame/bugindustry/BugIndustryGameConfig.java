@@ -52,13 +52,13 @@ public class BugIndustryGameConfig extends ChildGameConfig {
             ConstructionId.BEEWAX_SELL_HOUSE
         ));
         this.setAreaControlableConstructionIds(areaShownConstructionIds);
-        this.setAreaShowEntityConstructionIds(areaShownConstructionIds);
+        this.setAreaShowEntityByOwnAmountConstructionIds(areaShownConstructionIds);
         
         Map<String, List<String>> areaShownResourceIds = new HashMap<>(); 
         areaShownResourceIds.put(GameArea.BEE_FARM, Arrays.asList(
             ResourceType.BEE
         ));
-        this.setAreaShowEntityResourceIds(areaShownResourceIds);
+        this.setAreaShowEntityByOwnAmountResourceIds(areaShownResourceIds);
         
         var constructionStarterLevelMap = Map.of(ConstructionId.WOOD_SELL_HOUSE, 1);
         this.setConstructionStarterLevelMap(constructionStarterLevelMap);

@@ -38,7 +38,7 @@ public class BuffManager {
     public void addBuffAmout(String id, int amount) {
         int oldValue = getBuffAmoutOrDefault(id);
         buffAmounts.put(id, oldValue + amount);
-        game.getEventManager().notifyBuffChange(false);
+        game.getEventManager().notifyBuffChange();
     }
 
     

@@ -91,8 +91,8 @@ public abstract class BaseIdleGame extends Game {
 	    if (load) {
 	        SaveUtils.load(modelContext);
 	        // post
-	        this.getEventManager().notifyBuffChange(true);
-	        this.getEventManager().notifyResourceAmountChange(true);
+	        //this.getEventManager().notifyBuffChange(true);
+	        //this.getEventManager().notifyResourceAmountChange(true);
 	    } else {
 	        SaveUtils.newSaveStarter(modelContext);
 	    }
@@ -147,7 +147,7 @@ public abstract class BaseIdleGame extends Game {
         
         modelContext.getConstructionFactory().lazyInit(childGameConfig.getConstructions());
         modelContext.getConstructionManager().lazyInit(childGameConfig.getAreaControlableConstructionIds());
-        modelContext.getGameEntityManager().lazyInit(childGameConfig.getAreaShowEntityConstructionIds(), childGameConfig.getAreaShowEntityResourceIds());
+        modelContext.getGameEntityManager().lazyInit(childGameConfig.getAreaShowEntityByOwnAmountConstructionIds(), childGameConfig.getAreaShowEntityByOwnAmountResourceIds(), childGameConfig.getAreaShowEntityByChangeAmountResourceIds());
         modelContext.getAchievementManager().lazyInit(childGameConfig.getAchievementPrototypes());
         audioPlayManager.lazyInit(childGameConfig.getScreenIdToFilePathMap());
         

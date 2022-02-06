@@ -69,7 +69,7 @@ public class BugGameEntityFactory extends BaseGameEntityFactory {
     }
 
     @Override
-    public GameEntity newResourceEntity(String resourceId) {
+    public GameEntity newResourceEntity(String resourceId, int index) {
         switch (resourceId) {
             case ResourceType.BEE:
                 return this.randomMoveResourcEntity(resourceId, layoutConst.EXPECTED_DRAW_MIN_X, layoutConst.EXPECTED_DRAW_MAX_X, layoutConst.EXPECTED_DRAW_MIN_Y, layoutConst.EXPECTED_DRAW_MAX_Y, FLY_UNION_SPEED);

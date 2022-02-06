@@ -13,12 +13,14 @@ import java.util.Set;
 import com.badlogic.gdx.Gdx;
 
 import hundun.gdxgame.idleframe.BaseIdleGame;
-import hundun.gdxgame.idleframe.listener.IAmountChangeEventListener;
+import hundun.gdxgame.idleframe.listener.IBuffChangeListener;
+import hundun.gdxgame.idleframe.listener.IGameStartListener;
+import hundun.gdxgame.idleframe.listener.IOneFrameResourceChangeListener;
 import hundun.gdxgame.idleframe.model.AchievementPrototype;
 import lombok.Getter;
 import lombok.Setter;
 
-public class AchievementManager implements IAmountChangeEventListener {
+public class AchievementManager implements IBuffChangeListener, IOneFrameResourceChangeListener, IGameStartListener {
     BaseIdleGame game;
     
     Map<String, AchievementPrototype> prototypes = new HashMap<>();
@@ -79,21 +81,22 @@ public class AchievementManager implements IAmountChangeEventListener {
     
     
     @Override
-    public void onBuffChange(boolean fromLoad) {
-        if (!fromLoad) {
-            checkAllAchievementUnlock();
-        }
-    }
-    
-    @Override
-    public void onResourceChange(boolean fromLoad) {
-        if (!fromLoad) {
-            checkAllAchievementUnlock();
-        }
+    public void onBuffChange() {
+        checkAllAchievementUnlock();
     }
 
     public void lazyInit(List<AchievementPrototype> achievementPrototypes) {
         achievementPrototypes.forEach(item -> addPrototype(item));
+    }
+
+    @Override
+    public void onResourceChange(HashMap<String, Long> changeMap) {
+        checkAllAchievementUnlock();
+    }
+
+    @Override
+    public void onGameStart() {
+        checkAllAchievementUnlock();
     }
     
     

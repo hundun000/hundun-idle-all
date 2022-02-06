@@ -12,7 +12,7 @@ import hundun.gdxgame.idlestarter.ui.screen.play.PlayScreenLayoutConst;
 public abstract class BaseGameEntityFactory {
     public abstract int calculateResourceDrawNum(String resourceId, long logicAmount);
     public abstract int calculateConstructionDrawNum(String constructionid, long logicAmount, int maxDrawNum);
-    public abstract GameEntity newResourceEntity(String resourceId);
+    public abstract GameEntity newResourceEntity(String resourceId, int index);
     public abstract GameEntity newConstructionEntity(String constructionid, int index);
     
     protected double DEFAULT_CONSTRUCTION_WIDTH_SCALE = 1.0;
@@ -33,14 +33,22 @@ public abstract class BaseGameEntityFactory {
         this.parent = parent;
     }
     
-    protected GameEntity failingResourcEntity(String resourceId, int MIN_X, int MAX_X, int START_Y, int REMOVE_Y, double BASE_FAILING_SPEED, double FAILING_SPEED_RANDOM_RANGE) {
+    protected GameEntity failingResourcEntity(
+            String resourceId, 
+            int MIN_X, int MAX_X, 
+            int START_Y, int REMOVE_Y, 
+            double BASE_FAILING_SPEED, 
+            double FAILING_SPEED_RANDOM_RANGE,
+            int HIDEN_FRAME_RANGE
+            ) {
         Sprite sprite = new Sprite(parent.game.getTextureManager().getResourceEntity(resourceId));
         MAX_X = (int) (MAX_X - DEFAULT_RESOURCE_WIDTH_SCALE * sprite.getRegionWidth());
         REMOVE_Y = (int) (REMOVE_Y + DEFAULT_RESOURCE_HEIGHT_SCALE * sprite.getRegionHeight());
         int randX = (int) (MIN_X + Math.random() * (MAX_X - MIN_X));
         double speed = BASE_FAILING_SPEED + Math.random() * FAILING_SPEED_RANDOM_RANGE;
+        int hidenFrame = (int) (Math.random() * HIDEN_FRAME_RANGE);
         
-        FailingEntity entity = new FailingEntity(REMOVE_Y);
+        FailingEntity entity = new FailingEntity(REMOVE_Y, hidenFrame);
         entity.setTexture(sprite);
         entity.setX(randX);
         entity.setY(START_Y);
@@ -48,7 +56,7 @@ public abstract class BaseGameEntityFactory {
         entity.setDrawHeight((int) (DEFAULT_RESOURCE_HEIGHT_SCALE * entity.getTexture().getRegionHeight()));
         entity.setMoveable(true);
         entity.setSpeedY((float) (-1.0 * speed));
-        entity.checkMoveSpeedChange();
+        entity.frameLogic();
         return entity;
     }
     
@@ -65,7 +73,7 @@ public abstract class BaseGameEntityFactory {
         entity.setDrawWidth(entity.getTexture().getRegionWidth());
         entity.setDrawHeight(entity.getTexture().getRegionHeight());
         entity.setMoveable(true);
-        entity.checkMoveSpeedChange();
+        entity.frameLogic();
         return entity;
     }
     

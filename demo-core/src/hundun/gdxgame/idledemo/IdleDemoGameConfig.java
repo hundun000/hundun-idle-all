@@ -42,13 +42,19 @@ public class IdleDemoGameConfig extends ChildGameConfig {
         ));
 
         this.setAreaControlableConstructionIds(areaShownConstructionIds);
-        this.setAreaShowEntityConstructionIds(areaShownConstructionIds);
+        this.setAreaShowEntityByOwnAmountConstructionIds(areaShownConstructionIds);
         
         Map<String, List<String>> areaShownResourceIds = new HashMap<>(); 
         areaShownResourceIds.put(GameArea.AREA_COOKIE, Arrays.asList(
+            ResourceType.COIN
+        ));
+        this.setAreaShowEntityByOwnAmountResourceIds(areaShownResourceIds);
+        
+        Map<String, List<String>> areaShowEntityByChangeAmountResourceIds = new HashMap<>(); 
+        areaShowEntityByChangeAmountResourceIds.put(GameArea.AREA_COOKIE, Arrays.asList(
             ResourceType.COOKIE
         ));
-        this.setAreaShowEntityResourceIds(areaShownResourceIds);
+        this.setAreaShowEntityByChangeAmountResourceIds(areaShowEntityByChangeAmountResourceIds);
         
         var constructionStarterLevelMap = Map.of(ConstructionId.COOKIE_SELLER, 1);
         this.setConstructionStarterLevelMap(constructionStarterLevelMap);
