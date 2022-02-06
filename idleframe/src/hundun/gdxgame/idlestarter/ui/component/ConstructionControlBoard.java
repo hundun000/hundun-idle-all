@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -12,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 
@@ -33,7 +36,7 @@ public class ConstructionControlBoard<T_GAME extends BaseIdleGame> extends Table
 
     
     public final int LR_BUTTON_HEIGHT;
-    public final int LR_BUTTON_WIDTH = 0;
+    public final int LR_BUTTON_WIDTH = 10;
 
     
     BasePlayScreen<T_GAME> parent;
@@ -76,13 +79,18 @@ public class ConstructionControlBoard<T_GAME extends BaseIdleGame> extends Table
         });
         
         childTable = new Table();
-        childTable.setBackground(BasePlayScreen.createBorderBoard(150, 50, 0.7f, 2));
+        childTable.setBackground(parent.getLayoutConst().simpleBoardBackgroundMiddle);
         ScrollPane scrollPane = new ScrollPane(childTable, parent.game.getButtonSkin());
-
-        this.add(leftButton);
-        this.add(scrollPane).fill();
-        this.add(rightButton);
+        scrollPane.setScrollingDisabled(false, true);
         
+        this.add(leftButton);
+        this.add(scrollPane);
+        this.add(rightButton);
+        this.setBackground(parent.getLayoutConst().simpleBoardBackground);
+        
+        if (parent.game.debugMode) {
+            this.debugCell();
+        }
     }
     
     private void initChild(int currentNumNode) {
@@ -90,9 +98,9 @@ public class ConstructionControlBoard<T_GAME extends BaseIdleGame> extends Table
         childTable.clearChildren();
         
         for (int i = 0; i < currentNumNode; i++) {
-            var constructionView = new ConstructionControlNode<T_GAME>(parent, i);
+            var constructionView = new ConstructionControlNode<T_GAME>(parent, i, parent.getLayoutConst());
             constructionControlNodes.add(constructionView);
-            childTable.add(constructionView).spaceRight(10);
+            childTable.add(constructionView).spaceRight(10).expand();
         }
 
     }

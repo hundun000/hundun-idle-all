@@ -4,10 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -34,7 +36,20 @@ import hundun.gdxgame.idlestarter.ui.screen.play.PlayScreenLayoutConst;
 public class PlayScreen extends BasePlayScreen<IdleDemoGame> {
 
     public PlayScreen(IdleDemoGame game) {
-        super(game, GameArea.AREA_COOKIE, new PlayScreenLayoutConst(game.LOGIC_WIDTH, game.LOGIC_HEIGHT));
+        super(game, GameArea.AREA_COOKIE, customLayoutConst(game));
+    }
+    
+    private static PlayScreenLayoutConst customLayoutConst(IdleDemoGame game) {
+        PlayScreenLayoutConst layoutConst = new PlayScreenLayoutConst(game.LOGIC_WIDTH, game.LOGIC_HEIGHT);
+        NinePatch ninePatch = new NinePatch(game.getTextureManager().getDefaultBoardNinePatchTexture(), 
+                game.getTextureManager().getDefaultBoardNinePatchEdgeSize(), 
+                game.getTextureManager().getDefaultBoardNinePatchEdgeSize(), 
+                game.getTextureManager().getDefaultBoardNinePatchEdgeSize(), 
+                game.getTextureManager().getDefaultBoardNinePatchEdgeSize()
+                );
+        layoutConst.simpleBoardBackground = new NinePatchDrawable(ninePatch);
+        layoutConst.simpleBoardBackgroundMiddle = new TextureRegionDrawable(game.getTextureManager().getDefaultBoardNinePatchMiddle());
+        return layoutConst;
     }
     
     @Override

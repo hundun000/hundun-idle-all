@@ -14,6 +14,7 @@ import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.listener.ILogicFrameListener;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idlestarter.ui.screen.play.BasePlayScreen;
+import hundun.gdxgame.idlestarter.ui.screen.play.PlayScreenLayoutConst;
 
 
 /**
@@ -33,13 +34,15 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame> extends Table 
     Table changeWorkingLevelGroup;
 
     
-    int CHILD_WIDTH = 100;
-    int CHILD_HEIGHT = 30;
-    int NAME_CHILD_HEIGHT = 50;
+
     
-    public ConstructionControlNode(BasePlayScreen<T_GAME> parent, int index) {
+    public ConstructionControlNode(BasePlayScreen<T_GAME> parent, int index, PlayScreenLayoutConst playScreenLayoutConst) {
         super();
         this.parent = parent;
+        
+        int CHILD_WIDTH = playScreenLayoutConst.CONSTRUCION_CHILD_WIDTH;
+        int CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_BUTTON_HEIGHT;
+        int NAME_CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_NAME_HEIGHT;
         
         this.constructionNameLabel = new Label("", parent.game.getButtonSkin());
         constructionNameLabel.setWrap(true);
@@ -113,6 +116,7 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame> extends Table 
         this.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
         this.add(clickEffectButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
         this.add(changeWorkingLevelGroup).size(CHILD_WIDTH, CHILD_HEIGHT);
+        this.setBackground(BasePlayScreen.createBorderBoard(30, 10, 0.8f, 1));
     }
     
 

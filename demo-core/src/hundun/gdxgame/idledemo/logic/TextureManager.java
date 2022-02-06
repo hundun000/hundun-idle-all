@@ -16,7 +16,15 @@ public class TextureManager extends AbstractTextureManager {
 
         winTexture = new Texture(Gdx.files.internal("win.png"));
         menuTexture = new Texture(Gdx.files.internal("menu.png"));
-
+        defaultBoardNinePatchTexture = new Texture(Gdx.files.internal("defaultBoardNinePatch.png"));
+        defaultBoardNinePatchEdgeSize = 4;
+        defaultBoardNinePatchMiddle = new TextureRegion(
+                defaultBoardNinePatchTexture, 
+                defaultBoardNinePatchEdgeSize, 
+                defaultBoardNinePatchEdgeSize, 
+                defaultBoardNinePatchTexture.getWidth() - defaultBoardNinePatchEdgeSize * 2, 
+                defaultBoardNinePatchTexture.getHeight() - defaultBoardNinePatchEdgeSize * 2
+                );
         {
             Texture texture = new Texture(Gdx.files.internal("resourceIcons.png"));
             TextureRegion[][] regions = TextureRegion.split(texture, 16, 16);

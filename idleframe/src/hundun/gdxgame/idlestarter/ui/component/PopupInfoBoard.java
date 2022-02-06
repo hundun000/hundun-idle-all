@@ -27,12 +27,14 @@ public class PopupInfoBoard<T_GAME extends BaseIdleGame> extends Table {
         this.parent = parent;
         //this.setBounds(5, GameAreaControlBoard.Y, GameAreaControlBoard.X - 10, 120);
         this.setTouchable(Touchable.disabled);
+        this.setBackground(parent.getLayoutConst().simpleBoardBackground);
+        this.setVisible(false);
     }
     
     
     private <T extends Actor> Container<T> wapperContainer(T content) {
         Container<T> container = new Container<T>(content);
-        container.setBackground(BasePlayScreen.createBorderBoard(1, 1, 0.7f, 0));
+        //container.setBackground(BasePlayScreen.createBorderBoard(1, 1, 0.7f, 0));
         container.fill(true);
         return container;
     }

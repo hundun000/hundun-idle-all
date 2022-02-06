@@ -17,6 +17,13 @@ public abstract class AbstractTextureManager {
     
     @Getter
     protected Texture menuTexture;
+    @Getter
+    protected Texture defaultBoardNinePatchTexture;
+    @Getter
+    protected TextureRegion defaultBoardNinePatchMiddle;
+    @Getter
+    protected int defaultBoardNinePatchEdgeSize;
+    
     protected Map<String, TextureRegion> resourceIconMap = new HashMap<>();
     protected Map<String, TextureRegion> resourceEntityMap = new HashMap<>();
     protected Map<String, TextureRegion> constructionEntityMap = new HashMap<>();
