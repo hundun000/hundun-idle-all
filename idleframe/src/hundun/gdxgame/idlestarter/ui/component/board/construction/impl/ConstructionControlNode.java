@@ -1,4 +1,4 @@
-package hundun.gdxgame.idlestarter.ui.component;
+package hundun.gdxgame.idlestarter.ui.component.board.construction.impl;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -21,8 +21,8 @@ import hundun.gdxgame.idlestarter.ui.screen.play.PlayScreenLayoutConst;
  * @author hundun
  * Created on 2021/11/05
  */
-public class ConstructionControlNode<T_GAME extends BaseIdleGame> extends Table implements ILogicFrameListener {
-    BasePlayScreen<T_GAME> parent;
+public class ConstructionControlNode extends Table implements ILogicFrameListener {
+    BasePlayScreen<?> parent;
     BaseConstruction model;
     Label constructionNameLabel;
     TextButton upWorkingLevelButton;
@@ -36,7 +36,7 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame> extends Table 
     
 
     
-    public ConstructionControlNode(BasePlayScreen<T_GAME> parent, int index, PlayScreenLayoutConst playScreenLayoutConst) {
+    public ConstructionControlNode(BasePlayScreen<?> parent, int index, PlayScreenLayoutConst playScreenLayoutConst) {
         super();
         this.parent = parent;
         

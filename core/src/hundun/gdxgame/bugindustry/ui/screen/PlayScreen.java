@@ -18,11 +18,11 @@ import hundun.gdxgame.idleframe.model.AchievementPrototype;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idlestarter.ui.component.AchievementMaskBoard;
 import hundun.gdxgame.idlestarter.ui.component.BackgroundImageBox;
-import hundun.gdxgame.idlestarter.ui.component.ConstructionControlBoard;
 import hundun.gdxgame.idlestarter.ui.component.GameAreaControlBoard;
 import hundun.gdxgame.idlestarter.ui.component.GameImageDrawer;
 import hundun.gdxgame.idlestarter.ui.component.PopupInfoBoard;
 import hundun.gdxgame.idlestarter.ui.component.StorageInfoBoard;
+import hundun.gdxgame.idlestarter.ui.component.board.construction.impl.scroll.ScrollConstructionControlBoard;
 import hundun.gdxgame.idlestarter.ui.screen.play.BasePlayScreen;
 import hundun.gdxgame.idlestarter.ui.screen.play.PlayScreenLayoutConst;
 
@@ -56,8 +56,8 @@ public class PlayScreen extends BasePlayScreen<BugIndustryGame> {
         
         gameAreaControlBoard = new GameAreaControlBoard<BugIndustryGame>(this, GameArea.values);
         uiRootTable.add(gameAreaControlBoard).expand().right().row();
-
-        constructionControlBoard = new ConstructionControlBoard<BugIndustryGame>(this);
+        
+        constructionControlBoard = new ScrollConstructionControlBoard(this);
         uiRootTable.add(constructionControlBoard).height(layoutConst.CONSTRUCION_BOARD_BORDER_HEIGHT);
         
         uiRootTable.debugCell();

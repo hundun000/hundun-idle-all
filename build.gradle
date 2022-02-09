@@ -98,6 +98,7 @@ project(":idleframe") {
         implementation group: 'org.jetbrains', name: 'annotations', version: '23.0.0'
         compileOnly 'org.projectlombok:lombok:1.18.4'
         annotationProcessor 'org.projectlombok:lombok:1.18.4'
+        testCompile "junit:junit:4.11"
     }
 }
 

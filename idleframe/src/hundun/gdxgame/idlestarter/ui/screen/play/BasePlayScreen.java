@@ -23,11 +23,12 @@ import hundun.gdxgame.idleframe.model.AchievementPrototype;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idlestarter.ui.component.AchievementMaskBoard;
 import hundun.gdxgame.idlestarter.ui.component.BackgroundImageBox;
-import hundun.gdxgame.idlestarter.ui.component.ConstructionControlBoard;
 import hundun.gdxgame.idlestarter.ui.component.GameAreaControlBoard;
 import hundun.gdxgame.idlestarter.ui.component.GameImageDrawer;
 import hundun.gdxgame.idlestarter.ui.component.PopupInfoBoard;
 import hundun.gdxgame.idlestarter.ui.component.StorageInfoBoard;
+import hundun.gdxgame.idlestarter.ui.component.board.construction.AbstractConstructionControlBoard;
+import hundun.gdxgame.idlestarter.ui.component.board.construction.impl.scroll.ScrollConstructionControlBoard;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -63,7 +64,7 @@ public abstract class BasePlayScreen<T_GAME extends BaseIdleGame>
     protected PopupInfoBoard<T_GAME> popUpInfoBoard;
     protected GameImageDrawer<T_GAME> gameImageDrawer;
     protected StorageInfoBoard<T_GAME> storageInfoTable;
-    protected ConstructionControlBoard<T_GAME> constructionControlBoard;
+    protected AbstractConstructionControlBoard constructionControlBoard;
     protected BackgroundImageBox<T_GAME> backgroundImageBox;
     protected GameAreaControlBoard<T_GAME> gameAreaControlBoard;
     // ====== need child lazy-init end ======

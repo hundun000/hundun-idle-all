@@ -13,13 +13,13 @@ public class GameDictionary implements IGameDictionary {
         switch (constructionId) {
         
             case ConstructionId.COOKIE_CLICK_PROVIDER:
-                return "provider0";
+                return "main cookie";
             case ConstructionId.COOKIE_AUTO_PROVIDER:
-                return "provider1";
+                return "cliker";
             case ConstructionId.COOKIE_SELLER:
-                return "provider2";
+                return "seller";
             case ConstructionId.WIN_PROVIDER:
-                return "provider3";
+                return "win";
 
             default:
                 return "[dic:" + constructionId + "]";
