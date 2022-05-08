@@ -26,7 +26,6 @@ allprojects {
     
     version = '1.0'
     ext {
-        appName = "hundun-idle"
         gdxVersion = '1.10.0'
         roboVMVersion = '2.3.12'
         box2DLightsVersion = '1.5'
@@ -75,6 +74,10 @@ project(":idleframe") {
     apply plugin: "maven"
     apply plugin: "maven-publish"
     
+    ext {
+        appName = "hundun-idle"
+    }
+    
     task sourcesJar(type: Jar, dependsOn: classes) {
         classifier = 'sources'
         from sourceSets.main.allSource
@@ -102,7 +105,7 @@ project(":idleframe") {
     }
 }
 
-project(":demo-game:core") {
+project(":IdleDemo-game:core") {
 
     dependencies {
         api project(":idleframe")
@@ -113,10 +116,10 @@ project(":demo-game:core") {
     }
 }
 
-project(":demo-game:desktop") {
+project(":IdleDemo-game:desktop") {
 
     dependencies {
-        implementation project(":demo-game:core")
+        implementation project(":IdleDemo-game:core")
         api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
