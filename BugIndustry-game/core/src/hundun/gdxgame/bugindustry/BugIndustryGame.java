@@ -21,6 +21,7 @@ import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.data.ChildGameConfig;
 import hundun.gdxgame.idleframe.model.AchievementPrototype;
 import hundun.gdxgame.idleframe.model.construction.BaseConstructionFactory;
+import hundun.gdxgame.idleframe.util.save.ISaveTool;
 import hundun.gdxgame.idlestarter.ui.screen.menu.MenuScreen;
 import lombok.Getter;
 
@@ -31,8 +32,8 @@ public class BugIndustryGame extends BaseIdleGame {
     
     
     
-    public BugIndustryGame() {
-        super(640, 480);
+    public BugIndustryGame(ISaveTool saveTool) {
+        super(640, 480, saveTool);
         this.skinFilePath = "skins/orange/skin/uiskin.json";
         drawGameImageAndPlayAudio = false;
         debugMode = false;

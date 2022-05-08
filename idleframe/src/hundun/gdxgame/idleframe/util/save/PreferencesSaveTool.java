@@ -1,4 +1,4 @@
-package hundun.gdxgame.idleframe.util;
+package hundun.gdxgame.idleframe.util.save;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -23,15 +23,15 @@ import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
  * @author hundun
  * Created on 2021/11/10
  */
-public class PreferencesSaveUtils {
-    
-    static Preferences preferences;
+public class PreferencesSaveTool implements ISaveTool {
+    String preferencesName;
+    Preferences preferences;
     private static final String ROOT_KEY = "root";
-    private static ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
     
-    public static void init(String preferencesName) {
-        PreferencesSaveUtils.preferences = Gdx.app.getPreferences(preferencesName);;
-        PreferencesSaveUtils.objectMapper = new ObjectMapper()
+    public PreferencesSaveTool(String preferencesName) {
+        this.preferencesName = preferencesName;
+        this.objectMapper = new ObjectMapper()
                 .enable(SerializationFeature.INDENT_OUTPUT)
                 ;
         
@@ -49,8 +49,8 @@ public class PreferencesSaveUtils {
     }
     
     
-    
-    public static void save(ModelContext modelContext) {
+    @Override
+    public void save(ModelContext modelContext) {
         
         SaveData saveData = new SaveData();
         saveData.setOwnResoueces(modelContext.getStorageManager().getOwnResoueces());
@@ -68,24 +68,25 @@ public class PreferencesSaveUtils {
         try {
             preferences.putString(ROOT_KEY, objectMapper.writeValueAsString(saveData));
             preferences.flush();
-            Gdx.app.log(PreferencesSaveUtils.class.getSimpleName(), "save() done");
+            Gdx.app.log(getClass().getSimpleName(), "save() done");
         } catch (Exception e) {
-            Gdx.app.error(PreferencesSaveUtils.class.getSimpleName(), "save() error", e);
+            Gdx.app.error(getClass().getSimpleName(), "save() error", e);
         }
         
     }
     
-    public static boolean hasSave() {
+    @Override
+    public boolean hasSave() {
         return preferences != null && preferences.contains(ROOT_KEY);
     }
     
 
     
-    
-    public static void load(ModelContext modelContext) {
+    @Override
+    public void load(ModelContext modelContext) {
         
         if (!hasSave()) {
-            Gdx.app.log(PreferencesSaveUtils.class.getSimpleName(), "no savefile, load() do nothing");
+            Gdx.app.log(getClass().getSimpleName(), "no savefile, load() do nothing");
             return;
         }
         
@@ -94,7 +95,7 @@ public class PreferencesSaveUtils {
             String date = preferences.getString(ROOT_KEY);
             saveData = objectMapper.readValue(date, SaveData.class);
         } catch (IOException e) {
-            Gdx.app.error(PreferencesSaveUtils.class.getSimpleName(), "load() error", e);
+            Gdx.app.error(getClass().getSimpleName(), "load() error", e);
             return;
         }
         
@@ -108,6 +109,13 @@ public class PreferencesSaveUtils {
             loadConstructionSaveData(map, construction);
         }
 
-        Gdx.app.log(PreferencesSaveUtils.class.getSimpleName(), "load() done");
+        Gdx.app.log(getClass().getSimpleName(), "load() done");
+    }
+
+
+
+    @Override
+    public void lazyInitOnGameCreate() {
+        this.preferences = Gdx.app.getPreferences(preferencesName);
     }
 }

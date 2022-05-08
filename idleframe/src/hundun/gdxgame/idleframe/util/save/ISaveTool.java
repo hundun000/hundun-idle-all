@@ -9,6 +9,7 @@ import hundun.gdxgame.idleframe.model.ModelContext;
  * Created on 2022/04/08
  */
 public interface ISaveTool {
+    void lazyInitOnGameCreate();
     boolean hasSave();
     void save(ModelContext modelContext);
     void load(ModelContext modelContext);

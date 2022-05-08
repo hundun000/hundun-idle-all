@@ -21,6 +21,8 @@ import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.data.ChildGameConfig;
 import hundun.gdxgame.idleframe.model.AchievementPrototype;
 import hundun.gdxgame.idleframe.model.construction.BaseConstructionFactory;
+import hundun.gdxgame.idleframe.util.save.ISaveTool;
+import hundun.gdxgame.idleframe.util.save.PreferencesSaveTool;
 import hundun.gdxgame.idlestarter.ui.screen.menu.MenuScreen;
 import lombok.Getter;
 
@@ -31,8 +33,8 @@ public class IdleDemoGame extends BaseIdleGame {
     
     
     
-    public IdleDemoGame() {
-        super(640, 480);
+    public IdleDemoGame(ISaveTool saveTool) {
+        super(640, 480, saveTool);
         //this.skinFilePath = "skins/orange/skin/uiskin.json";
         desktopScale = 1;
         drawGameImageAndPlayAudio = false;

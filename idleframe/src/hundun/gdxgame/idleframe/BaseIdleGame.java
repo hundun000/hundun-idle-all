@@ -33,8 +33,8 @@ import hundun.gdxgame.idleframe.model.manager.GameEntityManager;
 import hundun.gdxgame.idleframe.model.manager.StorageManager;
 import hundun.gdxgame.idleframe.model.manager.AbstractTextureManager;
 import hundun.gdxgame.idleframe.util.IGameDictionary;
-import hundun.gdxgame.idleframe.util.PreferencesSaveUtils;
 import hundun.gdxgame.idleframe.util.save.ISaveTool;
+import hundun.gdxgame.idleframe.util.save.PreferencesSaveTool;
 import lombok.Getter;
 
 public abstract class BaseIdleGame extends Game {
@@ -68,9 +68,10 @@ public abstract class BaseIdleGame extends Game {
     
     private StarterData starterData;
     
-    public BaseIdleGame(int LOGIC_WIDTH, int LOGIC_HEIGHT) {
+    public BaseIdleGame(int LOGIC_WIDTH, int LOGIC_HEIGHT, ISaveTool saveTool) {
         this.LOGIC_WIDTH = LOGIC_WIDTH;
         this.LOGIC_HEIGHT = LOGIC_HEIGHT;
+        this.saveTool = saveTool;
     }
     
 	@Override
@@ -78,7 +79,7 @@ public abstract class BaseIdleGame extends Game {
 
 		this.batch = new SpriteBatch();
 		
-		
+		saveTool.lazyInitOnGameCreate();
 		initContexts();
 		contextsLazyInit();
 	}
@@ -161,11 +162,6 @@ public abstract class BaseIdleGame extends Game {
         audioPlayManager.lazyInit(childGameConfig.getScreenIdToFilePathMap());
         
         
-    }
-    
-    
-    public void saveToolLazyInit(ISaveTool saveTool) {
-        this.saveTool = saveTool;
     }
     
     protected abstract ChildGameConfig getChildGameConfig();

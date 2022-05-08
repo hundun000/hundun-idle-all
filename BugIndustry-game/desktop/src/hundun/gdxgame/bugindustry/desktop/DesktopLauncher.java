@@ -3,11 +3,12 @@ package hundun.gdxgame.bugindustry.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import hundun.gdxgame.bugindustry.BugIndustryGame;
+import hundun.gdxgame.idleframe.util.save.PreferencesSaveTool;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		
-	    BugIndustryGame game = new BugIndustryGame();
+	    BugIndustryGame game = new BugIndustryGame(new PreferencesSaveTool("BugIndustry-save"));
 	    Runtime.getRuntime().addShutdownHook(new DesktopExitHookTask(game));
 	    
 	    LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
