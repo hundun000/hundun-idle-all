@@ -11,7 +11,7 @@ import hundun.gdxgame.idleframe.util.save.PreferencesSaveTool;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		
-	    IdleDemoGame game = new IdleDemoGame(new PreferencesSaveTool("IdleDemo-save"));
+	    IdleDemoGame game = new IdleDemoGame(new PreferencesSaveTool("IdleDemo-destop-save"));
 	    Runtime.getRuntime().addShutdownHook(new DesktopExitHookTask(game));
 	    
 	    LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();

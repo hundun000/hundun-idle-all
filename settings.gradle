@@ -1,2 +1,2 @@
 rootProject.name = 'hundun-idle-all'
-include 'idleframe', 'BugIndustry-game:desktop', 'BugIndustry-game:core', 'IdleDemo-game:desktop', 'IdleDemo-game:core'
+include 'idleframe', 'BugIndustry-game:desktop', 'BugIndustry-game:core', 'IdleDemo-game:desktop', 'IdleDemo-game:core', 'IdleDemo-game:html'

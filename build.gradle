@@ -1,6 +1,7 @@
 buildscript {
-    
-
+    ext {
+        gwtPluginVersion = '1.1.16'
+    }
     repositories {
         mavenLocal()
         mavenCentral()
@@ -9,8 +10,8 @@ buildscript {
         google()
     }
     dependencies {
-        
-
+        classpath "org.wisepersist:gwt-gradle-plugin:$gwtPluginVersion"
+        classpath 'org.gretty:gretty:3.0.3'
     }
 }
 
@@ -32,6 +33,8 @@ allprojects {
         ashleyVersion = '1.7.3'
         aiVersion = '1.8.2'
         gdxControllersVersion = '2.1.0'
+        
+        gwtFrameworkVersion = '2.8.2'
     }
 
     repositories {
@@ -126,5 +129,19 @@ project(":IdleDemo-game:desktop") {
         //api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
                 
 
+    }
+}
+
+project(":IdleDemo-game:html") {
+    apply plugin: "gwt"
+    apply plugin: "war"
+    apply plugin: "org.gretty"
+
+    dependencies {
+        implementation project(':IdleDemo-game:core')
+        implementation "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
+        implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
+        implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
     }
 }
