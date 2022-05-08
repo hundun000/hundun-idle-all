@@ -15,6 +15,7 @@ import hundun.gdxgame.bugindustry.logic.ResourceType;
 import hundun.gdxgame.bugindustry.logic.ScreenId;
 import hundun.gdxgame.bugindustry.ui.screen.PlayScreen;
 import hundun.gdxgame.idleframe.data.ChildGameConfig;
+import hundun.gdxgame.idleframe.data.StarterData;
 import hundun.gdxgame.idleframe.model.AchievementPrototype;
 import hundun.gdxgame.idlestarter.ConstructionsFileLoader;
 
@@ -60,12 +61,13 @@ public class BugIndustryGameConfig extends ChildGameConfig {
         ));
         this.setAreaShowEntityByOwnAmountResourceIds(areaShownResourceIds);
         
+        var starterData = new StarterData();
         var constructionStarterLevelMap = Map.of(ConstructionId.WOOD_SELL_HOUSE, 1);
-        this.setConstructionStarterLevelMap(constructionStarterLevelMap);
-        
+        starterData.setConstructionStarterLevelMap(constructionStarterLevelMap);
         var constructionStarterWorkingLevelMap = Map.of(ConstructionId.WOOD_SELL_HOUSE, Boolean.FALSE);
-        this.setConstructionStarterWorkingLevelMap(constructionStarterWorkingLevelMap);
-         
+        starterData.setConstructionStarterWorkingLevelMap(constructionStarterWorkingLevelMap);
+        this.setStarterData(starterData); 
+        
         Map<String, String> screenIdToFilePathMap = Map.of(
                 ScreenId.MENU, "audio/Loop-Menu.wav",
                 ScreenId.PLAY, "audio/forest.mp3"

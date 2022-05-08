@@ -2,4 +2,4 @@
 
 sourceSets.main.java.srcDirs = [ "src/" ]
 
-eclipse.project.name = appName + "-core"
+eclipse.project.name = appName + "-BugIndustry-core"

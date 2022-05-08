@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 import hundun.gdxgame.idleframe.BaseIdleGame;
-import hundun.gdxgame.idleframe.util.SaveUtils;
 import hundun.gdxgame.idlestarter.ui.screen.play.BaseScreen;
 
 
@@ -57,7 +56,7 @@ public class MenuScreen<T_GAME extends BaseIdleGame> extends BaseScreen<T_GAME> 
         //buttonContinueGame.setSize(100, 100);
         //buttonContinueGame.setPosition(0, 0);
         buttonContinueGame.addListener(buttonContinueGameInputListener);
-        if (SaveUtils.hasSave()) {
+        if (game.getSaveTool().hasSave()) {
             table.add(buttonContinueGame)
                 .height(BUTTON_BIG_HEIGHT)
                 .fill()
@@ -70,7 +69,7 @@ public class MenuScreen<T_GAME extends BaseIdleGame> extends BaseScreen<T_GAME> 
         buttonNewGame = new TextButton("New Game", game.getButtonSkin());
         buttonNewGame.addListener(buttonNewGameInputListener);
         table.add(buttonNewGame)
-            .height(SaveUtils.hasSave() ? BUTTON_SMALL_HEIGHT : BUTTON_BIG_HEIGHT)
+            .height(game.getSaveTool().hasSave() ? BUTTON_SMALL_HEIGHT : BUTTON_BIG_HEIGHT)
             .fill()
             .pad(10)
             .row();

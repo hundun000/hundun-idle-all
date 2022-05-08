@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
@@ -19,8 +20,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import hundun.gdxgame.idleframe.data.ChildGameConfig;
 import hundun.gdxgame.idleframe.data.SaveData;
+import hundun.gdxgame.idleframe.data.StarterData;
 import hundun.gdxgame.idleframe.model.ModelContext;
 import hundun.gdxgame.idleframe.model.construction.BaseConstructionFactory;
+import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleframe.model.manager.AchievementManager;
 import hundun.gdxgame.idleframe.model.manager.AudioPlayManager;
 import hundun.gdxgame.idleframe.model.manager.BuffManager;
@@ -29,9 +32,9 @@ import hundun.gdxgame.idleframe.model.manager.EventManager;
 import hundun.gdxgame.idleframe.model.manager.GameEntityManager;
 import hundun.gdxgame.idleframe.model.manager.StorageManager;
 import hundun.gdxgame.idleframe.model.manager.AbstractTextureManager;
-import hundun.gdxgame.idleframe.util.FontUtil;
 import hundun.gdxgame.idleframe.util.IGameDictionary;
-import hundun.gdxgame.idleframe.util.SaveUtils;
+import hundun.gdxgame.idleframe.util.PreferencesSaveUtils;
+import hundun.gdxgame.idleframe.util.save.ISaveTool;
 import lombok.Getter;
 
 public abstract class BaseIdleGame extends Game {
@@ -45,8 +48,6 @@ public abstract class BaseIdleGame extends Game {
     
     @Getter
     private SpriteBatch batch;
-    @Getter
-	private BitmapFont font;
 
     @Getter
     private ModelContext modelContext;
@@ -62,7 +63,10 @@ public abstract class BaseIdleGame extends Game {
     
     @Getter
     private Skin buttonSkin;
+    @Getter
+    private ISaveTool saveTool;
     
+    private StarterData starterData;
     
     public BaseIdleGame(int LOGIC_WIDTH, int LOGIC_HEIGHT) {
         this.LOGIC_WIDTH = LOGIC_WIDTH;
@@ -70,14 +74,9 @@ public abstract class BaseIdleGame extends Game {
     }
     
 	@Override
-	public void create () {
-	    FontUtil.init();
-	    SaveUtils.init(Gdx.files.internal("save.json").file());
-        
-	    
+	public void create() {
+
 		this.batch = new SpriteBatch();
-		this.font = FontUtil.KOMIKA;
-		
 		
 		
 		initContexts();
@@ -89,22 +88,33 @@ public abstract class BaseIdleGame extends Game {
 	public void loadAndHookSave(boolean load) {
 	    
 	    if (load) {
-	        SaveUtils.load(modelContext);
+	        saveTool.load(modelContext);
 	        // post
 	        //this.getEventManager().notifyBuffChange(true);
 	        //this.getEventManager().notifyResourceAmountChange(true);
 	    } else {
-	        SaveUtils.newSaveStarter(modelContext);
+	        this.newSaveStarter(modelContext);
 	    }
 	    
 	    
 	    
-	    Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-	        SaveUtils.save(modelContext);
-	    }));
+	    
 	}
 	
-	
+    /**
+     * 作为新存档，也需要修改ModelContext
+     */
+    public void newSaveStarter(ModelContext modelContext) {
+        var constructions = modelContext.getConstructionFactory().getConstructions();
+        for (BaseConstruction construction : constructions) {
+            construction.getSaveData().setLevel(starterData.getConstructionStarterLevelMap().getOrDefault(construction.getId(), 0));
+            if (starterData.getConstructionStarterWorkingLevelMap().getOrDefault(construction.getId(), false)) {
+                construction.getSaveData().setWorkingLevel(starterData.getConstructionStarterLevelMap().getOrDefault(construction.getId(), 0));
+            }
+            construction.updateModifiedValues();
+        }
+    }
+
 	
 	protected void initContexts() {
 	    
@@ -135,7 +145,6 @@ public abstract class BaseIdleGame extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		font.dispose();
 		audioPlayManager.dispose();
 	}
 
@@ -143,7 +152,7 @@ public abstract class BaseIdleGame extends Game {
     private void contextsLazyInit() {
         ChildGameConfig childGameConfig = getChildGameConfig();
         
-        SaveUtils.lazyInit(childGameConfig.getConstructionStarterLevelMap(), childGameConfig.getConstructionStarterWorkingLevelMap());
+        this.starterData = childGameConfig.getStarterData();
         
         modelContext.getConstructionFactory().lazyInit(childGameConfig.getConstructions());
         modelContext.getConstructionManager().lazyInit(childGameConfig.getAreaControlableConstructionIds());
@@ -152,6 +161,11 @@ public abstract class BaseIdleGame extends Game {
         audioPlayManager.lazyInit(childGameConfig.getScreenIdToFilePathMap());
         
         
+    }
+    
+    
+    public void saveToolLazyInit(ISaveTool saveTool) {
+        this.saveTool = saveTool;
     }
     
     protected abstract ChildGameConfig getChildGameConfig();

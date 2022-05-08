@@ -15,6 +15,7 @@ import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.ScreenId;
 import hundun.gdxgame.idledemo.ui.screen.PlayScreen;
 import hundun.gdxgame.idleframe.data.ChildGameConfig;
+import hundun.gdxgame.idleframe.data.StarterData;
 import hundun.gdxgame.idleframe.model.AchievementPrototype;
 import hundun.gdxgame.idlestarter.ConstructionsFileLoader;
 
@@ -56,12 +57,13 @@ public class IdleDemoGameConfig extends ChildGameConfig {
         ));
         this.setAreaShowEntityByChangeAmountResourceIds(areaShowEntityByChangeAmountResourceIds);
         
+        var starterData = new StarterData();
         var constructionStarterLevelMap = Map.of(ConstructionId.COOKIE_SELLER, 1);
-        this.setConstructionStarterLevelMap(constructionStarterLevelMap);
-        
+        starterData.setConstructionStarterLevelMap(constructionStarterLevelMap);
         var constructionStarterWorkingLevelMap = Map.of(ConstructionId.COOKIE_SELLER, Boolean.FALSE);
-        this.setConstructionStarterWorkingLevelMap(constructionStarterWorkingLevelMap);
-         
+        starterData.setConstructionStarterWorkingLevelMap(constructionStarterWorkingLevelMap);
+        this.setStarterData(starterData); 
+        
         Map<String, String> screenIdToFilePathMap = Map.of(
                 ScreenId.MENU, "audio/Loop-Menu.wav",
                 ScreenId.PLAY, "audio/forest.mp3"

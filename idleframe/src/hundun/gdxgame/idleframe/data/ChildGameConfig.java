@@ -21,8 +21,7 @@ public abstract class ChildGameConfig {
     Map<String, List<String>> areaShowEntityByOwnAmountResourceIds;
     Map<String, List<String>> areaShowEntityByChangeAmountResourceIds;
     List<BaseConstruction> constructions;
-    Map<String, Integer> constructionStarterLevelMap;
-    Map<String, Boolean> constructionStarterWorkingLevelMap;
+    StarterData starterData;
     Map<String, String> screenIdToFilePathMap;
     List<AchievementPrototype> achievementPrototypes;
 

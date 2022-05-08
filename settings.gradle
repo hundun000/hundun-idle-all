@@ -1,1 +1,2 @@
-include 'desktop', 'core', 'idleframe', 'demo-desktop', 'demo-core'
+rootProject.name = 'hundun-idle-all'
+include 'idleframe', 'BugIndustry-game:desktop', 'BugIndustry-game:core', 'demo-game:desktop', 'demo-game:core'

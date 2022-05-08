@@ -1,4 +1,4 @@
-package hundun.gdxgame.idleframe.util;
+package hundun.gdxgame.bugindustry.desktop;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -22,7 +22,7 @@ import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
  * @author hundun
  * Created on 2021/11/10
  */
-public class SaveUtils {
+public class DesktopSaveUtils {
     
     static File saveFile;
     private static ObjectMapper objectMapper;
@@ -31,8 +31,8 @@ public class SaveUtils {
     private static Map<String, Boolean> constructionStarterWorkingLevelMap;
     
     public static void init(File saveFile) {
-        SaveUtils.saveFile = saveFile;
-        SaveUtils.objectMapper = new ObjectMapper()
+        DesktopSaveUtils.saveFile = saveFile;
+        DesktopSaveUtils.objectMapper = new ObjectMapper()
                 .enable(SerializationFeature.INDENT_OUTPUT)
                 ;
         
@@ -40,8 +40,8 @@ public class SaveUtils {
     
     public static void lazyInit(Map<String, Integer> constructionStarterLevelMap, Map<String, Boolean> constructionStarterWorkingLevelMap) {
 
-        SaveUtils.constructionStarterLevelMap = constructionStarterLevelMap;
-        SaveUtils.constructionStarterWorkingLevelMap = constructionStarterWorkingLevelMap;
+        DesktopSaveUtils.constructionStarterLevelMap = constructionStarterLevelMap;
+        DesktopSaveUtils.constructionStarterWorkingLevelMap = constructionStarterWorkingLevelMap;
     }
     
     private static void appendConstructionSaveData(Map<String, ConstructionSaveData> map, BaseConstruction construction) {
@@ -66,7 +66,7 @@ public class SaveUtils {
             try {
                 saveFile.createNewFile();
             } catch (IOException e) {
-                Gdx.app.error(SaveUtils.class.getSimpleName(), "saveFile.createNewFile() fail", e);
+                Gdx.app.error(DesktopSaveUtils.class.getSimpleName(), "saveFile.createNewFile() fail", e);
                 e.printStackTrace();
             }
         }
@@ -88,9 +88,9 @@ public class SaveUtils {
             writer.write(objectMapper.writeValueAsString(saveData));
             writer.flush();
             writer.close();
-            Gdx.app.log(SaveUtils.class.getSimpleName(), "save() done");
+            Gdx.app.log(DesktopSaveUtils.class.getSimpleName(), "save() done");
         } catch (Exception e) {
-            Gdx.app.error(SaveUtils.class.getSimpleName(), "save() error", e);
+            Gdx.app.error(DesktopSaveUtils.class.getSimpleName(), "save() error", e);
         }
         
 
@@ -114,7 +114,7 @@ public class SaveUtils {
     public static void load(ModelContext modelContext) {
         
         if (!saveFile.exists()) {
-            Gdx.app.log(SaveUtils.class.getSimpleName(), "no savefile, load() do nothing");
+            Gdx.app.log(DesktopSaveUtils.class.getSimpleName(), "no savefile, load() do nothing");
             return;
         }
         
@@ -122,7 +122,7 @@ public class SaveUtils {
         try {
             saveData = objectMapper.readValue(saveFile, SaveData.class);
         } catch (IOException e) {
-            Gdx.app.error(SaveUtils.class.getSimpleName(), "load() error", e);
+            Gdx.app.error(DesktopSaveUtils.class.getSimpleName(), "load() error", e);
             return;
         }
         
@@ -136,6 +136,6 @@ public class SaveUtils {
             loadConstructionSaveData(map, construction);
         }
 
-        Gdx.app.log(SaveUtils.class.getSimpleName(), "load() done");
+        Gdx.app.log(DesktopSaveUtils.class.getSimpleName(), "load() done");
     }
 }

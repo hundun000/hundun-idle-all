@@ -20,7 +20,6 @@ import hundun.gdxgame.idleframe.model.construction.base.UpgradeComponent;
 import hundun.gdxgame.idleframe.model.resource.ResourcePack;
 import hundun.gdxgame.idleframe.model.resource.ResourcePair;
 import hundun.gdxgame.idleframe.util.IGameDictionary;
-import hundun.gdxgame.idleframe.util.SaveUtils;
 import hundun.gdxgame.idlestarter.ConstructionsConfig.ConstructionNode;
 
 /**
@@ -50,25 +49,25 @@ public class ConstructionsFileLoader {
     }
 
 
-    public List<BaseConstruction> loadFromFile() {
-        if (!configFile.exists()) {
-            Gdx.app.log(SaveUtils.class.getSimpleName(), "no savefile, load() do nothing");
-            return constructions;
-        }
-        
-        ConstructionsConfig config;
-        try {
-            config = objectMapper.readValue(configFile, ConstructionsConfig.class);
-        } catch (IOException e) {
-            Gdx.app.error(SaveUtils.class.getSimpleName(), "load() error", e);
-            return constructions;
-        }
-        
-        for (ConstructionNode node : config.getNodes()) {
-            registerOneConstructionFromFile(node);
-        }
-        return constructions;
-    }
+//    public List<BaseConstruction> loadFromFile() {
+//        if (!configFile.exists()) {
+//            Gdx.app.log(DesktopSaveUtils.class.getSimpleName(), "no savefile, load() do nothing");
+//            return constructions;
+//        }
+//        
+//        ConstructionsConfig config;
+//        try {
+//            config = objectMapper.readValue(configFile, ConstructionsConfig.class);
+//        } catch (IOException e) {
+//            Gdx.app.error(DesktopSaveUtils.class.getSimpleName(), "load() error", e);
+//            return constructions;
+//        }
+//        
+//        for (ConstructionNode node : config.getNodes()) {
+//            registerOneConstructionFromFile(node);
+//        }
+//        return constructions;
+//    }
     
     private void registerOneConstructionFromFile(ConstructionNode node) {
         BaseConstruction construction;
