@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -41,7 +42,7 @@ public class ConstructionManager {
         ModelContext modelContext = game.getModelContext();
         areaControlableConstructions = new HashMap<>();
         if (areaControlableConstructionIds != null) {
-            for (var entry : areaControlableConstructionIds.entrySet()) {
+            for (Entry<String, List<String>> entry : areaControlableConstructionIds.entrySet()) {
                 areaControlableConstructions.put(
                         entry.getKey(), 
                         entry.getValue()

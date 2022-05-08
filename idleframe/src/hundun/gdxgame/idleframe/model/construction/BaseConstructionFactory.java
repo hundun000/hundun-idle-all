@@ -30,7 +30,7 @@ public class BaseConstructionFactory {
     }
     
     public BaseConstruction getConstruction(String id) {
-        var result = constructions.get(id);
+        BaseConstruction result = constructions.get(id);
         if (result == null) {
             throw new RuntimeException("getConstruction " + id + " not found");
         }

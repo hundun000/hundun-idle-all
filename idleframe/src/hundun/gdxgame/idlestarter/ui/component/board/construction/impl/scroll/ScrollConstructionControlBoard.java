@@ -94,7 +94,7 @@ public class ScrollConstructionControlBoard extends AbstractConstructionControlB
         childTable.clearChildren();
         
         for (int i = 0; i < childrenSize; i++) {
-            var constructionView = new ConstructionControlNode(parent, i, parent.getLayoutConst());
+            ConstructionControlNode constructionView = new ConstructionControlNode(parent, i, parent.getLayoutConst());
             constructionControlNodes.add(constructionView);
             childTable.add(constructionView).spaceRight(10).expand();
         }

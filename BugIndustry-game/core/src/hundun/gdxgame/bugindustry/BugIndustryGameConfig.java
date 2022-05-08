@@ -17,7 +17,8 @@ import hundun.gdxgame.bugindustry.ui.screen.PlayScreen;
 import hundun.gdxgame.idleframe.data.ChildGameConfig;
 import hundun.gdxgame.idleframe.data.StarterData;
 import hundun.gdxgame.idleframe.model.AchievementPrototype;
-import hundun.gdxgame.idlestarter.ConstructionsFileLoader;
+import hundun.gdxgame.idleframe.util.JavaHighVersionFeature;
+import hundun.gdxgame.idlehelper.desktop.ConstructionsFileLoader;
 
 /**
  * @author hundun
@@ -32,20 +33,20 @@ public class BugIndustryGameConfig extends ChildGameConfig {
         this.setConstructions(builtinConstructionsLoader.load());
         
         Map<String, List<String>> areaShownConstructionIds = new HashMap<>(); 
-        areaShownConstructionIds.put(GameArea.BEE_FARM, Arrays.asList(
+        areaShownConstructionIds.put(GameArea.BEE_FARM, JavaHighVersionFeature.arraysAsList(
             ConstructionId.BEE_GATHER_HOUSE,
             ConstructionId.SMALL_BEEHIVE,
             ConstructionId.MID_BEEHIVE,
             ConstructionId.BIG_BEEHIVE,
             ConstructionId.QUEEN_BEEHIVE
         ));
-        areaShownConstructionIds.put(GameArea.FOREST_FARM, Arrays.asList(
+        areaShownConstructionIds.put(GameArea.FOREST_FARM, JavaHighVersionFeature.arraysAsList(
             ConstructionId.WOOD_GATHER_HOUSE,
             ConstructionId.WOOD_KEEPING,
             ConstructionId.WOOD_BOARD_MAKER,
             ConstructionId.WIN_THE_GAME
         ));
-        areaShownConstructionIds.put(GameArea.SHOP, Arrays.asList(
+        areaShownConstructionIds.put(GameArea.SHOP, JavaHighVersionFeature.arraysAsList(
             ConstructionId.WOOD_SELL_HOUSE,
             ConstructionId.WOOD_BOARD_SELL_HOUSE,
             ConstructionId.BEE_SELL_HOUSE,
@@ -56,15 +57,15 @@ public class BugIndustryGameConfig extends ChildGameConfig {
         this.setAreaShowEntityByOwnAmountConstructionIds(areaShownConstructionIds);
         
         Map<String, List<String>> areaShownResourceIds = new HashMap<>(); 
-        areaShownResourceIds.put(GameArea.BEE_FARM, Arrays.asList(
+        areaShownResourceIds.put(GameArea.BEE_FARM, JavaHighVersionFeature.arraysAsList(
             ResourceType.BEE
         ));
         this.setAreaShowEntityByOwnAmountResourceIds(areaShownResourceIds);
         
-        var starterData = new StarterData();
-        var constructionStarterLevelMap = Map.of(ConstructionId.WOOD_SELL_HOUSE, 1);
+        StarterData starterData = new StarterData();
+        Map<String, Integer> constructionStarterLevelMap = Map.of(ConstructionId.WOOD_SELL_HOUSE, 1);
         starterData.setConstructionStarterLevelMap(constructionStarterLevelMap);
-        var constructionStarterWorkingLevelMap = Map.of(ConstructionId.WOOD_SELL_HOUSE, Boolean.FALSE);
+        Map<String, Boolean> constructionStarterWorkingLevelMap = Map.of(ConstructionId.WOOD_SELL_HOUSE, Boolean.FALSE);
         starterData.setConstructionStarterWorkingLevelMap(constructionStarterWorkingLevelMap);
         this.setStarterData(starterData); 
         
@@ -74,7 +75,7 @@ public class BugIndustryGameConfig extends ChildGameConfig {
                 );
         this.setScreenIdToFilePathMap(screenIdToFilePathMap);
         
-        var achievementPrototypes = Arrays.asList(
+        List<AchievementPrototype> achievementPrototypes = JavaHighVersionFeature.arraysAsList(
                 new AchievementPrototype("Game win", "You win the game!",
                         null,
                         Map.of(ResourceType.WIN_TROPHY, 1)

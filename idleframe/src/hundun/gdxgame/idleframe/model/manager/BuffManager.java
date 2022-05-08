@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.badlogic.gdx.graphics.g3d.environment.AmbientCubemap;
 
 
 import hundun.gdxgame.idleframe.BaseIdleGame;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @author hundun
@@ -19,11 +17,16 @@ import lombok.Setter;
  */
 public class BuffManager {
     
-    BaseIdleGame game;
+    private BaseIdleGame game;
     
-    @Setter
-    @Getter
-    Map<String, Integer> buffAmounts = new HashMap<>();
+    private Map<String, Integer> buffAmounts = new HashMap<>();
+    // ------ replace-lombok ------
+    public Map<String, Integer> getBuffAmounts() {
+        return buffAmounts;
+    }
+    public void setBuffAmounts(Map<String, Integer> buffAmounts) {
+        this.buffAmounts = buffAmounts;
+    }
     
     public BuffManager(BaseIdleGame game) {
         this.game = game;
@@ -44,7 +47,7 @@ public class BuffManager {
     
     public int modifyResourceGain(String resourceType, int oldAmout) {
         int newAmout = oldAmout;
-        for (var entry : buffAmounts.entrySet()) {
+        for (Entry<String, Integer> entry : buffAmounts.entrySet()) {
             String buffId = entry.getKey();
             double buffAmount = entry.getValue();
 //            switch (buffId) {

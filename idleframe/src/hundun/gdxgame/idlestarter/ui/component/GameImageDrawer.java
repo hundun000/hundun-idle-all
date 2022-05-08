@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
@@ -28,9 +26,7 @@ public class GameImageDrawer<T_GAME extends BaseIdleGame> implements IOneFrameRe
     
     BasePlayScreen<T_GAME> parent;
     BaseGameEntityFactory gameEntityFactory;
-    
-    
-    //private Queue<GameEntity> beeEntities = new ConcurrentLinkedQueue<>();
+
     
     public GameImageDrawer(BasePlayScreen<T_GAME> parent, BaseGameEntityFactory gameEntityFactory) {
         this.parent = parent;
@@ -91,7 +87,7 @@ public class GameImageDrawer<T_GAME extends BaseIdleGame> implements IOneFrameRe
 
 
     @Override
-    public void onResourceChange(HashMap<String, Long> changeMap) {
+    public void onResourceChange(Map<String, Long> changeMap) {
         GameEntityManager manager = parent.game.getModelContext().getGameEntityManager();
         String gameArea = parent.getArea();
         

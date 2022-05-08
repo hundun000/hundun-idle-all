@@ -10,9 +10,8 @@ import com.badlogic.gdx.Gdx;
 
 import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
+import hundun.gdxgame.idleframe.model.resource.ResourcePair;
 import hundun.gdxgame.idlestarter.ui.screen.play.BasePlayScreen;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
 /**
  * @author hundun
@@ -54,7 +53,7 @@ public class BaseAutoConstruction extends BaseConstruction {
         if (!canClickEffect()) {
             return;
         }
-        var upgradeCostRule = upgradeComponent.getUpgradeCostPack().getModifiedValues();
+        List<ResourcePair> upgradeCostRule = upgradeComponent.getUpgradeCostPack().getModifiedValues();
         game.getModelContext().getStorageManager().modifyAllResourceNum(upgradeCostRule, false);
         saveData.setLevel(saveData.getLevel() + 1);
         if (!levelComponent.isWorkingLevelChangable()) {

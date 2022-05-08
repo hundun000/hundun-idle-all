@@ -23,8 +23,8 @@ public abstract class BaseScreen<T_GAME extends BaseIdleGame> implements Screen 
     
     public BaseScreen(T_GAME game) {
         this.game = game;
-        var camera = new OrthographicCamera(game.LOGIC_WIDTH, game.LOGIC_HEIGHT);
-        var viewport = new FitViewport(game.LOGIC_WIDTH, game.LOGIC_HEIGHT, camera);
+        OrthographicCamera camera = new OrthographicCamera(game.LOGIC_WIDTH, game.LOGIC_HEIGHT);
+        FitViewport viewport = new FitViewport(game.LOGIC_WIDTH, game.LOGIC_HEIGHT, camera);
         this.uiStage = new Stage(viewport, game.getBatch());
     }
     

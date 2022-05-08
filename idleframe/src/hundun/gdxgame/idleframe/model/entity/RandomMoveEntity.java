@@ -1,7 +1,5 @@
 package hundun.gdxgame.idleframe.model.entity;
 
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @author hundun
@@ -14,10 +12,15 @@ public class RandomMoveEntity extends GameEntity {
     private float FLY_MIN_Y;
     private float FLY_MAX_Y;
     private double FLY_UNION_SPEED;
-    @Setter
-    @Getter
+
     int randomMoveCount;
-    
+    // ------ replace-lombok ------
+    public int getRandomMoveCount() {
+        return randomMoveCount;
+    }
+    public void setRandomMoveCount(int randomMoveCount) {
+        this.randomMoveCount = randomMoveCount;
+    }
     
     public RandomMoveEntity(float FLY_MIN_X, float FLY_MAX_X, float FLY_MIN_Y, float FLY_MAX_Y,
             double FLY_UNION_SPEED) {

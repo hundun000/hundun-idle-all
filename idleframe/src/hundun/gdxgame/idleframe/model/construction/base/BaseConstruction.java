@@ -18,17 +18,19 @@ import hundun.gdxgame.idleframe.listener.IBuffChangeListener;
 import hundun.gdxgame.idleframe.listener.ILogicFrameListener;
 import hundun.gdxgame.idleframe.model.resource.ResourcePack;
 import hundun.gdxgame.idleframe.model.resource.ResourcePair;
-import lombok.Getter;
-import lombok.Setter;
-import org.jetbrains.annotations.NotNull;
 
 public abstract class BaseConstruction implements ILogicFrameListener, IBuffChangeListener {
     
     protected int MAX_LEVEL = 99;
-    @Setter
-    @Getter
+
     protected int MAX_DRAW_NUM = 5;
-    
+    // ------ replace-lombok ------
+    public int getMAX_DRAW_NUM() {
+        return MAX_DRAW_NUM;
+    }
+    public void setMAX_DRAW_NUM(int mAX_DRAW_NUM) {
+        MAX_DRAW_NUM = mAX_DRAW_NUM;
+    }
     
     public static final DescriptionPackage WORKING_LEVEL_AUTO_DESCRIPTION_PACKAGE = new DescriptionPackage(
             "AutoCost", "AutoGain", "UpgradeCost", "Upgrade", 
@@ -53,35 +55,75 @@ public abstract class BaseConstruction implements ILogicFrameListener, IBuffChan
     
     protected Random random = new Random();
     protected final BaseIdleGame game;
-    @Setter
-    @Getter
+
     protected ConstructionSaveData saveData;
-
-    @Getter
+    // ------ replace-lombok ------
+    public ConstructionSaveData getSaveData() {
+        return saveData;
+    }
+    public void setSaveData(ConstructionSaveData saveData) {
+        this.saveData = saveData;
+    }
+    
     public String name;
-    @Getter
+    // ------ replace-lombok ------
+    public String getName() {
+        return name;
+    }
+    
     public String id;
-    @Getter
+    // ------ replace-lombok ------
+    public String getId() {
+        return id;
+    }
+    
     public String detailDescroptionConstPart;
+    // ------ replace-lombok ------
+    public String getDetailDescroptionConstPart() {
+        return detailDescroptionConstPart;
+    }
     
-    
-    @Getter
     public DescriptionPackage descriptionPackage;
-
-    @Getter
-    @Setter
-    @NotNull
+    // ------ replace-lombok ------
+    public DescriptionPackage getDescriptionPackage() {
+        return descriptionPackage;
+    }
+    
+    /**
+     * NotNull
+     */
     protected UpgradeComponent upgradeComponent;
+    // ------ replace-lombok ------
+    public UpgradeComponent getUpgradeComponent() {
+        return upgradeComponent;
+    }
+    public void setUpgradeComponent(UpgradeComponent upgradeComponent) {
+        this.upgradeComponent = upgradeComponent;
+    }
     
-    @Getter
-    @Setter
-    @NotNull
+    /**
+     * NotNull
+     */
     protected OutputComponent outputComponent;
+    // ------ replace-lombok ------
+    public OutputComponent getOutputComponent() {
+        return outputComponent;
+    }
+    public void setOutputComponent(OutputComponent outputComponent) {
+        this.outputComponent = outputComponent;
+    }
     
-    @Getter
-    @Setter
-    @NotNull
+    /**
+     * NotNull
+     */
     protected LevelComponent levelComponent;
+    // ------ replace-lombok ------
+    public LevelComponent getLevelComponent() {
+        return levelComponent;
+    }
+    public void setLevelComponent(LevelComponent levelComponent) {
+        this.levelComponent = levelComponent;
+    }
     
     public void updateDescription() {
         outputComponent.updateDescription();

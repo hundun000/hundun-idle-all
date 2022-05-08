@@ -16,6 +16,7 @@ import hundun.gdxgame.idleframe.model.construction.base.OutputComponent;
 import hundun.gdxgame.idleframe.model.construction.base.UpgradeComponent;
 import hundun.gdxgame.idleframe.model.resource.ResourcePack;
 import hundun.gdxgame.idleframe.model.resource.ResourcePair;
+import hundun.gdxgame.idleframe.util.JavaHighVersionFeature;
 
 /**
  * @author hundun
@@ -46,7 +47,7 @@ public class BuiltinConstructionsLoader {
             construction.descriptionPackage = BaseConstruction.GATHER_DESCRIPTION_PACKAGE;
             
             OutputComponent outputComponent = new OutputComponent(construction);
-            outputComponent.setOutputGainPack(toPack(Map.of(
+            outputComponent.setOutputGainPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.WOOD, 1
                     )));
             construction.setOutputComponent(outputComponent);
@@ -68,13 +69,13 @@ public class BuiltinConstructionsLoader {
             construction.descriptionPackage = BaseConstruction.MAX_LEVEL_AUTO_DESCRIPTION_PACKAGE;
             
             OutputComponent outputComponent = new OutputComponent(construction);
-            outputComponent.setOutputGainPack(toPack(Map.of(
+            outputComponent.setOutputGainPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.WOOD, 1
                     )));
             construction.setOutputComponent(outputComponent);
             
             UpgradeComponent upgradeComponent = new UpgradeComponent(construction);
-            upgradeComponent.setUpgradeCostPack(toPack(Map.of(
+            upgradeComponent.setUpgradeCostPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.COIN, 25,
                     ResourceType.WOOD, 5
                     )));
@@ -94,16 +95,16 @@ public class BuiltinConstructionsLoader {
             construction.descriptionPackage = BaseConstruction.WORKING_LEVEL_AUTO_DESCRIPTION_PACKAGE;
             
             OutputComponent outputComponent = new OutputComponent(construction);
-            outputComponent.setOutputCostPack(toPack(Map.of(
+            outputComponent.setOutputCostPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.WOOD, 50
                     )));
-            outputComponent.setOutputGainPack(toPack(Map.of(
+            outputComponent.setOutputGainPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.WOOD_BOARD, 1
                     )));
             construction.setOutputComponent(outputComponent);
             
             UpgradeComponent upgradeComponent = new UpgradeComponent(construction);
-            upgradeComponent.setUpgradeCostPack(toPack(Map.of(
+            upgradeComponent.setUpgradeCostPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.COIN, 500
                     )));
             construction.setUpgradeComponent(upgradeComponent);
@@ -122,10 +123,10 @@ public class BuiltinConstructionsLoader {
             construction.descriptionPackage = BaseConstruction.WIN_DESCRIPTION_PACKAGE;
             
             OutputComponent outputComponent = new OutputComponent(construction);
-            outputComponent.setOutputCostPack(toPack(Map.of(
+            outputComponent.setOutputCostPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.QUEEN_BEE, 500
                     )));
-            outputComponent.setOutputGainPack(toPack(Map.of(
+            outputComponent.setOutputGainPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.WIN_TROPHY, 1
                     )));
             construction.setOutputComponent(outputComponent);
@@ -158,16 +159,16 @@ public class BuiltinConstructionsLoader {
             construction.descriptionPackage = BaseConstruction.SELLING_DESCRIPTION_PACKAGE;
             
             OutputComponent outputComponent = new OutputComponent(construction);
-            outputComponent.setOutputCostPack(toPack(Map.of(
+            outputComponent.setOutputCostPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.WOOD, 1
                     )));
-            outputComponent.setOutputGainPack(toPack(Map.of(
+            outputComponent.setOutputGainPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.COIN, 5
                     )));
             construction.setOutputComponent(outputComponent);
             
             UpgradeComponent upgradeComponent = new UpgradeComponent(construction);
-            upgradeComponent.setUpgradeCostPack(toPack(Map.of(
+            upgradeComponent.setUpgradeCostPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.COIN, 50
                     )));
             construction.setUpgradeComponent(upgradeComponent);
@@ -185,16 +186,16 @@ public class BuiltinConstructionsLoader {
             construction.descriptionPackage = BaseConstruction.SELLING_DESCRIPTION_PACKAGE;
             
             OutputComponent outputComponent = new OutputComponent(construction);
-            outputComponent.setOutputCostPack(toPack(Map.of(
+            outputComponent.setOutputCostPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.WOOD_BOARD, 1
                     )));
-            outputComponent.setOutputGainPack(toPack(Map.of(
+            outputComponent.setOutputGainPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.COIN, 300
                     )));
             construction.setOutputComponent(outputComponent);
             
             UpgradeComponent upgradeComponent = new UpgradeComponent(construction);
-            upgradeComponent.setUpgradeCostPack(toPack(Map.of(
+            upgradeComponent.setUpgradeCostPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.COIN, 500
                     )));
             construction.setUpgradeComponent(upgradeComponent);
@@ -212,16 +213,16 @@ public class BuiltinConstructionsLoader {
             construction.descriptionPackage = BaseConstruction.SELLING_DESCRIPTION_PACKAGE;
 
             OutputComponent outputComponent = new OutputComponent(construction);
-            outputComponent.setOutputCostPack(toPack(Map.of(
+            outputComponent.setOutputCostPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.BEE, 1
                     )));
-            outputComponent.setOutputGainPack(toPack(Map.of(
+            outputComponent.setOutputGainPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.COIN, 5
                     )));
             construction.setOutputComponent(outputComponent);
             
             UpgradeComponent upgradeComponent = new UpgradeComponent(construction);
-            upgradeComponent.setUpgradeCostPack(toPack(Map.of(
+            upgradeComponent.setUpgradeCostPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.COIN, 50
                     )));
             construction.setUpgradeComponent(upgradeComponent);
@@ -239,16 +240,16 @@ public class BuiltinConstructionsLoader {
             construction.descriptionPackage = BaseConstruction.SELLING_DESCRIPTION_PACKAGE;
             
             OutputComponent outputComponent = new OutputComponent(construction);
-            outputComponent.setOutputCostPack(toPack(Map.of(
+            outputComponent.setOutputCostPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.HONEY, 1
                     )));
-            outputComponent.setOutputGainPack(toPack(Map.of(
+            outputComponent.setOutputGainPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.COIN, 10
                     )));
             construction.setOutputComponent(outputComponent);
             
             UpgradeComponent upgradeComponent = new UpgradeComponent(construction);
-            upgradeComponent.setUpgradeCostPack(toPack(Map.of(
+            upgradeComponent.setUpgradeCostPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.COIN, 100
                     )));
             construction.setUpgradeComponent(upgradeComponent);
@@ -266,16 +267,16 @@ public class BuiltinConstructionsLoader {
             construction.descriptionPackage = BaseConstruction.SELLING_DESCRIPTION_PACKAGE;
             
             OutputComponent outputComponent = new OutputComponent(construction);
-            outputComponent.setOutputCostPack(toPack(Map.of(
+            outputComponent.setOutputCostPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.HONEY, 1
                     )));
-            outputComponent.setOutputGainPack(toPack(Map.of(
+            outputComponent.setOutputGainPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.COIN, 100
                     )));
             construction.setOutputComponent(outputComponent);
             
             UpgradeComponent upgradeComponent = new UpgradeComponent(construction);
-            upgradeComponent.setUpgradeCostPack(toPack(Map.of(
+            upgradeComponent.setUpgradeCostPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.COIN, 1000
                     )));
             construction.setUpgradeComponent(upgradeComponent);
@@ -302,7 +303,7 @@ public class BuiltinConstructionsLoader {
             construction.descriptionPackage = BaseConstruction.GATHER_DESCRIPTION_PACKAGE;
             
             OutputComponent outputComponent = new OutputComponent(construction);
-            outputComponent.setOutputGainPack(toPack(Map.of(
+            outputComponent.setOutputGainPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.BEE, 1
                     )));
             construction.setOutputComponent(outputComponent);
@@ -324,13 +325,13 @@ public class BuiltinConstructionsLoader {
             construction.descriptionPackage = BaseConstruction.MAX_LEVEL_AUTO_DESCRIPTION_PACKAGE;
             
             OutputComponent outputComponent = new OutputComponent(construction);
-            outputComponent.setOutputGainPack(toPack(Map.of(
+            outputComponent.setOutputGainPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.HONEY, 1
                     )));
             construction.setOutputComponent(outputComponent);
             
             UpgradeComponent upgradeComponent = new UpgradeComponent(construction);
-            upgradeComponent.setUpgradeCostPack(toPack(Map.of(
+            upgradeComponent.setUpgradeCostPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.COIN, 50, 
                     ResourceType.WOOD, 5, 
                     ResourceType.BEE, 3
@@ -350,14 +351,14 @@ public class BuiltinConstructionsLoader {
             construction.descriptionPackage = BaseConstruction.MAX_LEVEL_AUTO_DESCRIPTION_PACKAGE;
             
             OutputComponent outputComponent = new OutputComponent(construction);
-            outputComponent.setOutputGainPack(toPack(Map.of(
+            outputComponent.setOutputGainPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.BEE, 1,
                     ResourceType.HONEY, 3
                     )));
             construction.setOutputComponent(outputComponent);
             
             UpgradeComponent upgradeComponent = new UpgradeComponent(construction);
-            upgradeComponent.setUpgradeCostPack(toPack(Map.of(
+            upgradeComponent.setUpgradeCostPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.COIN, 200,
                     ResourceType.WOOD, 15, 
                     ResourceType.BEE, 5,
@@ -378,7 +379,7 @@ public class BuiltinConstructionsLoader {
             construction.descriptionPackage = BaseConstruction.MAX_LEVEL_AUTO_DESCRIPTION_PACKAGE;
             
             OutputComponent outputComponent = new OutputComponent(construction);
-            outputComponent.setOutputGainPack(toPack(Map.of(
+            outputComponent.setOutputGainPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.BEE, 1,
                     ResourceType.HONEY, 3,
                     ResourceType.BEEWAX, 3
@@ -386,7 +387,7 @@ public class BuiltinConstructionsLoader {
             construction.setOutputComponent(outputComponent);
             
             UpgradeComponent upgradeComponent = new UpgradeComponent(construction);
-            upgradeComponent.setUpgradeCostPack(toPack(Map.of(
+            upgradeComponent.setUpgradeCostPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.COIN, 500,
                     ResourceType.WOOD, 30, 
                     ResourceType.WOOD_BOARD, 5, 
@@ -408,13 +409,13 @@ public class BuiltinConstructionsLoader {
             construction.descriptionPackage = BaseConstruction.MAX_LEVEL_AUTO_DESCRIPTION_PACKAGE;
             
             OutputComponent outputComponent = new OutputComponent(construction);
-            outputComponent.setOutputGainPack(toPack(Map.of(
+            outputComponent.setOutputGainPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.QUEEN_BEE, 1
                     )));
             construction.setOutputComponent(outputComponent);
             
             UpgradeComponent upgradeComponent = new UpgradeComponent(construction);
-            upgradeComponent.setUpgradeCostPack(toPack(Map.of(
+            upgradeComponent.setUpgradeCostPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.COIN, 5000,
                     ResourceType.WOOD_BOARD, 50, 
                     ResourceType.BEE, 100,

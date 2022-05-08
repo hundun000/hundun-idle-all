@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleframe.model.resource.ResourcePack;
+import hundun.gdxgame.idleframe.model.resource.ResourcePair;
 import hundun.gdxgame.idlestarter.ui.screen.play.BasePlayScreen;
 
 
@@ -61,8 +62,8 @@ public class PopupInfoBoard<T_GAME extends BaseIdleGame> extends Table {
     private void buildOnePack(ResourcePack pack) {
         if (pack != null && pack.getModifiedValues() != null) {
             add(wapperContainer(new Label(pack.getDescriptionStart(), parent.game.getButtonSkin())));
-            for (var entry : pack.getModifiedValues()) {
-                var node = new ResourceAmountPairNode<T_GAME>(parent.game, entry.getType());
+            for (ResourcePair entry : pack.getModifiedValues()) {
+                ResourceAmountPairNode<T_GAME> node = new ResourceAmountPairNode<T_GAME>(parent.game, entry.getType());
                 node.update(entry.getAmount());
                 this.add(wapperContainer(node)).height(NODE_HEIGHT).width(NODE_WIDTH);
             }

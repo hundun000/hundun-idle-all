@@ -1,11 +1,10 @@
 package hundun.gdxgame.idleframe.model.construction.base;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import hundun.gdxgame.idleframe.model.resource.ResourcePack;
 import hundun.gdxgame.idleframe.model.resource.ResourcePair;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @author hundun
@@ -14,9 +13,14 @@ import lombok.Setter;
 public class UpgradeComponent {
     private final BaseConstruction construction;
 
-    @Setter
-    @Getter
     private ResourcePack upgradeCostPack;
+    // ------ replace-lombok ------
+    public ResourcePack getUpgradeCostPack() {
+        return upgradeCostPack;
+    }
+    public void setUpgradeCostPack(ResourcePack upgradeCostPack) {
+        this.upgradeCostPack = upgradeCostPack;
+    }
     
     public UpgradeComponent(BaseConstruction construction) {
         super();
@@ -34,7 +38,7 @@ public class UpgradeComponent {
             upgradeCostPack.setModifiedValues(
                     upgradeCostPack.getBaseValues().stream()
                         .map(pair -> {
-                                var newAmout = construction.calculateModifiedUpgradeCost(pair.getAmount(), construction.saveData.getWorkingLevel());
+                                long newAmout = construction.calculateModifiedUpgradeCost(pair.getAmount(), construction.saveData.getWorkingLevel());
                                 return new ResourcePair(pair.getType(), newAmout);
                             })
                         .collect(Collectors.toList())
@@ -53,7 +57,7 @@ public class UpgradeComponent {
             return false;
         }
         
-        var compareTarget = upgradeCostPack.getModifiedValues();
+        List<ResourcePair> compareTarget = upgradeCostPack.getModifiedValues();
         return construction.game.getModelContext().getStorageManager().isEnough(compareTarget);
     }
     

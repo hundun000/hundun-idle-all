@@ -3,6 +3,7 @@ package hundun.gdxgame.idleframe.model.manager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 
@@ -48,7 +49,7 @@ public class EventManager {
 //        }
 //    }
     
-    public void notifyOneFrameResourceChange(HashMap<String, Long> changeMap) {
+    public void notifyOneFrameResourceChange(Map<String, Long> changeMap) {
         Gdx.app.log(this.getClass().getSimpleName(), "notifyOneFrameResourceChange");
         for (IOneFrameResourceChangeListener listener : oneFrameResourceChangeListeners) {
             listener.onResourceChange(changeMap);

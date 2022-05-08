@@ -1,13 +1,11 @@
 package hundun.gdxgame.idleframe.model.construction.base;
 
+import java.util.List;
 import java.util.stream.Collectors;
-
-import org.jetbrains.annotations.Nullable;
 
 import hundun.gdxgame.idleframe.model.resource.ResourcePack;
 import hundun.gdxgame.idleframe.model.resource.ResourcePair;
-import lombok.Getter;
-import lombok.Setter;
+
 
 /**
  * @author hundun
@@ -19,18 +17,26 @@ public class OutputComponent {
     /**
      * 对于Click型，即为基础点击收益；对于Auto型，即为基础自动收益；
      */
-    @Nullable
-    @Setter
-    @Getter
     protected ResourcePack outputGainPack;
+    // ------ replace-lombok ------
+    public ResourcePack getOutputGainPack() {
+        return outputGainPack;
+    }
+    public void setOutputGainPack(ResourcePack outputGainPack) {
+        this.outputGainPack = outputGainPack;
+    }
     
     /**
      * output行为所需要支付的费用; 无费用时为null
      */
-    @Nullable
-    @Setter
-    @Getter
     protected ResourcePack outputCostPack;
+    // ------ replace-lombok ------
+    public ResourcePack getOutputCostPack() {
+        return outputCostPack;
+    }
+    public void setOutputCostPack(ResourcePack outputCostPack) {
+        this.outputCostPack = outputCostPack;
+    }
     
     public OutputComponent(BaseConstruction construction) {
         this.construction = construction;
@@ -51,7 +57,7 @@ public class OutputComponent {
             outputGainPack.setModifiedValues(
                     outputGainPack.getBaseValues().stream()
                         .map(pair -> {
-                                var newAmout = construction.calculateModifiedOutput(pair.getAmount(), construction.saveData.getWorkingLevel());
+                                long newAmout = construction.calculateModifiedOutput(pair.getAmount(), construction.saveData.getWorkingLevel());
                                 return new ResourcePair(pair.getType(), newAmout);
                             })
                         .collect(Collectors.toList())
@@ -68,7 +74,7 @@ public class OutputComponent {
             outputCostPack.setModifiedValues(
                     outputCostPack.getBaseValues().stream()
                         .map(pair -> {
-                                var newAmout = construction.calculateModifiedOutputCost(pair.getAmount(), construction.saveData.getWorkingLevel());
+                                long newAmout = construction.calculateModifiedOutputCost(pair.getAmount(), construction.saveData.getWorkingLevel());
                                 return new ResourcePair(pair.getType(), newAmout);
                             })
                         .collect(Collectors.toList())
@@ -91,7 +97,7 @@ public class OutputComponent {
             return true;
         }
         
-        var compareTarget = outputCostPack.getModifiedValues();
+        List<ResourcePair> compareTarget = outputCostPack.getModifiedValues();
         return construction.game.getModelContext().getStorageManager().isEnough(compareTarget);
     }
 }

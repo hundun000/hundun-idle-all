@@ -3,7 +3,8 @@ package hundun.gdxgame.bugindustry.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import hundun.gdxgame.bugindustry.BugIndustryGame;
-import hundun.gdxgame.idleframe.util.save.PreferencesSaveTool;
+import hundun.gdxgame.idlehelper.desktop.DesktopExitHookTask;
+import hundun.gdxgame.idlehelper.desktop.PreferencesSaveTool;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {

@@ -1,7 +1,6 @@
 package hundun.gdxgame.idleframe.model.construction.base;
 
 import hundun.gdxgame.idleframe.model.resource.ResourcePack;
-import lombok.Setter;
 
 /**
  * @author hundun
@@ -17,12 +16,24 @@ public class PromotionComponent {
     }
     
     private final BaseConstruction construction;
-    @Setter
+    
     private int levelCondition;
-    @Setter
+    // ------ replace-lombok ------
+    public void setLevelCondition(int levelCondition) {
+        this.levelCondition = levelCondition;
+    }
+    
     private String nextId;
-    @Setter
+    // ------ replace-lombok ------
+    public void setNextId(String nextId) {
+        this.nextId = nextId;
+    }
+    
     private ResourcePack promotionCostPack;
+    // ------ replace-lombok ------
+    public void setPromotionCostPack(ResourcePack promotionCostPack) {
+        this.promotionCostPack = promotionCostPack;
+    }
     
     public PromotionComponent(BaseConstruction parent) {
         super();

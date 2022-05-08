@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.util.TextFormatUtils;
 import hundun.gdxgame.idlestarter.ui.screen.play.BasePlayScreen;
-import lombok.Getter;
 
 /**
  * @author hundun
@@ -17,8 +16,12 @@ import lombok.Getter;
 public class ResourceAmountPairNode<T_GAME extends BaseIdleGame> extends HorizontalGroup {
     
     T_GAME game;
-    @Getter
+
     String resourceType;
+    // ------ replace-lombok ------
+    public String getResourceType() {
+        return resourceType;
+    }
     
     Image image;
     Label label;

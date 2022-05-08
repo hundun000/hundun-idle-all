@@ -29,9 +29,7 @@ import hundun.gdxgame.idlestarter.ui.component.PopupInfoBoard;
 import hundun.gdxgame.idlestarter.ui.component.StorageInfoBoard;
 import hundun.gdxgame.idlestarter.ui.component.board.construction.AbstractConstructionControlBoard;
 import hundun.gdxgame.idlestarter.ui.component.board.construction.impl.scroll.ScrollConstructionControlBoard;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+
 
 /**
  * @author hundun
@@ -47,15 +45,34 @@ public abstract class BasePlayScreen<T_GAME extends BaseIdleGame>
     private int clockCount = 0;
     private float logicFramAccumulator;
     
-    @Setter(value = AccessLevel.PRIVATE)
-    @Getter(value = AccessLevel.PRIVATE)
+
     private boolean logicFramePause;
-    @Getter
+    // ====== replace-lombok ======
+    public boolean isLogicFramePause() {
+        return logicFramePause;
+    }
+    public void setLogicFramePause(boolean logicFramePause) {
+        this.logicFramePause = logicFramePause;
+    }
+    
     private String area;
+    // ------ replace-lombok ------
+    public String getArea() {
+        return area;
+    }
+    
     // ====== need child construct-init start ======
     private final String startArea;
-    @Getter
+    // ------ replace-lombok ------
+    public String getStartArea() {
+        return startArea;
+    }
+    
     protected final PlayScreenLayoutConst layoutConst;
+    // ------ replace-lombok ------
+    public PlayScreenLayoutConst getLayoutConst() {
+        return layoutConst;
+    }
     // ====== need child construct-init end ======
     
     

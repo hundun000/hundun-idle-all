@@ -1,11 +1,11 @@
 package hundun.gdxgame.idleframe.model.manager;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Queue;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.badlogic.gdx.Gdx;
 
@@ -13,8 +13,6 @@ import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleframe.model.entity.BaseGameEntityFactory;
 import hundun.gdxgame.idleframe.model.entity.GameEntity;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 管理GameEntity在内存中的数量，不负责绘制。
@@ -23,18 +21,37 @@ import lombok.Setter;
  */
 public class GameEntityManager {
     
-    BaseIdleGame game;
+    private BaseIdleGame game;
     
-    @Getter
     private Map<String, Queue<GameEntity>> gameEntitiesOfConstructionIds = new HashMap<>();
-    @Getter
+    // ------ replace-lombok ------
+    public Map<String, Queue<GameEntity>> getGameEntitiesOfConstructionIds() {
+        return gameEntitiesOfConstructionIds;
+    }
+    
     private Map<String, Queue<GameEntity>> gameEntitiesOfResourceIds = new HashMap<>();
-    @Getter
+    // ------ replace-lombok ------
+    public Map<String, Queue<GameEntity>> getGameEntitiesOfResourceIds() {
+        return gameEntitiesOfResourceIds;
+    }
+    
     private Map<String, List<String>> areaShowEntityByOwnAmountConstructionIds;
-    @Getter
+    // ------ replace-lombok ------
+    public Map<String, List<String>> getAreaShowEntityByOwnAmountConstructionIds() {
+        return areaShowEntityByOwnAmountConstructionIds;
+    }
+    
     private Map<String, List<String>> areaShowEntityByOwnAmountResourceIds;
-    @Getter
+    // ------ replace-lombok ------
+    public Map<String, List<String>> getAreaShowEntityByOwnAmountResourceIds() {
+        return areaShowEntityByOwnAmountResourceIds;
+    }
+    
     private Map<String, List<String>> areaShowEntityByChangeAmountResourceIds;
+    // ------ replace-lombok ------
+    public Map<String, List<String>> getAreaShowEntityByChangeAmountResourceIds() {
+        return areaShowEntityByChangeAmountResourceIds;
+    }
     
     public GameEntityManager(BaseIdleGame game) {
         super();
@@ -42,7 +59,7 @@ public class GameEntityManager {
     }
     
     public void allEntityMoveForFrame() {
-        for (var entry : gameEntitiesOfConstructionIds.entrySet()) {
+        for (Entry<String, Queue<GameEntity>> entry : gameEntitiesOfConstructionIds.entrySet()) {
             Queue<GameEntity> queue = entry.getValue();
             queue.forEach(entity -> {
                 entity.frameLogic();
@@ -50,7 +67,7 @@ public class GameEntityManager {
             });
         }
         
-        for (var entry : gameEntitiesOfResourceIds.entrySet()) {
+        for (Entry<String, Queue<GameEntity>> entry : gameEntitiesOfResourceIds.entrySet()) {
             Queue<GameEntity> queue = entry.getValue();
             queue.removeIf(entity -> {
                 boolean remove = entity.checkRemove();
@@ -83,7 +100,7 @@ public class GameEntityManager {
         }
     }
     
-    public void areaEntityCheckByChangeAmount(String gameArea, BaseGameEntityFactory gameEntityFactory, HashMap<String, Long> changeMap) {
+    public void areaEntityCheckByChangeAmount(String gameArea, BaseGameEntityFactory gameEntityFactory, Map<String, Long> changeMap) {
 
         List<String> shownResourceIds = this.areaShowEntityByChangeAmountResourceIds.get(gameArea);
         if (shownResourceIds != null) {
@@ -106,7 +123,7 @@ public class GameEntityManager {
         long resourceNum = game.getModelContext().getStorageManager().getResourceNumOrZero(resourceId);
         int drawNum = gameEntityFactory.calculateResourceDrawNum(resourceId, resourceNum);
         
-        gameEntitiesOfResourceIds.computeIfAbsent(resourceId, k -> new ConcurrentLinkedQueue<>());
+        gameEntitiesOfResourceIds.computeIfAbsent(resourceId, k -> new LinkedList<>());
         Queue<GameEntity> gameEntities = gameEntitiesOfResourceIds.get(resourceId);
         while (gameEntities.size() > drawNum) {
             Gdx.app.log(this.getClass().getSimpleName(), "checkResourceEntityByOwnAmount " + resourceId + " remove for " + gameEntities.size() + " -> " + drawNum);
@@ -123,7 +140,7 @@ public class GameEntityManager {
     private void addResourceEntityByChangeAmount(String resourceId, BaseGameEntityFactory gameEntityFactory, int addAmount) {
         int drawNum = addAmount;
         
-        gameEntitiesOfResourceIds.computeIfAbsent(resourceId, k -> new ConcurrentLinkedQueue<>());
+        gameEntitiesOfResourceIds.computeIfAbsent(resourceId, k -> new LinkedList<>());
         Queue<GameEntity> gameEntities = gameEntitiesOfResourceIds.get(resourceId);
         for (int i = 0; i < drawNum; i++) {
             GameEntity gameEntity = gameEntityFactory.newResourceEntity(resourceId, i);
@@ -137,7 +154,7 @@ public class GameEntityManager {
         int resourceNum = construction.getSaveData().getWorkingLevel();
         int MAX_DRAW_NUM = construction.getMAX_DRAW_NUM();
         int drawNum = gameEntityFactory.calculateConstructionDrawNum(id, resourceNum, MAX_DRAW_NUM);
-        gameEntitiesOfConstructionIds.computeIfAbsent(id, k -> new ConcurrentLinkedQueue<>());
+        gameEntitiesOfConstructionIds.computeIfAbsent(id, k -> new LinkedList<>());
         Queue<GameEntity> gameEntities = gameEntitiesOfConstructionIds.get(id);
         while (gameEntities.size() > drawNum) {
             Gdx.app.log(this.getClass().getSimpleName(), "checkConstructionEntityByOwnAmount " + id + " remove for " + gameEntities.size() + " -> " + drawNum);

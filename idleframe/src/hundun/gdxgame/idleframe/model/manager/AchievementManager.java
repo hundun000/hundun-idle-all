@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import com.badlogic.gdx.Gdx;
@@ -17,16 +18,21 @@ import hundun.gdxgame.idleframe.listener.IBuffChangeListener;
 import hundun.gdxgame.idleframe.listener.IGameStartListener;
 import hundun.gdxgame.idleframe.listener.IOneFrameResourceChangeListener;
 import hundun.gdxgame.idleframe.model.AchievementPrototype;
-import lombok.Getter;
-import lombok.Setter;
 
 public class AchievementManager implements IBuffChangeListener, IOneFrameResourceChangeListener, IGameStartListener {
     BaseIdleGame game;
     
     Map<String, AchievementPrototype> prototypes = new HashMap<>();
-    @Setter
-    @Getter
+
     Set<String> unlockedAchievementNames = new HashSet<>();
+    // ------ replace-lombok ------
+    public Set<String> getUnlockedAchievementNames() {
+        return unlockedAchievementNames;
+    }
+    public void setUnlockedAchievementNames(Set<String> unlockedAchievementNames) {
+        this.unlockedAchievementNames = unlockedAchievementNames;
+    }
+    
     
     public AchievementManager(BaseIdleGame game) {
         this.game = game;
@@ -41,7 +47,7 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
         if (requiredResources == null) {
             return true;
         }
-        for (var entry : requiredResources.entrySet()) {
+        for (Entry<String, Integer> entry : requiredResources.entrySet()) {
             long own = game.getModelContext().getStorageManager().getResourceNumOrZero(entry.getKey());
             if (own < entry.getValue()) {
                 return false;
@@ -54,7 +60,7 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
         if (map == null) {
             return true;
         }
-        for (var entry : map.entrySet()) {
+        for (Entry<String, Integer> entry : map.entrySet()) {
             int own = game.getModelContext().getBuffManager().getBuffAmoutOrDefault(entry.getKey());
             if (own < entry.getValue()) {
                 return false;
@@ -90,7 +96,7 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
     }
 
     @Override
-    public void onResourceChange(HashMap<String, Long> changeMap) {
+    public void onResourceChange(Map<String, Long> changeMap) {
         checkAllAchievementUnlock();
     }
 

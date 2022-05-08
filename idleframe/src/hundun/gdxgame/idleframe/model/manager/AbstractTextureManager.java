@@ -7,22 +7,37 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import lombok.Getter;
-import lombok.Setter;
-
 public abstract class AbstractTextureManager {
     
-    @Getter
     protected Texture winTexture;
+    // ------ replace-lombok ------
+    public Texture getWinTexture() {
+        return winTexture;
+    }
     
-    @Getter
     protected Texture menuTexture;
-    @Getter
+    // ------ replace-lombok ------
+    public Texture getMenuTexture() {
+        return menuTexture;
+    }
+    
     protected Texture defaultBoardNinePatchTexture;
-    @Getter
+    // ------ replace-lombok ------
+    public Texture getDefaultBoardNinePatchTexture() {
+        return defaultBoardNinePatchTexture;
+    }
+    
     protected TextureRegion defaultBoardNinePatchMiddle;
-    @Getter
+    // ------ replace-lombok ------
+    public TextureRegion getDefaultBoardNinePatchMiddle() {
+        return defaultBoardNinePatchMiddle;
+    }
+    
     protected int defaultBoardNinePatchEdgeSize;
+    // ------ replace-lombok ------
+    public int getDefaultBoardNinePatchEdgeSize() {
+        return defaultBoardNinePatchEdgeSize;
+    }
     
     protected Map<String, TextureRegion> resourceIconMap = new HashMap<>();
     protected Map<String, TextureRegion> resourceEntityMap = new HashMap<>();

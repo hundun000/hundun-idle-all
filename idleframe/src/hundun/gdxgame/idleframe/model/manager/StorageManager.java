@@ -14,9 +14,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.model.resource.ResourcePair;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @author hundun
@@ -25,19 +22,29 @@ import lombok.Setter;
 public class StorageManager {
     
     BaseIdleGame game;
-    @Getter
-    @Setter
+
     Map<String, Long> ownResoueces = new HashMap<>();
-    @Getter
-    @Setter
+    // ------ replace-lombok ------
+    public Map<String, Long> getOwnResoueces() {
+        return ownResoueces;
+    }
+    public void setOwnResoueces(Map<String, Long> ownResoueces) {
+        this.ownResoueces = ownResoueces;
+    }
+    
     Set<String> unlockedResourceTypes = new HashSet<>();
+    // ------ replace-lombok ------
+    public Set<String> getUnlockedResourceTypes() {
+        return unlockedResourceTypes;
+    }
+    public void setUnlockedResourceTypes(Set<String> unlockedResourceTypes) {
+        this.unlockedResourceTypes = unlockedResourceTypes;
+    }
     
     Map<String, Long> oneFrameDeltaResoueces = new HashMap<>();
     
     public StorageManager(BaseIdleGame game) {
         this.game = game;
-        
-
     }
     
     public String getResourceDescription(String key) {
@@ -56,7 +63,7 @@ public class StorageManager {
      */
     public void modifyAllResourceNum(Map<String, Long> map, boolean plus) {
         //Gdx.app.log(this.getClass().getSimpleName(), (plus ? "plus" : "minus") + ": " + map);
-        for (var entry : map.entrySet()) {
+        for (Entry<String, Long> entry : map.entrySet()) {
             unlockedResourceTypes.add(entry.getKey());
             ownResoueces.merge(entry.getKey(), (plus ? 1 : -1 ) * entry.getValue(), (oldValue, newValue) -> oldValue + newValue);
             oneFrameDeltaResoueces.merge(entry.getKey(), (plus ? 1 : -1 ) * entry.getValue(), (oldValue, newValue) -> oldValue + newValue);
@@ -66,7 +73,7 @@ public class StorageManager {
     
     public void modifyAllResourceNum(List<ResourcePair> packs, boolean plus) {
         //Gdx.app.log(this.getClass().getSimpleName(), (plus ? "plus" : "minus") + ": " + packs);
-        for (var pack : packs) {
+        for (ResourcePair pack : packs) {
             unlockedResourceTypes.add(pack.getType());
             ownResoueces.merge(pack.getType(), (plus ? 1 : -1 ) * pack.getAmount(), (oldValue, newValue) -> oldValue + newValue);
             oneFrameDeltaResoueces.merge(pack.getType(), (plus ? 1 : -1 ) * pack.getAmount(), (oldValue, newValue) -> oldValue + newValue);
@@ -84,8 +91,8 @@ public class StorageManager {
         return true;
     }
     
-    public HashMap<String, Long> frameDeltaAmountClear() {
-        var temp = new HashMap<>(oneFrameDeltaResoueces);
+    public Map<String, Long> frameDeltaAmountClear() {
+        Map<String, Long> temp = new HashMap<>(oneFrameDeltaResoueces);
         oneFrameDeltaResoueces.clear();
         Gdx.app.log(this.getClass().getSimpleName(), "frameDeltaAmountClear: " + temp);
         game.getEventManager().notifyOneFrameResourceChange(temp);

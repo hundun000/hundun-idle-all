@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
 
@@ -64,7 +65,7 @@ public class StorageInfoBoard<T_GAME extends BaseIdleGame> extends Table {
                 ResourceAmountPairNode<T_GAME> node = new ResourceAmountPairNode<T_GAME>(parent.game, resourceType);
                 nodes.add(node);
                 shownTypes.add(resourceType);
-                var cell = this.add(node).width(NODE_WIDTH).height(NODE_HEIGHT);
+                Cell<ResourceAmountPairNode<T_GAME>> cell = this.add(node).width(NODE_WIDTH).height(NODE_HEIGHT);
                 if ((i + 1) % NUM_NODE_PER_ROW == 0) {
                     cell.row();
                 }

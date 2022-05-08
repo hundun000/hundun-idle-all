@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -34,8 +35,8 @@ import hundun.gdxgame.idleframe.model.manager.StorageManager;
 import hundun.gdxgame.idleframe.model.manager.AbstractTextureManager;
 import hundun.gdxgame.idleframe.util.IGameDictionary;
 import hundun.gdxgame.idleframe.util.save.ISaveTool;
-import hundun.gdxgame.idleframe.util.save.PreferencesSaveTool;
-import lombok.Getter;
+import hundun.gdxgame.idlehelper.desktop.PreferencesSaveTool;
+
 
 public abstract class BaseIdleGame extends Game {
     public boolean debugMode = false;
@@ -46,25 +47,53 @@ public abstract class BaseIdleGame extends Game {
     protected String DEFAULT_SKIN_FILA_PATH = "skins/default/skin/uiskin.json";
     protected String skinFilePath;
     
-    @Getter
     private SpriteBatch batch;
+    // ------ replace-lombok ------
+    public SpriteBatch getBatch() {
+        return batch;
+    }
 
-    @Getter
     private ModelContext modelContext;
-    @Getter
+    // ------ replace-lombok ------
+    public ModelContext getModelContext() {
+        return modelContext;
+    }
+    
     private EventManager eventManager;
-    @Getter
+    // ------ replace-lombok ------
+    public EventManager getEventManager() {
+        return eventManager;
+    }
+    
     private AudioPlayManager audioPlayManager;
+    // ------ replace-lombok ------
+    public AudioPlayManager getAudioPlayManager() {
+        return audioPlayManager;
+    }
     
-    @Getter
     protected AbstractTextureManager textureManager;
-    @Getter
-    protected IGameDictionary gameDictionary;
+    // ------ replace-lombok ------
+    public AbstractTextureManager getTextureManager() {
+        return textureManager;
+    }
     
-    @Getter
+    protected IGameDictionary gameDictionary;
+    // ------ replace-lombok ------
+    public IGameDictionary getGameDictionary() {
+        return gameDictionary;
+    }
+    
     private Skin buttonSkin;
-    @Getter
+    // ------ replace-lombok ------
+    public Skin getButtonSkin() {
+        return buttonSkin;
+    }
+    
     private ISaveTool saveTool;
+    // ------ replace-lombok ------
+    public ISaveTool getSaveTool() {
+        return saveTool;
+    }
     
     private StarterData starterData;
     
@@ -106,7 +135,7 @@ public abstract class BaseIdleGame extends Game {
      * 作为新存档，也需要修改ModelContext
      */
     public void newSaveStarter(ModelContext modelContext) {
-        var constructions = modelContext.getConstructionFactory().getConstructions();
+        Collection<BaseConstruction> constructions = modelContext.getConstructionFactory().getConstructions();
         for (BaseConstruction construction : constructions) {
             construction.getSaveData().setLevel(starterData.getConstructionStarterLevelMap().getOrDefault(construction.getId(), 0));
             if (starterData.getConstructionStarterWorkingLevelMap().getOrDefault(construction.getId(), false)) {

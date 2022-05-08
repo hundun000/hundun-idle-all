@@ -2,7 +2,6 @@ package hundun.gdxgame.idleframe.model.construction.base;
 
 import com.badlogic.gdx.Gdx;
 
-import lombok.Getter;
 
 /**
  * @author hundun
@@ -14,8 +13,12 @@ public class LevelComponent {
     
     private final BaseConstruction construction;
 
-    @Getter
+
     private final boolean workingLevelChangable;
+    // ------ replace-lombok ------
+    public boolean isWorkingLevelChangable() {
+        return workingLevelChangable;
+    }
     
     public LevelComponent(BaseConstruction construction, boolean workingLevelChangable) {
         super();
