@@ -54,7 +54,7 @@ public class BugIndustryGame extends BaseIdleGame {
                 Map.of(ResourceType.WIN_TROPHY, 1)
                 ));
         setScreen(screenContext.getMenuScreen());
-        getAudioPlayManager().intoScreen(MenuScreen.class.getSimpleName());
+        getAudioPlayManager().intoScreen(screenContext.getMenuScreen().getScreenId());
     }
     
     @Override
@@ -67,6 +67,7 @@ public class BugIndustryGame extends BaseIdleGame {
         this.screenContext = new ScreenContext();
         screenContext.setMenuScreen(new MenuScreen<>(
                 this,
+                ScreenId.MENU,
                 new InputListener(){
                     @Override
                     public void touchUp (InputEvent event, float x, float y, int pointer, int button) {

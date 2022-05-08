@@ -94,7 +94,7 @@ public class StorageManager {
     public Map<String, Long> frameDeltaAmountClear() {
         Map<String, Long> temp = new HashMap<>(oneFrameDeltaResoueces);
         oneFrameDeltaResoueces.clear();
-        Gdx.app.log(this.getClass().getSimpleName(), "frameDeltaAmountClear: " + temp);
+        //Gdx.app.log(this.getClass().getSimpleName(), "frameDeltaAmountClear: " + temp);
         game.getEventManager().notifyOneFrameResourceChange(temp);
         return temp;
     }

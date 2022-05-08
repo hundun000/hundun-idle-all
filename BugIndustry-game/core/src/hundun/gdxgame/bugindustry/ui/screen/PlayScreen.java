@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.bugindustry.logic.GameArea;
 import hundun.gdxgame.bugindustry.logic.ResourceType;
+import hundun.gdxgame.bugindustry.logic.ScreenId;
 import hundun.gdxgame.bugindustry.ui.entity.BugGameEntityFactory;
 import hundun.gdxgame.idleframe.model.AchievementPrototype;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
@@ -33,7 +34,7 @@ import hundun.gdxgame.idlestarter.ui.screen.play.PlayScreenLayoutConst;
 public class PlayScreen extends BasePlayScreen<BugIndustryGame> {
 
     public PlayScreen(BugIndustryGame game) {
-        super(game, GameArea.BEE_FARM, new PlayScreenLayoutConst(game.LOGIC_WIDTH, game.LOGIC_HEIGHT));
+        super(game, ScreenId.PLAY, GameArea.BEE_FARM, new PlayScreenLayoutConst(game.LOGIC_WIDTH, game.LOGIC_HEIGHT));
     }
     
     @Override

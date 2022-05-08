@@ -40,7 +40,7 @@ public class IdleDemoGame extends BaseIdleGame {
         super(640, 480, saveTool);
         //this.skinFilePath = "skins/orange/skin/uiskin.json";
         desktopScale = 1;
-        drawGameImageAndPlayAudio = false;
+        drawGameImageAndPlayAudio = true;
         debugMode = false;
     }
     
@@ -54,7 +54,7 @@ public class IdleDemoGame extends BaseIdleGame {
         super.create();
        
         setScreen(screenContext.getMenuScreen());
-        getAudioPlayManager().intoScreen(MenuScreen.class.getSimpleName());
+        getAudioPlayManager().intoScreen(screenContext.getMenuScreen().getScreenId());
     }
     
     @Override
@@ -67,6 +67,7 @@ public class IdleDemoGame extends BaseIdleGame {
         this.screenContext = new ScreenContext();
         screenContext.setMenuScreen(new MenuScreen<>(
                 this,
+                ScreenId.MENU,
                 new InputListener(){
                     @Override
                     public void touchUp (InputEvent event, float x, float y, int pointer, int button) {

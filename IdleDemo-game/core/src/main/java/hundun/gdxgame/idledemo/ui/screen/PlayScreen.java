@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import hundun.gdxgame.idledemo.IdleDemoGame;
 import hundun.gdxgame.idledemo.logic.GameArea;
 import hundun.gdxgame.idledemo.logic.ResourceType;
+import hundun.gdxgame.idledemo.logic.ScreenId;
 import hundun.gdxgame.idledemo.ui.entity.GameEntityFactory;
 import hundun.gdxgame.idleframe.model.AchievementPrototype;
 import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
@@ -37,7 +38,7 @@ import hundun.gdxgame.idlestarter.ui.screen.play.PlayScreenLayoutConst;
 public class PlayScreen extends BasePlayScreen<IdleDemoGame> {
 
     public PlayScreen(IdleDemoGame game) {
-        super(game, GameArea.AREA_COOKIE, customLayoutConst(game));
+        super(game, ScreenId.PLAY, GameArea.AREA_COOKIE, customLayoutConst(game));
     }
     
     private static PlayScreenLayoutConst customLayoutConst(IdleDemoGame game) {

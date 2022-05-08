@@ -32,8 +32,8 @@ public class MenuScreen<T_GAME extends BaseIdleGame> extends BaseScreen<T_GAME> 
     Button buttonNewGame;
     Button buttonIntoSettingScreen;
     Table table;
-    public MenuScreen(T_GAME game, InputListener buttonContinueGameInputListener, InputListener buttonNewGameInputListener) {
-        super(game);
+    public MenuScreen(T_GAME game, String screenId, InputListener buttonContinueGameInputListener, InputListener buttonNewGameInputListener) {
+        super(game, screenId);
         this.buttonContinueGameInputListener = buttonContinueGameInputListener;
         this.buttonNewGameInputListener = buttonNewGameInputListener;
         initScene2d();

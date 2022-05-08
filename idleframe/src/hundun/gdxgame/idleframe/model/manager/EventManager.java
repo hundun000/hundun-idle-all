@@ -50,7 +50,7 @@ public class EventManager {
 //    }
     
     public void notifyOneFrameResourceChange(Map<String, Long> changeMap) {
-        Gdx.app.log(this.getClass().getSimpleName(), "notifyOneFrameResourceChange");
+        //Gdx.app.log(this.getClass().getSimpleName(), "notifyOneFrameResourceChange");
         for (IOneFrameResourceChangeListener listener : oneFrameResourceChangeListeners) {
             listener.onResourceChange(changeMap);
         }

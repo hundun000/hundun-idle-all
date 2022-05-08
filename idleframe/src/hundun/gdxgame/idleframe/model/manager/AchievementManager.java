@@ -70,7 +70,7 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
     }
     
     private void checkAllAchievementUnlock() {
-        Gdx.app.log(this.getClass().getSimpleName(), "checkAllAchievementUnlock");
+        //Gdx.app.log(this.getClass().getSimpleName(), "checkAllAchievementUnlock");
         for (AchievementPrototype prototype : prototypes.values()) {
             if (unlockedAchievementNames.contains(prototype.getName())) {
                 continue;

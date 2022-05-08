@@ -94,8 +94,8 @@ public abstract class BasePlayScreen<T_GAME extends BaseIdleGame>
     protected Table uiRootTable;
     protected Table popupRootTable;
     
-    public BasePlayScreen(T_GAME game, String startArea, PlayScreenLayoutConst layoutConst) {
-        super(game);
+    public BasePlayScreen(T_GAME game, String screenId,  String startArea, PlayScreenLayoutConst layoutConst) {
+        super(game, screenId);
         this.startArea = startArea;
         this.layoutConst = layoutConst;
         game.getEventManager().registerListener(this);
