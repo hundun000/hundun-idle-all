@@ -22,7 +22,7 @@ public class BaseAutoConstruction extends BaseConstruction {
     /**
      * 影响升级后下一级费用，详见具体公式
      */
-    protected final double upgradeCostLevelUpArg = 1.1;
+    protected final double upgradeCostLevelUpArg = 1.05;
     
 
 
@@ -94,7 +94,7 @@ public class BaseAutoConstruction extends BaseConstruction {
     protected long calculateModifiedUpgradeCost(long baseValue, int level) {
         return (int)(
                 baseValue
-                * (1 + 2 * level)
+                * (1 + 1 * level)
                 * Math.pow(upgradeCostLevelUpArg, level)
                 );
     }

@@ -132,8 +132,12 @@ public class GameEntityManager {
         while (gameEntities.size() < drawNum) {
             int newIndex = gameEntities.size();
             GameEntity gameEntity = gameEntityFactory.newResourceEntity(resourceId, newIndex);
-            gameEntities.add(gameEntity);
-            Gdx.app.log(this.getClass().getSimpleName(), "checkResourceEntityByOwnAmount " + resourceId + " new for " + gameEntities.size() + " -> " + drawNum);
+            if (gameEntity != null) {
+                gameEntities.add(gameEntity);
+                Gdx.app.log(this.getClass().getSimpleName(), "checkResourceEntityByOwnAmount " + resourceId + " new for " + gameEntities.size() + " -> " + drawNum);
+            } else {
+                break;
+            }
         }
     }
     
@@ -144,15 +148,19 @@ public class GameEntityManager {
         Queue<GameEntity> gameEntities = gameEntitiesOfResourceIds.get(resourceId);
         for (int i = 0; i < drawNum; i++) {
             GameEntity gameEntity = gameEntityFactory.newResourceEntity(resourceId, i);
-            gameEntities.add(gameEntity);
-            Gdx.app.log(this.getClass().getSimpleName(), "addResourceEntityByChangeAmount " + resourceId + " new for change:" + drawNum);
+            if (gameEntity != null) {
+                gameEntities.add(gameEntity);
+                Gdx.app.log(this.getClass().getSimpleName(), "addResourceEntityByChangeAmount " + resourceId + " new for change:" + drawNum);
+            } else {
+                break;
+            }
         }
     }
     
     private void checkConstructionEntityByOwnAmount(String id, BaseGameEntityFactory gameEntityFactory) {
         BaseConstruction construction = game.getModelContext().getConstructionFactory().getConstruction(id);
         int resourceNum = construction.getSaveData().getWorkingLevel();
-        int MAX_DRAW_NUM = construction.getMAX_DRAW_NUM();
+        int MAX_DRAW_NUM = construction.getMaxDrawNum();
         int drawNum = gameEntityFactory.calculateConstructionDrawNum(id, resourceNum, MAX_DRAW_NUM);
         gameEntitiesOfConstructionIds.computeIfAbsent(id, k -> new LinkedList<>());
         Queue<GameEntity> gameEntities = gameEntitiesOfConstructionIds.get(id);
@@ -167,7 +175,7 @@ public class GameEntityManager {
                 gameEntities.add(gameEntity);
                 Gdx.app.log(this.getClass().getSimpleName(), "checkConstructionEntityByOwnAmount " + id + " new for " + gameEntities.size() + " -> " + drawNum);
             } else {
-                Gdx.app.log(this.getClass().getSimpleName(), "checkConstructionEntityByOwnAmount " + id + " , cannot create new entity.");
+                //Gdx.app.log(this.getClass().getSimpleName(), "checkConstructionEntityByOwnAmount " + id + " , cannot create new entity.");
                 break;
             }
         }

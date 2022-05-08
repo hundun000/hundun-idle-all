@@ -38,7 +38,7 @@ public class UpgradeComponent {
             upgradeCostPack.setModifiedValues(
                     upgradeCostPack.getBaseValues().stream()
                         .map(pair -> {
-                                long newAmout = construction.calculateModifiedUpgradeCost(pair.getAmount(), construction.saveData.getWorkingLevel());
+                                long newAmout = construction.calculateModifiedUpgradeCost(pair.getAmount(), construction.saveData.getLevel());
                                 return new ResourcePair(pair.getType(), newAmout);
                             })
                         .collect(Collectors.toList())

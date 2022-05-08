@@ -23,13 +23,14 @@ public abstract class BaseConstruction implements ILogicFrameListener, IBuffChan
     
     protected int MAX_LEVEL = 99;
 
-    protected int MAX_DRAW_NUM = 5;
+    protected static final int DEFAULT_MAX_DRAW_NUM = 5;
     // ------ replace-lombok ------
-    public int getMAX_DRAW_NUM() {
-        return MAX_DRAW_NUM;
+    protected int maxDrawNum = DEFAULT_MAX_DRAW_NUM;
+    public int getMaxDrawNum() {
+        return maxDrawNum;
     }
-    public void setMAX_DRAW_NUM(int mAX_DRAW_NUM) {
-        MAX_DRAW_NUM = mAX_DRAW_NUM;
+    public void setMaxDrawNum(int maxDrawNum) {
+        this.maxDrawNum = maxDrawNum;
     }
     
     public static final DescriptionPackage WORKING_LEVEL_AUTO_DESCRIPTION_PACKAGE = new DescriptionPackage(

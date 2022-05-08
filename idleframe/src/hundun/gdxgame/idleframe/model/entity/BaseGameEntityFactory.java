@@ -15,15 +15,22 @@ public abstract class BaseGameEntityFactory {
     public abstract GameEntity newResourceEntity(String resourceId, int index);
     public abstract GameEntity newConstructionEntity(String constructionid, int index);
     
-    protected double DEFAULT_CONSTRUCTION_WIDTH_SCALE = 1.0;
-    protected double DEFAULT_CONSTRUCTION_HEIGHT_SCALE = 1.0;
+    protected double DEFAULT_CONSTRUCTION_WIDTH_SCALE = 2.0;
+    protected double DEFAULT_CONSTRUCTION_HEIGHT_SCALE = 2.0;
     protected double DEFAULT_RESOURCE_WIDTH_SCALE = 1.0;
     protected double DEFAULT_RESOURCE_HEIGHT_SCALE = 1.0;
+    
     protected int COLUMN_STABLE_FIRST_COL_X = 80;
     protected int COLUMN_STABLE_COL_PADDING_X = 90;
     protected int COLUMN_STABLE_FIRST_COL_Y = 250;
-    protected int COLUMN_STABLE_ROW_PADDING_X = 15;
-    protected int COLUMN_STABLE_ROW_PADDING_Y = 30;
+    protected int COLUMN_STABLE_INDEX_PADDING_X = 0;
+    protected int COLUMN_STABLE_INDEX_PADDING_Y = 30;
+    
+    protected int ROW_STABLE_FIRST_COL_X = 32;
+    protected int ROW_STABLE_ROW_PADDING_Y = 100;
+    protected int ROW_STABLE_FIRST_COL_Y = 150;
+    protected int ROW_STABLE_INDEX_PADDING_X = 48;
+    protected int ROW_STABLE_INDEX_PADDING_Y = 0;
     
     protected PlayScreenLayoutConst layoutConst;
     protected BasePlayScreen<?> parent;
@@ -94,8 +101,20 @@ public abstract class BaseGameEntityFactory {
     }
     
     protected GameEntity columnStableConstructionEntity(String constructionId, int index, int col) {
-        int x = COLUMN_STABLE_FIRST_COL_X + col * COLUMN_STABLE_COL_PADDING_X + COLUMN_STABLE_ROW_PADDING_X * index;
-        int y = COLUMN_STABLE_FIRST_COL_Y - COLUMN_STABLE_ROW_PADDING_Y * index;
+        int x = COLUMN_STABLE_FIRST_COL_X + col * COLUMN_STABLE_COL_PADDING_X + COLUMN_STABLE_INDEX_PADDING_X * index;
+        int y = COLUMN_STABLE_FIRST_COL_Y + COLUMN_STABLE_INDEX_PADDING_Y * index;
+        return stableAnyEntity(
+                new Sprite(parent.game.getTextureManager().getConstructionEntity(constructionId)),
+                x, 
+                y, 
+                DEFAULT_CONSTRUCTION_WIDTH_SCALE, 
+                DEFAULT_CONSTRUCTION_HEIGHT_SCALE, 
+                constructionId);
+    }
+    
+    protected GameEntity rowStableConstructionEntity(String constructionId, int index, int row) {
+        int x = ROW_STABLE_FIRST_COL_X + ROW_STABLE_INDEX_PADDING_X * index;
+        int y = ROW_STABLE_FIRST_COL_Y + row * ROW_STABLE_ROW_PADDING_Y + ROW_STABLE_INDEX_PADDING_Y * index;
         return stableAnyEntity(
                 new Sprite(parent.game.getTextureManager().getConstructionEntity(constructionId)),
                 x, 

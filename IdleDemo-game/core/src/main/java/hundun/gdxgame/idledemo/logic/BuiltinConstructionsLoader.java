@@ -78,7 +78,7 @@ public class BuiltinConstructionsLoader {
             LevelComponent levelComponent = new LevelComponent(construction, false);
             construction.setLevelComponent(levelComponent);
             
-            construction.setMAX_DRAW_NUM(15);
+            construction.setMaxDrawNum(9);
             construction.updateDescription();
             constructions.add(construction);
         }
@@ -107,6 +107,7 @@ public class BuiltinConstructionsLoader {
             LevelComponent levelComponent = new LevelComponent(construction, true);
             construction.setLevelComponent(levelComponent);
             
+            construction.setMaxDrawNum(9);
             construction.updateDescription();
             constructions.add(construction);
         } 

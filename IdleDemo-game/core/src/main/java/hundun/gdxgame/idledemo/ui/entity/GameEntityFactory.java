@@ -35,11 +35,11 @@ public class GameEntityFactory extends BaseGameEntityFactory {
     public GameEntity newConstructionEntity(String id, int index) {
         switch (id) {
             case ConstructionId.COOKIE_CLICK_PROVIDER: 
-                return this.columnStableConstructionEntity(id, index, 0);
+                return null;
             case ConstructionId.COOKIE_AUTO_PROVIDER:
-                return this.columnStableConstructionEntity(id, index, 1);
+                return this.rowStableConstructionEntity(id, index, 1);
             case ConstructionId.COOKIE_SELLER:
-                return this.columnStableConstructionEntity(id, index, 2); 
+                return this.rowStableConstructionEntity(id, index, 0); 
             default:
                 // no need GameEntity
                 return null;
@@ -63,8 +63,6 @@ public class GameEntityFactory extends BaseGameEntityFactory {
     @Override
     public GameEntity newResourceEntity(String resourceId, int index) {
         switch (resourceId) {
-            case ResourceType.COIN: 
-                return this.columnStableConstructionEntity(resourceId, index, 0);
             case ResourceType.COOKIE:
                 return this.failingResourcEntity(resourceId, layoutConst.EXPECTED_DRAW_MIN_X, layoutConst.EXPECTED_DRAW_MAX_X, layoutConst.EXPECTED_DRAW_MAX_Y, layoutConst.EXPECTED_DRAW_MIN_Y, FLY_UNION_SPEED, FLY_UNION_SPEED * 0.2, HIDEN_FRAME_RANGE);
                 //return this.randomMoveResourcEntity(resourceId, layoutConst.EXPECTED_DRAW_MIN_X, layoutConst.EXPECTED_DRAW_MAX_X, layoutConst.EXPECTED_DRAW_MIN_Y, layoutConst.EXPECTED_DRAW_MAX_Y, FLY_UNION_SPEED);
