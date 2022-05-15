@@ -48,11 +48,6 @@ public class BugIndustryGame extends BaseIdleGame {
     public void create () {
         super.create();
        
-        getModelContext().getAchievementManager().addPrototype(
-                new AchievementPrototype("Game win", "You win the game!",
-                null,
-                Map.of(ResourceType.WIN_TROPHY, 1)
-                ));
         setScreen(screenContext.getMenuScreen());
         getAudioPlayManager().intoScreen(screenContext.getMenuScreen().getScreenId());
     }

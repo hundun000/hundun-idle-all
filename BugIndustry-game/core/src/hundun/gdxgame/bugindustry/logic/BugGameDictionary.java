@@ -1,6 +1,6 @@
 package hundun.gdxgame.bugindustry.logic;
 
-import hundun.gdxgame.idleframe.util.IGameDictionary;
+import hundun.gdxgame.idleframe.util.text.IGameDictionary;
 
 /**
  * @author hundun
@@ -18,7 +18,7 @@ public class BugGameDictionary implements IGameDictionary {
                 return "plate tree";
             case ConstructionId.WOOD_BOARD_MAKER:
                 return "board maker";
-            case ConstructionId.WIN_THE_GAME:
+            case ConstructionId.WIN_PROVIDER:
                 return "win goal";
                 
             case ConstructionId.BEE_GATHER_HOUSE:

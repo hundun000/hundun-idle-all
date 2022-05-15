@@ -2,9 +2,6 @@
 /release-prepare/*
 !/release-prepare/packr-config.json
 
-/idleframe/build/
-/idleframe/bin/
-
 ## Java
 
 *.class
@@ -120,3 +117,4 @@ Thumbs.db
 /ios/xcode/native/
 /ios/IOSLauncher.app
 /ios/IOSLauncher.app.dSYM
+/bin/

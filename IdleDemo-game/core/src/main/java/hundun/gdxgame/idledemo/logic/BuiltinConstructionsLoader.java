@@ -7,6 +7,7 @@ import java.util.Map;
 import hundun.gdxgame.idledemo.IdleDemoGame;
 import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.model.construction.BaseAutoConstruction;
+import hundun.gdxgame.idleframe.model.construction.BaseBuffConstruction;
 import hundun.gdxgame.idleframe.model.construction.BaseClickGatherConstruction;
 
 import hundun.gdxgame.idleframe.model.construction.BaseConstructionFactory;
@@ -113,27 +114,30 @@ public class BuiltinConstructionsLoader {
         } 
         // win
         {
-            BaseConstruction construction = new BaseClickGatherConstruction(game, ConstructionId.WIN_PROVIDER);
+            BaseConstruction construction = new BaseBuffConstruction(game, ConstructionId.WIN_PROVIDER, BuffId.WIN);
             construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
             construction.detailDescroptionConstPart = "Get a trophy and win the game";
             construction.descriptionPackage = BaseConstruction.WIN_DESCRIPTION_PACKAGE;
             
             OutputComponent outputComponent = new OutputComponent(construction);
-            outputComponent.setOutputCostPack(toPack(JavaHighVersionFeature.mapOf(
-                    ResourceType.COIN, 500
-                    )));
-            outputComponent.setOutputGainPack(toPack(JavaHighVersionFeature.mapOf(
-                    ResourceType.WIN_TROPHY, 1
-                    )));
+//            outputComponent.setOutputCostPack(toPack(JavaHighVersionFeature.mapOf(
+//                    ResourceType.COIN, 500
+//                    )));
+//            outputComponent.setOutputGainPack(toPack(JavaHighVersionFeature.mapOf(
+//                    ResourceType.WIN_TROPHY, 1
+//                    )));
             construction.setOutputComponent(outputComponent);
             
             UpgradeComponent upgradeComponent = new UpgradeComponent(construction);
+            upgradeComponent.setUpgradeCostPack(toPack(JavaHighVersionFeature.mapOf(
+                    ResourceType.COIN, 500
+                    )));
             construction.setUpgradeComponent(upgradeComponent);
             
             LevelComponent levelComponent = new LevelComponent(construction, false);
             construction.setLevelComponent(levelComponent);            
             
-            
+            construction.setMaxLevel(1);
             construction.updateDescription();
             constructions.add(construction);
         }

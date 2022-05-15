@@ -45,16 +45,40 @@ allprojects {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
-}
-
-
-project(":idleframe") {
-    apply plugin: "maven"
-    apply plugin: "maven-publish"
     
     ext {
         appName = "hundun-idle"
     }
+}
+
+
+project(":share:html-idleshare") {
+    
+    dependencies {
+        implementation project(":BugIndustry-game:core")
+        api "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
+        api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
+        implementation group: 'com.github.nmorel.gwtjackson', name: 'gwt-jackson', version: '0.15.4'
+    }
+}
+
+
+project(":share:desktop-idleshare") {
+
+    
+    dependencies {
+        implementation project(":BugIndustry-game:core")
+        implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.5'
+        api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+    }
+}
+
+
+project(":share:idleframe") {
+    apply plugin: "maven"
+    apply plugin: "maven-publish"
     
     task sourcesJar(type: Jar, dependsOn: classes) {
         classifier = 'sources'
@@ -74,10 +98,6 @@ project(":idleframe") {
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
-        //api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-        implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.5'
-        //implementation group: 'org.jetbrains', name: 'annotations', version: '23.0.0'
-        
         testCompile "junit:junit:4.11"
     }
 }
@@ -87,20 +107,16 @@ project(":BugIndustry-game:desktop") {
 
     dependencies {
         implementation project(":BugIndustry-game:core")
-        api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
-        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
-        //api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
-
+        implementation project(":share:desktop-idleshare")
     }
 }
 
 project(":BugIndustry-game:core") {
 
     dependencies {
-        api project(":idleframe")
+        api project(":share:idleframe")
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
-        //api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+
         compileOnly 'org.projectlombok:lombok:1.18.4'
         annotationProcessor 'org.projectlombok:lombok:1.18.4'
     }
@@ -113,9 +129,7 @@ project(":BugIndustry-game:core") {
 project(":IdleDemo-game:core") {
 
     dependencies {
-        api project(":idleframe")
-        api "com.badlogicgames.gdx:gdx:$gdxVersion"
-        //api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        api project(":share:idleframe")
     }
 }
 
@@ -123,12 +137,7 @@ project(":IdleDemo-game:desktop") {
 
     dependencies {
         implementation project(":IdleDemo-game:core")
-        api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
-        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
-        //api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
-                
-
+        implementation project(":share:desktop-idleshare")
     }
 }
 
@@ -139,12 +148,36 @@ project(":IdleDemo-game:html") {
 
     dependencies {
         implementation project(':IdleDemo-game:core')
-        implementation "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
-        implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
-        implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
-        implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-        
-        implementation group: 'com.github.nmorel.gwtjackson', name: 'gwt-jackson', version: '0.15.4'
-        
+        implementation project(":share:html-idleshare")
+    }
+}
+
+
+
+
+project(":ThreeCookie-game:core") {
+    
+    dependencies {
+        api project(":share:idleframe")
+    }
+}
+
+project(":ThreeCookie-game:desktop") {
+
+    dependencies {
+        implementation project(":ThreeCookie-game:core")
+        implementation project(":share:desktop-idleshare")
+
+    }
+}
+
+project(":ThreeCookie-game:html") {
+    apply plugin: "gwt"
+    apply plugin: "war"
+    apply plugin: "org.gretty"
+
+    dependencies {
+        implementation project(':ThreeCookie-game:core')
+        implementation project(":share:html-idleshare")
     }
 }

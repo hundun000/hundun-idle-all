@@ -9,6 +9,7 @@ import java.util.Map;
 import com.badlogic.gdx.Gdx;
 
 import hundun.gdxgame.bugindustry.logic.ConstructionId;
+import hundun.gdxgame.bugindustry.logic.BuffId;
 import hundun.gdxgame.bugindustry.logic.BuiltinConstructionsLoader;
 import hundun.gdxgame.bugindustry.logic.GameArea;
 import hundun.gdxgame.bugindustry.logic.ResourceType;
@@ -18,7 +19,6 @@ import hundun.gdxgame.idleframe.data.ChildGameConfig;
 import hundun.gdxgame.idleframe.data.StarterData;
 import hundun.gdxgame.idleframe.model.AchievementPrototype;
 import hundun.gdxgame.idleframe.util.JavaHighVersionFeature;
-import hundun.gdxgame.idlehelper.desktop.ConstructionsFileLoader;
 
 /**
  * @author hundun
@@ -44,7 +44,7 @@ public class BugIndustryGameConfig extends ChildGameConfig {
             ConstructionId.WOOD_GATHER_HOUSE,
             ConstructionId.WOOD_KEEPING,
             ConstructionId.WOOD_BOARD_MAKER,
-            ConstructionId.WIN_THE_GAME
+            ConstructionId.WIN_PROVIDER
         ));
         areaShownConstructionIds.put(GameArea.SHOP, JavaHighVersionFeature.arraysAsList(
             ConstructionId.WOOD_SELL_HOUSE,
@@ -77,8 +77,8 @@ public class BugIndustryGameConfig extends ChildGameConfig {
         
         List<AchievementPrototype> achievementPrototypes = JavaHighVersionFeature.arraysAsList(
                 new AchievementPrototype("Game win", "You win the game!",
-                        null,
-                        Map.of(ResourceType.WIN_TROPHY, 1)
+                        Map.of(BuffId.WIN, 1),
+                        null
                         )
                 );
         this.setAchievementPrototypes(achievementPrototypes);

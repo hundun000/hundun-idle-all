@@ -22,7 +22,7 @@ import hundun.gdxgame.idleframe.data.ChildGameConfig;
 import hundun.gdxgame.idleframe.model.AchievementPrototype;
 import hundun.gdxgame.idleframe.model.construction.BaseConstructionFactory;
 import hundun.gdxgame.idleframe.util.save.ISaveTool;
-import hundun.gdxgame.idlehelper.desktop.PreferencesSaveTool;
+import hundun.gdxgame.idleframe.util.text.TextFormatTool;
 import hundun.gdxgame.idlestarter.ui.screen.menu.MenuScreen;
 
 

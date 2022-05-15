@@ -11,7 +11,7 @@ public class ConstructionId {
     public static final String WOOD_GATHER_HOUSE = "ENUM_CSTR@WOOD_GATHER_HOUSE";
     public static final String WOOD_KEEPING = "ENUM_CSTR@WOOD_KEEPING";
     public static final String WOOD_BOARD_MAKER = "ENUM_CSTR@WOOD_BOARD_MAKER";
-    public static final String WIN_THE_GAME = "ENUM_CSTR@WIN_THE_GAME";
+    public static final String WIN_PROVIDER = "ENUM_CSTR@WIN_PROVIDER";
     // ------ bee ------
     public static final String BEE_GATHER_HOUSE = "ENUM_CSTR@BEE_GATHER_HOUSE";
     public static final String SMALL_BEEHIVE = "ENUM_CSTR@SMALL_BEEHIVE"; 

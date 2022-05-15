@@ -1,0 +1,7 @@
+allprojects {
+    ext {
+        appName = "hundun-idleshare"
+    }
+}
+
+eclipse.project.name = appName

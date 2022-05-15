@@ -7,6 +7,7 @@ import java.util.Map;
 import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.idleframe.BaseIdleGame;
 import hundun.gdxgame.idleframe.model.construction.BaseAutoConstruction;
+import hundun.gdxgame.idleframe.model.construction.BaseBuffConstruction;
 import hundun.gdxgame.idleframe.model.construction.BaseClickGatherConstruction;
 
 import hundun.gdxgame.idleframe.model.construction.BaseConstructionFactory;
@@ -117,7 +118,7 @@ public class BuiltinConstructionsLoader {
         } 
         // win
         {
-            BaseConstruction construction = new BaseClickGatherConstruction(game, ConstructionId.WIN_THE_GAME);
+            BaseConstruction construction = new BaseBuffConstruction(game, ConstructionId.WIN_PROVIDER, BuffId.WIN);
             construction.name = game.getGameDictionary().constructionIdToShowName(construction.getId());
             construction.detailDescroptionConstPart = "Get a trophy and win the game";
             construction.descriptionPackage = BaseConstruction.WIN_DESCRIPTION_PACKAGE;
@@ -125,9 +126,6 @@ public class BuiltinConstructionsLoader {
             OutputComponent outputComponent = new OutputComponent(construction);
             outputComponent.setOutputCostPack(toPack(JavaHighVersionFeature.mapOf(
                     ResourceType.QUEEN_BEE, 500
-                    )));
-            outputComponent.setOutputGainPack(toPack(JavaHighVersionFeature.mapOf(
-                    ResourceType.WIN_TROPHY, 1
                     )));
             construction.setOutputComponent(outputComponent);
             

@@ -4,8 +4,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import hundun.gdxgame.idledemo.IdleDemoGame;
-import hundun.gdxgame.idlehelper.desktop.DesktopExitHookTask;
-import hundun.gdxgame.idlehelper.desktop.PreferencesSaveTool;
+import hundun.gdxgame.idleshare.desktop.DesktopExitHookTask;
+import hundun.gdxgame.idleshare.desktop.PreferencesSaveTool;
 
 
 
