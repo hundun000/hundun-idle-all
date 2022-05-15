@@ -99,7 +99,7 @@ public class ConstructionsFileLoader {
         LevelComponent levelComponent = new LevelComponent(construction, node.isWorkingLevelChangable());
         construction.setLevelComponent(levelComponent);
         
-        construction.updateDescription();
+        construction.lazyInitDescription();
         
         constructions.add(construction);
     }

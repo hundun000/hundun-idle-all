@@ -58,7 +58,7 @@ public class BuiltinConstructionsLoader {
             LevelComponent levelComponent = new LevelComponent(construction, false);
             construction.setLevelComponent(levelComponent);
             
-            construction.updateDescription();
+            construction.lazyInitDescription();
             constructions.add(construction);
         }
         // auto
@@ -85,7 +85,7 @@ public class BuiltinConstructionsLoader {
             construction.setLevelComponent(levelComponent);
             
             construction.setMaxDrawNum(15);
-            construction.updateDescription();
+            construction.lazyInitDescription();
             constructions.add(construction);
         }
         {
@@ -112,7 +112,7 @@ public class BuiltinConstructionsLoader {
             LevelComponent levelComponent = new LevelComponent(construction, true);
             construction.setLevelComponent(levelComponent);
             
-            construction.updateDescription();
+            construction.lazyInitDescription();
             constructions.add(construction);
         } 
         // win
@@ -135,7 +135,7 @@ public class BuiltinConstructionsLoader {
             construction.setLevelComponent(levelComponent);            
             
             
-            construction.updateDescription();
+            construction.lazyInitDescription();
             constructions.add(construction);
         }
     }
@@ -173,7 +173,7 @@ public class BuiltinConstructionsLoader {
             LevelComponent levelComponent = new LevelComponent(construction, true);
             construction.setLevelComponent(levelComponent);
             
-            construction.updateDescription();
+            construction.lazyInitDescription();
             constructions.add(construction);
         }
         {
@@ -200,7 +200,7 @@ public class BuiltinConstructionsLoader {
             LevelComponent levelComponent = new LevelComponent(construction, true);
             construction.setLevelComponent(levelComponent);
             
-            construction.updateDescription();
+            construction.lazyInitDescription();
             constructions.add(construction);
         }
         {
@@ -227,7 +227,7 @@ public class BuiltinConstructionsLoader {
             LevelComponent levelComponent = new LevelComponent(construction, true);
             construction.setLevelComponent(levelComponent);
             
-            construction.updateDescription();
+            construction.lazyInitDescription();
             constructions.add(construction);
         }
         {
@@ -254,7 +254,7 @@ public class BuiltinConstructionsLoader {
             LevelComponent levelComponent = new LevelComponent(construction, true);
             construction.setLevelComponent(levelComponent);
             
-            construction.updateDescription();
+            construction.lazyInitDescription();
             constructions.add(construction);
         }
         {
@@ -281,7 +281,7 @@ public class BuiltinConstructionsLoader {
             LevelComponent levelComponent = new LevelComponent(construction, true);
             construction.setLevelComponent(levelComponent);
             
-            construction.updateDescription();
+            construction.lazyInitDescription();
             constructions.add(construction);
         }
         
@@ -311,7 +311,7 @@ public class BuiltinConstructionsLoader {
             LevelComponent levelComponent = new LevelComponent(construction, false);
             construction.setLevelComponent(levelComponent);
             
-            construction.updateDescription();
+            construction.lazyInitDescription();
             constructions.add(construction);
         }
         // auto
@@ -338,7 +338,7 @@ public class BuiltinConstructionsLoader {
             LevelComponent levelComponent = new LevelComponent(construction, false);
             construction.setLevelComponent(levelComponent);
             
-            construction.updateDescription();
+            construction.lazyInitDescription();
             constructions.add(construction);
         }
         {
@@ -366,7 +366,7 @@ public class BuiltinConstructionsLoader {
             LevelComponent levelComponent = new LevelComponent(construction, false);
             construction.setLevelComponent(levelComponent);
             
-            construction.updateDescription();
+            construction.lazyInitDescription();
             constructions.add(construction);
         }
         {
@@ -396,7 +396,7 @@ public class BuiltinConstructionsLoader {
             LevelComponent levelComponent = new LevelComponent(construction, false);
             construction.setLevelComponent(levelComponent);
             
-            construction.updateDescription();
+            construction.lazyInitDescription();
             constructions.add(construction);
         }
         {
@@ -424,7 +424,7 @@ public class BuiltinConstructionsLoader {
             LevelComponent levelComponent = new LevelComponent(construction, false);
             construction.setLevelComponent(levelComponent);
             
-            construction.updateDescription();
+            construction.lazyInitDescription();
             constructions.add(construction);
         }
         

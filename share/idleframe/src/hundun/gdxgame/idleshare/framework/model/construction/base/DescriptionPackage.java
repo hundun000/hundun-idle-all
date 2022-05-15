@@ -8,6 +8,7 @@ public class DescriptionPackage {
     String outputCostDescriptionStart;
     String outputGainDescriptionStart;
     String upgradeCostDescriptionStart;
+    String upgradeMaxLevelDescription = "(max level)";
     String buttonDescroption;
     ILevelDescroptionProvider levelDescroptionProvider;
 
@@ -15,7 +16,7 @@ public class DescriptionPackage {
 
         public static ILevelDescroptionProvider EMPTY_IMP = (level, workingLevel, reachMaxLevel) -> "";
         public static ILevelDescroptionProvider ONLY_LEVEL_IMP = (level, workingLevel, reachMaxLevel) -> {
-            return "lv." + level + (reachMaxLevel ? "(max)" : "");
+            return "lv." + level;
         };
         public static ILevelDescroptionProvider WORKING_LEVEL_IMP = (level, workingLevel, reachMaxLevel) -> {
             return workingLevel + "/" + level + (reachMaxLevel ? "(max)" : "");
@@ -67,7 +68,12 @@ public class DescriptionPackage {
     public void setLevelDescroptionProvider(ILevelDescroptionProvider levelDescroptionProvider) {
         this.levelDescroptionProvider = levelDescroptionProvider;
     }
-
+    public String getUpgradeMaxLevelDescription() {
+        return upgradeMaxLevelDescription;
+    }
+    public void setUpgradeMaxLevelDescription(String upgradeMaxLevelDescription) {
+        this.upgradeMaxLevelDescription = upgradeMaxLevelDescription;
+    }
 
 
 }

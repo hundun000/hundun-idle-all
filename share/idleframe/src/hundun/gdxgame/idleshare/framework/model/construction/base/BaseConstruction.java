@@ -132,9 +132,9 @@ public abstract class BaseConstruction implements ILogicFrameListener, IBuffChan
         this.levelComponent = levelComponent;
     }
 
-    public void updateDescription() {
-        outputComponent.updateDescription();
-        upgradeComponent.updateDescription();
+    public void lazyInitDescription() {
+        outputComponent.lazyInitDescription();
+        upgradeComponent.lazyInitDescription();
     }
 
     public BaseConstruction(BaseIdleGame game, String id) {
@@ -168,7 +168,8 @@ public abstract class BaseConstruction implements ILogicFrameListener, IBuffChan
     public void updateModifiedValues() {
         Gdx.app.log(this.name, "updateCurrentCache called");
         // --------------
-        upgradeComponent.updateModifiedValues();
+        boolean reachMaxLevel = this.getSaveData().getLevel() == this.getMaxLevel();
+        upgradeComponent.updateModifiedValues(reachMaxLevel);
         outputComponent.updateModifiedValues();
 
     }

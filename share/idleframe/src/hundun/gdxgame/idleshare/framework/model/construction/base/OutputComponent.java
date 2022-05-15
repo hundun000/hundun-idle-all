@@ -55,7 +55,7 @@ public class OutputComponent {
         this.construction = construction;
     }
 
-    public void updateDescription() {
+    public void lazyInitDescription() {
         if (outputCostPack != null) {
             outputCostPack.setDescriptionStart(construction.descriptionPackage.getOutputCostDescriptionStart());
         }

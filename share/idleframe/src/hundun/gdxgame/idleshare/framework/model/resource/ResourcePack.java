@@ -11,7 +11,7 @@ public class ResourcePack {
     List<ResourcePair> baseValues;
     List<ResourcePair> modifiedValues;
     String modifiedValuesDescription;
-
+    
     // ------ replace-lombok ------
     public String getDescriptionStart() {
         return descriptionStart;

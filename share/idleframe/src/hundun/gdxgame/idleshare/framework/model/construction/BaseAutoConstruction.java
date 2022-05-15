@@ -39,6 +39,10 @@ public class BaseAutoConstruction extends BaseConstruction {
         if (!canClickEffect()) {
             return;
         }
+        doUpgrade();
+    }
+
+    private void doUpgrade() {
         List<ResourcePair> upgradeCostRule = upgradeComponent.getUpgradeCostPack().getModifiedValues();
         game.getModelContext().getStorageManager().modifyAllResourceNum(upgradeCostRule, false);
         saveData.setLevel(saveData.getLevel() + 1);
@@ -47,7 +51,7 @@ public class BaseAutoConstruction extends BaseConstruction {
         }
         updateModifiedValues();
     }
-
+    
     @Override
     public boolean canClickEffect() {
         return canUpgrade();

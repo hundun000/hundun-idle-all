@@ -22,7 +22,19 @@ public class UpgradeComponent {
     public void setUpgradeCostPack(ResourcePack upgradeCostPack) {
         this.upgradeCostPack = upgradeCostPack;
     }
-
+    
+    public static enum UpgradeState {
+        NO_UPGRADE,
+        HAS_NEXT_UPGRADE,
+        REACHED_MAX_UPGRADE,
+        ;
+    }
+    private UpgradeState upgradeState;
+    // ------ replace-lombok ------
+    public UpgradeState getUpgradeState() {
+        return upgradeState;
+    }
+    
     /**
      * 影响升级后下一级费用，详见具体公式
      */
@@ -46,30 +58,39 @@ public class UpgradeComponent {
     public UpgradeComponent(BaseConstruction construction) {
         super();
         this.construction = construction;
+        // default value
+        upgradeState = UpgradeState.NO_UPGRADE;
     }
 
-    public void updateDescription() {
+    public void lazyInitDescription() {
         if (upgradeCostPack != null) {
+            upgradeState = UpgradeState.HAS_NEXT_UPGRADE;
             upgradeCostPack.setDescriptionStart(construction.descriptionPackage.getUpgradeCostDescriptionStart());
         }
     }
 
-    public void updateModifiedValues() {
+    public void updateModifiedValues(boolean reachMaxLevel) {
         if (upgradeCostPack != null) {
-            upgradeCostPack.setModifiedValues(
-                    upgradeCostPack.getBaseValues().stream()
-                        .map(pair -> {
-                                long newAmout = calculateCostFunction.apply(pair.getAmount(), construction.saveData.getLevel());
-                                return new ResourcePair(pair.getType(), newAmout);
-                            })
-                        .collect(Collectors.toList())
-            );
-            this.upgradeCostPack.setModifiedValuesDescription(
-                    upgradeCostPack.getModifiedValues().stream()
-                    .map(pair -> pair.getType() + "x" + pair.getAmount())
-                    .collect(Collectors.joining(", "))
-                    + "; "
-            );
+            if (reachMaxLevel) {
+                upgradeState = UpgradeState.REACHED_MAX_UPGRADE;
+                this.upgradeCostPack.setModifiedValues(null);
+                this.upgradeCostPack.setModifiedValuesDescription(null);
+            } else {
+                this.upgradeCostPack.setModifiedValues(
+                        upgradeCostPack.getBaseValues().stream()
+                            .map(pair -> {
+                                    long newAmout = calculateCostFunction.apply(pair.getAmount(), construction.saveData.getLevel());
+                                    return new ResourcePair(pair.getType(), newAmout);
+                                })
+                            .collect(Collectors.toList())
+                );
+                this.upgradeCostPack.setModifiedValuesDescription(
+                        upgradeCostPack.getModifiedValues().stream()
+                        .map(pair -> pair.getType() + "x" + pair.getAmount())
+                        .collect(Collectors.joining(", "))
+                        + "; "
+                );
+            }
         }
     }
 

@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import hundun.gdxgame.idleshare.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.framework.model.construction.base.BaseConstruction;
+import hundun.gdxgame.idleshare.framework.model.construction.base.UpgradeComponent.UpgradeState;
 import hundun.gdxgame.idleshare.framework.model.resource.ResourcePack;
 import hundun.gdxgame.idleshare.framework.model.resource.ResourcePair;
 import hundun.gdxgame.idleshare.starter.ui.screen.play.BasePlayScreen;
@@ -52,7 +53,15 @@ public class PopupInfoBoard<T_GAME extends BaseIdleGame> extends Table {
 
         buildOnePack(model.getOutputComponent().getOutputGainPack());
 
-        buildOnePack(model.getUpgradeComponent().getUpgradeCostPack());
+        if (model.getUpgradeComponent().getUpgradeState() == UpgradeState.HAS_NEXT_UPGRADE) {
+            buildOnePack(model.getUpgradeComponent().getUpgradeCostPack());
+        } else if (model.getUpgradeComponent().getUpgradeState() == UpgradeState.REACHED_MAX_UPGRADE) {
+            this.add(wapperContainer(new Label(model.getUpgradeComponent().getUpgradeCostPack().getDescriptionStart(), parent.game.getButtonSkin())));
+            this.add(wapperContainer(new Label(model.getDescriptionPackage().getUpgradeMaxLevelDescription(), parent.game.getButtonSkin())));
+            this.row();
+        }
+        
+        
 
         if (parent.game.debugMode) {
             this.debug();
@@ -61,7 +70,7 @@ public class PopupInfoBoard<T_GAME extends BaseIdleGame> extends Table {
 
     private void buildOnePack(ResourcePack pack) {
         if (pack != null && pack.getModifiedValues() != null) {
-            add(wapperContainer(new Label(pack.getDescriptionStart(), parent.game.getButtonSkin())));
+            this.add(wapperContainer(new Label(pack.getDescriptionStart(), parent.game.getButtonSkin())));
             for (ResourcePair entry : pack.getModifiedValues()) {
                 ResourceAmountPairNode<T_GAME> node = new ResourceAmountPairNode<>(parent.game, entry.getType());
                 node.update(entry.getAmount());

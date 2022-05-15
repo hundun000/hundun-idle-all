@@ -82,7 +82,7 @@ public class BuiltinConstructionsLoader {
             LevelComponent levelComponent = new LevelComponent(construction, false);
             construction.setLevelComponent(levelComponent);
             
-            construction.updateDescription();
+            construction.lazyInitDescription();
             constructions.add(construction);
         }
         // auto-provider
@@ -110,7 +110,7 @@ public class BuiltinConstructionsLoader {
             construction.setLevelComponent(levelComponent);
             
             construction.setMaxDrawNum(9);
-            construction.updateDescription();
+            construction.lazyInitDescription();
             construction.setMaxLevel(9);
             constructions.add(construction);
         }
@@ -142,7 +142,7 @@ public class BuiltinConstructionsLoader {
             construction.setLevelComponent(levelComponent);
             
             construction.setMaxDrawNum(9);
-            construction.updateDescription();
+            construction.lazyInitDescription();
             construction.setMaxLevel(9);
             constructions.add(construction);
         } 
@@ -172,7 +172,7 @@ public class BuiltinConstructionsLoader {
             construction.setLevelComponent(levelComponent);            
             
             construction.setMaxLevel(1);
-            construction.updateDescription();
+            construction.lazyInitDescription();
             constructions.add(construction);
         }
     }
