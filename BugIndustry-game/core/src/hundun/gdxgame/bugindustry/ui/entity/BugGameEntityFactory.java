@@ -7,14 +7,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import hundun.gdxgame.bugindustry.BugIndustryGame;
 import hundun.gdxgame.bugindustry.logic.ConstructionId;
 import hundun.gdxgame.bugindustry.logic.ResourceType;
-import hundun.gdxgame.idleframe.BaseIdleGame;
-import hundun.gdxgame.idleframe.model.entity.BaseGameEntityFactory;
-import hundun.gdxgame.idleframe.model.entity.GameEntity;
-import hundun.gdxgame.idleframe.model.entity.RandomMoveEntity;
-import hundun.gdxgame.idlestarter.ui.component.GameAreaControlBoard;
-import hundun.gdxgame.idlestarter.ui.component.StorageInfoBoard;
-import hundun.gdxgame.idlestarter.ui.screen.play.BasePlayScreen;
-import hundun.gdxgame.idlestarter.ui.screen.play.PlayScreenLayoutConst;
+import hundun.gdxgame.idleshare.framework.BaseIdleGame;
+import hundun.gdxgame.idleshare.framework.model.entity.BaseGameEntityFactory;
+import hundun.gdxgame.idleshare.framework.model.entity.GameEntity;
+import hundun.gdxgame.idleshare.framework.model.entity.RandomMoveEntity;
+import hundun.gdxgame.idleshare.starter.ui.component.GameAreaControlBoard;
+import hundun.gdxgame.idleshare.starter.ui.component.StorageInfoBoard;
+import hundun.gdxgame.idleshare.starter.ui.screen.play.BasePlayScreen;
+import hundun.gdxgame.idleshare.starter.ui.screen.play.PlayScreenLayoutConst;
 
 /**
  * @author hundun

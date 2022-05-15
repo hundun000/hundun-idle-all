@@ -5,19 +5,18 @@ import java.util.List;
 import java.util.Map;
 
 import hundun.gdxgame.idledemo.IdleDemoGame;
-import hundun.gdxgame.idleframe.BaseIdleGame;
-import hundun.gdxgame.idleframe.model.construction.BaseAutoConstruction;
-import hundun.gdxgame.idleframe.model.construction.BaseBuffConstruction;
-import hundun.gdxgame.idleframe.model.construction.BaseClickGatherConstruction;
-
-import hundun.gdxgame.idleframe.model.construction.BaseConstructionFactory;
-import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
-import hundun.gdxgame.idleframe.model.construction.base.LevelComponent;
-import hundun.gdxgame.idleframe.model.construction.base.OutputComponent;
-import hundun.gdxgame.idleframe.model.construction.base.UpgradeComponent;
-import hundun.gdxgame.idleframe.model.resource.ResourcePack;
-import hundun.gdxgame.idleframe.model.resource.ResourcePair;
-import hundun.gdxgame.idleframe.util.JavaHighVersionFeature;
+import hundun.gdxgame.idleshare.framework.BaseIdleGame;
+import hundun.gdxgame.idleshare.framework.model.construction.BaseAutoConstruction;
+import hundun.gdxgame.idleshare.framework.model.construction.BaseBuffConstruction;
+import hundun.gdxgame.idleshare.framework.model.construction.BaseClickGatherConstruction;
+import hundun.gdxgame.idleshare.framework.model.construction.BaseConstructionFactory;
+import hundun.gdxgame.idleshare.framework.model.construction.base.BaseConstruction;
+import hundun.gdxgame.idleshare.framework.model.construction.base.LevelComponent;
+import hundun.gdxgame.idleshare.framework.model.construction.base.OutputComponent;
+import hundun.gdxgame.idleshare.framework.model.construction.base.UpgradeComponent;
+import hundun.gdxgame.idleshare.framework.model.resource.ResourcePack;
+import hundun.gdxgame.idleshare.framework.model.resource.ResourcePair;
+import hundun.gdxgame.idleshare.framework.util.JavaHighVersionFeature;
 
 
 public class BuiltinConstructionsLoader {

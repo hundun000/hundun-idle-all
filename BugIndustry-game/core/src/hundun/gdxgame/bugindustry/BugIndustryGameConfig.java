@@ -15,10 +15,10 @@ import hundun.gdxgame.bugindustry.logic.GameArea;
 import hundun.gdxgame.bugindustry.logic.ResourceType;
 import hundun.gdxgame.bugindustry.logic.ScreenId;
 import hundun.gdxgame.bugindustry.ui.screen.PlayScreen;
-import hundun.gdxgame.idleframe.data.ChildGameConfig;
-import hundun.gdxgame.idleframe.data.StarterData;
-import hundun.gdxgame.idleframe.model.AchievementPrototype;
-import hundun.gdxgame.idleframe.util.JavaHighVersionFeature;
+import hundun.gdxgame.idleshare.framework.data.ChildGameConfig;
+import hundun.gdxgame.idleshare.framework.data.StarterData;
+import hundun.gdxgame.idleshare.framework.model.AchievementPrototype;
+import hundun.gdxgame.idleshare.framework.util.JavaHighVersionFeature;
 
 /**
  * @author hundun

@@ -1,7 +1,7 @@
 package hundun.gdxgame.idledemo.ui.screen;
 
 import hundun.gdxgame.idledemo.IdleDemoGame;
-import hundun.gdxgame.idlestarter.ui.screen.menu.MenuScreen;
+import hundun.gdxgame.idleshare.starter.ui.screen.menu.MenuScreen;
 
 /**
  * @author hundun

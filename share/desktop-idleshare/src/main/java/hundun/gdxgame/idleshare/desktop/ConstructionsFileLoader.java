@@ -9,19 +9,19 @@ import java.util.Map;
 import com.badlogic.gdx.Gdx;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import hundun.gdxgame.idleframe.BaseIdleGame;
-import hundun.gdxgame.idleframe.model.construction.BaseAutoConstruction;
-import hundun.gdxgame.idleframe.model.construction.BaseClickGatherConstruction;
-import hundun.gdxgame.idleframe.model.construction.BaseConstructionFactory;
-import hundun.gdxgame.idleframe.model.construction.base.BaseConstruction;
-import hundun.gdxgame.idleframe.model.construction.base.LevelComponent;
-import hundun.gdxgame.idleframe.model.construction.base.OutputComponent;
-import hundun.gdxgame.idleframe.model.construction.base.UpgradeComponent;
-import hundun.gdxgame.idleframe.model.resource.ResourcePack;
-import hundun.gdxgame.idleframe.model.resource.ResourcePair;
-import hundun.gdxgame.idleframe.util.text.IGameDictionary;
-import hundun.gdxgame.idlestarter.ConstructionsConfig;
-import hundun.gdxgame.idlestarter.ConstructionsConfig.ConstructionNode;
+import hundun.gdxgame.idleshare.framework.BaseIdleGame;
+import hundun.gdxgame.idleshare.framework.model.construction.BaseAutoConstruction;
+import hundun.gdxgame.idleshare.framework.model.construction.BaseClickGatherConstruction;
+import hundun.gdxgame.idleshare.framework.model.construction.BaseConstructionFactory;
+import hundun.gdxgame.idleshare.framework.model.construction.base.BaseConstruction;
+import hundun.gdxgame.idleshare.framework.model.construction.base.LevelComponent;
+import hundun.gdxgame.idleshare.framework.model.construction.base.OutputComponent;
+import hundun.gdxgame.idleshare.framework.model.construction.base.UpgradeComponent;
+import hundun.gdxgame.idleshare.framework.model.resource.ResourcePack;
+import hundun.gdxgame.idleshare.framework.model.resource.ResourcePair;
+import hundun.gdxgame.idleshare.framework.util.text.IGameDictionary;
+import hundun.gdxgame.idleshare.starter.ConstructionsConfig;
+import hundun.gdxgame.idleshare.starter.ConstructionsConfig.ConstructionNode;
 
 /**
  * @author hundun

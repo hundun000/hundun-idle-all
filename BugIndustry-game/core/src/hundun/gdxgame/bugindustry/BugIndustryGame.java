@@ -17,12 +17,12 @@ import hundun.gdxgame.bugindustry.logic.ResourceType;
 import hundun.gdxgame.bugindustry.logic.ScreenId;
 import hundun.gdxgame.bugindustry.ui.screen.PlayScreen;
 import hundun.gdxgame.bugindustry.ui.screen.ScreenContext;
-import hundun.gdxgame.idleframe.BaseIdleGame;
-import hundun.gdxgame.idleframe.data.ChildGameConfig;
-import hundun.gdxgame.idleframe.model.AchievementPrototype;
-import hundun.gdxgame.idleframe.model.construction.BaseConstructionFactory;
-import hundun.gdxgame.idleframe.util.save.ISaveTool;
-import hundun.gdxgame.idlestarter.ui.screen.menu.MenuScreen;
+import hundun.gdxgame.idleshare.framework.BaseIdleGame;
+import hundun.gdxgame.idleshare.framework.data.ChildGameConfig;
+import hundun.gdxgame.idleshare.framework.model.AchievementPrototype;
+import hundun.gdxgame.idleshare.framework.model.construction.BaseConstructionFactory;
+import hundun.gdxgame.idleshare.framework.util.save.ISaveTool;
+import hundun.gdxgame.idleshare.starter.ui.screen.menu.MenuScreen;
 import lombok.Getter;
 
 public class BugIndustryGame extends BaseIdleGame {

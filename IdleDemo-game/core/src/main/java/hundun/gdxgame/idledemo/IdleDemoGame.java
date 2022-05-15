@@ -17,13 +17,13 @@ import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.ScreenId;
 import hundun.gdxgame.idledemo.ui.screen.PlayScreen;
 import hundun.gdxgame.idledemo.ui.screen.ScreenContext;
-import hundun.gdxgame.idleframe.BaseIdleGame;
-import hundun.gdxgame.idleframe.data.ChildGameConfig;
-import hundun.gdxgame.idleframe.model.AchievementPrototype;
-import hundun.gdxgame.idleframe.model.construction.BaseConstructionFactory;
-import hundun.gdxgame.idleframe.util.save.ISaveTool;
-import hundun.gdxgame.idleframe.util.text.TextFormatTool;
-import hundun.gdxgame.idlestarter.ui.screen.menu.MenuScreen;
+import hundun.gdxgame.idleshare.framework.BaseIdleGame;
+import hundun.gdxgame.idleshare.framework.data.ChildGameConfig;
+import hundun.gdxgame.idleshare.framework.model.AchievementPrototype;
+import hundun.gdxgame.idleshare.framework.model.construction.BaseConstructionFactory;
+import hundun.gdxgame.idleshare.framework.util.save.ISaveTool;
+import hundun.gdxgame.idleshare.framework.util.text.TextFormatTool;
+import hundun.gdxgame.idleshare.starter.ui.screen.menu.MenuScreen;
 
 
 public class IdleDemoGame extends BaseIdleGame {

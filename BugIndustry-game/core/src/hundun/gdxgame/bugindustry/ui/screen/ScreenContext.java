@@ -1,7 +1,7 @@
 package hundun.gdxgame.bugindustry.ui.screen;
 
 import hundun.gdxgame.bugindustry.BugIndustryGame;
-import hundun.gdxgame.idlestarter.ui.screen.menu.MenuScreen;
+import hundun.gdxgame.idleshare.starter.ui.screen.menu.MenuScreen;
 import lombok.Data;
 
 /**

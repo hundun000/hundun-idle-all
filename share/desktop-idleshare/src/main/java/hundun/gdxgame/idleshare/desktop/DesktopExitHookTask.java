@@ -4,7 +4,7 @@ package hundun.gdxgame.idleshare.desktop;
  * Created on 2022/04/08
  */
 
-import hundun.gdxgame.idleframe.BaseIdleGame;
+import hundun.gdxgame.idleshare.framework.BaseIdleGame;
 
 public class DesktopExitHookTask extends Thread {
 

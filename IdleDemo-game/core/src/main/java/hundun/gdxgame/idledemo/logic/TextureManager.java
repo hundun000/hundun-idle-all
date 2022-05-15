@@ -7,7 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import hundun.gdxgame.idleframe.model.manager.AbstractTextureManager;
+import hundun.gdxgame.idleshare.framework.model.manager.AbstractTextureManager;
 
 public class TextureManager extends AbstractTextureManager {
 

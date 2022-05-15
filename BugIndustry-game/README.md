@@ -14,7 +14,7 @@ Download the zip. Use the win64 exe file, or the jar file.
 
 ### How to play
 
-- Some constuctions are free. Click and gain its output.
+- Some constructions are free. Click and gain its output.
 
 ![](./pic/1.jpg)
 
@@ -22,15 +22,15 @@ Download the zip. Use the win64 exe file, or the jar file.
 
 ![](./pic/2.jpg)
 
-- Some constuctions can swtich working-level by "+" / "-" button. Now we enable 1-level wood-selling and gain coins. 
+- Some constructions can switch working-level by "+" / "-" button. Now we enable 1-level wood-selling and gain coins. 
 
 ![](./pic/3.jpg)
 
-- Upgrade other constuctions if your can afdord its upgrade-cost. And constuction only work if your can afdord its auto-work-cost.
+- Upgrade other constructions if your can afford its upgrade-cost. And constructions only work if your can afford its auto-work-cost.
 
 ![](./pic/4.jpg)
 
-### Assert thanks
+### Resources thanks
 
 Audio:
 https://opengameart.org/sites/default/files/Loop-Menu.wav

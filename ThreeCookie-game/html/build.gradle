@@ -6,8 +6,8 @@ gwt {
 	minHeapSize = '1G'
 
 	src = files(file('src/main/java')) // Needs to be in front of "modules" below.
-	modules 'hundun.gdxgame.idledemo.html.GdxDefinition'
-	devModules 'hundun.gdxgame.idledemo.html.GdxDefinitionSuperdev'
+	modules 'hundun.gdxgame.threecookie.html.GdxDefinition'
+	devModules 'hundun.gdxgame.threecookie.html.GdxDefinitionSuperdev'
 	project.webAppDirName = 'webapp'
 
 	compiler.strict = true
@@ -75,8 +75,9 @@ task dist(dependsOn: [clean, compileGwt]) {
 
 task addSource {
 	doLast {
-		sourceSets.main.compileClasspath += files(project(':IdleDemo-game:core').sourceSets.main.allJava.srcDirs)
-        sourceSets.main.compileClasspath += files(project(':idleframe').sourceSets.main.allJava.srcDirs)
+		sourceSets.main.compileClasspath += files(project(':ThreeCookie-game:core').sourceSets.main.allJava.srcDirs)
+        sourceSets.main.compileClasspath += files(project(':share:html-idleshare').sourceSets.main.allJava.srcDirs)
+        sourceSets.main.compileClasspath += files(project(':share:idleframe').sourceSets.main.allJava.srcDirs)
 	}
 }
 
