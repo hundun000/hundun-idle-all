@@ -1,4 +1,10 @@
 allprojects {
+    ext {
+        appName = "hundun-idleshare"
+    }
+}
+
+subprojects {
     apply plugin: "maven"
     apply plugin: "maven-publish"
     
@@ -18,9 +24,7 @@ allprojects {
     }
     
     version = '1.0'
-    ext {
-        appName = "hundun-idleshare"
-    }
+    
 }
 
 eclipse.project.name = appName
