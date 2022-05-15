@@ -3,3 +3,15 @@
 sourceSets.main.java.srcDirs = [ "src/main/java/" ]
 
 eclipse.project.name = appName + "-html"
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            // useless for jitpack: groupId = GROUP
+            artifactId = ARTIFACT_ID_START + "-html"
+            // useless for jitpack: version = VERSION
+
+            from components.java
+        }
+    }
+}

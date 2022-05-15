@@ -1,6 +1,7 @@
 allprojects {
     ext {
         appName = "hundun-idleshare"
+        ARTIFACT_ID_START = "hundun-idleshare"
     }
 }
 
@@ -13,14 +14,8 @@ subprojects {
         from sourceSets.main.allSource
     }
     
-    task javadocJar(type: Jar, dependsOn: javadoc) {
-        classifier = 'javadoc'
-        from javadoc.destinationDir
-    }
-    
     artifacts {
         archives sourcesJar
-        archives javadocJar
     }
     
     version = '1.0'
