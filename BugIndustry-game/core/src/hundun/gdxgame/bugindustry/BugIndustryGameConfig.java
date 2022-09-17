@@ -63,13 +63,13 @@ public class BugIndustryGameConfig extends ChildGameConfig {
         this.setAreaShowEntityByOwnAmountResourceIds(areaShownResourceIds);
         
         StarterData starterData = new StarterData();
-        Map<String, Integer> constructionStarterLevelMap = Map.of(ConstructionId.WOOD_SELL_HOUSE, 1);
+        Map<String, Integer> constructionStarterLevelMap = JavaHighVersionFeature.mapOf(ConstructionId.WOOD_SELL_HOUSE, 1);
         starterData.setConstructionStarterLevelMap(constructionStarterLevelMap);
-        Map<String, Boolean> constructionStarterWorkingLevelMap = Map.of(ConstructionId.WOOD_SELL_HOUSE, Boolean.FALSE);
+        Map<String, Boolean> constructionStarterWorkingLevelMap = JavaHighVersionFeature.mapOf(ConstructionId.WOOD_SELL_HOUSE, Boolean.FALSE);
         starterData.setConstructionStarterWorkingLevelMap(constructionStarterWorkingLevelMap);
         this.setStarterData(starterData); 
         
-        Map<String, String> screenIdToFilePathMap = Map.of(
+        Map<String, String> screenIdToFilePathMap = JavaHighVersionFeature.mapOf(
                 ScreenId.MENU, "audio/Loop-Menu.wav",
                 ScreenId.PLAY, "audio/forest.mp3"
                 );
@@ -77,7 +77,7 @@ public class BugIndustryGameConfig extends ChildGameConfig {
         
         List<AchievementPrototype> achievementPrototypes = JavaHighVersionFeature.arraysAsList(
                 new AchievementPrototype("Game win", "You win the game!",
-                        Map.of(BuffId.WIN, 1),
+                        JavaHighVersionFeature.mapOf(BuffId.WIN, 1),
                         null
                         )
                 );
