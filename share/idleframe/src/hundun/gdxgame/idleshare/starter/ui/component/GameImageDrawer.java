@@ -51,7 +51,7 @@ public class GameImageDrawer<T_GAME extends BaseIdleGame> implements IOneFrameRe
             }
         }
 
-        List<String> needDrawByOwnAmountResourceIds = manager.getAreaShowEntityByOwnAmountConstructionIds().get(gameArea);
+        List<String> needDrawByOwnAmountResourceIds = manager.getAreaShowEntityByOwnAmountResourceIds().get(gameArea);
         if (needDrawByOwnAmountResourceIds != null) {
             for (String id : needDrawByOwnAmountResourceIds) {
                 List<GameEntity> queue = manager.getGameEntitiesOfResourceIds().get(id);

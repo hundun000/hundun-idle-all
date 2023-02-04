@@ -6,9 +6,9 @@ A self-made framework for idle game, using engine Libgdx. And some games using t
 
 - [idle-framework](/share): the framework for idle game [![](https://jitpack.io/v/hundun000/hundun-idle-all.svg)](https://jitpack.io/#hundun000/hundun-idle-all)
 - [IdleDemo-game](/IdleDemo-game): a demo game using the idle-framework, can run in desktop & html.
-- [BugIndustry-game](/BugIndustry-game): a bee farming game using the idle-framework, can run in desktop.
 
-Other game using the idle-framework:
+Other game using this idle-framework:
 
+- [IdleBee](https://github.com/hundun000/libgdx-IdleBee): can run in desktop.
 - [IdlePizza](https://github.com/hundun000/libgdx-IdlePizza): can run in desktop.
 - [ThreeCookie](https://github.com/hundun000/libgdx-ThreeCookie): can run in desktop & html.
