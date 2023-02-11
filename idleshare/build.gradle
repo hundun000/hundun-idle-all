@@ -1,6 +1,6 @@
 allprojects {
     ext {
-        appName = "hundun-idleshare"
+        appName = "hundun-idle-idleshare"
         ARTIFACT_ID_START = "hundun-idleshare"
     }
 }

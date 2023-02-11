@@ -27,62 +27,56 @@ allprojects {
     
     
     ext {
+        appName = "hundun-idle"
         gdxVersion = '1.10.0'
-        roboVMVersion = '2.3.12'
-        box2DLightsVersion = '1.5'
-        ashleyVersion = '1.7.3'
-        aiVersion = '1.8.2'
-        gdxControllersVersion = '2.1.0'
-        
         gwtFrameworkVersion = '2.8.2'
+        
+        hundunLibVersion = '66d2d64f08'
     }
 
     repositories {
-        mavenLocal()
         mavenCentral()
         maven { url 'https://jitpack.io' }
-        google()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
-    
-    ext {
-        appName = "hundun-idle"
-    }
+
 }
 
 
-project(":share:html-idleshare") {
+project(":idleshare:core") {
     
     dependencies {
-        implementation project(":share:idleframe")
+        api "com.github.hundun000:libgdx-hundun-lib:$hundunLibVersion"
+
+        testCompile "junit:junit:4.11"
+        compileOnly 'org.projectlombok:lombok:1.18.4'
+        annotationProcessor 'org.projectlombok:lombok:1.18.4'
+    }
+}
+
+project(":idleshare:desktop") {
+
+    
+    dependencies {
+        implementation project(":idleshare:core")
+        
+        api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        
+        implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.5'
+        
+    }
+}
+
+project(":idleshare:html") {
+    
+    dependencies {
+        implementation project(":idleshare:core")
+        
         api "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
         api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
+        
         api group: 'com.github.nmorel.gwtjackson', name: 'gwt-jackson', version: '0.15.4'
-    }
-}
-
-
-project(":share:desktop-idleshare") {
-
-    
-    dependencies {
-        implementation project(":share:idleframe")
-        implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.5'
-        api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
-        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-    }
-}
-
-
-project(":share:idleframe") {
-    
-
-
-    dependencies {
-        api "com.badlogicgames.gdx:gdx:$gdxVersion"
-        testCompile "junit:junit:4.11"
     }
 }
 
@@ -90,7 +84,7 @@ project(":share:idleframe") {
 project(":IdleDemo-game:core") {
 
     dependencies {
-        api project(":share:idleframe")
+        api project(":idleshare:core")
     }
 }
 
@@ -98,7 +92,7 @@ project(":IdleDemo-game:desktop") {
 
     dependencies {
         implementation project(":IdleDemo-game:core")
-        implementation project(":share:desktop-idleshare")
+        implementation project(":idleshare:desktop")
     }
 }
 
@@ -109,6 +103,8 @@ project(":IdleDemo-game:html") {
 
     dependencies {
         implementation project(':IdleDemo-game:core')
-        implementation project(":share:html-idleshare")
+        implementation project(":idleshare:html")
     }
 }
+
+eclipse.project.name = appName + "-all"
