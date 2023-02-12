@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import hundun.gdxgame.idledemo.IdleDemoGame;
+import hundun.gdxgame.corelib.base.util.JavaFeatureForGwt;
+import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idleshare.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.framework.model.construction.BaseAutoConstruction;
 import hundun.gdxgame.idleshare.framework.model.construction.BaseBuffConstruction;
@@ -16,14 +17,13 @@ import hundun.gdxgame.idleshare.framework.model.construction.base.OutputComponen
 import hundun.gdxgame.idleshare.framework.model.construction.base.UpgradeComponent;
 import hundun.gdxgame.idleshare.framework.model.resource.ResourcePack;
 import hundun.gdxgame.idleshare.framework.model.resource.ResourcePair;
-import hundun.gdxgame.idleshare.framework.util.JavaHighVersionFeature;
 
 
 public class BuiltinConstructionsLoader {
-    IdleDemoGame game;
+    DemoIdleGame game;
     List<BaseConstruction> constructions = new ArrayList<>();
     
-    public BuiltinConstructionsLoader(IdleDemoGame game) {
+    public BuiltinConstructionsLoader(DemoIdleGame game) {
         this.game = game;
         
     }
@@ -42,7 +42,7 @@ public class BuiltinConstructionsLoader {
             construction.descriptionPackage = BaseConstruction.GATHER_DESCRIPTION_PACKAGE;
             
             OutputComponent outputComponent = new OutputComponent(construction);
-            outputComponent.setOutputGainPack(toPack(JavaHighVersionFeature.mapOf(
+            outputComponent.setOutputGainPack(toPack(JavaFeatureForGwt.mapOf(
                     ResourceType.COOKIE, 1
                     )));
             construction.setOutputComponent(outputComponent);
@@ -64,13 +64,13 @@ public class BuiltinConstructionsLoader {
             construction.descriptionPackage = BaseConstruction.MAX_LEVEL_AUTO_DESCRIPTION_PACKAGE;
             
             OutputComponent outputComponent = new OutputComponent(construction);
-            outputComponent.setOutputGainPack(toPack(JavaHighVersionFeature.mapOf(
+            outputComponent.setOutputGainPack(toPack(JavaFeatureForGwt.mapOf(
                     ResourceType.COOKIE, 1
                     )));
             construction.setOutputComponent(outputComponent);
             
             UpgradeComponent upgradeComponent = new UpgradeComponent(construction);
-            upgradeComponent.setUpgradeCostPack(toPack(JavaHighVersionFeature.mapOf(
+            upgradeComponent.setUpgradeCostPack(toPack(JavaFeatureForGwt.mapOf(
                     ResourceType.COIN, 25
                     )));
             construction.setUpgradeComponent(upgradeComponent);
@@ -90,16 +90,16 @@ public class BuiltinConstructionsLoader {
             construction.descriptionPackage = BaseConstruction.WORKING_LEVEL_AUTO_DESCRIPTION_PACKAGE;
             
             OutputComponent outputComponent = new OutputComponent(construction);
-            outputComponent.setOutputCostPack(toPack(JavaHighVersionFeature.mapOf(
+            outputComponent.setOutputCostPack(toPack(JavaFeatureForGwt.mapOf(
                     ResourceType.COOKIE, 1
                     )));
-            outputComponent.setOutputGainPack(toPack(JavaHighVersionFeature.mapOf(
+            outputComponent.setOutputGainPack(toPack(JavaFeatureForGwt.mapOf(
                     ResourceType.COIN, 5
                     )));
             construction.setOutputComponent(outputComponent);
             
             UpgradeComponent upgradeComponent = new UpgradeComponent(construction);
-            upgradeComponent.setUpgradeCostPack(toPack(JavaHighVersionFeature.mapOf(
+            upgradeComponent.setUpgradeCostPack(toPack(JavaFeatureForGwt.mapOf(
                     ResourceType.COIN, 500
                     )));
             construction.setUpgradeComponent(upgradeComponent);
@@ -119,16 +119,16 @@ public class BuiltinConstructionsLoader {
             construction.descriptionPackage = BaseConstruction.WIN_DESCRIPTION_PACKAGE;
             
             OutputComponent outputComponent = new OutputComponent(construction);
-//            outputComponent.setOutputCostPack(toPack(JavaHighVersionFeature.mapOf(
+//            outputComponent.setOutputCostPack(toPack(JavaFeatureForGwt.mapOf(
 //                    ResourceType.COIN, 500
 //                    )));
-//            outputComponent.setOutputGainPack(toPack(JavaHighVersionFeature.mapOf(
+//            outputComponent.setOutputGainPack(toPack(JavaFeatureForGwt.mapOf(
 //                    ResourceType.WIN_TROPHY, 1
 //                    )));
             construction.setOutputComponent(outputComponent);
             
             UpgradeComponent upgradeComponent = new UpgradeComponent(construction);
-            upgradeComponent.setUpgradeCostPack(toPack(JavaHighVersionFeature.mapOf(
+            upgradeComponent.setUpgradeCostPack(toPack(JavaFeatureForGwt.mapOf(
                     ResourceType.COIN, 500
                     )));
             construction.setUpgradeComponent(upgradeComponent);

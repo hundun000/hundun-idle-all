@@ -8,23 +8,24 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
+import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.idleshare.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.starter.ui.screen.play.BasePlayScreen;
+import hundun.gdxgame.idleshare.starter.ui.screen.play.BaseIdlePlayScreen;
 
 
 /**
  * @author hundun
  * Created on 2021/12/06
  */
-public class GameAreaControlNode<T_GAME extends BaseIdleGame> extends Image {
+public class GameAreaControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Image {
 
-    BasePlayScreen<T_GAME> parent;
+    BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
     //Image image;
     Label label;
     boolean debugType;
     String gameArea;
 
-    public GameAreaControlNode(BasePlayScreen<T_GAME> parent, String gameArea, boolean longVersion, boolean debugType) {
+    public GameAreaControlNode(BaseIdlePlayScreen<T_GAME, T_SAVE> parent, String gameArea, boolean longVersion, boolean debugType) {
         this.parent = parent;
         this.debugType = debugType;
         this.gameArea = gameArea;
@@ -42,10 +43,10 @@ public class GameAreaControlNode<T_GAME extends BaseIdleGame> extends Image {
 
     private Drawable rebuildImage(boolean longVersion) {
         if (!debugType) {
-            Drawable drawable = new SpriteDrawable(new Sprite(parent.game.getTextureManager().getGameAreaTexture(gameArea, longVersion)));
+            Drawable drawable = new SpriteDrawable(new Sprite(parent.getGame().getTextureManager().getGameAreaTexture(gameArea, longVersion)));
             return drawable;
         } else {
-            Drawable drawable = BasePlayScreen.createTwoColorBoard(5, 5, 0.8f, longVersion ? 0 : 2);
+            Drawable drawable = DrawableFactory.createBorderBoard(5, 5, 0.8f, longVersion ? 0 : 2);
             return drawable;
         }
     }

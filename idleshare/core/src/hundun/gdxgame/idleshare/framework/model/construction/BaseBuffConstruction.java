@@ -34,9 +34,9 @@ public class BaseBuffConstruction extends BaseConstruction {
     
     private void doEnhanceBuff() {
         List<ResourcePair> upgradeCostRule = upgradeComponent.getUpgradeCostPack().getModifiedValues();
-        game.getModelContext().getStorageManager().modifyAllResourceNum(upgradeCostRule, false);
+        game.getManagerContext().getStorageManager().modifyAllResourceNum(upgradeCostRule, false);
         saveData.setLevel(saveData.getLevel() + 1);
-        game.getModelContext().getBuffManager().addBuffAmout(buffId, 1);
+        game.getManagerContext().getBuffManager().addBuffAmout(buffId, 1);
         updateModifiedValues();
     }
 

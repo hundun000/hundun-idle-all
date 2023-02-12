@@ -31,7 +31,7 @@ allprojects {
         gdxVersion = '1.10.0'
         gwtFrameworkVersion = '2.8.2'
         
-        hundunLibVersion = '66d2d64f08'
+        hundunLibVersion = '01211c6bdf'
     }
 
     repositories {
@@ -85,6 +85,9 @@ project(":IdleDemo-game:core") {
 
     dependencies {
         api project(":idleshare:core")
+        
+        compileOnly 'org.projectlombok:lombok:1.18.4'
+        annotationProcessor 'org.projectlombok:lombok:1.18.4'
     }
 }
 

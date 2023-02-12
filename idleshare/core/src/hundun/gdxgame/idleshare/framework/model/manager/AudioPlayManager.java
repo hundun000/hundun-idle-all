@@ -40,7 +40,7 @@ public class AudioPlayManager implements Disposable {
 
 
     public void intoScreen(String screenId) {
-        if (game.drawGameImageAndPlayAudio && screenIdToSoundMap.containsKey(screenId)) {
+        if (screenIdToSoundMap.containsKey(screenId)) {
             setScreenBgm(screenIdToSoundMap.get(screenId));
         }
     }

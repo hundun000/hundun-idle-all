@@ -2,9 +2,10 @@ package hundun.gdxgame.idleshare.starter.ui.component.board.construction.impl.fi
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
+import hundun.gdxgame.idleshare.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.starter.ui.component.board.construction.AbstractConstructionControlBoard;
 import hundun.gdxgame.idleshare.starter.ui.component.board.construction.impl.ConstructionControlNode;
-import hundun.gdxgame.idleshare.starter.ui.screen.play.BasePlayScreen;
+import hundun.gdxgame.idleshare.starter.ui.screen.play.BaseIdlePlayScreen;
 
 
 
@@ -12,7 +13,7 @@ import hundun.gdxgame.idleshare.starter.ui.screen.play.BasePlayScreen;
  * @author hundun
  * Created on 2021/11/05
  */
-public class FixedConstructionControlBoard extends AbstractConstructionControlBoard {
+public class FixedConstructionControlBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends AbstractConstructionControlBoard<T_GAME, T_SAVE> {
 
 
     public static int FIXED_NODE_NUM = 5;
@@ -20,7 +21,7 @@ public class FixedConstructionControlBoard extends AbstractConstructionControlBo
     Table childTable;
 
 
-    public FixedConstructionControlBoard(BasePlayScreen<?> parent) {
+    public FixedConstructionControlBoard(BaseIdlePlayScreen<T_GAME, T_SAVE> parent) {
 
         super(parent);
 
@@ -31,7 +32,7 @@ public class FixedConstructionControlBoard extends AbstractConstructionControlBo
 
         this.setBackground(parent.getLayoutConst().simpleBoardBackground);
 
-        if (parent.game.debugMode) {
+        if (parent.getGame().debugMode) {
             this.debugCell();
         }
     }

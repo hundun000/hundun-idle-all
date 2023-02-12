@@ -11,7 +11,7 @@ import hundun.gdxgame.idleshare.framework.BaseIdleGame;
  * @author hundun
  * Created on 2021/11/25
  */
-public class ResourceAmountPairNode<T_GAME extends BaseIdleGame> extends HorizontalGroup {
+public class ResourceAmountPairNode<T_GAME extends BaseIdleGame<?>> extends HorizontalGroup {
 
     T_GAME game;
 
@@ -31,7 +31,7 @@ public class ResourceAmountPairNode<T_GAME extends BaseIdleGame> extends Horizon
         TextureRegion textureRegion = game.getTextureManager().getResourceIcon(resourceType);
         this.image = new Image(textureRegion);
         this.addActor(image);
-        this.label = new Label("", game.getButtonSkin());
+        this.label = new Label("", game.getMainSkin());
         this.addActor(label);
     }
 

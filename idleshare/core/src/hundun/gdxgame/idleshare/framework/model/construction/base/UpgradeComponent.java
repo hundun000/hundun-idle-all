@@ -100,7 +100,7 @@ public class UpgradeComponent {
         }
 
         List<ResourcePair> compareTarget = upgradeCostPack.getModifiedValues();
-        return construction.game.getModelContext().getStorageManager().isEnough(compareTarget);
+        return construction.game.getManagerContext().getStorageManager().isEnough(compareTarget);
     }
 
 }

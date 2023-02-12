@@ -3,21 +3,18 @@ package hundun.gdxgame.idledemo.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-import hundun.gdxgame.idledemo.IdleDemoGame;
-import hundun.gdxgame.idleshare.desktop.DesktopExitHookTask;
-import hundun.gdxgame.idleshare.desktop.PreferencesSaveTool;
+import hundun.gdxgame.idledemo.DemoIdleGame;
 
 
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		
-	    IdleDemoGame game = new IdleDemoGame(new PreferencesSaveTool("IdleDemo-destop-save"));
-	    Runtime.getRuntime().addShutdownHook(new DesktopExitHookTask(game));
-	    
+	    DemoIdleGame game = new DemoIdleGame(new PreferencesSaveTool("IdleDemo-destop-save.xml"));
+   
 	    LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = (int) (game.LOGIC_WIDTH * game.desktopScale);
-		config.height = (int) (game.LOGIC_HEIGHT * game.desktopScale);
+		config.width = (int) (game.getWidth());
+		config.height = (int) (game.getHeight());
 		new LwjglApplication(game, config);
 	}
 }

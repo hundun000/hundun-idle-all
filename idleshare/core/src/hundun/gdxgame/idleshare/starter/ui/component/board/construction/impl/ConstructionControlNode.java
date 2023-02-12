@@ -10,9 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 
-import hundun.gdxgame.idleshare.framework.listener.ILogicFrameListener;
+import hundun.gdxgame.corelib.base.util.DrawableFactory;
+import hundun.gdxgame.corelib.starter.listerner.ILogicFrameListener;
+import hundun.gdxgame.idleshare.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.framework.model.construction.base.BaseConstruction;
-import hundun.gdxgame.idleshare.starter.ui.screen.play.BasePlayScreen;
+import hundun.gdxgame.idleshare.starter.ui.screen.play.BaseIdlePlayScreen;
 import hundun.gdxgame.idleshare.starter.ui.screen.play.PlayScreenLayoutConst;
 
 
@@ -20,8 +22,8 @@ import hundun.gdxgame.idleshare.starter.ui.screen.play.PlayScreenLayoutConst;
  * @author hundun
  * Created on 2021/11/05
  */
-public class ConstructionControlNode extends Table implements ILogicFrameListener {
-    BasePlayScreen<?> parent;
+public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table implements ILogicFrameListener {
+    BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
     BaseConstruction model;
     Label constructionNameLabel;
     TextButton upWorkingLevelButton;
@@ -35,7 +37,7 @@ public class ConstructionControlNode extends Table implements ILogicFrameListene
 
 
 
-    public ConstructionControlNode(BasePlayScreen<?> parent, int index, PlayScreenLayoutConst playScreenLayoutConst) {
+    public ConstructionControlNode(BaseIdlePlayScreen<T_GAME, T_SAVE> parent, int index, PlayScreenLayoutConst playScreenLayoutConst) {
         super();
         this.parent = parent;
 
@@ -43,10 +45,10 @@ public class ConstructionControlNode extends Table implements ILogicFrameListene
         int CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_BUTTON_HEIGHT;
         int NAME_CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_NAME_HEIGHT;
 
-        this.constructionNameLabel = new Label("", parent.game.getButtonSkin());
+        this.constructionNameLabel = new Label("", parent.getGame().getMainSkin());
         constructionNameLabel.setWrap(true);
 
-        this.clickEffectButton = new TextButton("", parent.game.getButtonSkin());
+        this.clickEffectButton = new TextButton("", parent.getGame().getMainSkin());
         clickEffectButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -86,7 +88,7 @@ public class ConstructionControlNode extends Table implements ILogicFrameListene
         // ------ changeWorkingLevelGroup ------
         this.changeWorkingLevelGroup = new Table();
 
-        this.downWorkingLevelButton = new TextButton("-", parent.game.getButtonSkin());
+        this.downWorkingLevelButton = new TextButton("-", parent.getGame().getMainSkin());
         downWorkingLevelButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -96,11 +98,11 @@ public class ConstructionControlNode extends Table implements ILogicFrameListene
         });
         changeWorkingLevelGroup.add(downWorkingLevelButton).size(CHILD_WIDTH / 4, CHILD_HEIGHT);
 
-        this.workingLevelLabel = new Label("", parent.game.getButtonSkin());
+        this.workingLevelLabel = new Label("", parent.getGame().getMainSkin());
         workingLevelLabel.setAlignment(Align.center);
         changeWorkingLevelGroup.add(workingLevelLabel).size(CHILD_WIDTH / 2, CHILD_HEIGHT);
 
-        this.upWorkingLevelButton = new TextButton("+", parent.game.getButtonSkin());
+        this.upWorkingLevelButton = new TextButton("+", parent.getGame().getMainSkin());
         upWorkingLevelButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -115,7 +117,7 @@ public class ConstructionControlNode extends Table implements ILogicFrameListene
         this.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
         this.add(clickEffectButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
         this.add(changeWorkingLevelGroup).size(CHILD_WIDTH, CHILD_HEIGHT);
-        this.setBackground(BasePlayScreen.createBorderBoard(30, 10, 0.8f, 1));
+        this.setBackground(DrawableFactory.createBorderBoard(30, 10, 0.8f, 1));
     }
 
 

@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import hundun.gdxgame.corelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idleshare.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.framework.model.resource.ResourcePair;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Set;
 
@@ -15,31 +18,22 @@ import java.util.Set;
  * @author hundun
  * Created on 2021/11/02
  */
-public class StorageManager {
+public class StorageManager implements ILogicFrameListener {
 
-    BaseIdleGame game;
+    BaseIdleGame<?> game;
 
+    @Getter
+    @Setter
     Map<String, Long> ownResoueces = new HashMap<>();
-    // ------ replace-lombok ------
-    public Map<String, Long> getOwnResoueces() {
-        return ownResoueces;
-    }
-    public void setOwnResoueces(Map<String, Long> ownResoueces) {
-        this.ownResoueces = ownResoueces;
-    }
 
+    @Getter
+    @Setter
     Set<String> unlockedResourceTypes = new HashSet<>();
-    // ------ replace-lombok ------
-    public Set<String> getUnlockedResourceTypes() {
-        return unlockedResourceTypes;
-    }
-    public void setUnlockedResourceTypes(Set<String> unlockedResourceTypes) {
-        this.unlockedResourceTypes = unlockedResourceTypes;
-    }
+
 
     Map<String, Long> oneFrameDeltaResoueces = new HashMap<>();
 
-    public StorageManager(BaseIdleGame game) {
+    public StorageManager(BaseIdleGame<?> game) {
         this.game = game;
     }
 
@@ -87,12 +81,14 @@ public class StorageManager {
         return true;
     }
 
-    public Map<String, Long> frameDeltaAmountClear() {
+
+    @Override
+    public void onLogicFrame() {
+        // ------ frameDeltaAmountClear ------
         Map<String, Long> temp = new HashMap<>(oneFrameDeltaResoueces);
         oneFrameDeltaResoueces.clear();
         //Gdx.app.log(this.getClass().getSimpleName(), "frameDeltaAmountClear: " + temp);
         game.getEventManager().notifyOneFrameResourceChange(temp);
-        return temp;
     }
 
 //    public void addResourceNum(String key, int add) {

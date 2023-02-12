@@ -6,9 +6,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.idleshare.starter.ui.component.board.construction.AbstractConstructionControlBoard;
 import hundun.gdxgame.idleshare.starter.ui.component.board.construction.impl.ConstructionControlNode;
-import hundun.gdxgame.idleshare.starter.ui.screen.play.BasePlayScreen;
+import hundun.gdxgame.idleshare.starter.ui.screen.play.BaseIdlePlayScreen;
 
 
 
@@ -34,13 +35,13 @@ public class ScrollConstructionControlBoard extends AbstractConstructionControlB
 
 
 
-    public ScrollConstructionControlBoard(BasePlayScreen<?> parent) {
+    public ScrollConstructionControlBoard(BaseIdlePlayScreen<?, ?> parent) {
         super(parent);
 
-        this.LR_BUTTON_HEIGHT = parent.getLayoutConst().CONSTRUCION_BOARD_BORDER_HEIGHT;
+        this.LR_BUTTON_HEIGHT = parent.getLayoutConst().CONSTRUCION_BOARD_ROOT_BOX_HEIGHT;
 
 
-        leftButton = new ImageButton(BasePlayScreen.createBorderBoard(LR_BUTTON_WIDTH, LR_BUTTON_HEIGHT, 0.8f, 3));
+        leftButton = new ImageButton(DrawableFactory.createBorderBoard(LR_BUTTON_WIDTH, LR_BUTTON_HEIGHT, 0.8f, 3));
         leftButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -48,7 +49,7 @@ public class ScrollConstructionControlBoard extends AbstractConstructionControlB
 
             }
         });
-        rightButton = new ImageButton(BasePlayScreen.createBorderBoard(LR_BUTTON_WIDTH, LR_BUTTON_HEIGHT, 0.8f, 3));
+        rightButton = new ImageButton(DrawableFactory.createBorderBoard(LR_BUTTON_WIDTH, LR_BUTTON_HEIGHT, 0.8f, 3));
         rightButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -59,7 +60,7 @@ public class ScrollConstructionControlBoard extends AbstractConstructionControlB
 
         childTable = new Table();
         childTable.setBackground(parent.getLayoutConst().simpleBoardBackgroundMiddle);
-        ScrollPane scrollPane = new ScrollPane(childTable, parent.game.getButtonSkin());
+        ScrollPane scrollPane = new ScrollPane(childTable, parent.getGame().getMainSkin());
         scrollPane.setScrollingDisabled(false, true);
 
 
@@ -68,7 +69,7 @@ public class ScrollConstructionControlBoard extends AbstractConstructionControlB
         this.add(rightButton);
         this.setBackground(parent.getLayoutConst().simpleBoardBackground);
 
-        if (parent.game.debugMode) {
+        if (parent.getGame().debugMode) {
             this.debugCell();
         }
     }

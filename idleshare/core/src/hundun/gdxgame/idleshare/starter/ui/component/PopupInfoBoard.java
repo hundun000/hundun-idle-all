@@ -11,20 +11,20 @@ import hundun.gdxgame.idleshare.framework.model.construction.base.BaseConstructi
 import hundun.gdxgame.idleshare.framework.model.construction.base.UpgradeComponent.UpgradeState;
 import hundun.gdxgame.idleshare.framework.model.resource.ResourcePack;
 import hundun.gdxgame.idleshare.framework.model.resource.ResourcePair;
-import hundun.gdxgame.idleshare.starter.ui.screen.play.BasePlayScreen;
+import hundun.gdxgame.idleshare.starter.ui.screen.play.BaseIdlePlayScreen;
 
 
 /**
  * @author hundun
  * Created on 2021/11/08
  */
-public class PopupInfoBoard<T_GAME extends BaseIdleGame> extends Table {
+public class PopupInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table {
     private static int NODE_HEIGHT = 25;
     private static int NODE_WIDTH = 70;
 
-    BasePlayScreen<T_GAME> parent;
+    BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
 
-    public PopupInfoBoard(BasePlayScreen<T_GAME> parent) {
+    public PopupInfoBoard(BaseIdlePlayScreen<T_GAME, T_SAVE> parent) {
         //super("GUIDE_TEXT", parent.game.getButtonSkin());
         this.parent = parent;
         //this.setBounds(5, GameAreaControlBoard.Y, GameAreaControlBoard.X - 10, 120);
@@ -44,7 +44,7 @@ public class PopupInfoBoard<T_GAME extends BaseIdleGame> extends Table {
     private void rebuildCells(BaseConstruction model) {
         this.clearChildren();
 
-        add(wapperContainer(new Label(model.getDetailDescroptionConstPart(), parent.game.getButtonSkin())))
+        add(wapperContainer(new Label(model.getDetailDescroptionConstPart(), parent.getGame().getMainSkin())))
             .colspan(3)
             .left()
             .row();
@@ -56,23 +56,23 @@ public class PopupInfoBoard<T_GAME extends BaseIdleGame> extends Table {
         if (model.getUpgradeComponent().getUpgradeState() == UpgradeState.HAS_NEXT_UPGRADE) {
             buildOnePack(model.getUpgradeComponent().getUpgradeCostPack());
         } else if (model.getUpgradeComponent().getUpgradeState() == UpgradeState.REACHED_MAX_UPGRADE) {
-            this.add(wapperContainer(new Label(model.getUpgradeComponent().getUpgradeCostPack().getDescriptionStart(), parent.game.getButtonSkin())));
-            this.add(wapperContainer(new Label(model.getDescriptionPackage().getUpgradeMaxLevelDescription(), parent.game.getButtonSkin())));
+            this.add(wapperContainer(new Label(model.getUpgradeComponent().getUpgradeCostPack().getDescriptionStart(), parent.getGame().getMainSkin())));
+            this.add(wapperContainer(new Label(model.getDescriptionPackage().getUpgradeMaxLevelDescription(), parent.getGame().getMainSkin())));
             this.row();
         }
         
         
 
-        if (parent.game.debugMode) {
+        if (parent.getGame().debugMode) {
             this.debug();
         }
     }
 
     private void buildOnePack(ResourcePack pack) {
         if (pack != null && pack.getModifiedValues() != null) {
-            this.add(wapperContainer(new Label(pack.getDescriptionStart(), parent.game.getButtonSkin())));
+            this.add(wapperContainer(new Label(pack.getDescriptionStart(), parent.getGame().getMainSkin())));
             for (ResourcePair entry : pack.getModifiedValues()) {
-                ResourceAmountPairNode<T_GAME> node = new ResourceAmountPairNode<>(parent.game, entry.getType());
+                ResourceAmountPairNode<T_GAME> node = new ResourceAmountPairNode<>(parent.getGame(), entry.getType());
                 node.update(entry.getAmount());
                 this.add(wapperContainer(node)).height(NODE_HEIGHT).width(NODE_WIDTH);
             }

@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import hundun.gdxgame.idleshare.framework.data.ConstructionSaveData;
 import hundun.gdxgame.idleshare.framework.data.SaveData;
-import hundun.gdxgame.idleshare.framework.model.ModelContext;
+import hundun.gdxgame.idleshare.framework.model.ManagerContext;
 import hundun.gdxgame.idleshare.framework.model.construction.base.BaseConstruction;
 
 
@@ -61,7 +61,7 @@ public class DesktopSaveUtils {
         construction.updateModifiedValues();
     }
     
-    public static void save(ModelContext modelContext) {
+    public static void save(ManagerContext modelContext) {
         if (!saveFile.exists()) {
             try {
                 saveFile.createNewFile();
@@ -103,7 +103,7 @@ public class DesktopSaveUtils {
     /**
      * 作为新存档，也需要修改ModelContext
      */
-    public static void newSaveStarter(ModelContext modelContext) {
+    public static void newSaveStarter(ManagerContext modelContext) {
         Collection<BaseConstruction> constructions = modelContext.getConstructionFactory().getConstructions();
         for (BaseConstruction construction : constructions) {
             setStarterConstructionSaveData(construction);
@@ -111,7 +111,7 @@ public class DesktopSaveUtils {
     }
     
     
-    public static void load(ModelContext modelContext) {
+    public static void load(ManagerContext modelContext) {
         
         if (!saveFile.exists()) {
             Gdx.app.log(DesktopSaveUtils.class.getSimpleName(), "no savefile, load() do nothing");

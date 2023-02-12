@@ -58,7 +58,7 @@ public class PromotionComponent {
     }
 
     public boolean isMeetResource() {
-        return construction.game.getModelContext().getStorageManager().isEnough(promotionCostPack.getModifiedValues());
+        return construction.game.getManagerContext().getStorageManager().isEnough(promotionCostPack.getModifiedValues());
     }
 
 }

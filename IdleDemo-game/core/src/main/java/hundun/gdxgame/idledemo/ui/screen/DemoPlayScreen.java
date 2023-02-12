@@ -13,10 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-import hundun.gdxgame.idledemo.IdleDemoGame;
+import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.logic.GameArea;
 import hundun.gdxgame.idledemo.logic.ResourceType;
-import hundun.gdxgame.idledemo.logic.ScreenId;
+import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.entity.GameEntityFactory;
 import hundun.gdxgame.idleshare.framework.model.AchievementPrototype;
 import hundun.gdxgame.idleshare.framework.model.construction.base.BaseConstruction;
@@ -28,21 +28,21 @@ import hundun.gdxgame.idleshare.starter.ui.component.PopupInfoBoard;
 import hundun.gdxgame.idleshare.starter.ui.component.StorageInfoBoard;
 import hundun.gdxgame.idleshare.starter.ui.component.board.construction.impl.fixed.FixedConstructionControlBoard;
 import hundun.gdxgame.idleshare.starter.ui.component.board.construction.impl.scroll.ScrollConstructionControlBoard;
-import hundun.gdxgame.idleshare.starter.ui.screen.play.BasePlayScreen;
+import hundun.gdxgame.idleshare.starter.ui.screen.play.BaseIdlePlayScreen;
 import hundun.gdxgame.idleshare.starter.ui.screen.play.PlayScreenLayoutConst;
 
 /**
  * @author hundun
  * Created on 2021/11/02
  */
-public class PlayScreen extends BasePlayScreen<IdleDemoGame> {
+public class DemoPlayScreen extends BaseIdlePlayScreen<DemoIdleGame, RootSaveData> {
 
-    public PlayScreen(IdleDemoGame game) {
-        super(game, ScreenId.PLAY, GameArea.AREA_COOKIE, customLayoutConst(game));
+    public DemoPlayScreen(DemoIdleGame game) {
+        super(game, GameArea.AREA_COOKIE, customLayoutConst(game));
     }
     
-    private static PlayScreenLayoutConst customLayoutConst(IdleDemoGame game) {
-        PlayScreenLayoutConst layoutConst = new PlayScreenLayoutConst(game.LOGIC_WIDTH, game.LOGIC_HEIGHT);
+    private static PlayScreenLayoutConst customLayoutConst(DemoIdleGame game) {
+        PlayScreenLayoutConst layoutConst = new PlayScreenLayoutConst(game.getWidth(), game.getHeight());
         NinePatch ninePatch = new NinePatch(game.getTextureManager().getDefaultBoardNinePatchTexture(), 
                 game.getTextureManager().getDefaultBoardNinePatchEdgeSize(), 
                 game.getTextureManager().getDefaultBoardNinePatchEdgeSize(), 
@@ -54,57 +54,19 @@ public class PlayScreen extends BasePlayScreen<IdleDemoGame> {
         return layoutConst;
     }
     
-    @Override
+
+
+
     protected void lazyInitLogicContext() {
+        super.lazyInitLogicContext();
+        
         GameEntityFactory gameEntityFactory = new GameEntityFactory(this.layoutConst, this);
-        gameImageDrawer = new GameImageDrawer<>(this, gameEntityFactory);
-        
-        logicFrameListeners.add(constructionControlBoard);
-        gameAreaChangeListeners.add(backgroundImageBox);
-        gameAreaChangeListeners.add(constructionControlBoard);
-        gameAreaChangeListeners.add(gameAreaControlBoard);
-    }
-
-    @Override
-    protected void lazyInitUiRootContext() {
-        
-        storageInfoTable = new StorageInfoBoard<IdleDemoGame>(this);
+        gameImageDrawer.lazyInit(gameEntityFactory);
         storageInfoTable.lazyInit(ResourceType.VALUES_FOR_SHOW_ORDER);
-        uiRootTable.add(storageInfoTable).height(layoutConst.STORAGE_BOARD_BORDER_HEIGHT).fill().row();
-        
-        gameAreaControlBoard = new GameAreaControlBoard<IdleDemoGame>(this, GameArea.values);
-        uiRootTable.add(gameAreaControlBoard).expand().right().row();
-        // impl switchable
-        constructionControlBoard = new FixedConstructionControlBoard(this);
-        uiRootTable.add(constructionControlBoard).height(layoutConst.CONSTRUCION_BOARD_BORDER_HEIGHT).fill();
-        
-        if (game.debugMode) {
-            uiRootTable.debugCell();
-        }
-    }
-    
-    @Override
-    protected void lazyInitBackUiAndPopupUiContent() {
-        
-        this.backgroundImageBox = new BackgroundImageBox<IdleDemoGame>(this);
-        backUiStage.addActor(backgroundImageBox);
-        
-        
-        popUpInfoBoard = new PopupInfoBoard<IdleDemoGame>(this);
-        popupRootTable.add(popUpInfoBoard).bottom().expand().row();
-        // empty image for hold the space
-        popupRootTable.add(new Image()).height(game.LOGIC_HEIGHT / 4);
-        
-        achievementMaskBoard = new AchievementMaskBoard<IdleDemoGame>(this);
-        popupUiStage.addActor(achievementMaskBoard);
+        gameAreaControlBoard.lazyInit(GameArea.values);
     }
 
 
-    @Override
-    public void dispose() {
-
-
-    }
 
 
 }

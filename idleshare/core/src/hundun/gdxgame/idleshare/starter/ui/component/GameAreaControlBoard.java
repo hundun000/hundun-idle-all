@@ -6,39 +6,32 @@ import java.util.Map;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
+import hundun.gdxgame.corelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.idleshare.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.framework.listener.IGameAreaChangeListener;
-import hundun.gdxgame.idleshare.starter.ui.screen.play.BasePlayScreen;
+import hundun.gdxgame.idleshare.starter.ui.screen.play.BaseIdlePlayScreen;
 
 /**
  * @author hundun
  * Created on 2021/11/20
  */
-public class GameAreaControlBoard<T_GAME extends BaseIdleGame> extends Table implements IGameAreaChangeListener {
+public class GameAreaControlBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table implements IGameAreaChangeListener {
 
-    BasePlayScreen<T_GAME> parent;
-    Map<String, GameAreaControlNode<T_GAME>> nodes = new LinkedHashMap<>();
+    BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
+    Map<String, GameAreaControlNode<T_GAME, T_SAVE>> nodes = new LinkedHashMap<>();
 
 
-    public GameAreaControlBoard(BasePlayScreen<T_GAME> parent, List<String> gameAreas) {
+    public GameAreaControlBoard(BaseIdlePlayScreen<T_GAME, T_SAVE> parent) {
         super();
         this.parent = parent;
 //        this.setSize(
 //                WIDTH,
 //                HEIGHT);
 
-        for (String gameArea : gameAreas) {
-            initButtonMap(gameArea, false);
-        }
-
-        rebuildChild(null);
-        if (parent.game.debugMode) {
-            this.debugAll();
-        }
+        
     }
 
     private void initButtonMap(String gameArea, boolean longVersion) {
-        GameAreaControlNode<T_GAME> node = new GameAreaControlNode<>(parent, gameArea, longVersion, !parent.game.drawGameImageAndPlayAudio);
+        GameAreaControlNode<T_GAME, T_SAVE> node = new GameAreaControlNode<>(parent, gameArea, longVersion, false);
         nodes.put(gameArea, node);
         this.add(node).width(parent.getLayoutConst().AREA_BOARD_BORDER_WIDTH).height(parent.getLayoutConst().AREA_BOARD_CELL_HEIGHT).row();
     }
@@ -61,6 +54,18 @@ public class GameAreaControlBoard<T_GAME extends BaseIdleGame> extends Table imp
 
         });
 
+    }
+
+    public void lazyInit(List<String> gameAreas) {
+        for (String gameArea : gameAreas) {
+            initButtonMap(gameArea, false);
+        }
+
+        rebuildChild(null);
+        if (parent.getGame().debugMode) {
+            this.debugAll();
+        }
+        
     }
 
 

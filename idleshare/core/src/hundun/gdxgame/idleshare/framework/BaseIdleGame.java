@@ -3,191 +3,85 @@ package hundun.gdxgame.idleshare.framework;
 import java.util.Collection;
 import java.util.List;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
+import hundun.gdxgame.corelib.base.BaseHundunGame;
 import hundun.gdxgame.idleshare.framework.data.ChildGameConfig;
-import hundun.gdxgame.idleshare.framework.data.StarterData;
-import hundun.gdxgame.idleshare.framework.model.ModelContext;
-import hundun.gdxgame.idleshare.framework.model.construction.BaseConstructionFactory;
-import hundun.gdxgame.idleshare.framework.model.construction.base.BaseConstruction;
+import hundun.gdxgame.idleshare.framework.model.ManagerContext;
+import hundun.gdxgame.idleshare.framework.model.manager.AbstractIdleScreenContext;
 import hundun.gdxgame.idleshare.framework.model.manager.AbstractTextureManager;
-import hundun.gdxgame.idleshare.framework.model.manager.AchievementManager;
 import hundun.gdxgame.idleshare.framework.model.manager.AudioPlayManager;
-import hundun.gdxgame.idleshare.framework.model.manager.BuffManager;
-import hundun.gdxgame.idleshare.framework.model.manager.ConstructionManager;
 import hundun.gdxgame.idleshare.framework.model.manager.EventManager;
-import hundun.gdxgame.idleshare.framework.model.manager.GameEntityManager;
-import hundun.gdxgame.idleshare.framework.model.manager.StorageManager;
-import hundun.gdxgame.idleshare.framework.util.save.ISaveTool;
 import hundun.gdxgame.idleshare.framework.util.text.IGameDictionary;
 import hundun.gdxgame.idleshare.framework.util.text.TextFormatTool;
+import lombok.Getter;
 
 
-public abstract class BaseIdleGame extends Game {
-    public boolean debugMode = false;
-    public boolean drawGameImageAndPlayAudio = true;
-    public int desktopScale = 1;
-    public final int LOGIC_WIDTH;
-    public final int LOGIC_HEIGHT;
-    protected String DEFAULT_SKIN_FILA_PATH = "skins/default/skin/uiskin.json";
-    protected String skinFilePath;
+public abstract class BaseIdleGame<T_SAVE> extends BaseHundunGame<T_SAVE> {
 
-    private SpriteBatch batch;
-    // ------ replace-lombok ------
-    public SpriteBatch getBatch() {
-        return batch;
-    }
-
-    private ModelContext modelContext;
-    // ------ replace-lombok ------
-    public ModelContext getModelContext() {
-        return modelContext;
-    }
-
-    private EventManager eventManager;
-    // ------ replace-lombok ------
-    public EventManager getEventManager() {
-        return eventManager;
-    }
-
-    private AudioPlayManager audioPlayManager;
-    // ------ replace-lombok ------
-    public AudioPlayManager getAudioPlayManager() {
-        return audioPlayManager;
-    }
-
-    protected AbstractTextureManager textureManager;
-    // ------ replace-lombok ------
-    public AbstractTextureManager getTextureManager() {
-        return textureManager;
-    }
-
+    @Getter
+    protected AbstractIdleScreenContext<? extends BaseIdleGame<T_SAVE>, T_SAVE> screenContext;
+    @Getter
+    protected ManagerContext<? extends BaseIdleGame<T_SAVE>, T_SAVE> managerContext;
+    @Getter
+    protected AudioPlayManager audioPlayManager;
+    @Getter
     protected IGameDictionary gameDictionary;
-    // ------ replace-lombok ------
-    public IGameDictionary getGameDictionary() {
-        return gameDictionary;
-    }
-
-    private Skin buttonSkin;
-    // ------ replace-lombok ------
-    public Skin getButtonSkin() {
-        return buttonSkin;
-    }
-
-    private ISaveTool saveTool;
-    // ------ replace-lombok ------
-    public ISaveTool getSaveTool() {
-        return saveTool;
-    }
-
+    @Getter
+    protected EventManager eventManager;
+    @Getter
+    protected AbstractTextureManager textureManager;
+    @Getter
     protected TextFormatTool textFormatTool;
-    // ------ replace-lombok ------
-    public TextFormatTool getTextFormatTool() {
-        return textFormatTool;
+
+    @Getter
+    protected Viewport sharedViewport;
+    
+    public BaseIdleGame(int viewportWidth, int viewportHeight) {
+        super(viewportWidth, viewportHeight);
     }
 
-
-    private StarterData starterData;
-
-    public BaseIdleGame(int LOGIC_WIDTH, int LOGIC_HEIGHT, ISaveTool saveTool) {
-        this.LOGIC_WIDTH = LOGIC_WIDTH;
-        this.LOGIC_HEIGHT = LOGIC_HEIGHT;
-        this.saveTool = saveTool;
-        this.textFormatTool = new TextFormatTool();
-    }
-
+	
 	@Override
-	public void create() {
+	protected void createStage2() {
+	    textureManager.lazyInitOnGameCreateStage2();
+	    screenContext.lazyInit();
+	}
+	
+	
+	@Override
+	protected void createStage3() {
+	    ChildGameConfig childGameConfig = getChildGameConfig();
 
-		this.batch = new SpriteBatch();
 
-		saveTool.lazyInitOnGameCreate();
-		initContexts();
-		contextsLazyInit();
+        managerContext.lazyInitOnGameCreate(childGameConfig);
+        audioPlayManager.lazyInit(childGameConfig.getScreenIdToFilePathMap());
+        
 	}
 
 	public abstract List<String> getGameAreaValues();
 
-	public void loadAndHookSave(boolean load) {
-
-	    if (load) {
-	        saveTool.load(modelContext);
-	        // post
-	        //this.getEventManager().notifyBuffChange(true);
-	        //this.getEventManager().notifyResourceAmountChange(true);
-	    } else {
-	        this.newSaveStarter(modelContext);
-	    }
-
-
-
-
-	}
-
-    /**
-     * 作为新存档，也需要修改ModelContext
-     */
-    public void newSaveStarter(ModelContext modelContext) {
-        Collection<BaseConstruction> constructions = modelContext.getConstructionFactory().getConstructions();
-        for (BaseConstruction construction : constructions) {
-            construction.getSaveData().setLevel(starterData.getConstructionStarterLevelMap().getOrDefault(construction.getId(), 0));
-            if (starterData.getConstructionStarterWorkingLevelMap().getOrDefault(construction.getId(), false)) {
-                construction.getSaveData().setWorkingLevel(starterData.getConstructionStarterLevelMap().getOrDefault(construction.getId(), 0));
-            }
-            construction.updateModifiedValues();
-        }
-    }
-
-
-	protected void initContexts() {
-
-	    if (drawGameImageAndPlayAudio && skinFilePath != null) {
-            this.buttonSkin = new Skin(Gdx.files.internal(skinFilePath));
-        } else {
-            this.buttonSkin = new Skin(Gdx.files.internal(DEFAULT_SKIN_FILA_PATH));
-        }
-
-        this.modelContext = new ModelContext();
-        this.eventManager = new EventManager();
-
-        modelContext.setStorageManager(new StorageManager(this));
-        modelContext.setBuffManager(new BuffManager(this));
-
-        modelContext.setConstructionFactory(new BaseConstructionFactory());
-        modelContext.setAchievementManager(new AchievementManager(this));
-        modelContext.setConstructionManager(new ConstructionManager(this));
-        modelContext.setGameEntityManager(new GameEntityManager(this));
-
-        this.audioPlayManager = new AudioPlayManager(this);
-
-
-	}
-
-
-
-	@Override
-	public void dispose () {
-		batch.dispose();
-		audioPlayManager.dispose();
-	}
-
-
-    private void contextsLazyInit() {
-        ChildGameConfig childGameConfig = getChildGameConfig();
-
-        this.starterData = childGameConfig.getStarterData();
-
-        modelContext.getConstructionFactory().lazyInit(childGameConfig.getConstructions());
-        modelContext.getConstructionManager().lazyInit(childGameConfig.getAreaControlableConstructionIds());
-        modelContext.getGameEntityManager().lazyInit(childGameConfig.getAreaShowEntityByOwnAmountConstructionIds(), childGameConfig.getAreaShowEntityByOwnAmountResourceIds(), childGameConfig.getAreaShowEntityByChangeAmountResourceIds());
-        modelContext.getAchievementManager().lazyInit(childGameConfig.getAchievementPrototypes());
-        audioPlayManager.lazyInit(childGameConfig.getScreenIdToFilePathMap());
-
-
-    }
+//    /**
+//     * 作为新存档，也需要修改ModelContext
+//     */
+//    public void newSaveStarter(ManagerContext modelContext) {
+//        Collection<BaseConstruction> constructions = modelContext.getConstructionFactory().getConstructions();
+//        for (BaseConstruction construction : constructions) {
+//            construction.getSaveData().setLevel(starterData.getConstructionStarterLevelMap().getOrDefault(construction.getId(), 0));
+//            if (starterData.getConstructionStarterWorkingLevelMap().getOrDefault(construction.getId(), false)) {
+//                construction.getSaveData().setWorkingLevel(starterData.getConstructionStarterLevelMap().getOrDefault(construction.getId(), 0));
+//            }
+//            construction.updateModifiedValues();
+//        }
+//    }
 
     protected abstract ChildGameConfig getChildGameConfig();
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        
+        saveHandler.gameSaveCurrent();
+    }
+    
 }

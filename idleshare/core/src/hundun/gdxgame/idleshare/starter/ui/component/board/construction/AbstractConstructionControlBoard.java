@@ -11,14 +11,16 @@ import java.util.stream.Collectors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
-import hundun.gdxgame.idleshare.framework.listener.IGameAreaChangeListener;
-import hundun.gdxgame.idleshare.framework.listener.ILogicFrameListener;
+import hundun.gdxgame.corelib.base.BaseHundunGame;
+import hundun.gdxgame.corelib.starter.listerner.IGameAreaChangeListener;
+import hundun.gdxgame.corelib.starter.listerner.ILogicFrameListener;
+import hundun.gdxgame.idleshare.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.starter.ui.component.board.construction.impl.ConstructionControlNode;
-import hundun.gdxgame.idleshare.starter.ui.screen.play.BasePlayScreen;
+import hundun.gdxgame.idleshare.starter.ui.screen.play.BaseIdlePlayScreen;
 
-public abstract class AbstractConstructionControlBoard extends Table implements ILogicFrameListener, IGameAreaChangeListener {
-    protected BasePlayScreen<?> parent;
+public abstract class AbstractConstructionControlBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table implements ILogicFrameListener, IGameAreaChangeListener {
+    protected BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
     /**
      * 显示在当前screen的Construction集合。以ConstructionView形式存在。
      */
@@ -26,7 +28,7 @@ public abstract class AbstractConstructionControlBoard extends Table implements 
 
 
 
-    public AbstractConstructionControlBoard(BasePlayScreen<?> parent) {
+    public AbstractConstructionControlBoard(BaseIdlePlayScreen<T_GAME, T_SAVE> parent) {
         super();
         this.parent = parent;
     }
@@ -34,7 +36,7 @@ public abstract class AbstractConstructionControlBoard extends Table implements 
     @Override
     public void onLogicFrame() {
         constructionControlNodes.forEach(item -> item.onLogicFrame());
-        parent.game.getModelContext().getConstructionManager().logicFrameForAllConstructionModels();
+        parent.getGame().getManagerContext().getConstructionManager().logicFrameForAllConstructionModels();
 
     }
 
@@ -42,7 +44,7 @@ public abstract class AbstractConstructionControlBoard extends Table implements 
     public void onGameAreaChange(String last, String current) {
 
 
-        List<BaseConstruction> newConstructions = parent.game.getModelContext().getConstructionManager().getAreaShownConstructionsOrEmpty(current);
+        List<BaseConstruction> newConstructions = parent.getGame().getManagerContext().getConstructionManager().getAreaShownConstructionsOrEmpty(current);
 
         int childrenSize = initChild(newConstructions.size());
 

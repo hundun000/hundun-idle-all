@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import hundun.gdxgame.idleshare.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.framework.model.ModelContext;
+import hundun.gdxgame.idleshare.framework.model.ManagerContext;
 import hundun.gdxgame.idleshare.framework.model.construction.base.BaseConstruction;
 
 /**
@@ -36,7 +36,7 @@ public class ConstructionManager {
     Map<String, List<BaseConstruction>> areaControlableConstructions;
 
     public void lazyInit(Map<String, List<String>> areaControlableConstructionIds) {
-        ModelContext modelContext = game.getModelContext();
+        ManagerContext modelContext = game.getManagerContext();
         areaControlableConstructions = new HashMap<>();
         if (areaControlableConstructionIds != null) {
             for (Entry<String, List<String>> entry : areaControlableConstructionIds.entrySet()) {

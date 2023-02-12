@@ -8,33 +8,26 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 
+import hundun.gdxgame.corelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idleshare.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.framework.data.ConstructionSaveData;
 import hundun.gdxgame.idleshare.framework.listener.IBuffChangeListener;
-import hundun.gdxgame.idleshare.framework.listener.ILogicFrameListener;
 import hundun.gdxgame.idleshare.framework.model.construction.base.DescriptionPackage.ILevelDescroptionProvider;
+import lombok.Getter;
+import lombok.Setter;
 
 public abstract class BaseConstruction implements ILogicFrameListener, IBuffChangeListener {
 
     protected static final int DEFAULT_MAX_LEVEL = 99;
+    @Getter
+    @Setter
     protected int maxLevel = DEFAULT_MAX_LEVEL;
-    // ------ replace-lombok ------
-    public int getMaxLevel() {
-        return maxLevel;
-    }
-    public void setMaxLevel(int maxLevel) {
-        this.maxLevel = maxLevel;
-    }
+
 
     protected static final int DEFAULT_MAX_DRAW_NUM = 5;
-    // ------ replace-lombok ------
+    @Getter
+    @Setter
     protected int maxDrawNum = DEFAULT_MAX_DRAW_NUM;
-    public int getMaxDrawNum() {
-        return maxDrawNum;
-    }
-    public void setMaxDrawNum(int maxDrawNum) {
-        this.maxDrawNum = maxDrawNum;
-    }
 
     public static final DescriptionPackage WORKING_LEVEL_AUTO_DESCRIPTION_PACKAGE = new DescriptionPackage(
             "AutoCost", "AutoGain", "UpgradeCost", "Upgrade",
@@ -63,78 +56,51 @@ public abstract class BaseConstruction implements ILogicFrameListener, IBuffChan
     /**
      * NotNull
      */
+    @Getter
+    @Setter
     protected ConstructionSaveData saveData;
-    // ------ replace-lombok ------
-    public ConstructionSaveData getSaveData() {
-        return saveData;
-    }
-    public void setSaveData(ConstructionSaveData saveData) {
-        this.saveData = saveData;
-    }
 
+    @Getter
     public String name;
-    // ------ replace-lombok ------
-    public String getName() {
-        return name;
-    }
 
+    @Getter
     public String id;
-    // ------ replace-lombok ------
-    public String getId() {
-        return id;
-    }
 
+    @Getter
     public String detailDescroptionConstPart;
-    // ------ replace-lombok ------
-    public String getDetailDescroptionConstPart() {
-        return detailDescroptionConstPart;
-    }
 
+    @Getter
     public DescriptionPackage descriptionPackage;
-    // ------ replace-lombok ------
-    public DescriptionPackage getDescriptionPackage() {
-        return descriptionPackage;
-    }
+
 
     /**
      * NotNull
      */
+    @Getter
+    @Setter
     protected UpgradeComponent upgradeComponent;
-    // ------ replace-lombok ------
-    public UpgradeComponent getUpgradeComponent() {
-        return upgradeComponent;
-    }
-    public void setUpgradeComponent(UpgradeComponent upgradeComponent) {
-        this.upgradeComponent = upgradeComponent;
-    }
+
 
     /**
      * NotNull
      */
+    @Getter
+    @Setter
     protected OutputComponent outputComponent;
-    // ------ replace-lombok ------
-    public OutputComponent getOutputComponent() {
-        return outputComponent;
-    }
-    public void setOutputComponent(OutputComponent outputComponent) {
-        this.outputComponent = outputComponent;
-    }
 
     /**
      * NotNull
      */
+    @Getter
+    @Setter
     protected LevelComponent levelComponent;
-    // ------ replace-lombok ------
-    public LevelComponent getLevelComponent() {
-        return levelComponent;
-    }
-    public void setLevelComponent(LevelComponent levelComponent) {
-        this.levelComponent = levelComponent;
-    }
+
 
     public void lazyInitDescription() {
         outputComponent.lazyInitDescription();
         upgradeComponent.lazyInitDescription();
+        
+        updateModifiedValues();
     }
 
     public BaseConstruction(BaseIdleGame game, String id) {
@@ -143,9 +109,6 @@ public abstract class BaseConstruction implements ILogicFrameListener, IBuffChan
         this.id = id;
 
         game.getEventManager().registerListener(this);
-        if(game.debugMode) {
-            printDebugInfoAfterConstructed();
-        }
     }
 
     public abstract void onClick();

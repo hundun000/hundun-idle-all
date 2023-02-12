@@ -9,9 +9,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import hundun.gdxgame.idleshare.framework.model.manager.AbstractTextureManager;
 
-public class TextureManager extends AbstractTextureManager {
-
-    public TextureManager() {
+public class DemoTextureManager extends AbstractTextureManager {
+    
+    
+    @Override
+    public void lazyInitOnGameCreateStage2() {
 
         winTexture = new Texture(Gdx.files.internal("win.png"));
         menuTexture = new Texture(Gdx.files.internal("menu.png"));

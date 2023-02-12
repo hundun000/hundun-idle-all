@@ -24,9 +24,9 @@ public class BaseClickGatherConstruction extends BaseConstruction {
     
     private void doGather() {
         if (outputComponent.hasCost()) {
-            game.getModelContext().getStorageManager().modifyAllResourceNum(outputComponent.getOutputCostPack().getModifiedValues(), false);
+            game.getManagerContext().getStorageManager().modifyAllResourceNum(outputComponent.getOutputCostPack().getModifiedValues(), false);
         }
-        game.getModelContext().getStorageManager().modifyAllResourceNum(outputComponent.getOutputGainPack().getModifiedValues(), true);
+        game.getManagerContext().getStorageManager().modifyAllResourceNum(outputComponent.getOutputGainPack().getModifiedValues(), true);
     }
 
     @Override

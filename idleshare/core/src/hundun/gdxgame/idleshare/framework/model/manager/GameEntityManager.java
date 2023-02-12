@@ -120,7 +120,7 @@ public class GameEntityManager {
     }
 
     private void checkResourceEntityByOwnAmount(String resourceId, BaseGameEntityFactory gameEntityFactory) {
-        long resourceNum = game.getModelContext().getStorageManager().getResourceNumOrZero(resourceId);
+        long resourceNum = game.getManagerContext().getStorageManager().getResourceNumOrZero(resourceId);
         int drawNum = gameEntityFactory.calculateResourceDrawNum(resourceId, resourceNum);
 
         gameEntitiesOfResourceIds.computeIfAbsent(resourceId, k -> new LinkedList<>());
@@ -158,7 +158,7 @@ public class GameEntityManager {
     }
 
     private void checkConstructionEntityByOwnAmount(String id, BaseGameEntityFactory gameEntityFactory) {
-        BaseConstruction construction = game.getModelContext().getConstructionFactory().getConstruction(id);
+        BaseConstruction construction = game.getManagerContext().getConstructionFactory().getConstruction(id);
         int resourceNum = construction.getSaveData().getWorkingLevel();
         int MAX_DRAW_NUM = construction.getMaxDrawNum();
         int drawNum = gameEntityFactory.calculateConstructionDrawNum(id, resourceNum, MAX_DRAW_NUM);

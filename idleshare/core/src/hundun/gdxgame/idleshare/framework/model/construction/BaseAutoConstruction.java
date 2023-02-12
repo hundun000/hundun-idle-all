@@ -7,7 +7,7 @@ import com.badlogic.gdx.Gdx;
 import hundun.gdxgame.idleshare.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.framework.model.resource.ResourcePair;
-import hundun.gdxgame.idleshare.starter.ui.screen.play.BasePlayScreen;
+import hundun.gdxgame.idleshare.starter.ui.screen.play.BaseIdlePlayScreen;
 
 /**
  * @author hundun
@@ -44,7 +44,7 @@ public class BaseAutoConstruction extends BaseConstruction {
 
     private void doUpgrade() {
         List<ResourcePair> upgradeCostRule = upgradeComponent.getUpgradeCostPack().getModifiedValues();
-        game.getModelContext().getStorageManager().modifyAllResourceNum(upgradeCostRule, false);
+        game.getManagerContext().getStorageManager().modifyAllResourceNum(upgradeCostRule, false);
         saveData.setLevel(saveData.getLevel() + 1);
         if (!levelComponent.isWorkingLevelChangable()) {
             saveData.setWorkingLevel(saveData.getLevel());
@@ -61,7 +61,7 @@ public class BaseAutoConstruction extends BaseConstruction {
     @Override
     public void onLogicFrame() {
         autoOutputProgress++;
-        int logicFrameCountMax = outputComponent.getAutoOutputSecondCountMax() * BasePlayScreen.LOGIC_FRAME_PER_SECOND;
+        int logicFrameCountMax = outputComponent.getAutoOutputSecondCountMax() * BaseIdlePlayScreen.LOGIC_FRAME_PER_SECOND;
         if (autoOutputProgress >= logicFrameCountMax) {
             autoOutputProgress = 0;
             tryAutoOutputOnce();
@@ -75,10 +75,10 @@ public class BaseAutoConstruction extends BaseConstruction {
         }
         Gdx.app.log(this.id, "AutoOutput");
         if (outputComponent.hasCost()) {
-            game.getModelContext().getStorageManager().modifyAllResourceNum(outputComponent.getOutputCostPack().getModifiedValues(), false);
+            game.getManagerContext().getStorageManager().modifyAllResourceNum(outputComponent.getOutputCostPack().getModifiedValues(), false);
         }
         if (outputComponent.getOutputGainPack() != null) {
-            game.getModelContext().getStorageManager().modifyAllResourceNum(outputComponent.getOutputGainPack().getModifiedValues(), true);
+            game.getManagerContext().getStorageManager().modifyAllResourceNum(outputComponent.getOutputGainPack().getModifiedValues(), true);
         }
     }
 

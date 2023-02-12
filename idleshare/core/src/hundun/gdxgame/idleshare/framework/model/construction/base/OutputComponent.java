@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import hundun.gdxgame.idleshare.framework.model.resource.ResourcePack;
 import hundun.gdxgame.idleshare.framework.model.resource.ResourcePair;
+import lombok.Setter;
+import lombok.Getter;
 
 
 /**
@@ -17,39 +19,23 @@ public class OutputComponent {
     /**
      * 对于Click型，即为基础点击收益；对于Auto型，即为基础自动收益；
      */
+    @Getter
+    @Setter
     protected ResourcePack outputGainPack;
-    // ------ replace-lombok ------
-    public ResourcePack getOutputGainPack() {
-        return outputGainPack;
-    }
-    public void setOutputGainPack(ResourcePack outputGainPack) {
-        this.outputGainPack = outputGainPack;
-    }
+
 
     /**
      * output行为所需要支付的费用; 无费用时为null
      */
+    @Getter
+    @Setter
     protected ResourcePack outputCostPack;
-    // ------ replace-lombok ------
-    public ResourcePack getOutputCostPack() {
-        return outputCostPack;
-    }
-    public void setOutputCostPack(ResourcePack outputCostPack) {
-        this.outputCostPack = outputCostPack;
-    }
+
 
     private static final int DEFAULT_AUTO_OUPUT_SECOND_MAX = 1;
+    @Getter
+    @Setter
     private int autoOutputSecondCountMax = DEFAULT_AUTO_OUPUT_SECOND_MAX;
-    // ------ replace-lombok ------
-    public void setAutoOutputSecondCountMax(int autoOutputSecondCountMax) {
-        this.autoOutputSecondCountMax = autoOutputSecondCountMax;
-    }
-    public int getAutoOutputSecondCountMax() {
-        return autoOutputSecondCountMax;
-    }
-
-
-
 
     public OutputComponent(BaseConstruction construction) {
         this.construction = construction;
@@ -111,6 +97,6 @@ public class OutputComponent {
         }
 
         List<ResourcePair> compareTarget = outputCostPack.getModifiedValues();
-        return construction.game.getModelContext().getStorageManager().isEnough(compareTarget);
+        return construction.game.getManagerContext().getStorageManager().isEnough(compareTarget);
     }
 }

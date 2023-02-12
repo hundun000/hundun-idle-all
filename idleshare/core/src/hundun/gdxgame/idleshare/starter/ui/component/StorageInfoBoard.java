@@ -9,14 +9,15 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
+import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.idleshare.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.starter.ui.screen.play.BasePlayScreen;
+import hundun.gdxgame.idleshare.starter.ui.screen.play.BaseIdlePlayScreen;
 
 /**
  * @author hundun
  * Created on 2021/11/05
  */
-public class StorageInfoBoard<T_GAME extends BaseIdleGame> extends Table {
+public class StorageInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table {
 
     private static int NODE_HEIGHT = 25;
     private static int NODE_WIDTH = 120;
@@ -25,7 +26,7 @@ public class StorageInfoBoard<T_GAME extends BaseIdleGame> extends Table {
 
     List<String> shownOrders;
     Set<String> shownTypes = new HashSet<>();
-    BasePlayScreen<T_GAME> parent;
+    BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
 
     List<ResourceAmountPairNode<T_GAME>> nodes = new ArrayList<>();
 
@@ -37,15 +38,15 @@ public class StorageInfoBoard<T_GAME extends BaseIdleGame> extends Table {
     //Label mainLabel;
 
 
-    public StorageInfoBoard(BasePlayScreen<T_GAME> parent) {
+    public StorageInfoBoard(BaseIdlePlayScreen<T_GAME, T_SAVE> parent) {
         this.parent = parent;
-        this.setBackground(BasePlayScreen.createBorderBoard(
+        this.setBackground(DrawableFactory.createBorderBoard(
                 25,
                 10,
                 0.7f, 1));
 
 
-        if (parent.game.debugMode) {
+        if (parent.getGame().debugMode) {
             this.debugAll();
         }
     }
@@ -59,7 +60,7 @@ public class StorageInfoBoard<T_GAME extends BaseIdleGame> extends Table {
         for (int i = 0; i < shownOrders.size(); i++) {
             String resourceType = shownOrders.get(i);
             if (shownTypes.contains(resourceType)) {
-                ResourceAmountPairNode<T_GAME> node = new ResourceAmountPairNode<>(parent.game, resourceType);
+                ResourceAmountPairNode<T_GAME> node = new ResourceAmountPairNode<>(parent.getGame(), resourceType);
                 nodes.add(node);
                 shownTypes.add(resourceType);
                 Cell<ResourceAmountPairNode<T_GAME>> cell = this.add(node).width(NODE_WIDTH).height(NODE_HEIGHT);
@@ -85,14 +86,14 @@ public class StorageInfoBoard<T_GAME extends BaseIdleGame> extends Table {
 //                .collect(Collectors.joining("    "));
 //        text += "\nBuffs = " + parent.game.getModelContext().getBuffManager().getBuffAmounts();
 //        mainLabel.setText(text);
-        boolean needRebuildCells = !shownTypes.equals(parent.game.getModelContext().getStorageManager().getUnlockedResourceTypes());
+        boolean needRebuildCells = !shownTypes.equals(parent.getGame().getManagerContext().getStorageManager().getUnlockedResourceTypes());
         if (needRebuildCells) {
             shownTypes.clear();
-            shownTypes.addAll(parent.game.getModelContext().getStorageManager().getUnlockedResourceTypes());
+            shownTypes.addAll(parent.getGame().getManagerContext().getStorageManager().getUnlockedResourceTypes());
             rebuildCells();
         }
 
-        nodes.stream().forEach(node -> node.update(parent.game.getModelContext().getStorageManager().getResourceNumOrZero(node.getResourceType())));
+        nodes.stream().forEach(node -> node.update(parent.getGame().getManagerContext().getStorageManager().getResourceNumOrZero(node.getResourceType())));
     }
 
     @Override
