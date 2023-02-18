@@ -3,11 +3,12 @@ package hundun.gdxgame.idledemo.logic;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import hundun.gdxgame.corelib.base.save.ISaveTool;
-import hundun.gdxgame.corelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.corelib.starter.StarterSaveHandler;
-import hundun.gdxgame.idleshare.framework.data.ConstructionSaveData;
-import hundun.gdxgame.idleshare.framework.data.GameplaySaveData;
+import hundun.gdxgame.gamelib.base.IFrontEnd;
+import hundun.gdxgame.gamelib.base.save.ISaveTool;
+import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
+import hundun.gdxgame.gamelib.starter.save.StarterSaveHandler;
+import hundun.gdxgame.idleshare.gamelib.framework.data.ConstructionSaveData;
+import hundun.gdxgame.idleshare.gamelib.framework.data.GameplaySaveData;
 
 /**
  * @author hundun
@@ -15,8 +16,8 @@ import hundun.gdxgame.idleshare.framework.data.GameplaySaveData;
  */
 public class DemoSaveHandler extends StarterSaveHandler<RootSaveData, Void, GameplaySaveData> {
 
-    public DemoSaveHandler(ISaveTool<RootSaveData> saveTool) {
-        super(RootSaveData.Factory.INSTANCE, saveTool);
+    public DemoSaveHandler(IFrontEnd frontEnd, ISaveTool<RootSaveData> saveTool) {
+        super(frontEnd, RootSaveData.Factory.INSTANCE, saveTool);
 
     }
 

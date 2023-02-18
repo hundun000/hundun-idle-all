@@ -1,0 +1,17 @@
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+sourceSets.main.java.srcDirs = [ "src/" ]
+
+eclipse.project.name = appName + "-gamelib"
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            // useless for jitpack: groupId = GROUP
+            artifactId = ARTIFACT_ID_START + "-gamelib"
+            // useless for jitpack: version = VERSION
+
+            from components.java
+        }
+    }
+}

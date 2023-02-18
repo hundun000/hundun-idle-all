@@ -1,7 +1,8 @@
 package hundun.gdxgame.idledemo.logic;
 
-import hundun.gdxgame.corelib.starter.StarterSaveHandler.IFactory;
-import hundun.gdxgame.idleshare.framework.data.GameplaySaveData;
+
+import hundun.gdxgame.gamelib.starter.save.StarterSaveHandler.IFactory;
+import hundun.gdxgame.idleshare.gamelib.framework.data.GameplaySaveData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

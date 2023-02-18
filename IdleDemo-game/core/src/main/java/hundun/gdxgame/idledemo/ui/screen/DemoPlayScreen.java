@@ -18,18 +18,18 @@ import hundun.gdxgame.idledemo.logic.GameArea;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.entity.GameEntityFactory;
-import hundun.gdxgame.idleshare.framework.model.AchievementPrototype;
-import hundun.gdxgame.idleshare.framework.model.construction.base.BaseConstruction;
-import hundun.gdxgame.idleshare.starter.ui.component.AchievementMaskBoard;
-import hundun.gdxgame.idleshare.starter.ui.component.BackgroundImageBox;
-import hundun.gdxgame.idleshare.starter.ui.component.GameAreaControlBoard;
-import hundun.gdxgame.idleshare.starter.ui.component.GameImageDrawer;
-import hundun.gdxgame.idleshare.starter.ui.component.PopupInfoBoard;
-import hundun.gdxgame.idleshare.starter.ui.component.StorageInfoBoard;
-import hundun.gdxgame.idleshare.starter.ui.component.board.construction.impl.fixed.FixedConstructionControlBoard;
-import hundun.gdxgame.idleshare.starter.ui.component.board.construction.impl.scroll.ScrollConstructionControlBoard;
-import hundun.gdxgame.idleshare.starter.ui.screen.play.BaseIdlePlayScreen;
-import hundun.gdxgame.idleshare.starter.ui.screen.play.PlayScreenLayoutConst;
+import hundun.gdxgame.idleshare.core.starter.ui.component.AchievementMaskBoard;
+import hundun.gdxgame.idleshare.core.starter.ui.component.BackgroundImageBox;
+import hundun.gdxgame.idleshare.core.starter.ui.component.GameAreaControlBoard;
+import hundun.gdxgame.idleshare.core.starter.ui.component.GameImageDrawer;
+import hundun.gdxgame.idleshare.core.starter.ui.component.PopupInfoBoard;
+import hundun.gdxgame.idleshare.core.starter.ui.component.StorageInfoBoard;
+import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.fixed.FixedConstructionControlBoard;
+import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.scroll.ScrollConstructionControlBoard;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
+import hundun.gdxgame.idleshare.gamelib.framework.model.AchievementPrototype;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
 /**
  * @author hundun

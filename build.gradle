@@ -31,7 +31,7 @@ allprojects {
         gdxVersion = '1.10.0'
         gwtFrameworkVersion = '2.8.2'
         
-        hundunLibVersion = '01211c6bdf'
+        hundunLibVersion = '680cc7277a'
     }
 
     repositories {
@@ -41,11 +41,23 @@ allprojects {
 
 }
 
+project(":idleshare:gamelib") {
+    
+    dependencies {
+        api "com.github.hundun000.libgdx-hundun-lib:gamelib:$hundunLibVersion"
+
+        testCompile "junit:junit:4.11"
+        compileOnly 'org.projectlombok:lombok:1.18.4'
+        annotationProcessor 'org.projectlombok:lombok:1.18.4'
+    }
+}
+
 
 project(":idleshare:core") {
     
     dependencies {
-        api "com.github.hundun000:libgdx-hundun-lib:$hundunLibVersion"
+        api project(":idleshare:gamelib")
+        api "com.github.hundun000.libgdx-hundun-lib:corelib:$hundunLibVersion"
 
         testCompile "junit:junit:4.11"
         compileOnly 'org.projectlombok:lombok:1.18.4'

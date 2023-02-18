@@ -8,24 +8,27 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import hundun.gdxgame.idledemo.logic.GameDictionary;
 import hundun.gdxgame.idledemo.logic.DemoTextureManager;
-import hundun.gdxgame.corelib.base.save.ISaveTool;
-import hundun.gdxgame.corelib.starter.StarterSaveHandler.ISubGameplaySaveHandler;
+import hundun.gdxgame.gamelib.base.save.ISaveTool;
+import hundun.gdxgame.idledemo.logic.BuiltinConstructionsLoader;
 import hundun.gdxgame.idledemo.logic.DemoSaveHandler;
 import hundun.gdxgame.idledemo.logic.GameArea;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.screen.DemoMenuScreen;
 import hundun.gdxgame.idledemo.ui.screen.DemoScreenContext;
-import hundun.gdxgame.idleshare.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.framework.data.ChildGameConfig;
-import hundun.gdxgame.idleshare.framework.data.GameplaySaveData;
-import hundun.gdxgame.idleshare.framework.model.ManagerContext;
-import hundun.gdxgame.idleshare.framework.model.construction.base.BaseConstruction;
-import hundun.gdxgame.idleshare.framework.model.manager.AudioPlayManager;
-import hundun.gdxgame.idleshare.framework.model.manager.EventManager;
-import hundun.gdxgame.idleshare.framework.util.text.TextFormatTool;
+import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
+import hundun.gdxgame.idleshare.core.framework.model.ManagerContext;
+import hundun.gdxgame.idleshare.core.framework.model.manager.AudioPlayManager;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
+import hundun.gdxgame.idleshare.gamelib.context.IdleGamePlayContext;
+import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
+import hundun.gdxgame.idleshare.gamelib.framework.data.GameplaySaveData;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.BaseConstructionFactory;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
+import hundun.gdxgame.idleshare.gamelib.framework.model.manager.EventManager;
+import hundun.gdxgame.idleshare.gamelib.framework.util.text.TextFormatTool;
 
 
-public class DemoIdleGame extends BaseIdleGame<RootSaveData> implements ISubGameplaySaveHandler<GameplaySaveData>{
+public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
 
 
     
@@ -37,20 +40,15 @@ public class DemoIdleGame extends BaseIdleGame<RootSaveData> implements ISubGame
         
         this.sharedViewport = new ScreenViewport();
         this.textFormatTool = new TextFormatTool();
-        this.saveHandler = new DemoSaveHandler(saveTool);
+        this.saveHandler = new DemoSaveHandler(frontend, saveTool);
         this.mainSkinFilePath = "skins/default/skin/uiskin.json";
-        this.gameDictionary = new GameDictionary();
         this.textureManager = new DemoTextureManager();
         this.screenContext = new DemoScreenContext(this);
         this.managerContext = new ManagerContext<>(this);
-        this.eventManager = new EventManager();
         this.audioPlayManager = new AudioPlayManager(this);
+        this.childGameConfig = new DemoChildGameConfig();
         
-    }
-    
-    @Override
-    protected ChildGameConfig getChildGameConfig() {
-        return new DemoChildGameConfig(this);
+        
     }
 
     @Override
@@ -59,41 +57,27 @@ public class DemoIdleGame extends BaseIdleGame<RootSaveData> implements ISubGame
     }
     
     @Override
+    protected void createStage1() {
+        super.createStage1();
+        
+        this.gamePlayContext = new IdleGamePlayContext(
+                frontend,
+                new GameDictionary(),
+                new BaseConstructionFactory(BuiltinConstructionsLoader.initProviders()),
+                BaseIdlePlayScreen.LOGIC_FRAME_PER_SECOND,
+                childGameConfig
+                );
+    }
+    
+    @Override
     protected void createStage3() {
         super.createStage3();
         
-        this.getSaveHandler().registerSubHandler(this);
+        this.getSaveHandler().registerSubHandler(gamePlayContext);
         
         screenManager.pushScreen(DemoMenuScreen.class.getSimpleName(), null);
         getAudioPlayManager().intoScreen(DemoMenuScreen.class.getSimpleName());
     }
 
-    @Override
-    public void applyGameSaveData(GameplaySaveData gameplaySaveData) {
-        Collection<BaseConstruction> constructions = managerContext.getConstructionFactory().getConstructions();
-        for (BaseConstruction construction : constructions) {
-            if (gameplaySaveData.getConstructionSaveDataMap().containsKey(construction.id)) {
-                construction.setSaveData(gameplaySaveData.getConstructionSaveDataMap().get(construction.id));
-                construction.updateModifiedValues();
-            }
-        }
-        managerContext.getStorageManager().setUnlockedResourceTypes(gameplaySaveData.getUnlockedResourceTypes());
-        managerContext.getStorageManager().setOwnResoueces(gameplaySaveData.getOwnResoueces());
-        managerContext.getAchievementManager().setUnlockedAchievementNames(gameplaySaveData.getUnlockedAchievementNames());
-    }
-
-    @Override
-    public void currentSituationToSaveData(GameplaySaveData gameplaySaveData) {
-        Collection<BaseConstruction> constructions = managerContext.getConstructionFactory().getConstructions();
-        gameplaySaveData.setConstructionSaveDataMap(constructions.stream()
-                .collect(Collectors.toMap(
-                        it -> it.getId(), 
-                        it -> it.getSaveData()
-                        ))
-                );
-        gameplaySaveData.setUnlockedResourceTypes(managerContext.getStorageManager().getUnlockedResourceTypes());
-        gameplaySaveData.setOwnResoueces(managerContext.getStorageManager().getOwnResoueces());
-        gameplaySaveData.setUnlockedAchievementNames(managerContext.getAchievementManager().getUnlockedAchievementNames());
-    }
     
 }

@@ -8,14 +8,14 @@ import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.logic.ConstructionId;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.ui.screen.DemoPlayScreen;
-import hundun.gdxgame.idleshare.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.framework.model.entity.BaseGameEntityFactory;
-import hundun.gdxgame.idleshare.framework.model.entity.GameEntity;
-import hundun.gdxgame.idleshare.framework.model.entity.RandomMoveEntity;
-import hundun.gdxgame.idleshare.starter.ui.component.GameAreaControlBoard;
-import hundun.gdxgame.idleshare.starter.ui.component.StorageInfoBoard;
-import hundun.gdxgame.idleshare.starter.ui.screen.play.BaseIdlePlayScreen;
-import hundun.gdxgame.idleshare.starter.ui.screen.play.PlayScreenLayoutConst;
+import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
+import hundun.gdxgame.idleshare.core.framework.model.entity.BaseGameEntityFactory;
+import hundun.gdxgame.idleshare.core.framework.model.entity.GameEntity;
+import hundun.gdxgame.idleshare.core.framework.model.entity.RandomMoveEntity;
+import hundun.gdxgame.idleshare.core.starter.ui.component.GameAreaControlBoard;
+import hundun.gdxgame.idleshare.core.starter.ui.component.StorageInfoBoard;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
 
 /**
  * @author hundun

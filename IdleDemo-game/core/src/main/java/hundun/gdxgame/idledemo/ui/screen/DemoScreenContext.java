@@ -2,7 +2,7 @@ package hundun.gdxgame.idledemo.ui.screen;
 
 import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
-import hundun.gdxgame.idleshare.framework.model.manager.AbstractIdleScreenContext;
+import hundun.gdxgame.idleshare.core.framework.model.manager.AbstractIdleScreenContext;
 
 /**
  * @author hundun

@@ -1,6 +1,7 @@
 include 'idleshare:core'
 include 'idleshare:desktop'
 include 'idleshare:html'
+include 'idleshare:gamelib'
 include 'IdleDemo-game:desktop'
 include 'IdleDemo-game:core'
 include 'IdleDemo-game:html'

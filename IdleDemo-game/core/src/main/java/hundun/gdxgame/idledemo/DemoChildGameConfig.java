@@ -8,7 +8,7 @@ import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 
-import hundun.gdxgame.corelib.base.util.JavaFeatureForGwt;
+import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idledemo.logic.BuffId;
 import hundun.gdxgame.idledemo.logic.BuiltinConstructionsLoader;
 import hundun.gdxgame.idledemo.logic.ConstructionId;
@@ -16,9 +16,9 @@ import hundun.gdxgame.idledemo.logic.GameArea;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.ui.screen.DemoMenuScreen;
 import hundun.gdxgame.idledemo.ui.screen.DemoPlayScreen;
-import hundun.gdxgame.idleshare.framework.data.ChildGameConfig;
-import hundun.gdxgame.idleshare.framework.data.GameplaySaveData;
-import hundun.gdxgame.idleshare.framework.model.AchievementPrototype;
+import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
+import hundun.gdxgame.idleshare.gamelib.framework.data.GameplaySaveData;
+import hundun.gdxgame.idleshare.gamelib.framework.model.AchievementPrototype;
 
 /**
  * @author hundun
@@ -26,10 +26,10 @@ import hundun.gdxgame.idleshare.framework.model.AchievementPrototype;
  */
 public class DemoChildGameConfig extends ChildGameConfig {
     
-    public DemoChildGameConfig(DemoIdleGame game) {
+    public DemoChildGameConfig() {
 
-        BuiltinConstructionsLoader builtinConstructionsLoader = new BuiltinConstructionsLoader(game);
-        this.setConstructions(builtinConstructionsLoader.load());
+//        BuiltinConstructionsLoader builtinConstructionsLoader = new BuiltinConstructionsLoader(game);
+//        this.setConstructions(builtinConstructionsLoader.load());
         
         Map<String, List<String>> areaShownConstructionIds = new HashMap<>(); 
         areaShownConstructionIds.put(GameArea.AREA_COOKIE, JavaFeatureForGwt.arraysAsList(

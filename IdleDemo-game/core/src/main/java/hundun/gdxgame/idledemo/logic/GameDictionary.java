@@ -1,6 +1,6 @@
 package hundun.gdxgame.idledemo.logic;
 
-import hundun.gdxgame.idleshare.framework.util.text.IGameDictionary;
+import hundun.gdxgame.idleshare.gamelib.framework.util.text.IGameDictionary;
 
 /**
  * @author hundun
