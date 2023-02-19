@@ -22,12 +22,10 @@ public class GameAreaControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> ex
     BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
     //Image image;
     Label label;
-    boolean debugType;
     String gameArea;
 
-    public GameAreaControlNode(BaseIdlePlayScreen<T_GAME, T_SAVE> parent, String gameArea, boolean longVersion, boolean debugType) {
+    public GameAreaControlNode(BaseIdlePlayScreen<T_GAME, T_SAVE> parent, String gameArea, boolean longVersion) {
         this.parent = parent;
-        this.debugType = debugType;
         this.gameArea = gameArea;
 
         rebuildImage(longVersion);
@@ -42,13 +40,10 @@ public class GameAreaControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> ex
     }
 
     private Drawable rebuildImage(boolean longVersion) {
-        if (!debugType) {
-            Drawable drawable = new SpriteDrawable(new Sprite(parent.getGame().getTextureManager().getGameAreaTexture(gameArea, longVersion)));
-            return drawable;
-        } else {
-            Drawable drawable = DrawableFactory.createBorderBoard(5, 5, 0.8f, longVersion ? 0 : 2);
-            return drawable;
-        }
+
+        Drawable drawable = new SpriteDrawable(new Sprite(parent.getGame().getTextureManager().getGameAreaTexture(gameArea, longVersion)));
+        return drawable;
+
     }
 
     public void changeVersion(boolean longVersion) {

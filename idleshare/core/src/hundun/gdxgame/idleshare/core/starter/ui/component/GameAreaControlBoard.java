@@ -31,7 +31,7 @@ public class GameAreaControlBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> e
     }
 
     private void initButtonMap(String gameArea, boolean longVersion) {
-        GameAreaControlNode<T_GAME, T_SAVE> node = new GameAreaControlNode<>(parent, gameArea, longVersion, false);
+        GameAreaControlNode<T_GAME, T_SAVE> node = new GameAreaControlNode<>(parent, gameArea, longVersion);
         nodes.put(gameArea, node);
         this.add(node).width(parent.getLayoutConst().AREA_BOARD_BORDER_WIDTH).height(parent.getLayoutConst().AREA_BOARD_CELL_HEIGHT).row();
     }

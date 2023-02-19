@@ -36,7 +36,7 @@ public abstract class AbstractConstructionControlBoard<T_GAME extends BaseIdleGa
 
     @Override
     public void onLogicFrame() {
-        constructionControlNodes.forEach(item -> item.onLogicFrame());
+        constructionControlNodes.forEach(item -> item.update());
     }
 
     @Override

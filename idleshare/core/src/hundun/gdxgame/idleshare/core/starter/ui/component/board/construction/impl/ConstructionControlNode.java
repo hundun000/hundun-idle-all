@@ -152,9 +152,10 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
                 initAsNormalStyle();
             }
         }
+        update();
     }
 
-    public void onLogicFrame() {
+    public void update() {
         // ------ update show-state ------
         if (model == null) {
             setVisible(false);
