@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import hundun.gdxgame.gamelib.base.IFrontEnd;
+import hundun.gdxgame.gamelib.base.IFrontend;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.gamelib.starter.save.StarterSaveHandler.ISubGameplaySaveHandler;
 import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
@@ -31,7 +31,7 @@ public class IdleGameplayExport implements ILogicFrameListener, ISubGameplaySave
     private IdleGameplayContext gameplayContext;
     
     public IdleGameplayExport(
-            IFrontEnd frontEnd, 
+            IFrontend frontEnd, 
             IGameDictionary gameDictionary,
             BaseConstructionFactory constructionFactory,
             int LOGIC_FRAME_PER_SECOND, ChildGameConfig childGameConfig) {

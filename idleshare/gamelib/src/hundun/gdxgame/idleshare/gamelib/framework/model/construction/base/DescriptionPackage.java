@@ -1,14 +1,23 @@
 package hundun.gdxgame.idleshare.gamelib.framework.model.construction.base;
 
+import lombok.NoArgsConstructor;
+
+import lombok.AllArgsConstructor;
+
+import lombok.Data;
+
 /**
  * @author hundun
  * Created on 2021/11/29
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class DescriptionPackage {
     String outputCostDescriptionStart;
     String outputGainDescriptionStart;
     String upgradeCostDescriptionStart;
-    String upgradeMaxLevelDescription = "(max level)";
+    String upgradeMaxLevelDescription;
     String buttonDescroption;
     ILevelDescroptionProvider levelDescroptionProvider;
 
@@ -27,53 +36,5 @@ public class DescriptionPackage {
 
         String provide(int level, int workingLevel, boolean reachMaxLevel);
     }
-
-    // ------ replace-lombok ------
-    public DescriptionPackage(String outputCostDescriptionStart, String outputGainDescriptionStart,
-            String upgradeCostDescriptionStart, String buttonDescroption, ILevelDescroptionProvider levelDescroptionProvider) {
-        super();
-        this.outputCostDescriptionStart = outputCostDescriptionStart;
-        this.outputGainDescriptionStart = outputGainDescriptionStart;
-        this.upgradeCostDescriptionStart = upgradeCostDescriptionStart;
-        this.buttonDescroption = buttonDescroption;
-        this.levelDescroptionProvider = levelDescroptionProvider;
-    }
-    public String getOutputCostDescriptionStart() {
-        return outputCostDescriptionStart;
-    }
-    public void setOutputCostDescriptionStart(String outputCostDescriptionStart) {
-        this.outputCostDescriptionStart = outputCostDescriptionStart;
-    }
-    public String getOutputGainDescriptionStart() {
-        return outputGainDescriptionStart;
-    }
-    public void setOutputGainDescriptionStart(String outputGainDescriptionStart) {
-        this.outputGainDescriptionStart = outputGainDescriptionStart;
-    }
-    public String getUpgradeCostDescriptionStart() {
-        return upgradeCostDescriptionStart;
-    }
-    public void setUpgradeCostDescriptionStart(String upgradeCostDescriptionStart) {
-        this.upgradeCostDescriptionStart = upgradeCostDescriptionStart;
-    }
-    public String getButtonDescroption() {
-        return buttonDescroption;
-    }
-    public void setButtonDescroption(String buttonDescroption) {
-        this.buttonDescroption = buttonDescroption;
-    }
-    public ILevelDescroptionProvider getLevelDescroptionProvider() {
-        return levelDescroptionProvider;
-    }
-    public void setLevelDescroptionProvider(ILevelDescroptionProvider levelDescroptionProvider) {
-        this.levelDescroptionProvider = levelDescroptionProvider;
-    }
-    public String getUpgradeMaxLevelDescription() {
-        return upgradeMaxLevelDescription;
-    }
-    public void setUpgradeMaxLevelDescription(String upgradeMaxLevelDescription) {
-        this.upgradeMaxLevelDescription = upgradeMaxLevelDescription;
-    }
-
 
 }

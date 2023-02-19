@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author hundun
@@ -13,19 +15,14 @@ public class BuffManager {
 
     private IdleGameplayContext gameContext;
 
+    @Getter
+    @Setter
     private Map<String, Integer> buffAmounts = new HashMap<>();
-    // ------ replace-lombok ------
-    public Map<String, Integer> getBuffAmounts() {
-        return buffAmounts;
-    }
-    public void setBuffAmounts(Map<String, Integer> buffAmounts) {
-        this.buffAmounts = buffAmounts;
-    }
+
 
     public BuffManager(IdleGameplayContext gameContext) {
         this.gameContext = gameContext;
     }
-
 
 
     public int getBuffAmoutOrDefault(String id) {

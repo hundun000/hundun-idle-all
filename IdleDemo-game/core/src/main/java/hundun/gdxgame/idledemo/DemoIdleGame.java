@@ -74,7 +74,7 @@ public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
     protected void createStage3() {
         super.createStage3();
         
-        this.getSaveHandler().registerSubHandler(idleGameplayExport);
+        
         
         screenManager.pushScreen(DemoMenuScreen.class.getSimpleName(), null);
         getAudioPlayManager().intoScreen(DemoMenuScreen.class.getSimpleName());

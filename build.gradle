@@ -31,7 +31,7 @@ allprojects {
         gdxVersion = '1.10.0'
         gwtFrameworkVersion = '2.8.2'
         
-        hundunLibVersion = '680cc7277a'
+        hundunLibVersion = '85275f2fd0'
     }
 
     repositories {

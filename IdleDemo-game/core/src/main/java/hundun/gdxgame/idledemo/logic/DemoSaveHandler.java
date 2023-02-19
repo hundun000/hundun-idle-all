@@ -3,7 +3,7 @@ package hundun.gdxgame.idledemo.logic;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import hundun.gdxgame.gamelib.base.IFrontEnd;
+import hundun.gdxgame.gamelib.base.IFrontend;
 import hundun.gdxgame.gamelib.base.save.ISaveTool;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.gamelib.starter.save.StarterSaveHandler;
@@ -16,7 +16,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.data.GameplaySaveData;
  */
 public class DemoSaveHandler extends StarterSaveHandler<RootSaveData, Void, GameplaySaveData> {
 
-    public DemoSaveHandler(IFrontEnd frontEnd, ISaveTool<RootSaveData> saveTool) {
+    public DemoSaveHandler(IFrontend frontEnd, ISaveTool<RootSaveData> saveTool) {
         super(frontEnd, RootSaveData.Factory.INSTANCE, saveTool);
 
     }

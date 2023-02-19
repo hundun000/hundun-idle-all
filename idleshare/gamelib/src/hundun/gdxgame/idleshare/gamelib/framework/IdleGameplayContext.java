@@ -3,7 +3,7 @@ package hundun.gdxgame.idleshare.gamelib.framework;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import hundun.gdxgame.gamelib.base.IFrontEnd;
+import hundun.gdxgame.gamelib.base.IFrontend;
 import hundun.gdxgame.gamelib.starter.save.StarterSaveHandler.ISubGameplaySaveHandler;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.data.GameplaySaveData;
@@ -27,7 +27,7 @@ public class IdleGameplayContext {
 
 
     
-    final IFrontEnd frontEnd;
+    final IFrontend frontEnd;
     
     final EventManager eventManager;
     final StorageManager storageManager;
@@ -38,7 +38,7 @@ public class IdleGameplayContext {
     final IGameDictionary gameDictionary;
     
     public IdleGameplayContext(
-            IFrontEnd frontEnd, 
+            IFrontend frontEnd, 
             IGameDictionary gameDictionary,
             BaseConstructionFactory constructionFactory,
             int LOGIC_FRAME_PER_SECOND, ChildGameConfig childGameConfig) {

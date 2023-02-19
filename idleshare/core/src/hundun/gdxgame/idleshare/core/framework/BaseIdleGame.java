@@ -38,14 +38,11 @@ public abstract class BaseIdleGame<T_SAVE> extends BaseHundunGame<T_SAVE> {
     protected Viewport sharedViewport;
     
     @Getter
-    protected LibgdxFrontend frontend;
-    @Getter
     protected IdleGameplayExport idleGameplayExport;
     protected ChildGameConfig childGameConfig;
     
     public BaseIdleGame(int viewportWidth, int viewportHeight) {
         super(viewportWidth, viewportHeight);
-        this.frontend = new LibgdxFrontend();
     }
 
 	
@@ -59,7 +56,7 @@ public abstract class BaseIdleGame<T_SAVE> extends BaseHundunGame<T_SAVE> {
 	@Override
 	protected void createStage3() {
 	    
-
+	    this.getSaveHandler().registerSubHandler(idleGameplayExport);
 
         managerContext.lazyInitOnGameCreate(childGameConfig);
         audioPlayManager.lazyInit(childGameConfig.getScreenIdToFilePathMap());

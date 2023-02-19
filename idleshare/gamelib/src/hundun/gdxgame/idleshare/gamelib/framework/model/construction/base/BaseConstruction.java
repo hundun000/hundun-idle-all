@@ -29,24 +29,24 @@ public abstract class BaseConstruction implements ILogicFrameListener, IBuffChan
     protected int maxDrawNum = DEFAULT_MAX_DRAW_NUM;
 
     public static final DescriptionPackage WORKING_LEVEL_AUTO_DESCRIPTION_PACKAGE = new DescriptionPackage(
-            "AutoCost", "AutoGain", "UpgradeCost", "Upgrade",
+            "AutoCost", "AutoGain", "UpgradeCost", "(max level)", "Upgrade",
             ILevelDescroptionProvider.WORKING_LEVEL_IMP);
 
     public static final DescriptionPackage MAX_LEVEL_AUTO_DESCRIPTION_PACKAGE = new DescriptionPackage(
-            "AutoCost", "AutoGain", "UpgradeCost", "Upgrade",
+            "AutoCost", "AutoGain", "UpgradeCost", "(max level)", "Upgrade",
             ILevelDescroptionProvider.ONLY_LEVEL_IMP);
 
     public static final DescriptionPackage SELLING_DESCRIPTION_PACKAGE = new DescriptionPackage(
-            "Sell", "Gain", "UpgradeCost", "Upgrade",
+            "Sell", "Gain", "UpgradeCost", "(max level)", "Upgrade",
             ILevelDescroptionProvider.WORKING_LEVEL_IMP);
 
 
     public static final DescriptionPackage GATHER_DESCRIPTION_PACKAGE = new DescriptionPackage(
-            "Pay", "Gain", null, "Gather",
+            "Pay", "Gain", null, "(max level)", "Gather",
             ILevelDescroptionProvider.EMPTY_IMP);
 
     public static final DescriptionPackage WIN_DESCRIPTION_PACKAGE = new DescriptionPackage(
-            null, null, "Pay", "Unlock",
+            null, null, "Pay", "(max level)", "Unlock",
             ILevelDescroptionProvider.LOCK_IMP);
 
     protected Random random = new Random();
