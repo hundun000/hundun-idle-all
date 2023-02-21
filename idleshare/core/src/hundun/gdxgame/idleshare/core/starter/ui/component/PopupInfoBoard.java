@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
+import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport.ConstructionExportData;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.UpgradeComponent.UpgradeState;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePack;
@@ -41,7 +42,7 @@ public class PopupInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends
         return container;
     }
 
-    private void rebuildCells(BaseConstruction model) {
+    private void rebuildCells(ConstructionExportData model) {
         this.clearChildren();
 
         add(wapperContainer(new Label(model.getDetailDescroptionConstPart(), parent.getGame().getMainSkin())))
@@ -49,14 +50,14 @@ public class PopupInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends
             .left()
             .row();
 
-        buildOnePack(model.getOutputComponent().getOutputCostPack());
+        buildOnePack(model.getOutputCostPack());
 
-        buildOnePack(model.getOutputComponent().getOutputGainPack());
+        buildOnePack(model.getOutputGainPack());
 
-        if (model.getUpgradeComponent().getUpgradeState() == UpgradeState.HAS_NEXT_UPGRADE) {
-            buildOnePack(model.getUpgradeComponent().getUpgradeCostPack());
-        } else if (model.getUpgradeComponent().getUpgradeState() == UpgradeState.REACHED_MAX_UPGRADE) {
-            this.add(wapperContainer(new Label(model.getUpgradeComponent().getUpgradeCostPack().getDescriptionStart(), parent.getGame().getMainSkin())));
+        if (model.getUpgradeState() == UpgradeState.HAS_NEXT_UPGRADE) {
+            buildOnePack(model.getUpgradeCostPack());
+        } else if (model.getUpgradeState() == UpgradeState.REACHED_MAX_UPGRADE) {
+            this.add(wapperContainer(new Label(model.getUpgradeCostPack().getDescriptionStart(), parent.getGame().getMainSkin())));
             this.add(wapperContainer(new Label(model.getDescriptionPackage().getUpgradeMaxLevelDescription(), parent.getGame().getMainSkin())));
             this.row();
         }
@@ -81,7 +82,7 @@ public class PopupInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends
     }
 
 
-    public void update(BaseConstruction model) {
+    public void update(ConstructionExportData model) {
         rebuildCells(model);
     }
 

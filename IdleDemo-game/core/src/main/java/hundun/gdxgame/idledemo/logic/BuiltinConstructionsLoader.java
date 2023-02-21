@@ -7,7 +7,7 @@ import java.util.Map;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.gamelib.context.IdleGamePlayContext;
+import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.BaseAutoConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.BaseBuffConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.BaseClickGatherConstruction;

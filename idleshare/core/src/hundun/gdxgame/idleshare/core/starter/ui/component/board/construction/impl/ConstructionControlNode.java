@@ -14,6 +14,7 @@ import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
+import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport.ConstructionExportData;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
 
@@ -23,7 +24,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseCo
  */
 public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table {
     BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
-    BaseConstruction model;
+    ConstructionExportData model;
     Label constructionNameLabel;
     TextButton upWorkingLevelButton;
     TextButton downWorkingLevelButton;
@@ -52,7 +53,7 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("ConstructionView", "clicked");
-                model.onClick();
+                parent.getGame().getIdleGameplayExport().constructionOnClick(model.getId());
             }
         });
 
@@ -92,7 +93,7 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("ConstructionView", "down clicked");
-                model.getLevelComponent().changeWorkingLevel(-1);
+                parent.getGame().getIdleGameplayExport().constructionChangeWorkingLevel(model.getId(), -1);
             }
         });
         changeWorkingLevelGroup.add(downWorkingLevelButton).size(CHILD_WIDTH / 4, CHILD_HEIGHT);
@@ -106,7 +107,7 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log(ConstructionControlNode.class.getSimpleName(), "up clicked");
-                model.getLevelComponent().changeWorkingLevel(1);
+                parent.getGame().getIdleGameplayExport().constructionChangeWorkingLevel(model.getId(), 1);
             }
         });
         changeWorkingLevelGroup.add(upWorkingLevelButton).size(CHILD_WIDTH / 4, CHILD_HEIGHT);
@@ -142,10 +143,10 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
 
     }
 
-    public void setModel(BaseConstruction model) {
-        this.model = model;
-        if (model != null) {
-            if (model.getLevelComponent().isWorkingLevelChangable()) {
+    public void setModel(ConstructionExportData constructionExportData) {
+        this.model = constructionExportData;
+        if (constructionExportData != null) {
+            if (constructionExportData.isWorkingLevelChangable()) {
                 initAsChangeWorkingLevelStyle();
             } else {
                 initAsNormalStyle();
@@ -168,10 +169,10 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
         // ------ update text ------
         constructionNameLabel.setText(model.getName());
         clickEffectButton.setText(model.getButtonDescroption());
-        workingLevelLabel.setText(model.getLevelComponent().getWorkingLevelDescroption());
+        workingLevelLabel.setText(model.getWorkingLevelDescroption());
 
         // ------ update clickable-state ------
-        boolean canClickEffect = model.canClickEffect();
+        boolean canClickEffect = parent.getGame().getIdleGameplayExport().constructionCanClickEffect(model.getId());
         //clickEffectButton.setTouchable(clickable ? Touchable.enabled : Touchable.disabled);
 
 
@@ -182,7 +183,7 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
             clickEffectButton.getLabel().setColor(Color.RED);
         }
 
-        boolean canUpWorkingLevel = model.getLevelComponent().canChangeWorkingLevel(1);
+        boolean canUpWorkingLevel = parent.getGame().getIdleGameplayExport().constructionCanChangeWorkingLevel(model.getId(), 1);
         if (canUpWorkingLevel) {
             upWorkingLevelButton.getLabel().setColor(Color.WHITE);
         } else {
@@ -190,7 +191,7 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
             upWorkingLevelButton.getLabel().setColor(Color.RED);
         }
 
-        boolean canDownWorkingLevel = model.getLevelComponent().canChangeWorkingLevel(-1);
+        boolean canDownWorkingLevel = parent.getGame().getIdleGameplayExport().constructionCanChangeWorkingLevel(model.getId(), -1);
         if (canDownWorkingLevel) {
             downWorkingLevelButton.getLabel().setColor(Color.WHITE);
         } else {

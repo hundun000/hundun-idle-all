@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
-import hundun.gdxgame.idleshare.gamelib.context.IdleGamePlayContext;
+import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,9 +18,9 @@ import java.util.Set;
  * @author hundun
  * Created on 2021/11/02
  */
-public class StorageManager implements ILogicFrameListener {
+public class StorageManager {
 
-    IdleGamePlayContext gameContext;
+    IdleGameplayContext gameContext;
 
     @Getter
     @Setter
@@ -33,7 +33,7 @@ public class StorageManager implements ILogicFrameListener {
 
     Map<String, Long> oneFrameDeltaResoueces = new HashMap<>();
 
-    public StorageManager(IdleGamePlayContext gameContext) {
+    public StorageManager(IdleGameplayContext gameContext) {
         this.gameContext = gameContext;
     }
 
@@ -82,8 +82,7 @@ public class StorageManager implements ILogicFrameListener {
     }
 
 
-    @Override
-    public void onLogicFrame() {
+    public void onSubLogicFrame() {
         // ------ frameDeltaAmountClear ------
         Map<String, Long> temp = new HashMap<>(oneFrameDeltaResoueces);
         oneFrameDeltaResoueces.clear();

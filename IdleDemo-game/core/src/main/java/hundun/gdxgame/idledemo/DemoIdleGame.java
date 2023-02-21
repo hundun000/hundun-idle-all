@@ -19,7 +19,8 @@ import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.framework.model.ManagerContext;
 import hundun.gdxgame.idleshare.core.framework.model.manager.AudioPlayManager;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
-import hundun.gdxgame.idleshare.gamelib.context.IdleGamePlayContext;
+import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport;
+import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.data.GameplaySaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.BaseConstructionFactory;
@@ -60,7 +61,7 @@ public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
     protected void createStage1() {
         super.createStage1();
         
-        this.gamePlayContext = new IdleGamePlayContext(
+        this.idleGameplayExport = new IdleGameplayExport(
                 frontend,
                 new GameDictionary(),
                 new BaseConstructionFactory(BuiltinConstructionsLoader.initProviders()),
@@ -73,7 +74,7 @@ public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
     protected void createStage3() {
         super.createStage3();
         
-        this.getSaveHandler().registerSubHandler(gamePlayContext);
+        this.getSaveHandler().registerSubHandler(idleGameplayExport);
         
         screenManager.pushScreen(DemoMenuScreen.class.getSimpleName(), null);
         getAudioPlayManager().intoScreen(DemoMenuScreen.class.getSimpleName());

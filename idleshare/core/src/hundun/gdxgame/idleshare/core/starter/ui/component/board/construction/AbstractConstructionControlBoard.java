@@ -17,6 +17,7 @@ import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.ConstructionControlNode;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
+import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport.ConstructionExportData;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
 public abstract class AbstractConstructionControlBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table implements ILogicFrameListener, IGameAreaChangeListener {
@@ -24,7 +25,7 @@ public abstract class AbstractConstructionControlBoard<T_GAME extends BaseIdleGa
     /**
      * 显示在当前screen的Construction集合。以ConstructionView形式存在。
      */
-    protected List<ConstructionControlNode> constructionControlNodes = new ArrayList<>();
+    protected List<ConstructionControlNode<T_GAME, T_SAVE>> constructionControlNodes = new ArrayList<>();
 
 
 
@@ -36,15 +37,13 @@ public abstract class AbstractConstructionControlBoard<T_GAME extends BaseIdleGa
     @Override
     public void onLogicFrame() {
         constructionControlNodes.forEach(item -> item.onLogicFrame());
-        parent.getGame().getGamePlayContext().getConstructionManager().logicFrameForAllConstructionModels();
-
     }
 
     @Override
     public void onGameAreaChange(String last, String current) {
 
 
-        List<BaseConstruction> newConstructions = parent.getGame().getGamePlayContext().getConstructionManager().getAreaShownConstructionsOrEmpty(current);
+        List<ConstructionExportData> newConstructions = parent.getGame().getIdleGameplayExport().getAreaShownConstructionsOrEmpty(current);
 
         int childrenSize = initChild(newConstructions.size());
 

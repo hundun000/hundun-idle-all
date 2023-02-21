@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import hundun.gdxgame.idleshare.gamelib.context.IdleGamePlayContext;
+import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
 /**
@@ -16,10 +16,10 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseCo
  */
 public class ConstructionManager {
 
-    IdleGamePlayContext gameContext;
+    IdleGameplayContext gameContext;
 
 
-    public ConstructionManager(IdleGamePlayContext gameContext) {
+    public ConstructionManager(IdleGameplayContext gameContext) {
         this.gameContext = gameContext;
     }
 
@@ -71,7 +71,7 @@ public class ConstructionManager {
         areaControlableConstructions.values().forEach(items -> items.forEach(item -> runningConstructionModelMap.putIfAbsent(item.getId(), item)));
     }
 
-    public void logicFrameForAllConstructionModels() {
+    public void onSubLogicFrame() {
         runningConstructionModelMap.values().forEach(item -> item.onLogicFrame());
     }
 

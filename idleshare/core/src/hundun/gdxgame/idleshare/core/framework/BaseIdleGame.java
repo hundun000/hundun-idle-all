@@ -10,7 +10,8 @@ import hundun.gdxgame.idleshare.core.framework.model.manager.AbstractIdleScreenC
 import hundun.gdxgame.idleshare.core.framework.model.manager.AbstractTextureManager;
 import hundun.gdxgame.idleshare.core.framework.model.manager.AudioPlayManager;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
-import hundun.gdxgame.idleshare.gamelib.context.IdleGamePlayContext;
+import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport;
+import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.BaseConstructionFactory;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
@@ -39,7 +40,7 @@ public abstract class BaseIdleGame<T_SAVE> extends BaseHundunGame<T_SAVE> {
     @Getter
     protected LibgdxFrontend frontend;
     @Getter
-    protected IdleGamePlayContext gamePlayContext;
+    protected IdleGameplayExport idleGameplayExport;
     protected ChildGameConfig childGameConfig;
     
     public BaseIdleGame(int viewportWidth, int viewportHeight) {

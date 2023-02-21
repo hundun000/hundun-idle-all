@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import hundun.gdxgame.idleshare.gamelib.context.IdleGamePlayContext;
+import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
 /**
@@ -36,7 +36,7 @@ public class BaseConstructionFactory {
         return constructions.values();
     }
 
-    public void lazyInit(IdleGamePlayContext gameContext) {
+    public void lazyInit(IdleGameplayContext gameContext) {
         constructions.values().forEach(it -> {
             it.lazyInitDescription(gameContext);
             gameContext.getEventManager().registerListener(it);

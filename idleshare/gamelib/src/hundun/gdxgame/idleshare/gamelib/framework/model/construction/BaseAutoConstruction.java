@@ -2,7 +2,7 @@ package hundun.gdxgame.idleshare.gamelib.framework.model.construction;
 
 import java.util.List;
 
-import hundun.gdxgame.idleshare.gamelib.context.IdleGamePlayContext;
+import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
 /**

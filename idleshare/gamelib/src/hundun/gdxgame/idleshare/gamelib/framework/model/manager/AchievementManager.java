@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import hundun.gdxgame.gamelib.starter.listerner.IGameStartListener;
-import hundun.gdxgame.idleshare.gamelib.context.IdleGamePlayContext;
+import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IBuffChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.model.AchievementPrototype;
@@ -21,7 +21,7 @@ import lombok.Setter;
 import java.util.Set;
 
 public class AchievementManager implements IBuffChangeListener, IOneFrameResourceChangeListener, IGameStartListener {
-    IdleGamePlayContext gameContext;
+    IdleGameplayContext gameContext;
 
     Map<String, AchievementPrototype> prototypes = new HashMap<>();
 
@@ -30,7 +30,7 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
     Set<String> unlockedAchievementNames = new HashSet<>();
 
 
-    public AchievementManager(IdleGamePlayContext gameContext) {
+    public AchievementManager(IdleGameplayContext gameContext) {
         this.gameContext = gameContext;
         gameContext.getEventManager().registerListener(this);
     }

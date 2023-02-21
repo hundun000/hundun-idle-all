@@ -1,4 +1,4 @@
-package hundun.gdxgame.idleshare.gamelib.context;
+package hundun.gdxgame.idleshare.gamelib.framework;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -22,7 +22,7 @@ import lombok.Getter;
  * Created on 2023/02/21
  */
 @Getter
-public class IdleGamePlayContext implements ISubGameplaySaveHandler<GameplaySaveData> {
+public class IdleGameplayContext {
     public final int LOGIC_FRAME_PER_SECOND;
 
 
@@ -37,7 +37,7 @@ public class IdleGamePlayContext implements ISubGameplaySaveHandler<GameplaySave
     final ConstructionManager constructionManager;
     final IGameDictionary gameDictionary;
     
-    public IdleGamePlayContext(
+    public IdleGameplayContext(
             IFrontEnd frontEnd, 
             IGameDictionary gameDictionary,
             BaseConstructionFactory constructionFactory,
@@ -59,31 +59,5 @@ public class IdleGamePlayContext implements ISubGameplaySaveHandler<GameplaySave
         this.getAchievementManager().lazyInit(childGameConfig.getAchievementPrototypes());
     }
     
-    @Override
-    public void applyGameSaveData(GameplaySaveData gameplaySaveData) {
-        Collection<BaseConstruction> constructions = this.getConstructionFactory().getConstructions();
-        for (BaseConstruction construction : constructions) {
-            if (gameplaySaveData.getConstructionSaveDataMap().containsKey(construction.id)) {
-                construction.setSaveData(gameplaySaveData.getConstructionSaveDataMap().get(construction.id));
-                construction.updateModifiedValues();
-            }
-        }
-        this.getStorageManager().setUnlockedResourceTypes(gameplaySaveData.getUnlockedResourceTypes());
-        this.getStorageManager().setOwnResoueces(gameplaySaveData.getOwnResoueces());
-        this.getAchievementManager().setUnlockedAchievementNames(gameplaySaveData.getUnlockedAchievementNames());
-    }
 
-    @Override
-    public void currentSituationToSaveData(GameplaySaveData gameplaySaveData) {
-        Collection<BaseConstruction> constructions = this.getConstructionFactory().getConstructions();
-        gameplaySaveData.setConstructionSaveDataMap(constructions.stream()
-                .collect(Collectors.toMap(
-                        it -> it.getId(), 
-                        it -> it.getSaveData()
-                        ))
-                );
-        gameplaySaveData.setUnlockedResourceTypes(this.getStorageManager().getUnlockedResourceTypes());
-        gameplaySaveData.setOwnResoueces(this.getStorageManager().getOwnResoueces());
-        gameplaySaveData.setUnlockedAchievementNames(this.getAchievementManager().getUnlockedAchievementNames());
-    }
 }

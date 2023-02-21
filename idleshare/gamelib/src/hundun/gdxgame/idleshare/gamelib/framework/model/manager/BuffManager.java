@@ -3,7 +3,7 @@ package hundun.gdxgame.idleshare.gamelib.framework.model.manager;
 import java.util.HashMap;
 import java.util.Map;
 
-import hundun.gdxgame.idleshare.gamelib.context.IdleGamePlayContext;
+import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 
 /**
  * @author hundun
@@ -11,7 +11,7 @@ import hundun.gdxgame.idleshare.gamelib.context.IdleGamePlayContext;
  */
 public class BuffManager {
 
-    private IdleGamePlayContext gameContext;
+    private IdleGameplayContext gameContext;
 
     private Map<String, Integer> buffAmounts = new HashMap<>();
     // ------ replace-lombok ------
@@ -22,7 +22,7 @@ public class BuffManager {
         this.buffAmounts = buffAmounts;
     }
 
-    public BuffManager(IdleGamePlayContext gameContext) {
+    public BuffManager(IdleGameplayContext gameContext) {
         this.gameContext = gameContext;
     }
 

@@ -26,7 +26,7 @@ public class GameImageDrawer<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> implem
     public GameImageDrawer(BaseIdlePlayScreen<T_GAME, T_SAVE> parent) {
         this.parent = parent;
 
-        parent.getGame().getGamePlayContext().getEventManager().registerListener(this);
+        parent.getGame().getIdleGameplayExport().eventManagerRegisterListener(this);
     }
 
 

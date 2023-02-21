@@ -7,7 +7,7 @@ package hundun.gdxgame.idleshare.gamelib.framework.model.construction.base;
 import java.util.Random;
 
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
-import hundun.gdxgame.idleshare.gamelib.context.IdleGamePlayContext;
+import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ConstructionSaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IBuffChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackage.ILevelDescroptionProvider;
@@ -51,7 +51,7 @@ public abstract class BaseConstruction implements ILogicFrameListener, IBuffChan
 
     protected Random random = new Random();
     @Getter
-    protected IdleGamePlayContext gameContext;
+    protected IdleGameplayContext gameContext;
 
     /**
      * NotNull
@@ -96,7 +96,7 @@ public abstract class BaseConstruction implements ILogicFrameListener, IBuffChan
     protected LevelComponent levelComponent;
 
 
-    public void lazyInitDescription(IdleGamePlayContext gameContext) {
+    public void lazyInitDescription(IdleGameplayContext gameContext) {
         this.gameContext = gameContext;
         
         this.name = gameContext.getGameDictionary().constructionIdToShowName(this.getId());

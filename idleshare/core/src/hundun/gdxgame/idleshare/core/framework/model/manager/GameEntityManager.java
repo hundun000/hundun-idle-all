@@ -13,6 +13,7 @@ import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.framework.model.entity.BaseGameEntityFactory;
 import hundun.gdxgame.idleshare.core.framework.model.entity.GameEntity;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
+import lombok.Getter;
 
 /**
  * 管理GameEntity在内存中的数量，不负责绘制。
@@ -21,39 +22,20 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseCo
  */
 public class GameEntityManager {
 
-    private BaseIdleGame game;
-
+    private BaseIdleGame<?> game;
+    @Getter
     private Map<String, List<GameEntity>> gameEntitiesOfConstructionIds = new HashMap<>();
-    // ------ replace-lombok ------
-    public Map<String, List<GameEntity>> getGameEntitiesOfConstructionIds() {
-        return gameEntitiesOfConstructionIds;
-    }
-
+    @Getter
     private Map<String, List<GameEntity>> gameEntitiesOfResourceIds = new HashMap<>();
-    // ------ replace-lombok ------
-    public Map<String, List<GameEntity>> getGameEntitiesOfResourceIds() {
-        return gameEntitiesOfResourceIds;
-    }
-
+    @Getter
     private Map<String, List<String>> areaShowEntityByOwnAmountConstructionIds;
-    // ------ replace-lombok ------
-    public Map<String, List<String>> getAreaShowEntityByOwnAmountConstructionIds() {
-        return areaShowEntityByOwnAmountConstructionIds;
-    }
-
+    @Getter
     private Map<String, List<String>> areaShowEntityByOwnAmountResourceIds;
-    // ------ replace-lombok ------
-    public Map<String, List<String>> getAreaShowEntityByOwnAmountResourceIds() {
-        return areaShowEntityByOwnAmountResourceIds;
-    }
-
+    @Getter
     private Map<String, List<String>> areaShowEntityByChangeAmountResourceIds;
-    // ------ replace-lombok ------
-    public Map<String, List<String>> getAreaShowEntityByChangeAmountResourceIds() {
-        return areaShowEntityByChangeAmountResourceIds;
-    }
 
-    public GameEntityManager(BaseIdleGame game) {
+
+    public GameEntityManager(BaseIdleGame<?> game) {
         super();
         this.game = game;
     }
@@ -120,7 +102,7 @@ public class GameEntityManager {
     }
 
     private void checkResourceEntityByOwnAmount(String resourceId, BaseGameEntityFactory gameEntityFactory) {
-        long resourceNum = game.getGamePlayContext().getStorageManager().getResourceNumOrZero(resourceId);
+        long resourceNum = game.getIdleGameplayExport().getResourceNumOrZero(resourceId);
         int drawNum = gameEntityFactory.calculateResourceDrawNum(resourceId, resourceNum);
 
         gameEntitiesOfResourceIds.computeIfAbsent(resourceId, k -> new LinkedList<>());
@@ -158,7 +140,7 @@ public class GameEntityManager {
     }
 
     private void checkConstructionEntityByOwnAmount(String id, BaseGameEntityFactory gameEntityFactory) {
-        BaseConstruction construction = game.getGamePlayContext().getConstructionFactory().getConstruction(id);
+        BaseConstruction construction = game.getIdleGameplayExport().getConstruction(id);
         int resourceNum = construction.getSaveData().getWorkingLevel();
         int MAX_DRAW_NUM = construction.getMaxDrawNum();
         int drawNum = gameEntityFactory.calculateConstructionDrawNum(id, resourceNum, MAX_DRAW_NUM);

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import hundun.gdxgame.idleshare.gamelib.context.IdleGamePlayContext;
+import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementUnlockCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IBuffChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
@@ -21,10 +21,10 @@ public class EventManager {
     List<IAchievementUnlockCallback> achievementUnlockListeners = new ArrayList<>();
     List<IOneFrameResourceChangeListener> oneFrameResourceChangeListeners = new ArrayList<>();
 
-    IdleGamePlayContext gameContext;
+    IdleGameplayContext gameContext;
 
 
-    public EventManager(IdleGamePlayContext gameContext) {
+    public EventManager(IdleGameplayContext gameContext) {
         this.gameContext = gameContext;
     }
     

@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePack;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author hundun
@@ -14,14 +16,9 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
 public class UpgradeComponent {
     private final BaseConstruction construction;
 
+    @Getter
+    @Setter
     private ResourcePack upgradeCostPack;
-    // ------ replace-lombok ------
-    public ResourcePack getUpgradeCostPack() {
-        return upgradeCostPack;
-    }
-    public void setUpgradeCostPack(ResourcePack upgradeCostPack) {
-        this.upgradeCostPack = upgradeCostPack;
-    }
     
     public static enum UpgradeState {
         NO_UPGRADE,
@@ -29,11 +26,9 @@ public class UpgradeComponent {
         REACHED_MAX_UPGRADE,
         ;
     }
+    @Getter
     private UpgradeState upgradeState;
-    // ------ replace-lombok ------
-    public UpgradeState getUpgradeState() {
-        return upgradeState;
-    }
+
     
     /**
      * 影响升级后下一级费用，详见具体公式
