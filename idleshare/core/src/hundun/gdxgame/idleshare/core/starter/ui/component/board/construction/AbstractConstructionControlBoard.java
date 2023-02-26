@@ -17,7 +17,7 @@ import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.ConstructionControlNode;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
-import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport.ConstructionExportData;
+import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport.ConstructionExportProxy;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
 public abstract class AbstractConstructionControlBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table implements ILogicFrameListener, IGameAreaChangeListener {
@@ -43,7 +43,7 @@ public abstract class AbstractConstructionControlBoard<T_GAME extends BaseIdleGa
     public void onGameAreaChange(String last, String current) {
 
 
-        List<ConstructionExportData> newConstructions = parent.getGame().getIdleGameplayExport().getAreaShownConstructionsOrEmpty(current);
+        List<ConstructionExportProxy> newConstructions = parent.getGame().getIdleGameplayExport().getAreaShownConstructionsOrEmpty(current);
 
         int childrenSize = initChild(newConstructions.size());
 

@@ -14,7 +14,7 @@ import hundun.gdxgame.idleshare.core.starter.ui.component.PopupInfoBoard;
 import hundun.gdxgame.idleshare.core.starter.ui.component.StorageInfoBoard;
 import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.AbstractConstructionControlBoard;
 import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.fixed.FixedConstructionControlBoard;
-import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport.ConstructionExportData;
+import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport.ConstructionExportProxy;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementUnlockCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.AchievementPrototype;
@@ -29,7 +29,7 @@ import lombok.Getter;
  */
 public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE>
         extends StarterPlayScreen<T_GAME, T_SAVE>
-        implements IAchievementUnlockCallback, ISecondaryInfoBoardCallback<ConstructionExportData> {
+        implements IAchievementUnlockCallback, ISecondaryInfoBoardCallback<ConstructionExportProxy> {
 
     public static final int LOGIC_FRAME_PER_SECOND = 30;
 
@@ -79,7 +79,7 @@ public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
     }
 
     @Override
-    public void showAndUpdateGuideInfo(ConstructionExportData model) {
+    public void showAndUpdateGuideInfo(ConstructionExportProxy model) {
         secondaryInfoBoard.setVisible(true);
         secondaryInfoBoard.update(model);
     }

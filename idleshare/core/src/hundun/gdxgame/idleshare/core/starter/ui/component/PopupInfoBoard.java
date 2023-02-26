@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
-import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport.ConstructionExportData;
+import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport.ConstructionExportProxy;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.UpgradeComponent.UpgradeState;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePack;
@@ -42,7 +42,7 @@ public class PopupInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends
         return container;
     }
 
-    private void rebuildCells(ConstructionExportData model) {
+    private void rebuildCells(ConstructionExportProxy model) {
         this.clearChildren();
 
         add(wapperContainer(new Label(model.getDetailDescroptionConstPart(), parent.getGame().getMainSkin())))
@@ -82,7 +82,7 @@ public class PopupInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends
     }
 
 
-    public void update(ConstructionExportData model) {
+    public void update(ConstructionExportProxy model) {
         rebuildCells(model);
     }
 

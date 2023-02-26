@@ -52,43 +52,61 @@ public class IdleGameplayExport implements ILogicFrameListener, ISubGameplaySave
         gameplayContext.getStorageManager().onSubLogicFrame();
     }
     
-    @Builder
-    @Data
-    public static class ConstructionExportData {
-        String id;
-        String name;
-        String buttonDescroption;
-        String workingLevelDescroption;
-        String detailDescroptionConstPart;
-        DescriptionPackage descriptionPackage;
-        ResourcePack outputGainPack;
-        ResourcePack outputCostPack;
-        UpgradeState upgradeState;
-        ResourcePack upgradeCostPack;
-        boolean workingLevelChangable;
+
+    public static class ConstructionExportProxy {
         
-        private static ConstructionExportData fromModel(BaseConstruction model) {
-            return ConstructionExportData.builder() 
-                    .id(model.id)
-                    .name(model.getName())
-                    .buttonDescroption(model.getButtonDescroption())
-                    .workingLevelDescroption(model.getLevelComponent().getWorkingLevelDescroption())
-                    .outputCostPack(model.getOutputComponent().getOutputCostPack())
-                    .outputGainPack(model.getOutputComponent().getOutputGainPack())
-                    .upgradeState(model.getUpgradeComponent().getUpgradeState())
-                    .upgradeCostPack(model.getUpgradeComponent().getUpgradeCostPack())
-                    .detailDescroptionConstPart(model.detailDescroptionConstPart)
-                    .descriptionPackage(model.getDescriptionPackage())
-                    .workingLevelChangable(model.getLevelComponent().isWorkingLevelChangable())
-                    .build();
+        private BaseConstruction model;
+        @Getter
+        String id;
+        @Getter
+        String name;
+        @Getter
+        DescriptionPackage descriptionPackage;
+        @Getter
+        ResourcePack outputGainPack;
+        @Getter
+        ResourcePack outputCostPack;
+        @Getter
+        UpgradeState upgradeState;
+        @Getter
+        ResourcePack upgradeCostPack;
+        
+        private static ConstructionExportProxy fromModel(BaseConstruction model) {
+            ConstructionExportProxy result = new ConstructionExportProxy();
+            result.model = model;
+            result.id = model.id;
+            result.name = model.name;
+            result.outputCostPack = (model.getOutputComponent().getOutputCostPack());
+            result.outputGainPack = (model.getOutputComponent().getOutputGainPack());
+            result.upgradeState = (model.getUpgradeComponent().getUpgradeState());
+            result.upgradeCostPack = (model.getUpgradeComponent().getUpgradeCostPack());
+            result.descriptionPackage = (model.getDescriptionPackage());
+            
+            return result;
         }
 
+        // ------- need runtime calculate ------
         
+        public boolean isWorkingLevelChangable() {
+            return model.getLevelComponent().isWorkingLevelChangable();
+        }
+        
+        public String getButtonDescroption() {
+            return model.getButtonDescroption();
+        }
+        
+        public String getDetailDescroptionConstPart() {
+            return model.detailDescroptionConstPart;
+        }
+        
+        public String getWorkingLevelDescroption() {
+            return model.getLevelComponent().getWorkingLevelDescroption();
+        }
     }
 
-    public List<ConstructionExportData> getAreaShownConstructionsOrEmpty(String current) {
+    public List<ConstructionExportProxy> getAreaShownConstructionsOrEmpty(String current) {
         return gameplayContext.getConstructionManager().getAreaShownConstructionsOrEmpty(current).stream()
-                .map(it -> ConstructionExportData.fromModel(it))
+                .map(it -> ConstructionExportProxy.fromModel(it))
                 .collect(Collectors.toList())
                 ;
     }

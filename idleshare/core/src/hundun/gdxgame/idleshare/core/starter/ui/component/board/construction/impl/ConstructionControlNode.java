@@ -14,7 +14,7 @@ import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
-import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport.ConstructionExportData;
+import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport.ConstructionExportProxy;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
 
@@ -24,7 +24,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseCo
  */
 public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table {
     BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
-    ConstructionExportData model;
+    ConstructionExportProxy model;
     Label constructionNameLabel;
     TextButton upWorkingLevelButton;
     TextButton downWorkingLevelButton;
@@ -143,10 +143,10 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
 
     }
 
-    public void setModel(ConstructionExportData constructionExportData) {
-        this.model = constructionExportData;
-        if (constructionExportData != null) {
-            if (constructionExportData.isWorkingLevelChangable()) {
+    public void setModel(ConstructionExportProxy constructionExportProxy) {
+        this.model = constructionExportProxy;
+        if (constructionExportProxy != null) {
+            if (constructionExportProxy.isWorkingLevelChangable()) {
                 initAsChangeWorkingLevelStyle();
             } else {
                 initAsNormalStyle();
