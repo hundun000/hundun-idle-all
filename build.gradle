@@ -29,9 +29,11 @@ allprojects {
     ext {
         appName = "hundun-idle"
         gdxVersion = '1.10.0'
+        gdxFreeTypeGwtVersion = '1.9.10.1'
         gwtFrameworkVersion = '2.8.2'
         
         hundunLibVersion = '85275f2fd0'
+        raeleusStripeVersion = '1.4.1'
     }
 
     repositories {
@@ -59,6 +61,9 @@ project(":idleshare:core") {
         api project(":idleshare:gamelib")
         api "com.github.hundun000.libgdx-hundun-lib:corelib:$hundunLibVersion"
 
+        api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        api "com.github.raeleus.stripe:freetype:$raeleusStripeVersion"
+
         testCompile "junit:junit:4.11"
         compileOnly 'org.projectlombok:lombok:1.18.4'
         annotationProcessor 'org.projectlombok:lombok:1.18.4'
@@ -73,6 +78,7 @@ project(":idleshare:desktop") {
         
         api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
         
         implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.5'
         
@@ -87,6 +93,10 @@ project(":idleshare:html") {
         api "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
         api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
+        
+        implementation "com.github.raeleus.stripe:freetype:$raeleusStripeVersion:sources"
+        implementation "com.github.intrigus.gdx-freetype-gwt:gdx-freetype-gwt:$gdxFreeTypeGwtVersion"
+        implementation "com.github.intrigus.gdx-freetype-gwt:gdx-freetype-gwt:$gdxFreeTypeGwtVersion:sources"
         
         api group: 'com.github.nmorel.gwtjackson', name: 'gwt-jackson', version: '0.15.4'
     }

@@ -3,7 +3,7 @@ package hundun.gdxgame.idleshare.gamelib.framework.model.construction.base;
 import lombok.NoArgsConstructor;
 
 import lombok.AllArgsConstructor;
-
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -23,16 +23,7 @@ public class DescriptionPackage {
 
     public static interface ILevelDescroptionProvider {
 
-        public static ILevelDescroptionProvider EMPTY_IMP = (level, workingLevel, reachMaxLevel) -> "";
-        public static ILevelDescroptionProvider ONLY_LEVEL_IMP = (level, workingLevel, reachMaxLevel) -> {
-            return "lv." + level;
-        };
-        public static ILevelDescroptionProvider WORKING_LEVEL_IMP = (level, workingLevel, reachMaxLevel) -> {
-            return workingLevel + "/" + level + (reachMaxLevel ? "(max)" : "");
-        };
-        public static ILevelDescroptionProvider LOCK_IMP = (level, workingLevel, reachMaxLevel) -> {
-            return (reachMaxLevel ? "Unlocked" : "");
-        };
+        
 
         String provide(int level, int workingLevel, boolean reachMaxLevel);
     }

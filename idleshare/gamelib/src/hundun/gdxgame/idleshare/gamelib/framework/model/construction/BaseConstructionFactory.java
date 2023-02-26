@@ -15,14 +15,6 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseCo
 public class BaseConstructionFactory {
 
     Map<String, BaseConstruction> constructions = new HashMap<>();
-    
-    public BaseConstructionFactory(List<BaseConstruction> constructions) {
-        constructions.forEach(item -> register(item));
-    }
-
-    protected void register(BaseConstruction construction) {
-        constructions.put(construction.getId(), construction);
-    }
 
     public BaseConstruction getConstruction(String id) {
         BaseConstruction result = constructions.get(id);
@@ -36,8 +28,9 @@ public class BaseConstructionFactory {
         return constructions.values();
     }
 
-    public void lazyInit(IdleGameplayContext gameContext) {
-        constructions.values().forEach(it -> {
+    public void lazyInit(IdleGameplayContext gameContext, List<BaseConstruction> constructions) {
+        constructions.forEach(item -> this.constructions.put(item.getId(), item));
+        this.constructions.values().forEach(it -> {
             it.lazyInitDescription(gameContext);
             gameContext.getEventManager().registerListener(it);
         });

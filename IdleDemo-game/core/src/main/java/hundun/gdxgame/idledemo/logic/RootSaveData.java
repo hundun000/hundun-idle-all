@@ -3,6 +3,8 @@ package hundun.gdxgame.idledemo.logic;
 
 import hundun.gdxgame.gamelib.starter.save.StarterSaveHandler.IFactory;
 import hundun.gdxgame.idleshare.gamelib.framework.data.GameplaySaveData;
+import hundun.gdxgame.idleshare.gamelib.framework.data.SystemSettingSaveData;
+import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,14 +21,15 @@ import lombok.NoArgsConstructor;
 public class RootSaveData {
     
     GameplaySaveData gameplaySave;
+    SystemSettingSaveData systemSettingSaveData;
     
-    public static final class Factory implements IFactory<RootSaveData, Void, GameplaySaveData> {
+    public static final class Factory implements IFactory<RootSaveData, SystemSettingSaveData, GameplaySaveData> {
 
         public static final Factory INSTANCE = new Factory();
         
         @Override
-        public Void getSystemSave(RootSaveData rootSaveData) {
-            return null;
+        public SystemSettingSaveData getSystemSave(RootSaveData rootSaveData) {
+            return rootSaveData.getSystemSettingSaveData();
         }
 
         @Override
@@ -35,8 +38,8 @@ public class RootSaveData {
         }
 
         @Override
-        public RootSaveData newRootSave(GameplaySaveData gameplaySave, Void systemSettingSave) {
-            return new RootSaveData(gameplaySave);
+        public RootSaveData newRootSave(GameplaySaveData gameplaySave, SystemSettingSaveData systemSettingSave) {
+            return new RootSaveData(gameplaySave, systemSettingSave);
         }
 
         @Override
@@ -45,8 +48,8 @@ public class RootSaveData {
         }
 
         @Override
-        public Void newSystemSave() {
-            return null;
+        public SystemSettingSaveData newSystemSave() {
+            return new SystemSettingSaveData();
         }
         
     }

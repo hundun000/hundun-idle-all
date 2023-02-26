@@ -8,12 +8,15 @@ import java.util.stream.Collectors;
 import hundun.gdxgame.gamelib.base.IFrontend;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.gamelib.starter.save.StarterSaveHandler.ISubGameplaySaveHandler;
+import hundun.gdxgame.gamelib.starter.save.StarterSaveHandler.ISubSystemSettingSaveHandler;
 import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.data.GameplaySaveData;
+import hundun.gdxgame.idleshare.gamelib.framework.data.SystemSettingSaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.BaseConstructionFactory;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackage;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.IBuiltinConstructionsLoader;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.UpgradeComponent.UpgradeState;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePack;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.IGameDictionary;
@@ -26,16 +29,22 @@ import lombok.Setter;
  * @author hundun
  * Created on 2023/02/21
  */
-public class IdleGameplayExport implements ILogicFrameListener, ISubGameplaySaveHandler<GameplaySaveData>{
+public class IdleGameplayExport implements ILogicFrameListener, 
+        ISubGameplaySaveHandler<GameplaySaveData>, 
+        ISubSystemSettingSaveHandler<SystemSettingSaveData>  {
 
     private IdleGameplayContext gameplayContext;
+    private IBuiltinConstructionsLoader builtinConstructionsLoader;
+    private ChildGameConfig childGameConfig;
     
     public IdleGameplayExport(
             IFrontend frontEnd, 
             IGameDictionary gameDictionary,
-            BaseConstructionFactory constructionFactory,
+            IBuiltinConstructionsLoader builtinConstructionsLoader,
             int LOGIC_FRAME_PER_SECOND, ChildGameConfig childGameConfig) {
-        this.gameplayContext = new IdleGameplayContext(frontEnd, gameDictionary, constructionFactory, LOGIC_FRAME_PER_SECOND, childGameConfig);
+        this.builtinConstructionsLoader = builtinConstructionsLoader;
+        this.childGameConfig = childGameConfig;
+        this.gameplayContext = new IdleGameplayContext(frontEnd, gameDictionary, LOGIC_FRAME_PER_SECOND);
     }
 
     public long getResourceNumOrZero(String resourceId) {
@@ -165,6 +174,21 @@ public class IdleGameplayExport implements ILogicFrameListener, ISubGameplaySave
         gameplaySaveData.setUnlockedResourceTypes(gameplayContext.getStorageManager().getUnlockedResourceTypes());
         gameplaySaveData.setOwnResoueces(gameplayContext.getStorageManager().getOwnResoueces());
         gameplaySaveData.setUnlockedAchievementNames(gameplayContext.getAchievementManager().getUnlockedAchievementNames());
+    }
+
+    @Override
+    public void applySystemSetting(SystemSettingSaveData systemSettingSave) {
+        gameplayContext.allLazyInit(
+                systemSettingSave.getLanguage(), 
+                childGameConfig, 
+                builtinConstructionsLoader.provide(systemSettingSave.getLanguage())
+                );
+        gameplayContext.getFrontEnd().log(this.getClass().getSimpleName(), "applySystemSetting done");
+    }
+
+    @Override
+    public void currentSituationToSystemSetting(SystemSettingSaveData systemSettingSave) {
+        systemSettingSave.setLanguage(gameplayContext.getLanguage());
     }
     
 }

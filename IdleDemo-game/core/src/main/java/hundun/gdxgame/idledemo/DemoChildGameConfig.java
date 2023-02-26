@@ -10,7 +10,7 @@ import com.badlogic.gdx.Gdx;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idledemo.logic.BuffId;
-import hundun.gdxgame.idledemo.logic.BuiltinConstructionsLoader;
+import hundun.gdxgame.idledemo.logic.DemoBuiltinConstructionsLoader;
 import hundun.gdxgame.idledemo.logic.ConstructionId;
 import hundun.gdxgame.idledemo.logic.GameArea;
 import hundun.gdxgame.idledemo.logic.ResourceType;

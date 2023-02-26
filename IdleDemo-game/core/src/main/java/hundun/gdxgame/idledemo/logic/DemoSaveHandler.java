@@ -9,12 +9,14 @@ import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.gamelib.starter.save.StarterSaveHandler;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ConstructionSaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.data.GameplaySaveData;
+import hundun.gdxgame.idleshare.gamelib.framework.data.SystemSettingSaveData;
+import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
 /**
  * @author hundun
  * Created on 2023/02/17
  */
-public class DemoSaveHandler extends StarterSaveHandler<RootSaveData, Void, GameplaySaveData> {
+public class DemoSaveHandler extends StarterSaveHandler<RootSaveData, SystemSettingSaveData, GameplaySaveData> {
 
     public DemoSaveHandler(IFrontend frontEnd, ISaveTool<RootSaveData> saveTool) {
         super(frontEnd, RootSaveData.Factory.INSTANCE, saveTool);
@@ -35,6 +37,9 @@ public class DemoSaveHandler extends StarterSaveHandler<RootSaveData, Void, Game
                         .ownResoueces(new HashMap<>())
                         .unlockedResourceTypes(new HashSet<>())
                         .unlockedAchievementNames(new HashSet<>())
+                        .build())
+                .systemSettingSaveData(SystemSettingSaveData.builder()
+                        .language(Language.EN)
                         .build())
                 .build();
     }

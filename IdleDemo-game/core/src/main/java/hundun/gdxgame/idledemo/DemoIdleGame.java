@@ -4,12 +4,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.ray3k.stripe.FreeTypeSkin;
 
-import hundun.gdxgame.idledemo.logic.GameDictionary;
+import hundun.gdxgame.idledemo.logic.DemoGameDictionary;
 import hundun.gdxgame.idledemo.logic.DemoTextureManager;
 import hundun.gdxgame.gamelib.base.save.ISaveTool;
-import hundun.gdxgame.idledemo.logic.BuiltinConstructionsLoader;
+import hundun.gdxgame.idledemo.logic.DemoBuiltinConstructionsLoader;
 import hundun.gdxgame.idledemo.logic.DemoSaveHandler;
 import hundun.gdxgame.idledemo.logic.GameArea;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
@@ -41,7 +43,7 @@ public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
         this.sharedViewport = new ScreenViewport();
         this.textFormatTool = new TextFormatTool();
         this.saveHandler = new DemoSaveHandler(frontend, saveTool);
-        this.mainSkinFilePath = "skins/default/skin/uiskin.json";
+        this.mainSkinFilePath = null;
         this.textureManager = new DemoTextureManager();
         this.screenContext = new DemoScreenContext(this);
         this.audioPlayManager = new AudioPlayManager(this);
@@ -58,14 +60,16 @@ public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
     @Override
     protected void createStage1() {
         super.createStage1();
-        
+        this.mainSkin = new FreeTypeSkin(Gdx.files.internal("skins/DefaultSkinWithFreeType/DefaultSkinWithFreeType.json"));
         this.idleGameplayExport = new IdleGameplayExport(
                 frontend,
-                new GameDictionary(),
-                new BaseConstructionFactory(BuiltinConstructionsLoader.initProviders()),
+                new DemoGameDictionary(),
+                new DemoBuiltinConstructionsLoader(),
                 BaseIdlePlayScreen.LOGIC_FRAME_PER_SECOND,
                 childGameConfig
                 );
+        this.getSaveHandler().registerSubHandler(idleGameplayExport);
+        saveHandler.systemSettingLoadOrNew();
     }
     
     @Override
