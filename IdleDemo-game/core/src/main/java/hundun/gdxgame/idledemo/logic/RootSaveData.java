@@ -1,7 +1,7 @@
 package hundun.gdxgame.idledemo.logic;
 
 
-import hundun.gdxgame.gamelib.starter.save.StarterSaveHandler.IFactory;
+import hundun.gdxgame.gamelib.starter.save.IRootSaveExtension;
 import hundun.gdxgame.idleshare.gamelib.framework.data.GameplaySaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.data.SystemSettingSaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
@@ -23,9 +23,9 @@ public class RootSaveData {
     GameplaySaveData gameplaySave;
     SystemSettingSaveData systemSettingSaveData;
     
-    public static final class Factory implements IFactory<RootSaveData, SystemSettingSaveData, GameplaySaveData> {
+    public static final class RootSaveExtension implements IRootSaveExtension<RootSaveData, SystemSettingSaveData, GameplaySaveData> {
 
-        public static final Factory INSTANCE = new Factory();
+        public static final RootSaveExtension INSTANCE = new RootSaveExtension();
         
         @Override
         public SystemSettingSaveData getSystemSave(RootSaveData rootSaveData) {

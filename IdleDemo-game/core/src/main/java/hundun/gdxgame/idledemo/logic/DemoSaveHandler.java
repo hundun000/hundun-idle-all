@@ -6,7 +6,7 @@ import java.util.HashSet;
 import hundun.gdxgame.gamelib.base.IFrontend;
 import hundun.gdxgame.gamelib.base.save.ISaveTool;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.gamelib.starter.save.StarterSaveHandler;
+import hundun.gdxgame.gamelib.starter.save.PairChildrenSaveHandler;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ConstructionSaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.data.GameplaySaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.data.SystemSettingSaveData;
@@ -16,10 +16,10 @@ import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
  * @author hundun
  * Created on 2023/02/17
  */
-public class DemoSaveHandler extends StarterSaveHandler<RootSaveData, SystemSettingSaveData, GameplaySaveData> {
+public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, SystemSettingSaveData, GameplaySaveData> {
 
     public DemoSaveHandler(IFrontend frontEnd, ISaveTool<RootSaveData> saveTool) {
-        super(frontEnd, RootSaveData.Factory.INSTANCE, saveTool);
+        super(frontEnd, RootSaveData.RootSaveExtension.INSTANCE, saveTool);
 
     }
 
@@ -43,5 +43,6 @@ public class DemoSaveHandler extends StarterSaveHandler<RootSaveData, SystemSett
                         .build())
                 .build();
     }
+
 
 }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -16,11 +17,13 @@ import hundun.gdxgame.corelib.base.BaseHundunGame;
 import hundun.gdxgame.corelib.base.BaseHundunScreen;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
+import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
 
 
 
-public abstract class BaseIdleMenuScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends BaseHundunScreen<T_GAME, T_SAVE> {
+public abstract class BaseIdleMenuScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> 
+        extends BaseHundunScreen<T_GAME, T_SAVE> {
 
 
 //    private MenuComponent<String> menu;
@@ -40,8 +43,9 @@ public abstract class BaseIdleMenuScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
     TextButton buttonNewGame;
     TextButton buttonIntoSettingScreen;
 
+
+    
     public BaseIdleMenuScreen(T_GAME game,
-            String titleText,
             InputListener buttonContinueGameInputListener, 
             InputListener buttonNewGameInputListener) {
         super(game, game.getSharedViewport());
@@ -75,7 +79,7 @@ public abstract class BaseIdleMenuScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
         uiRootTable.add(titleLabel)
                 .row();
         
-        if (game.getSaveHandler().gameHasSave()) {
+        if (game.getSaveHandler().hasContinuedGameplaySave()) {
             uiRootTable.add(buttonContinueGame)
                 .height(BUTTON_BIG_HEIGHT)
                 .fillY()
@@ -84,12 +88,24 @@ public abstract class BaseIdleMenuScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
         }
         
         uiRootTable.add(buttonNewGame)
-            .height(game.getSaveHandler().gameHasSave() ? BUTTON_SMALL_HEIGHT : BUTTON_BIG_HEIGHT)
+            .height(game.getSaveHandler().hasContinuedGameplaySave() ? BUTTON_SMALL_HEIGHT : BUTTON_BIG_HEIGHT)
             .fillY()
             .padTop(10)
             .row();
         
-        uiRootTable.debugAll();
+        uiRootTable.add(new LanguageSwitchBoard<>(this, 
+                Language.values(), 
+                game.getIdleGameplayExport().getLanguage(),
+                memuScreenTexts.get(3),
+                memuScreenTexts.get(4),
+                it -> game.getIdleGameplayExport().setLanguage(it))
+                )
+                .padTop(10);
+        
+        if (game.debugMode) {
+            uiRootTable.debugAll();
+        }
+        
     }
 
     @Override

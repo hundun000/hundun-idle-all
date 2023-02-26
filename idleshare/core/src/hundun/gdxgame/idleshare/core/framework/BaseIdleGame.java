@@ -15,6 +15,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.BaseConstructionFactory;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.IGameDictionary;
+import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.TextFormatTool;
 import lombok.Getter;
 

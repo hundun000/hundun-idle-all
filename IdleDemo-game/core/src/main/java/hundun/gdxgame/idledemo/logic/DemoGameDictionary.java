@@ -84,9 +84,9 @@ public class DemoGameDictionary implements IGameDictionary {
     public List<String> getMemuScreenTexts(Language language) {
         switch (language) {
             case CN:
-                return JavaFeatureForGwt.arraysAsList("Idle样例", "新游戏", "继续游戏");
+                return JavaFeatureForGwt.arraysAsList("Idle样例", "新游戏", "继续游戏", "语言", "重启后生效");
             default:
-                return JavaFeatureForGwt.arraysAsList("Demo游戏", "新游戏", "继续游戏");
+                return JavaFeatureForGwt.arraysAsList("IdleDemo", "New Game", "Continue", "Language", "Take effect after restart");
         }
     }
 }

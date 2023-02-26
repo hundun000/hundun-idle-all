@@ -15,11 +15,10 @@ public class DemoMenuScreen extends BaseIdleMenuScreen<DemoIdleGame, RootSaveDat
 
     public DemoMenuScreen(DemoIdleGame game) {
         super(game, 
-                "IdleDemo", 
                 new InputListener(){
                     @Override
                     public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                        game.getSaveHandler().gameLoadOrNew(true);
+                        game.getSaveHandler().gameplayLoadOrStarter(true);
                         game.getScreenManager().pushScreen(DemoPlayScreen.class.getSimpleName(), null);
                         game.getAudioPlayManager().intoScreen(DemoPlayScreen.class.getSimpleName());
                     }
@@ -31,7 +30,7 @@ public class DemoMenuScreen extends BaseIdleMenuScreen<DemoIdleGame, RootSaveDat
                 new InputListener(){
                     @Override
                     public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                        game.getSaveHandler().gameLoadOrNew(false);
+                        game.getSaveHandler().gameplayLoadOrStarter(false);
                         game.getScreenManager().pushScreen(DemoPlayScreen.class.getSimpleName(), null);
                         game.getAudioPlayManager().intoScreen(DemoPlayScreen.class.getSimpleName());
                     }
@@ -41,7 +40,6 @@ public class DemoMenuScreen extends BaseIdleMenuScreen<DemoIdleGame, RootSaveDat
                     }
                 }
                 );
-        // TODO Auto-generated constructor stub
     }
 
 }

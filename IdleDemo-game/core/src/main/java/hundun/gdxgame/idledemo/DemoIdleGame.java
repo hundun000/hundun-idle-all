@@ -69,7 +69,7 @@ public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
                 childGameConfig
                 );
         this.getSaveHandler().registerSubHandler(idleGameplayExport);
-        saveHandler.systemSettingLoadOrNew();
+        saveHandler.systemSettingLoadOrStarter();
     }
     
     @Override

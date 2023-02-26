@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 
 import hundun.gdxgame.gamelib.base.IFrontend;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
-import hundun.gdxgame.gamelib.starter.save.StarterSaveHandler.ISubGameplaySaveHandler;
-import hundun.gdxgame.gamelib.starter.save.StarterSaveHandler.ISubSystemSettingSaveHandler;
+import hundun.gdxgame.gamelib.starter.save.PairChildrenSaveHandler.ISubGameplaySaveHandler;
+import hundun.gdxgame.gamelib.starter.save.PairChildrenSaveHandler.ISubSystemSettingSaveHandler;
 import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.data.GameplaySaveData;
@@ -39,6 +39,7 @@ public class IdleGameplayExport implements ILogicFrameListener,
     private ChildGameConfig childGameConfig;
     @Getter
     private IGameDictionary gameDictionary;
+    @Setter
     @Getter
     private Language language;
     
@@ -155,7 +156,7 @@ public class IdleGameplayExport implements ILogicFrameListener,
     }
     
     @Override
-    public void applyGameSaveData(GameplaySaveData gameplaySaveData) {
+    public void applyGameplaySaveData(GameplaySaveData gameplaySaveData) {
         Collection<BaseConstruction> constructions = gameplayContext.getConstructionFactory().getConstructions();
         for (BaseConstruction construction : constructions) {
             if (gameplaySaveData.getConstructionSaveDataMap().containsKey(construction.getId())) {
@@ -169,7 +170,7 @@ public class IdleGameplayExport implements ILogicFrameListener,
     }
 
     @Override
-    public void currentSituationToSaveData(GameplaySaveData gameplaySaveData) {
+    public void currentSituationToGameplaySaveData(GameplaySaveData gameplaySaveData) {
         Collection<BaseConstruction> constructions = gameplayContext.getConstructionFactory().getConstructions();
         gameplaySaveData.setConstructionSaveDataMap(constructions.stream()
                 .collect(Collectors.toMap(
