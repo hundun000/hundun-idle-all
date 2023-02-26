@@ -102,12 +102,6 @@ public class BuiltinConstructionsLoader {
             construction.descriptionPackage = BaseConstruction.WIN_DESCRIPTION_PACKAGE;
             
             OutputComponent outputComponent = new OutputComponent(construction);
-//            outputComponent.setOutputCostPack(toPack(JavaFeatureForGwt.mapOf(
-//                    ResourceType.COIN, 500
-//                    )));
-//            outputComponent.setOutputGainPack(toPack(JavaFeatureForGwt.mapOf(
-//                    ResourceType.WIN_TROPHY, 1
-//                    )));
             construction.setOutputComponent(outputComponent);
             
             UpgradeComponent upgradeComponent = new UpgradeComponent(construction);

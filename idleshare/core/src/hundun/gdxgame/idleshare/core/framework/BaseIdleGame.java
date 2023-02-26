@@ -5,7 +5,6 @@ import java.util.List;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hundun.gdxgame.corelib.base.BaseHundunGame;
-import hundun.gdxgame.idleshare.core.framework.model.ManagerContext;
 import hundun.gdxgame.idleshare.core.framework.model.manager.AbstractIdleScreenContext;
 import hundun.gdxgame.idleshare.core.framework.model.manager.AbstractTextureManager;
 import hundun.gdxgame.idleshare.core.framework.model.manager.AudioPlayManager;
@@ -25,8 +24,6 @@ public abstract class BaseIdleGame<T_SAVE> extends BaseHundunGame<T_SAVE> {
     @Getter
     protected AbstractIdleScreenContext<? extends BaseIdleGame<T_SAVE>, T_SAVE> screenContext;
     @Getter
-    protected ManagerContext<? extends BaseIdleGame<T_SAVE>, T_SAVE> managerContext;
-    @Getter
     protected AudioPlayManager audioPlayManager;
     
     @Getter
@@ -39,6 +36,7 @@ public abstract class BaseIdleGame<T_SAVE> extends BaseHundunGame<T_SAVE> {
     
     @Getter
     protected IdleGameplayExport idleGameplayExport;
+    @Getter
     protected ChildGameConfig childGameConfig;
     
     public BaseIdleGame(int viewportWidth, int viewportHeight) {
@@ -58,7 +56,6 @@ public abstract class BaseIdleGame<T_SAVE> extends BaseHundunGame<T_SAVE> {
 	    
 	    this.getSaveHandler().registerSubHandler(idleGameplayExport);
 
-        managerContext.lazyInitOnGameCreate(childGameConfig);
         audioPlayManager.lazyInit(childGameConfig.getScreenIdToFilePathMap());
         
 	}

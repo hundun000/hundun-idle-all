@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import hundun.gdxgame.corelib.starter.StarterPlayScreen;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
+import hundun.gdxgame.idleshare.core.framework.model.manager.GameEntityManager;
 import hundun.gdxgame.idleshare.core.starter.ui.component.AchievementMaskBoard;
 import hundun.gdxgame.idleshare.core.starter.ui.component.BackgroundImageBox;
 import hundun.gdxgame.idleshare.core.starter.ui.component.GameAreaControlBoard;
@@ -44,7 +45,9 @@ public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
     protected AbstractConstructionControlBoard<T_GAME, T_SAVE> constructionControlBoard;
     protected BackgroundImageBox<T_GAME, T_SAVE> backgroundImageBox;
     protected GameAreaControlBoard<T_GAME, T_SAVE> gameAreaControlBoard;
-
+    @Getter
+    protected GameEntityManager gameEntityManager;
+    
     public BaseIdlePlayScreen(T_GAME game, String startArea, PlayScreenLayoutConst layoutConst) {
         super(game, startArea, game.getSharedViewport(), LOGIC_FRAME_PER_SECOND);
         this.layoutConst = layoutConst;
@@ -60,7 +63,7 @@ public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
 
     @Override
     public void hideAchievementMaskBoard() {
-        Gdx.app.log(this.getClass().getSimpleName(), "hideAchievementMaskBoard called");
+        game.getFrontend().log(this.getClass().getSimpleName(), "hideAchievementMaskBoard called");
         achievementMaskBoard.setVisible(false);
         Gdx.input.setInputProcessor(uiStage);
         logicFrameHelper.setLogicFramePause(false);
@@ -68,7 +71,7 @@ public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
 
     @Override
     public void onAchievementUnlock(AchievementPrototype prototype) {
-        Gdx.app.log(this.getClass().getSimpleName(), "onAchievementUnlock called");
+        game.getFrontend().log(this.getClass().getSimpleName(), "onAchievementUnlock called");
         achievementMaskBoard.setAchievementPrototype(prototype);
         achievementMaskBoard.setVisible(true);
         Gdx.input.setInputProcessor(popupUiStage);
@@ -88,7 +91,9 @@ public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
     }
 
     protected void lazyInitLogicContext() {
-        gameImageDrawer = new GameImageDrawer<>(this);
+        this.gameImageDrawer = new GameImageDrawer<>(this);
+        this.gameEntityManager = new GameEntityManager(game);
+        gameEntityManager.lazyInit(game.getChildGameConfig().getAreaShowEntityByOwnAmountConstructionIds(), game.getChildGameConfig().getAreaShowEntityByOwnAmountResourceIds(), game.getChildGameConfig().getAreaShowEntityByChangeAmountResourceIds());
         
         logicFrameListeners.add(constructionControlBoard);
         logicFrameListeners.add(game.getIdleGameplayExport());
@@ -96,6 +101,9 @@ public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
         gameAreaChangeListeners.add(backgroundImageBox);
         gameAreaChangeListeners.add(constructionControlBoard);
         gameAreaChangeListeners.add(gameAreaControlBoard);
+        
+        this.getGame().getIdleGameplayExport().eventManagerRegisterListener(this);
+        this.getGame().getIdleGameplayExport().eventManagerRegisterListener(gameImageDrawer);
     }
     
 
@@ -137,6 +145,7 @@ public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
         
     }
 
+    @Override
     protected void gameObjectDraw(float delta) {
         gameImageDrawer.allEntitiesMoveForFrameAndDraw();
     }

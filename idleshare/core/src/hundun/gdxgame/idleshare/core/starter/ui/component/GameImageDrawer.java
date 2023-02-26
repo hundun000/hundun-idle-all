@@ -26,18 +26,20 @@ public class GameImageDrawer<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> implem
     public GameImageDrawer(BaseIdlePlayScreen<T_GAME, T_SAVE> parent) {
         this.parent = parent;
 
-        parent.getGame().getIdleGameplayExport().eventManagerRegisterListener(this);
+        
     }
 
 
     public void allEntitiesMoveForFrameAndDraw() {
         parent.getGame().getBatch().begin();
-        GameEntityManager manager = parent.getGame().getManagerContext().getGameEntityManager();
+        GameEntityManager manager = parent.getGameEntityManager();
 
-        manager.allEntityMoveForFrame();
+        
         String gameArea = parent.getArea();
-
         List<String> needDrawConstructionIds = manager.getAreaShowEntityByOwnAmountConstructionIds().get(gameArea);
+        manager.destoryNoNeedDrawConstructionIds(needDrawConstructionIds);
+        manager.allEntityMoveForFrame();
+        
         if (needDrawConstructionIds != null) {
             for (String id : needDrawConstructionIds) {
                 List<GameEntity> queue = manager.getGameEntitiesOfConstructionIds().get(id);
@@ -82,7 +84,7 @@ public class GameImageDrawer<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> implem
 
     @Override
     public void onResourceChange(Map<String, Long> changeMap) {
-        GameEntityManager manager = parent.getGame().getManagerContext().getGameEntityManager();
+        GameEntityManager manager = parent.getGameEntityManager();
         String gameArea = parent.getArea();
 
         manager.areaEntityCheckByOwnAmount(gameArea, gameEntityFactory);

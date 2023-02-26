@@ -171,6 +171,18 @@ public class GameEntityManager {
         this.areaShowEntityByChangeAmountResourceIds = areaShowEntityByChangeAmountResourceIds;
     }
 
+    /**
+     * 某些引擎（如Unity）不光要在此处queue.clear()，还要queue.ForEach(entity => UnityEngine.Object.Destroy(entity.gameObject));
+     */
+    public void destoryNoNeedDrawConstructionIds(List<String> needDrawConstructionIds) {
+        for (Entry<String, List<GameEntity>> entry : gameEntitiesOfConstructionIds.entrySet()) {
+            List<GameEntity> queue = entry.getValue();
+            if (!needDrawConstructionIds.contains(entry.getKey())) {
+                queue.clear();
+            }
+        }
+    }
+
 
 
 

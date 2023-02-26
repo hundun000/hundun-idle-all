@@ -16,7 +16,6 @@ import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.screen.DemoMenuScreen;
 import hundun.gdxgame.idledemo.ui.screen.DemoScreenContext;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.core.framework.model.ManagerContext;
 import hundun.gdxgame.idleshare.core.framework.model.manager.AudioPlayManager;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
 import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport;
@@ -45,7 +44,6 @@ public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
         this.mainSkinFilePath = "skins/default/skin/uiskin.json";
         this.textureManager = new DemoTextureManager();
         this.screenContext = new DemoScreenContext(this);
-        this.managerContext = new ManagerContext<>(this);
         this.audioPlayManager = new AudioPlayManager(this);
         this.childGameConfig = new DemoChildGameConfig();
         
