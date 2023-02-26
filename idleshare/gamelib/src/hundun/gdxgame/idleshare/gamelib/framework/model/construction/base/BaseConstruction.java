@@ -12,6 +12,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.data.ConstructionSaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IBuffChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackage.ILevelDescroptionProvider;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.IGameDictionary;
+import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -42,13 +43,13 @@ public abstract class BaseConstruction implements ILogicFrameListener, IBuffChan
     protected ConstructionSaveData saveData;
 
     @Getter
-    public String name;
+    protected String name;
 
     @Getter
-    public String id;
+    protected String id;
 
     @Getter
-    public String detailDescroptionConstPart;
+    protected String detailDescroptionConstPart;
 
     @Getter
     public DescriptionPackage descriptionPackage;
@@ -77,10 +78,11 @@ public abstract class BaseConstruction implements ILogicFrameListener, IBuffChan
     protected LevelComponent levelComponent;
 
 
-    public void lazyInitDescription(IdleGameplayContext gameContext) {
+    public void lazyInitDescription(IdleGameplayContext gameContext, Language language) {
         this.gameContext = gameContext;
         
-        this.name = gameContext.getGameDictionary().constructionIdToShowName(this.getId());
+        this.name = gameContext.getGameDictionary().constructionIdToShowName(language, id);
+        this.detailDescroptionConstPart = gameContext.getGameDictionary().constructionIdToDetailDescroptionConstPart(language, id);
         
         outputComponent.lazyInitDescription();
         upgradeComponent.lazyInitDescription();

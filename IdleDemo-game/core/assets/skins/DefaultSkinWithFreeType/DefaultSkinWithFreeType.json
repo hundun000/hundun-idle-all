@@ -81,7 +81,8 @@
 "com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
 	"default": {
 		"up": "button2_rounded_CC",
-		"down": "button2_rounded_CC_down"
+		"down": "button2_rounded_CC_down",
+		"disabled": "button2_rounded_CC_disable"
 	},
 	"toggle": {
 		"up": "default-round",
@@ -168,7 +169,8 @@
 		"font": "MiSans-Bold",
 		"fontColor": "black",
 		"up": "button2_rounded_CC",
-		"down": "button2_rounded_CC_down"
+		"down": "button2_rounded_CC_down",
+		"disabled": "button2_rounded_CC_disable"
 	},
 	"toggle": {
 		"font": "default-font",

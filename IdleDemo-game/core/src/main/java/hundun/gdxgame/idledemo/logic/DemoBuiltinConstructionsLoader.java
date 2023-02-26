@@ -20,6 +20,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.Output
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.UpgradeComponent;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePack;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
+import hundun.gdxgame.idleshare.gamelib.framework.util.text.IGameDictionary;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
 
@@ -31,7 +32,6 @@ public class DemoBuiltinConstructionsLoader implements IBuiltinConstructionsLoad
         // clicker-provider
         {
             BaseConstruction construction = new BaseClickGatherConstruction(ConstructionId.COOKIE_CLICK_PROVIDER);
-            construction.detailDescroptionConstPart = "Click gain some cookie";
             construction.descriptionPackage = DescriptionPackageFactory.getGatherDescriptionPackage(language);
             
             OutputComponent outputComponent = new OutputComponent(construction);
@@ -51,7 +51,6 @@ public class DemoBuiltinConstructionsLoader implements IBuiltinConstructionsLoad
         // auto-provider
         {
             BaseConstruction construction = new BaseAutoConstruction(ConstructionId.COOKIE_AUTO_PROVIDER);
-            construction.detailDescroptionConstPart = "Auto gain some cookie";
             construction.descriptionPackage = DescriptionPackageFactory.getMaxLevelAutoDescriptionPackage(language);
             
             OutputComponent outputComponent = new OutputComponent(construction);
@@ -75,7 +74,6 @@ public class DemoBuiltinConstructionsLoader implements IBuiltinConstructionsLoad
         // seller
         {
             BaseConstruction construction = new BaseAutoConstruction(ConstructionId.COOKIE_SELLER);
-            construction.detailDescroptionConstPart = "Auto sell cookies";
             construction.descriptionPackage = DescriptionPackageFactory.getWorkingLevelAutoDescriptionPackage(language);
             
             OutputComponent outputComponent = new OutputComponent(construction);
@@ -102,7 +100,6 @@ public class DemoBuiltinConstructionsLoader implements IBuiltinConstructionsLoad
         // win
         {
             BaseConstruction construction = new BaseBuffConstruction(ConstructionId.WIN_PROVIDER, BuffId.WIN);
-            construction.detailDescroptionConstPart = "Get a trophy and win the game";
             construction.descriptionPackage = DescriptionPackageFactory.getWinDescriptionPackage(language);
             
             OutputComponent outputComponent = new OutputComponent(construction);

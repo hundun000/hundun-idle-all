@@ -1,5 +1,7 @@
 package hundun.gdxgame.idleshare.core.starter.ui.screen.menu;
 
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -18,7 +20,7 @@ import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 
 
 
-public abstract class AbstractMenuScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends BaseHundunScreen<T_GAME, T_SAVE> {
+public abstract class BaseIdleMenuScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends BaseHundunScreen<T_GAME, T_SAVE> {
 
 
 //    private MenuComponent<String> menu;
@@ -32,19 +34,18 @@ public abstract class AbstractMenuScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
     final InputListener buttonContinueGameInputListener;
     final InputListener buttonNewGameInputListener;
 
-    String titleText;
     Label titleLabel;
     Image backImage;
     TextButton buttonContinueGame;
     TextButton buttonNewGame;
     TextButton buttonIntoSettingScreen;
 
-    public AbstractMenuScreen(T_GAME game,
+    public BaseIdleMenuScreen(T_GAME game,
             String titleText,
             InputListener buttonContinueGameInputListener, 
             InputListener buttonNewGameInputListener) {
         super(game, game.getSharedViewport());
-        this.titleText = titleText;
+        
         this.buttonContinueGameInputListener = buttonContinueGameInputListener;
         this.buttonNewGameInputListener = buttonNewGameInputListener;
         
@@ -52,17 +53,17 @@ public abstract class AbstractMenuScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
     }
 
     private void initScene2d() {
-
+        List<String> memuScreenTexts = game.getIdleGameplayExport().getGameDictionary().getMemuScreenTexts(game.getIdleGameplayExport().getLanguage());
         this.titleLabel = new Label(
-                JavaFeatureForGwt.stringFormat("     %s     ", titleText), 
+                JavaFeatureForGwt.stringFormat("     %s     ", memuScreenTexts.get(0)), 
                 game.getMainSkin());
         titleLabel.setFontScale(1.5f);
         this.backImage = new Image(game.getTextureManager().getMenuTexture());
         
-        buttonContinueGame = new TextButton("Continue game", game.getMainSkin());
+        buttonContinueGame = new TextButton(memuScreenTexts.get(2), game.getMainSkin());
         buttonContinueGame.addListener(buttonContinueGameInputListener);
 
-        buttonNewGame = new TextButton("New game", game.getMainSkin());
+        buttonNewGame = new TextButton(memuScreenTexts.get(1), game.getMainSkin());
         buttonNewGame.addListener(buttonNewGameInputListener);
         
         

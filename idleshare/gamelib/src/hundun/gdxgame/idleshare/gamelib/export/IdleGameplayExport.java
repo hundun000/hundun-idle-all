@@ -20,6 +20,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.IBuilt
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.UpgradeComponent.UpgradeState;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePack;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.IGameDictionary;
+import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -36,12 +37,17 @@ public class IdleGameplayExport implements ILogicFrameListener,
     private IdleGameplayContext gameplayContext;
     private IBuiltinConstructionsLoader builtinConstructionsLoader;
     private ChildGameConfig childGameConfig;
+    @Getter
+    private IGameDictionary gameDictionary;
+    @Getter
+    private Language language;
     
     public IdleGameplayExport(
             IFrontend frontEnd, 
             IGameDictionary gameDictionary,
             IBuiltinConstructionsLoader builtinConstructionsLoader,
             int LOGIC_FRAME_PER_SECOND, ChildGameConfig childGameConfig) {
+        this.gameDictionary = gameDictionary;
         this.builtinConstructionsLoader = builtinConstructionsLoader;
         this.childGameConfig = childGameConfig;
         this.gameplayContext = new IdleGameplayContext(frontEnd, gameDictionary, LOGIC_FRAME_PER_SECOND);
@@ -83,8 +89,8 @@ public class IdleGameplayExport implements ILogicFrameListener,
         private static ConstructionExportProxy fromModel(BaseConstruction model) {
             ConstructionExportProxy result = new ConstructionExportProxy();
             result.model = model;
-            result.id = model.id;
-            result.name = model.name;
+            result.id = model.getId();
+            result.name = model.getName();
             result.outputCostPack = (model.getOutputComponent().getOutputCostPack());
             result.outputGainPack = (model.getOutputComponent().getOutputGainPack());
             result.upgradeState = (model.getUpgradeComponent().getUpgradeState());
@@ -105,7 +111,7 @@ public class IdleGameplayExport implements ILogicFrameListener,
         }
         
         public String getDetailDescroptionConstPart() {
-            return model.detailDescroptionConstPart;
+            return model.getDetailDescroptionConstPart();
         }
         
         public String getWorkingLevelDescroption() {
@@ -152,8 +158,8 @@ public class IdleGameplayExport implements ILogicFrameListener,
     public void applyGameSaveData(GameplaySaveData gameplaySaveData) {
         Collection<BaseConstruction> constructions = gameplayContext.getConstructionFactory().getConstructions();
         for (BaseConstruction construction : constructions) {
-            if (gameplaySaveData.getConstructionSaveDataMap().containsKey(construction.id)) {
-                construction.setSaveData(gameplaySaveData.getConstructionSaveDataMap().get(construction.id));
+            if (gameplaySaveData.getConstructionSaveDataMap().containsKey(construction.getId())) {
+                construction.setSaveData(gameplaySaveData.getConstructionSaveDataMap().get(construction.getId()));
                 construction.updateModifiedValues();
             }
         }
@@ -178,6 +184,7 @@ public class IdleGameplayExport implements ILogicFrameListener,
 
     @Override
     public void applySystemSetting(SystemSettingSaveData systemSettingSave) {
+        this.language = systemSettingSave.getLanguage();
         gameplayContext.allLazyInit(
                 systemSettingSave.getLanguage(), 
                 childGameConfig, 
@@ -188,7 +195,8 @@ public class IdleGameplayExport implements ILogicFrameListener,
 
     @Override
     public void currentSituationToSystemSetting(SystemSettingSaveData systemSettingSave) {
-        systemSettingSave.setLanguage(gameplayContext.getLanguage());
+        systemSettingSave.setLanguage(this.getLanguage());
     }
+
     
 }

@@ -29,7 +29,7 @@ import lombok.Setter;
 public class IdleGameplayContext {
     public final int LOGIC_FRAME_PER_SECOND;
 
-    Language language;
+    
     
     final IFrontend frontEnd;
     
@@ -62,8 +62,7 @@ public class IdleGameplayContext {
     }
     
     public void allLazyInit(Language language, ChildGameConfig childGameConfig, List<BaseConstruction> constructions) {
-        this.language = language;
-        this.getConstructionFactory().lazyInit(this, constructions);
+        this.getConstructionFactory().lazyInit(this, language, constructions);
         this.getConstructionManager().lazyInit(childGameConfig.getAreaControlableConstructionIds());
         this.getAchievementManager().lazyInit(childGameConfig.getAchievementPrototypes());
     }

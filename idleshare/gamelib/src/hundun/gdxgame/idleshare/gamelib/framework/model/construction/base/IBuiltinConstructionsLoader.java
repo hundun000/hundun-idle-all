@@ -2,6 +2,7 @@ package hundun.gdxgame.idleshare.gamelib.framework.model.construction.base;
 
 import java.util.List;
 
+import hundun.gdxgame.idleshare.gamelib.framework.util.text.IGameDictionary;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
 /**

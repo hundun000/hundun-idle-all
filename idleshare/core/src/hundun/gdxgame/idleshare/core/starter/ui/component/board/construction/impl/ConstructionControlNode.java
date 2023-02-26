@@ -178,6 +178,7 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
 
 
         if (canClickEffect) {
+            clickEffectButton.setDisabled(false);
             clickEffectButton.getLabel().setColor(Color.WHITE);
         } else {
             clickEffectButton.setDisabled(true);
@@ -186,6 +187,7 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
 
         boolean canUpWorkingLevel = parent.getGame().getIdleGameplayExport().constructionCanChangeWorkingLevel(model.getId(), 1);
         if (canUpWorkingLevel) {
+            upWorkingLevelButton.setDisabled(false);
             upWorkingLevelButton.getLabel().setColor(Color.WHITE);
         } else {
             upWorkingLevelButton.setDisabled(true);
@@ -194,6 +196,7 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
 
         boolean canDownWorkingLevel = parent.getGame().getIdleGameplayExport().constructionCanChangeWorkingLevel(model.getId(), -1);
         if (canDownWorkingLevel) {
+            downWorkingLevelButton.setDisabled(false);
             downWorkingLevelButton.getLabel().setColor(Color.WHITE);
         } else {
             downWorkingLevelButton.setDisabled(true);

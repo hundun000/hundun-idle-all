@@ -5,13 +5,13 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.menu.AbstractMenuScreen;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.menu.BaseIdleMenuScreen;
 
 /**
  * @author hundun
  * Created on 2023/02/16
  */
-public class DemoMenuScreen extends AbstractMenuScreen<DemoIdleGame, RootSaveData> {
+public class DemoMenuScreen extends BaseIdleMenuScreen<DemoIdleGame, RootSaveData> {
 
     public DemoMenuScreen(DemoIdleGame game) {
         super(game, 
