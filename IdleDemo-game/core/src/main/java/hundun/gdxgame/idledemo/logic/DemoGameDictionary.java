@@ -1,6 +1,7 @@
 package hundun.gdxgame.idledemo.logic;
 
 import java.util.List;
+import java.util.Map;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.IGameDictionary;
@@ -88,5 +89,13 @@ public class DemoGameDictionary implements IGameDictionary {
             default:
                 return JavaFeatureForGwt.arraysAsList("IdleDemo", "New Game", "Continue", "Language", "Take effect after restart");
         }
+    }
+
+    @Override
+    public Map<Language, String> getLanguageShowNameMap() {
+        return JavaFeatureForGwt.mapOf(
+                Language.CN, "中文",
+                Language.EN, "English"
+                );
     }
 }

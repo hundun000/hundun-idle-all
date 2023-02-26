@@ -47,7 +47,7 @@
 		"font": "MiSans-Bold.ttf",
 		"size": 16,
 		"mono": false,
-		"color": "MIKU_COLOR",
+		"color": "black",
 		"gamma": 1.8,
 		"renderCount": 2,
 		"borderWidth": 0,
@@ -112,7 +112,7 @@
 },
 "com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle": {
 	"default": {
-		"font": "default-font",
+		"font": "MiSans-Bold",
 		"fontColorSelected": "white",
 		"fontColorUnselected": "white",
 		"selection": "selection"
@@ -139,7 +139,7 @@
 },
 "com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle": {
 	"default": {
-		"font": "default-font",
+		"font": "MiSans-Bold",
 		"fontColor": "white",
 		"background": "default-select",
 		"scrollStyle": "default",

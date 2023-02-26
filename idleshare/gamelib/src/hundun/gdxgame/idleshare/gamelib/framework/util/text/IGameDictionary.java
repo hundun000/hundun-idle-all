@@ -1,6 +1,7 @@
 package hundun.gdxgame.idleshare.gamelib.framework.util.text;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author hundun
@@ -13,4 +14,5 @@ public interface IGameDictionary {
     String constructionIdToShowName(Language language, String constructionId);
     String constructionIdToDetailDescroptionConstPart(Language language, String constructionId);
     List<String> getMemuScreenTexts(Language language);
+    Map<Language, String> getLanguageShowNameMap();
 }
