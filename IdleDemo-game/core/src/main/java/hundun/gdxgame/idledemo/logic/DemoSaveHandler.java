@@ -33,6 +33,13 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
                 .gameplaySave(GameplaySaveData.builder()
                         .constructionSaveDataMap(
                                 JavaFeatureForGwt.mapOf(
+                                        ConstructionPrototypeId.COOKIE_CLICK_PROVIDER,
+                                        ConstructionSaveData.builder()
+                                                .prototypeId(ConstructionPrototypeId.COOKIE_CLICK_PROVIDER)
+                                                .level(0)
+                                                .workingLevel(0)
+                                                .position(USELESS_POSITON)
+                                                .build(),
                                         ConstructionPrototypeId.COOKIE_AUTO_PROVIDER,
                                         ConstructionSaveData.builder()
                                                 .prototypeId(ConstructionPrototypeId.COOKIE_AUTO_PROVIDER)

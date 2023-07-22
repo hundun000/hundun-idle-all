@@ -3,9 +3,9 @@ package hundun.gdxgame.idleshare.gamelib.framework.model.construction.starter;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.OutputComponent;
 
-public class EmptyOutputComponent extends OutputComponent {
+public class EmptyAutoOutputComponent extends OutputComponent {
 
-    public EmptyOutputComponent(BaseConstruction construction) {
+    public EmptyAutoOutputComponent(BaseConstruction construction) {
         super(construction);
     }
 

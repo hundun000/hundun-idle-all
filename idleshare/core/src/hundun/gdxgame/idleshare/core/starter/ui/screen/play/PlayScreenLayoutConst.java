@@ -10,6 +10,8 @@ import hundun.gdxgame.corelib.base.util.DrawableFactory;
  * Created on 2022/01/22
  */
 public class PlayScreenLayoutConst {
+    public final float DESK_WIDTH = 100;
+    public final float DESK_HEIGHT = 100;
     public int CONSTRUCION_BOARD_ROOT_BOX_HEIGHT = 120;
     public int CONSTRUCION_CHILD_WIDTH = 100;
     public int CONSTRUCION_CHILD_BUTTON_HEIGHT = 30;

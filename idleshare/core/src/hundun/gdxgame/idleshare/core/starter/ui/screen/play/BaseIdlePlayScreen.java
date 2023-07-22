@@ -1,6 +1,7 @@
 package hundun.gdxgame.idleshare.core.starter.ui.screen.play;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import hundun.gdxgame.corelib.base.BaseHundunScreen;
@@ -8,15 +9,11 @@ import hundun.gdxgame.gamelib.base.LogicFrameHelper;
 import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.core.framework.model.manager.GameEntityManager;
 import hundun.gdxgame.idleshare.core.starter.ui.component.AchievementMaskBoard;
 import hundun.gdxgame.idleshare.core.starter.ui.component.BackgroundImageBox;
 import hundun.gdxgame.idleshare.core.starter.ui.component.GameAreaControlBoard;
-import hundun.gdxgame.idleshare.core.starter.ui.component.GameImageDrawer;
 import hundun.gdxgame.idleshare.core.starter.ui.component.PopupInfoBoard;
 import hundun.gdxgame.idleshare.core.starter.ui.component.StorageInfoBoard;
-import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.AbstractConstructionControlBoard;
-import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.fixed.FixedConstructionControlBoard;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementUnlockCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.AbstractAchievement;
@@ -25,7 +22,6 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -46,14 +42,12 @@ public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
     // ====== need child lazy-init start ======
     protected AchievementMaskBoard<T_GAME, T_SAVE> achievementMaskBoard;
     protected PopupInfoBoard<T_GAME, T_SAVE> secondaryInfoBoard;
-    protected GameImageDrawer<T_GAME, T_SAVE> gameImageDrawer;
     protected StorageInfoBoard<T_GAME, T_SAVE> storageInfoTable;
-    protected AbstractConstructionControlBoard<T_GAME, T_SAVE> constructionControlBoard;
+
     protected BackgroundImageBox<T_GAME, T_SAVE> backgroundImageBox;
     protected GameAreaControlBoard<T_GAME, T_SAVE> gameAreaControlBoard;
     // ----- not ui ------
-    @Getter
-    protected GameEntityManager gameEntityManager;
+
     @Getter
     protected String area;
     private final String startArea;
@@ -71,6 +65,13 @@ public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
     
     @Override
     protected void create() {
+
+        lazyInitBackUiAndPopupUiContent();
+
+        lazyInitUiRootContext();
+
+        lazyInitLogicContext();
+
     }
 
     @Override
@@ -107,23 +108,18 @@ public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
     }
 
     protected void lazyInitLogicContext() {
-        this.gameImageDrawer = new GameImageDrawer<>(this);
-        this.gameEntityManager = new GameEntityManager(game);
-        gameEntityManager.lazyInit(
-                game.getChildGameConfig().getAreaShowEntityByOwnAmountConstructionPrototypeIds(),
-                game.getChildGameConfig().getAreaShowEntityByOwnAmountResourceIds(),
-                game.getChildGameConfig().getAreaShowEntityByChangeAmountResourceIds()
-        );
+
+
         
-        logicFrameListeners.add(constructionControlBoard);
+
         logicFrameListeners.add(game.getIdleGameplayExport());
 
         gameAreaChangeListeners.add(backgroundImageBox);
-        gameAreaChangeListeners.add(constructionControlBoard);
+
         gameAreaChangeListeners.add(gameAreaControlBoard);
         
         this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(this);
-        this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(gameImageDrawer);
+
     }
     
 
@@ -135,10 +131,7 @@ public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
         
         gameAreaControlBoard = new GameAreaControlBoard<>(this);
         uiRootTable.add(gameAreaControlBoard).expand().right().row();
-        // impl switchable
-        constructionControlBoard = new FixedConstructionControlBoard<>(this);
-        uiRootTable.add(constructionControlBoard).height(layoutConst.CONSTRUCION_BOARD_ROOT_BOX_HEIGHT).fill();
-        
+
         if (game.debugMode) {
             uiRootTable.debugCell();
         }
@@ -165,10 +158,7 @@ public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
         
     }
 
-    @Override
-    protected void gameObjectDraw(float delta) {
-        gameImageDrawer.allEntitiesMoveForFrameAndDraw();
-    }
+
 
     @Override
     protected void onLogicFrame() {
@@ -183,22 +173,19 @@ public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
     public void show() {
         super.show();
 
-        Gdx.input.setInputProcessor(uiStage);
-        game.getBatch().setProjectionMatrix(uiStage.getViewport().getCamera().combined);
+        Gdx.input.setInputProcessor(provideDefaultInputProcessor());
 
-        backUiStage.clear();
-        popupRootTable.clear();
-        lazyInitBackUiAndPopupUiContent();
+        updateUIForShow();
 
-        uiRootTable.clear();
-        lazyInitUiRootContext();
-
-        lazyInitLogicContext();
-
-        // start area
-        setAreaAndNotifyChildren(startArea);
         Gdx.app.log(this.getClass().getSimpleName(), "show done");
     }
+
+    protected void updateUIForShow() {
+        // start area
+        setAreaAndNotifyChildren(startArea);
+    }
+
+    protected abstract InputProcessor provideDefaultInputProcessor();
 
     public void setAreaAndNotifyChildren(String current) {
         String last = this.area;

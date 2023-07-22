@@ -4,15 +4,12 @@ import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idledemo.logic.ConstructionPrototypeId;
 import hundun.gdxgame.idledemo.logic.DemoBuiltinConstructionsLoader;
 import hundun.gdxgame.idledemo.logic.ResourceType;
-import hundun.gdxgame.idledemo.logic.construction.BaseIdleForestConstruction;
+import hundun.gdxgame.idledemo.logic.construction.BaseIdleDemoConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
-import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackage;
-import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackageFactory;
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 public class CookieAutoSellerPrototype extends AbstractConstructionPrototype {
@@ -38,7 +35,7 @@ public class CookieAutoSellerPrototype extends AbstractConstructionPrototype {
     @Override
     public BaseConstruction getInstance(GridPosition position) {
         String id = prototypeId + "_" + UUID.randomUUID().toString();
-        BaseIdleForestConstruction construction = BaseIdleForestConstruction.typeAutoConstProficienc(prototypeId, id, position, descriptionPackage);
+        BaseIdleDemoConstruction construction = BaseIdleDemoConstruction.typeAutoConstProficienc(prototypeId, id, position, descriptionPackage);
 
         construction.getOutputComponent().setOutputCostPack(DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
                 ResourceType.COOKIE, 1

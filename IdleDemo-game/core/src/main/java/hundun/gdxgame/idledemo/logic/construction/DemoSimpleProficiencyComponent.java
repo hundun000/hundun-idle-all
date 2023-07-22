@@ -3,15 +3,15 @@ package hundun.gdxgame.idledemo.logic.construction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.starter.BaseAutoProficiencyComponent;
 
-public class IdleForestProficiencyComponent extends BaseAutoProficiencyComponent {
+public class DemoSimpleProficiencyComponent extends BaseAutoProficiencyComponent {
 
     public static interface ProficiencySpeedCalculator {
-        int invoke(BaseIdleForestConstruction thiz);
+        int invoke(BaseIdleDemoConstruction thiz);
     }
     public ProficiencySpeedCalculator proficiencySpeedCalculator;
 
 
-    public IdleForestProficiencyComponent(BaseConstruction construction, Integer second) {
+    public DemoSimpleProficiencyComponent(BaseConstruction construction, Integer second) {
         super(construction, second, 50);
     }
 
@@ -26,7 +26,7 @@ public class IdleForestProficiencyComponent extends BaseAutoProficiencyComponent
     protected void tryProficiencyOnce() {
         if (this.proficiencySpeedCalculator != null)
         {
-            this.changeProficiency(proficiencySpeedCalculator.invoke((BaseIdleForestConstruction)construction));
+            this.changeProficiency(proficiencySpeedCalculator.invoke((BaseIdleDemoConstruction)construction));
         }
     }
 }

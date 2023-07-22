@@ -15,31 +15,27 @@ import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class CookieAutoProviderPrototype extends AbstractConstructionPrototype {
+public class CookieClickProviderPrototype extends AbstractConstructionPrototype {
     public static DescriptionPackage descriptionPackageEN = DescriptionPackage.builder()
-            .upgradeButtonText("Upgrade")
+            .clickOutputButtonText("Gather")
             .outputCostDescriptionStart("Consume")
             .outputGainDescriptionStart("Produce")
-            .upgradeCostDescriptionStart("Upgrade cost")
-            .upgradeMaxLevelDescription("(max)")
-            .levelDescriptionProvider(DescriptionPackageFactory.ONLY_LEVEL_IMP)
+            .levelDescriptionProvider(DescriptionPackageFactory.NO_LEVEL_IMP)
             .proficiencyDescriptionProvider(DescriptionPackageFactory.EN_PROFICIENCY_IMP)
             .build();
 
 
     public static DescriptionPackage descriptionPackageCN = DescriptionPackage.builder()
-            .upgradeButtonText("升级")
-            .outputCostDescriptionStart("自动消耗")
-            .outputGainDescriptionStart("自动产出")
-            .upgradeCostDescriptionStart("升级费用")
-            .upgradeMaxLevelDescription("(已达到最大等级)")
-            .levelDescriptionProvider(DescriptionPackageFactory.ONLY_LEVEL_IMP)
+            .clickOutputButtonText("收集")
+            .outputCostDescriptionStart("消耗")
+            .outputGainDescriptionStart("产出")
+            .levelDescriptionProvider(DescriptionPackageFactory.CN_NO_LEVEL_IMP)
             .proficiencyDescriptionProvider(DescriptionPackageFactory.CN_PROFICIENCY_IMP)
             .build();
 
-    public CookieAutoProviderPrototype(Language language) {
+    public CookieClickProviderPrototype(Language language) {
         super(
-                ConstructionPrototypeId.COOKIE_AUTO_PROVIDER,
+                ConstructionPrototypeId.COOKIE_CLICK_PROVIDER,
                 language,
                 DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf())
         );
@@ -58,15 +54,11 @@ public class CookieAutoProviderPrototype extends AbstractConstructionPrototype {
     @Override
     public BaseConstruction getInstance(GridPosition position) {
         String id = prototypeId + "_" + UUID.randomUUID().toString();
-        BaseIdleDemoConstruction construction = BaseIdleDemoConstruction.typeAutoConstProficienc(prototypeId, id, position, descriptionPackage);
+        BaseIdleDemoConstruction construction = BaseIdleDemoConstruction.typeClick(prototypeId, id, position, descriptionPackage);
 
         construction.getOutputComponent().setOutputCostPack(DemoBuiltinConstructionsLoader.toPack(new HashMap<>()));
         construction.getOutputComponent().setOutputGainPack(DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
                 ResourceType.COOKIE, 1
-        )));
-
-        construction.getUpgradeComponent().setUpgradeCostPack(DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
-                ResourceType.COIN, 50
         )));
 
         return construction;

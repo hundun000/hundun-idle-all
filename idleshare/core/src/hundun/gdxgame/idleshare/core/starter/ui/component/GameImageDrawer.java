@@ -20,19 +20,24 @@ import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChan
 public class GameImageDrawer<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> implements IOneFrameResourceChangeListener {
 
     BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
+    GameImageDrawerOwner owner;
     BaseGameEntityFactory gameEntityFactory;
 
+    public static interface GameImageDrawerOwner {
+        GameEntityManager getGameEntityManager();
+    }
 
-    public GameImageDrawer(BaseIdlePlayScreen<T_GAME, T_SAVE> parent) {
+
+    public GameImageDrawer(BaseIdlePlayScreen<T_GAME, T_SAVE> parent, GameImageDrawerOwner owner) {
         this.parent = parent;
-
+        this.owner = owner;
         
     }
 
 
     public void allEntitiesMoveForFrameAndDraw() {
         parent.getGame().getBatch().begin();
-        GameEntityManager manager = parent.getGameEntityManager();
+        GameEntityManager manager = owner.getGameEntityManager();
 
         
         String gameArea = parent.getArea();
@@ -84,7 +89,7 @@ public class GameImageDrawer<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> implem
 
     @Override
     public void onResourceChange(Map<String, Long> changeMap, Map<String, List<Long>> deltaHistoryMap) {
-        GameEntityManager manager = parent.getGameEntityManager();
+        GameEntityManager manager = owner.getGameEntityManager();
         String gameArea = parent.getArea();
 
         manager.areaEntityCheckByOwnAmount(gameArea, gameEntityFactory);

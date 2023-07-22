@@ -15,7 +15,8 @@ import lombok.Data;
 @NoArgsConstructor
 @Builder
 public class DescriptionPackage {
-    String buttonDescroption;
+    String clickOutputButtonText;
+    String upgradeButtonText;
 
     String outputCostDescriptionStart;
     String outputGainDescriptionStart;
@@ -23,19 +24,19 @@ public class DescriptionPackage {
     String upgradeCostDescriptionStart;
     String upgradeMaxLevelDescription;
 
-    private String transformButtonDescroption;
+    private String transformButtonText;
     private String transformCostDescriptionStart;
     private String upgradeMaxLevelHasTransferDescription;
 
-    private String destroyButtonDescroption;
+    private String destroyButtonText;
     private String destroyGainDescriptionStart;
     private String destroyCostDescriptionStart;
 
-    ILevelDescroptionProvider levelDescroptionProvider;
+    ILevelDescriptionProvider levelDescriptionProvider;
 
-    private IProficiencyDescroptionProvider proficiencyDescroptionProvider;
+    private IProficiencyDescroptionProvider proficiencyDescriptionProvider;
 
-    public static interface ILevelDescroptionProvider {
+    public static interface ILevelDescriptionProvider {
         String provide(int level, int workingLevel, boolean reachMaxLevel);
     }
     public static interface IProficiencyDescroptionProvider {

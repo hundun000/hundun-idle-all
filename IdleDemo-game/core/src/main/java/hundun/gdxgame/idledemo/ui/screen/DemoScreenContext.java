@@ -11,8 +11,8 @@ import hundun.gdxgame.idleshare.core.framework.model.manager.AbstractIdleScreenC
 public class DemoScreenContext extends AbstractIdleScreenContext<DemoIdleGame, RootSaveData> {
 
     DemoMenuScreen menuScreen;
-    DemoPlayScreen playScreen;
-    
+    CookiePlayScreen cookiePlayScreen;
+    ForestPlayScreen forestPlayScreen;
     
     public DemoScreenContext(DemoIdleGame game) {
         super(game);
@@ -21,10 +21,12 @@ public class DemoScreenContext extends AbstractIdleScreenContext<DemoIdleGame, R
     @Override
     public void lazyInit() {
         this.menuScreen = new DemoMenuScreen(game);
-        this.playScreen = new DemoPlayScreen(game);
-        
+        this.cookiePlayScreen = new CookiePlayScreen(game);
+        this.forestPlayScreen = new ForestPlayScreen(game);
+
         game.getScreenManager().addScreen(menuScreen.getClass().getSimpleName(), menuScreen);
-        game.getScreenManager().addScreen(playScreen.getClass().getSimpleName(), playScreen);
+        game.getScreenManager().addScreen(cookiePlayScreen.getClass().getSimpleName(), cookiePlayScreen);
+        game.getScreenManager().addScreen(forestPlayScreen.getClass().getSimpleName(), forestPlayScreen);
     }
 
 }

@@ -15,7 +15,7 @@ public abstract class ProficiencyComponent {
     public String getProficiencyDescroption()
     {
         Boolean reachMaxLevel = construction.saveData.getProficiency() >= this.maxProficiency;
-        return construction.descriptionPackage.getProficiencyDescroptionProvider().provide(construction.saveData.getProficiency(), reachMaxLevel);
+        return construction.descriptionPackage.getProficiencyDescriptionProvider().provide(construction.saveData.getProficiency(), reachMaxLevel);
     }
 
     public Boolean canPromote()

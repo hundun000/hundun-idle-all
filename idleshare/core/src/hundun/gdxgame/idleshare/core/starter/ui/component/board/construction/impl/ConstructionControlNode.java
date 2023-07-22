@@ -32,7 +32,7 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
     Label proficiencyLabel;
     Label positionLabel;
 
-    TextButton clickEffectButton;
+    TextButton clickOutputButton;
     TextButton upgradeButton;
     TextButton destoryButton;
     TextButton transformButton;
@@ -53,8 +53,8 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
         this.constructionNameLabel = new Label("", parent.getGame().getMainSkin());
         constructionNameLabel.setWrap(true);
 
-        this.clickEffectButton = new TextButton("", parent.getGame().getMainSkin());
-        clickEffectButton.addListener(new ChangeListener() {
+        this.clickOutputButton = new TextButton("", parent.getGame().getMainSkin());
+        clickOutputButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Gdx.app.log(ConstructionControlNode.class.getSimpleName(), "clickEffectButton changed");
@@ -132,7 +132,7 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
         this.transformButton = new TextButton("-", parent.getGame().getMainSkin());
         // ------ this ------
         this.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
-        this.add(clickEffectButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
+        this.add(clickOutputButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
         this.add(upgradeButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
         this.add(changeWorkingLevelGroup).size(CHILD_WIDTH, CHILD_HEIGHT).row();
         this.add(proficiencyLabel).size(CHILD_WIDTH, CHILD_HEIGHT).row();
@@ -156,9 +156,11 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
                 this.downWorkingLevelButton.setVisible(false);
             }
             if (constructionExportProxy.getOutputComponent().isTypeClickOutput()) {
-                this.clickEffectButton.setVisible(true);
+                this.clickOutputButton.setVisible(true);
+                this.upgradeButton.setVisible(false);
             } else {
-                this.clickEffectButton.setVisible(false);
+                this.clickOutputButton.setVisible(false);
+                this.upgradeButton.setVisible(true);
             }
         }
         update();
@@ -178,20 +180,20 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
         }
         // ------ update text ------
         constructionNameLabel.setText(model.getName());
-        clickEffectButton.setText(model.getDescriptionPackage().getButtonDescroption());
-        upgradeButton.setText(model.getDescriptionPackage().getButtonDescroption());
+        clickOutputButton.setText(model.getDescriptionPackage().getClickOutputButtonText());
+        upgradeButton.setText(model.getDescriptionPackage().getUpgradeButtonText());
         workingLevelLabel.setText(model.getLevelComponent().getWorkingLevelDescroption());
         proficiencyLabel.setText(model.getProficiencyComponent().getProficiencyDescroption());
         positionLabel.setText(model.getSaveData().getPosition().toShowText());
-        destoryButton.setText(model.descriptionPackage.getDestroyButtonDescroption());
+        destoryButton.setText(model.descriptionPackage.getDestroyButtonText());
 
         // ------ update clickable-state ------
         if (model.getOutputComponent().canOutput()) {
-            clickEffectButton.setDisabled(false);
-            clickEffectButton.getLabel().setColor(Color.WHITE);
+            clickOutputButton.setDisabled(false);
+            clickOutputButton.getLabel().setColor(Color.WHITE);
         } else {
-            clickEffectButton.setDisabled(true);
-            clickEffectButton.getLabel().setColor(Color.RED);
+            clickOutputButton.setDisabled(true);
+            clickOutputButton.getLabel().setColor(Color.RED);
         }
         if (model.getUpgradeComponent().canUpgrade()) {
             upgradeButton.setDisabled(false);

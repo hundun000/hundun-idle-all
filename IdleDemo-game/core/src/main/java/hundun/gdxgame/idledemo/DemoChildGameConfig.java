@@ -6,14 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.idledemo.logic.BuffId;
 import hundun.gdxgame.idledemo.logic.ConstructionPrototypeId;
 import hundun.gdxgame.idledemo.logic.GameArea;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.ui.screen.DemoMenuScreen;
-import hundun.gdxgame.idledemo.ui.screen.DemoPlayScreen;
+import hundun.gdxgame.idledemo.ui.screen.CookiePlayScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
-import hundun.gdxgame.idleshare.gamelib.framework.model.AbstractAchievement;
 
 /**
  * @author hundun
@@ -28,6 +26,7 @@ public class DemoChildGameConfig extends ChildGameConfig {
         
         Map<String, List<String>> areaControlableConstructionVMPrototypeIds = new HashMap<>();
         areaControlableConstructionVMPrototypeIds.put(GameArea.AREA_COOKIE, JavaFeatureForGwt.arraysAsList(
+                ConstructionPrototypeId.COOKIE_CLICK_PROVIDER,
                 ConstructionPrototypeId.COOKIE_AUTO_PROVIDER,
                 ConstructionPrototypeId.COOKIE_AUTO_SELLER
         ));
@@ -54,7 +53,7 @@ public class DemoChildGameConfig extends ChildGameConfig {
 
         Map<String, String> screenIdToFilePathMap = JavaFeatureForGwt.mapOf(
                 DemoMenuScreen.class.getSimpleName(), "audio/Loop-Menu.wav",
-                DemoPlayScreen.class.getSimpleName(), "audio/forest.mp3"
+                CookiePlayScreen.class.getSimpleName(), "audio/forest.mp3"
                 );
         this.setScreenIdToFilePathMap(screenIdToFilePathMap);
 

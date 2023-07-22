@@ -27,7 +27,7 @@ public class LevelComponent {
 
     public String getWorkingLevelDescroption() {
         boolean reachMaxLevel = construction.getSaveData().getLevel() == this.maxLevel;
-        return construction.descriptionPackage.getLevelDescroptionProvider().provide(construction.saveData.getLevel(), construction.saveData.getWorkingLevel(), reachMaxLevel);
+        return construction.descriptionPackage.getLevelDescriptionProvider().provide(construction.saveData.getLevel(), construction.saveData.getWorkingLevel(), reachMaxLevel);
     }
 
     public boolean canChangeWorkingLevel(int delta) {

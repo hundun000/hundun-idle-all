@@ -19,8 +19,8 @@ public class DemoMenuScreen extends BaseIdleMenuScreen<DemoIdleGame, RootSaveDat
                     @Override
                     public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                         game.getSaveHandler().gameplayLoadOrStarter(true);
-                        game.getScreenManager().pushScreen(DemoPlayScreen.class.getSimpleName(), null);
-                        game.getAudioPlayManager().intoScreen(DemoPlayScreen.class.getSimpleName());
+                        game.getScreenManager().pushScreen(CookiePlayScreen.class.getSimpleName(), null);
+                        game.getAudioPlayManager().intoScreen(CookiePlayScreen.class.getSimpleName());
                     }
                     @Override
                     public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -31,8 +31,8 @@ public class DemoMenuScreen extends BaseIdleMenuScreen<DemoIdleGame, RootSaveDat
                     @Override
                     public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                         game.getSaveHandler().gameplayLoadOrStarter(false);
-                        game.getScreenManager().pushScreen(DemoPlayScreen.class.getSimpleName(), null);
-                        game.getAudioPlayManager().intoScreen(DemoPlayScreen.class.getSimpleName());
+                        game.getScreenManager().pushScreen(CookiePlayScreen.class.getSimpleName(), null);
+                        game.getAudioPlayManager().intoScreen(CookiePlayScreen.class.getSimpleName());
                     }
                     @Override
                     public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
