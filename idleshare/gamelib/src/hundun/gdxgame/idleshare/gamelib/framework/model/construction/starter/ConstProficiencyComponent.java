@@ -18,4 +18,9 @@ public class ConstProficiencyComponent extends ProficiencyComponent {
     public void afterUpgrade() {
         // do nothing
     }
+
+    @Override
+    public boolean isEnoughProficiencyForUpgrade() {
+        return true;
+    }
 }

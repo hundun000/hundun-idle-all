@@ -37,9 +37,18 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
                                         ConstructionSaveData.builder()
                                                 .prototypeId(ConstructionPrototypeId.COOKIE_AUTO_PROVIDER)
                                                 .level(1)
+                                                .workingLevel(1)
+                                                .position(USELESS_POSITON)
+                                                .build(),
+                                        ConstructionPrototypeId.COOKIE_AUTO_SELLER,
+                                        ConstructionSaveData.builder()
+                                                .prototypeId(ConstructionPrototypeId.COOKIE_AUTO_SELLER)
+                                                .level(1)
                                                 .workingLevel(0)
                                                 .position(USELESS_POSITON)
-                                                .build())
+                                                .build()
+                                )
+
                         )
                         .ownResoueces(new HashMap<>())
                         .unlockedResourceTypes(new HashSet<>())

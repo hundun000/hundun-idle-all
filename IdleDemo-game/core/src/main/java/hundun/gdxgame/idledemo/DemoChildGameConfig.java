@@ -28,14 +28,12 @@ public class DemoChildGameConfig extends ChildGameConfig {
         
         Map<String, List<String>> areaControlableConstructionVMPrototypeIds = new HashMap<>();
         areaControlableConstructionVMPrototypeIds.put(GameArea.AREA_COOKIE, JavaFeatureForGwt.arraysAsList(
-                ConstructionPrototypeId.COOKIE_AUTO_PROVIDER
+                ConstructionPrototypeId.COOKIE_AUTO_PROVIDER,
+                ConstructionPrototypeId.COOKIE_AUTO_SELLER
         ));
         this.setAreaControlableConstructionVMPrototypeIds(areaControlableConstructionVMPrototypeIds);
 
         Map<String, List<String>> areaControlableConstructionPrototypeVMPrototypeIds = new HashMap<>();
-        areaControlableConstructionPrototypeVMPrototypeIds.put(GameArea.AREA_COOKIE, JavaFeatureForGwt.arraysAsList(
-                ConstructionPrototypeId.COOKIE_AUTO_PROVIDER
-        ));
         this.setAreaControlableConstructionPrototypeVMPrototypeIds(areaControlableConstructionPrototypeVMPrototypeIds);
 
 

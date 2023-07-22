@@ -37,5 +37,15 @@ public abstract class BaseAutoProficiencyComponent extends ProficiencyComponent 
         }
     }
 
+
+    @Override
+    public boolean isEnoughProficiencyForUpgrade() {
+        if (upgradeLostProficiency != null) {
+            return isMaxProficiency();
+        } else {
+            return true;
+        }
+    }
+
     protected abstract void tryProficiencyOnce();
 }

@@ -15,41 +15,21 @@ import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class CookieAutoProviderPrototype extends AbstractConstructionPrototype {
-    public static DescriptionPackage descriptionPackageEN = DescriptionPackage.builder()
-            .buttonDescroption("Upgrade")
-            .outputCostDescriptionStart("Consume")
-            .outputGainDescriptionStart("Produce")
-            .upgradeCostDescriptionStart("Upgrade cost")
-            .upgradeMaxLevelDescription("(max)")
-            .levelDescroptionProvider(DescriptionPackageFactory.ONLY_LEVEL_IMP)
-            .proficiencyDescroptionProvider(DescriptionPackageFactory.EN_PROFICIENCY_IMP)
-            .build();
+public class CookieAutoSellerPrototype extends AbstractConstructionPrototype {
 
-
-    public static DescriptionPackage descriptionPackageCN = DescriptionPackage.builder()
-            .buttonDescroption("升级")
-            .outputCostDescriptionStart("自动消耗")
-            .outputGainDescriptionStart("自动产出")
-            .upgradeCostDescriptionStart("升级费用")
-            .upgradeMaxLevelDescription("(已达到最大等级)")
-            .levelDescroptionProvider(DescriptionPackageFactory.ONLY_LEVEL_IMP)
-            .proficiencyDescroptionProvider(DescriptionPackageFactory.CN_PROFICIENCY_IMP)
-            .build();
-
-    public CookieAutoProviderPrototype(Language language) {
+    public CookieAutoSellerPrototype(Language language) {
         super(
-                ConstructionPrototypeId.COOKIE_AUTO_PROVIDER,
+                ConstructionPrototypeId.COOKIE_AUTO_SELLER,
                 language,
                 DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf())
         );
         switch (language)
         {
             case CN:
-                this.descriptionPackage = descriptionPackageCN;
+                this.descriptionPackage = CookieAutoProviderPrototype.descriptionPackageCN;
                 break;
             default:
-                this.descriptionPackage = descriptionPackageEN;
+                this.descriptionPackage = CookieAutoProviderPrototype.descriptionPackageEN;
                 break;
         }
 
@@ -60,14 +40,17 @@ public class CookieAutoProviderPrototype extends AbstractConstructionPrototype {
         String id = prototypeId + "_" + UUID.randomUUID().toString();
         BaseIdleForestConstruction construction = BaseIdleForestConstruction.typeAutoConstProficienc(prototypeId, id, position, descriptionPackage);
 
-        construction.getOutputComponent().setOutputCostPack(DemoBuiltinConstructionsLoader.toPack(new HashMap<>()));
-        construction.getOutputComponent().setOutputGainPack(DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
+        construction.getOutputComponent().setOutputCostPack(DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
                 ResourceType.COOKIE, 1
+        )));
+        construction.getOutputComponent().setOutputGainPack(DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
+                ResourceType.COIN, 5
         )));
 
         construction.getUpgradeComponent().setUpgradeCostPack(DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
                 ResourceType.COIN, 50
         )));
+        construction.getLevelComponent().setWorkingLevelChangable(true);
 
         return construction;
     }

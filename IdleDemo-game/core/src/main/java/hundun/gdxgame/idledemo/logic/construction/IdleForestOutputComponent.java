@@ -11,11 +11,11 @@ public class IdleForestOutputComponent extends BaseAutoOutputComponent {
 
     @Override
     public long calculateModifiedOutputGain(long baseValue, int level, int proficiency) {
-        return (long)((baseValue * level) * (0.5 + proficiency / construction.getProficiencyComponent().maxProficiency * 0.5));
+        return (long)((baseValue * level));
     }
 
     @Override
     public long calculateModifiedOutputCost(long baseValue, int level, int proficiency) {
-        return (long)((baseValue * level) * (0.5 + proficiency / construction.getProficiencyComponent().maxProficiency * 0.5));
+        return (long)((baseValue * level));
     }
 }

@@ -122,8 +122,8 @@ public abstract class BaseConstruction implements IBuffChangeListener, ITileNode
     public void lazyInitDescription(IdleGameplayContext gameContext, Language language) {
         this.gameplayContext = gameContext;
         
-        this.name = gameContext.getGameDictionary().constructionPrototypeIdToShowName(language, id);
-        this.detailDescroptionConstPart = gameContext.getGameDictionary().constructionPrototypeIdToDetailDescroptionConstPart(language, id);
+        this.name = gameContext.getGameDictionary().constructionPrototypeIdToShowName(language, prototypeId);
+        this.detailDescroptionConstPart = gameContext.getGameDictionary().constructionPrototypeIdToDetailDescroptionConstPart(language, prototypeId);
         
         outputComponent.lazyInitDescription();
         upgradeComponent.lazyInitDescription();

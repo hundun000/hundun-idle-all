@@ -1,6 +1,7 @@
 package hundun.gdxgame.idleshare.gamelib.framework.model.construction.base;
 
 import lombok.Getter;
+import lombok.Setter;
 
 
 /**
@@ -11,8 +12,9 @@ public class LevelComponent {
 
     private final BaseConstruction construction;
 
+    @Setter
     @Getter
-    private final boolean workingLevelChangable;
+    private boolean workingLevelChangable;
     public static final int DEFAULT_MIN_WORKING_LEVEL = 0;
     public int minWorkingLevel = DEFAULT_MIN_WORKING_LEVEL;
     public static final int DEFAULT_MAX_LEVEL = 5;

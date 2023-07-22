@@ -37,6 +37,10 @@ public abstract class OutputComponent {
     @Setter
     protected int autoOutputSecondCountMax = DEFAULT_AUTO_OUPUT_SECOND_MAX;
 
+    @Getter
+    @Setter
+    protected boolean typeClickOutput;
+
     public OutputComponent(BaseConstruction construction) {
         this.construction = construction;
     }
@@ -61,8 +65,8 @@ public abstract class OutputComponent {
                                     construction.saveData.getWorkingLevel(),
                                     construction.saveData.getProficiency()
                             );
-                                return new ResourcePair(pair.getType(), newAmout);
-                            })
+                            return new ResourcePair(pair.getType(), newAmout);
+                        })
                         .collect(Collectors.toList())
             );
             this.outputGainPack.setModifiedValuesDescription(

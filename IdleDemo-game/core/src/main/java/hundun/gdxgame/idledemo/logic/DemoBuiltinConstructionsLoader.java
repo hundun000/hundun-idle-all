@@ -7,6 +7,7 @@ import java.util.Map;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idledemo.logic.prototype.CookieAutoProviderPrototype;
+import hundun.gdxgame.idledemo.logic.prototype.CookieAutoSellerPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.*;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackageFactory;
@@ -25,6 +26,7 @@ public class DemoBuiltinConstructionsLoader implements IBuiltinConstructionsLoad
     public Map<String, AbstractConstructionPrototype> getProviderMap(Language language) {
         Map<String, AbstractConstructionPrototype> result = new HashMap<>();
         result.put(ConstructionPrototypeId.COOKIE_AUTO_PROVIDER, new CookieAutoProviderPrototype(language));
+        result.put(ConstructionPrototypeId.COOKIE_AUTO_SELLER, new CookieAutoSellerPrototype(language));
         return result;
     }
     

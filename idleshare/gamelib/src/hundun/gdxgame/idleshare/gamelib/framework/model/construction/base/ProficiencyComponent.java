@@ -72,7 +72,7 @@ public abstract class ProficiencyComponent {
 
 
     public abstract void afterUpgrade();
-
+    public abstract boolean isEnoughProficiencyForUpgrade();
     public boolean isMaxProficiency()
     {
         return construction.saveData.getProficiency() >= maxProficiency;

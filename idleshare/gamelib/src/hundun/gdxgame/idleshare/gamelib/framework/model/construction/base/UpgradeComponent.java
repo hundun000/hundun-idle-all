@@ -105,11 +105,11 @@ public class UpgradeComponent {
         }
     }
 
-    protected boolean canUpgrade() {
+    public boolean canUpgrade() {
         if (construction.levelComponent.isReachMaxLevel() || upgradeCostPack == null) {
             return false;
         }
-        if (!construction.proficiencyComponent.isMaxProficiency()) {
+        if (!construction.proficiencyComponent.isEnoughProficiencyForUpgrade()) {
             return false;
         }
 

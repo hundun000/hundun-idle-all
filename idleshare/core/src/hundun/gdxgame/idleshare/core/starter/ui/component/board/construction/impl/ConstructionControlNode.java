@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 
@@ -30,7 +31,9 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
     Label workingLevelLabel;
     Label proficiencyLabel;
     Label positionLabel;
+
     TextButton clickEffectButton;
+    TextButton upgradeButton;
     TextButton destoryButton;
     TextButton transformButton;
 
@@ -51,11 +54,20 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
         constructionNameLabel.setWrap(true);
 
         this.clickEffectButton = new TextButton("", parent.getGame().getMainSkin());
-        clickEffectButton.addListener(new ClickListener() {
+        clickEffectButton.addListener(new ChangeListener() {
             @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("ConstructionView", "clicked");
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.log(ConstructionControlNode.class.getSimpleName(), "clickEffectButton changed");
                 model.getOutputComponent().doOutput();
+            }
+        });
+
+        this.upgradeButton = new TextButton("", parent.getGame().getMainSkin());
+        upgradeButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.log(ConstructionControlNode.class.getSimpleName(), "upgradeButton changed");
+                model.getUpgradeComponent().doUpgrade();
             }
         });
 
@@ -66,7 +78,7 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
                 if (model != null) {
                     parent.showAndUpdateGuideInfo(model);
                 }
-                Gdx.app.log(ConstructionControlNode.class.getSimpleName(), "exit event");
+                Gdx.app.log(ConstructionControlNode.class.getSimpleName(), "this clicked event");
                 super.clicked(event, x, y);
             }
 
@@ -121,41 +133,32 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
         // ------ this ------
         this.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
         this.add(clickEffectButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
+        this.add(upgradeButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
         this.add(changeWorkingLevelGroup).size(CHILD_WIDTH, CHILD_HEIGHT).row();
         this.add(proficiencyLabel).size(CHILD_WIDTH, CHILD_HEIGHT).row();
         this.setBackground(DrawableFactory.createBorderBoard(30, 10, 0.8f, 1));
     }
 
 
-    private void initAsNormalStyle() {
-
-        this.upWorkingLevelButton.setVisible(false);
-        this.downWorkingLevelButton.setVisible(false);
-
-        //changeWorkingLevelGroup.setVisible(false);
-
-        //this.debug();
-    }
-
-
-    private void initAsChangeWorkingLevelStyle() {
-        //clearStyle();
-
-        //changeWorkingLevelGroup.setVisible(true);
-        this.upWorkingLevelButton.setVisible(true);
-        this.downWorkingLevelButton.setVisible(true);
 
 
 
-    }
+
 
     public void setModel(BaseConstruction constructionExportProxy) {
         this.model = constructionExportProxy;
         if (constructionExportProxy != null) {
             if (constructionExportProxy.getLevelComponent().isWorkingLevelChangable()) {
-                initAsChangeWorkingLevelStyle();
+                this.upWorkingLevelButton.setVisible(true);
+                this.downWorkingLevelButton.setVisible(true);
             } else {
-                initAsNormalStyle();
+                this.upWorkingLevelButton.setVisible(false);
+                this.downWorkingLevelButton.setVisible(false);
+            }
+            if (constructionExportProxy.getOutputComponent().isTypeClickOutput()) {
+                this.clickEffectButton.setVisible(true);
+            } else {
+                this.clickEffectButton.setVisible(false);
             }
         }
         update();
@@ -176,6 +179,7 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
         // ------ update text ------
         constructionNameLabel.setText(model.getName());
         clickEffectButton.setText(model.getDescriptionPackage().getButtonDescroption());
+        upgradeButton.setText(model.getDescriptionPackage().getButtonDescroption());
         workingLevelLabel.setText(model.getLevelComponent().getWorkingLevelDescroption());
         proficiencyLabel.setText(model.getProficiencyComponent().getProficiencyDescroption());
         positionLabel.setText(model.getSaveData().getPosition().toShowText());
@@ -188,6 +192,13 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
         } else {
             clickEffectButton.setDisabled(true);
             clickEffectButton.getLabel().setColor(Color.RED);
+        }
+        if (model.getUpgradeComponent().canUpgrade()) {
+            upgradeButton.setDisabled(false);
+            upgradeButton.getLabel().setColor(Color.WHITE);
+        } else {
+            upgradeButton.setDisabled(true);
+            upgradeButton.getLabel().setColor(Color.RED);
         }
         if (model.getExistenceComponent().canDestory())
         {
