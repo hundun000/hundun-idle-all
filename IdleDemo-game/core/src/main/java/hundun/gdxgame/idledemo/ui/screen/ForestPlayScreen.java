@@ -12,6 +12,9 @@ import hundun.gdxgame.idledemo.ui.entity.ChessVM;
 import hundun.gdxgame.idledemo.ui.entity.DeskAreaVM;
 import hundun.gdxgame.idledemo.ui.entity.GameEntityFactory;
 import hundun.gdxgame.idleshare.core.framework.model.CameraDataPackage;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
+
+import java.util.List;
 
 /**
  * @author hundun
@@ -24,7 +27,7 @@ public class ForestPlayScreen extends BaseDemoPlayScreen {
     protected Stage deskStage;
 
     public ForestPlayScreen(DemoIdleGame game) {
-        super(game, GameArea.AREA_FOREST);
+        super(game);
 
         this.deskCamera = new OrthographicCamera();
         this.deskStage = new Stage(new ScreenViewport(deskCamera), game.getBatch());
@@ -49,6 +52,16 @@ public class ForestPlayScreen extends BaseDemoPlayScreen {
         deskAreaVM = new DeskAreaVM(this);
         deskStage.addActor(deskAreaVM);
         deskStage.setScrollFocus(deskAreaVM);
+
+    }
+
+    @Override
+    protected void updateUIForShow() {
+        List<BaseConstruction> constructions = game.getIdleGameplayExport().getGameplayContext().getConstructionManager()
+                .getConstructions();
+        deskAreaVM.updateDeskDatas(constructions);
+        // start area
+        setAreaAndNotifyChildren(GameArea.AREA_FOREST);
     }
 
     @Override

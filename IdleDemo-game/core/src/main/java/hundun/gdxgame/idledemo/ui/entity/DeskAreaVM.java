@@ -5,9 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.idledemo.ui.screen.BaseDemoPlayScreen;
 import hundun.gdxgame.idleshare.core.framework.model.CameraDataPackage;
 
+import hundun.gdxgame.idleshare.core.framework.model.CameraGestureListener;
+import hundun.gdxgame.idleshare.core.framework.model.CameraMouseListener;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import lombok.Getter;
 
@@ -40,20 +43,20 @@ public class DeskAreaVM extends Table {
 
         Image background = new Image();
 
-        background.setDrawable(new TextureRegionDrawable(new Texture(Gdx.files.internal("棋盘.jpg"))));
+        background.setDrawable(DrawableFactory.getSimpleBoardBackground());
 
         int roomWidth = 5000;
         int roomHeight = 5000;
 
         background.setBounds(0, 0, roomWidth, roomHeight);
-
         this.addActor(background);
-        //this.addListener(new CameraGestureListener(cameraDataPackage));
-        //this.addListener(new CameraMouseListener(cameraDataPackage));
+        this.addListener(new CameraGestureListener(cameraDataPackage));
+        this.addListener(new CameraMouseListener(cameraDataPackage));
         this.getCameraDataPackage().forceSet(
-            roomWidth / 2.0f + 800,
-            roomHeight/ 2.0f,
-            null);
+                0.0f,
+                0.0f,
+                null
+        );
 
         chessRuntimeDataList.forEach(deskData -> {
 

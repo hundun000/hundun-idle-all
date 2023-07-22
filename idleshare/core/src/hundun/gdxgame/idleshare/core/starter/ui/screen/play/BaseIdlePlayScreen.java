@@ -31,7 +31,7 @@ import java.util.List;
  */
 public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE>
         extends BaseHundunScreen<T_GAME, T_SAVE>
-        implements IAchievementUnlockCallback, ISecondaryInfoBoardCallback<BaseConstruction> {
+        implements IAchievementUnlockCallback {
 
     public static final int LOGIC_FRAME_PER_SECOND = 30;
 
@@ -41,7 +41,7 @@ public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
 
     // ====== need child lazy-init start ======
     protected AchievementMaskBoard<T_GAME, T_SAVE> achievementMaskBoard;
-    protected PopupInfoBoard<T_GAME, T_SAVE> secondaryInfoBoard;
+
     protected StorageInfoBoard<T_GAME, T_SAVE> storageInfoTable;
 
     protected BackgroundImageBox<T_GAME, T_SAVE> backgroundImageBox;
@@ -50,14 +50,13 @@ public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
 
     @Getter
     protected String area;
-    private final String startArea;
+
     protected List<ILogicFrameListener> logicFrameListeners;
     protected List<IGameAreaChangeListener> gameAreaChangeListeners;
 
-    public BaseIdlePlayScreen(T_GAME game, String startArea, PlayScreenLayoutConst layoutConst) {
+    public BaseIdlePlayScreen(T_GAME game, PlayScreenLayoutConst layoutConst) {
         super(game, game.getSharedViewport());
         this.layoutConst = layoutConst;
-        this.startArea = startArea;
         this.logicFrameHelper = new LogicFrameHelper(LOGIC_FRAME_PER_SECOND);
         this.logicFrameListeners = new ArrayList<>();
         this.gameAreaChangeListeners = new ArrayList<>();
@@ -95,17 +94,7 @@ public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
         logicFrameHelper.setLogicFramePause(true);
     }
 
-    @Override
-    public void showAndUpdateGuideInfo(BaseConstruction model) {
-        secondaryInfoBoard.setVisible(true);
-        secondaryInfoBoard.update(model);
-    }
 
-    @Override
-    public void hideAndCleanGuideInfo() {
-        secondaryInfoBoard.setVisible(false);
-        //popUpInfoBoard.setText("GUIDE_TEXT");
-    }
 
     protected void lazyInitLogicContext() {
 
@@ -141,11 +130,7 @@ public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
         
         this.backgroundImageBox = new BackgroundImageBox<>(this);
         backUiStage.addActor(backgroundImageBox);
-        
-        this.secondaryInfoBoard = new PopupInfoBoard<>(this);
-        popupRootTable.add(secondaryInfoBoard).bottom().expand().row();
-        popupRootTable.add(new Image())
-                .height(layoutConst.CONSTRUCION_BOARD_ROOT_BOX_HEIGHT);
+
         
         
         
@@ -180,10 +165,7 @@ public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
         Gdx.app.log(this.getClass().getSimpleName(), "show done");
     }
 
-    protected void updateUIForShow() {
-        // start area
-        setAreaAndNotifyChildren(startArea);
-    }
+    protected abstract void updateUIForShow();
 
     protected abstract InputProcessor provideDefaultInputProcessor();
 

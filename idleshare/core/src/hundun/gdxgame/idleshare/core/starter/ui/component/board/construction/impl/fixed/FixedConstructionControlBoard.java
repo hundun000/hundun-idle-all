@@ -6,7 +6,8 @@ import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.AbstractConstructionControlBoard;
 import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.ConstructionControlNode;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
-
+import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
 
 /**
@@ -21,9 +22,9 @@ public class FixedConstructionControlBoard<T_GAME extends BaseIdleGame<T_SAVE>, 
     Table childTable;
 
 
-    public FixedConstructionControlBoard(BaseIdlePlayScreen<T_GAME, T_SAVE> parent) {
+    public FixedConstructionControlBoard(BaseIdlePlayScreen<T_GAME, T_SAVE> parent, ISecondaryInfoBoardCallback<BaseConstruction> callback) {
 
-        super(parent);
+        super(parent, callback);
 
         childTable = new Table();
         childTable.setBackground(parent.getLayoutConst().simpleBoardBackgroundMiddle);
@@ -45,7 +46,7 @@ public class FixedConstructionControlBoard<T_GAME extends BaseIdleGame<T_SAVE>, 
         childTable.clearChildren();
 
         for (int i = 0; i < childrenSize; i++) {
-            ConstructionControlNode constructionView = new ConstructionControlNode(parent, i, parent.getLayoutConst());
+            ConstructionControlNode constructionView = new ConstructionControlNode(parent, callback, i, parent.getLayoutConst());
             constructionControlNodes.add(constructionView);
             childTable.add(constructionView).spaceRight(10).expand();
         }

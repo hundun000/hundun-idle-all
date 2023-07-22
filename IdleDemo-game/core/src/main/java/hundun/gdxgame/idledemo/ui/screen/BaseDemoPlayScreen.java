@@ -16,8 +16,8 @@ import java.util.Map;
 
 public abstract class BaseDemoPlayScreen extends BaseIdlePlayScreen<DemoIdleGame, RootSaveData> implements IGameAreaChangeListener {
 
-    public BaseDemoPlayScreen(DemoIdleGame game, String startArea) {
-        super(game, startArea, customLayoutConst(game));
+    public BaseDemoPlayScreen(DemoIdleGame game) {
+        super(game, customLayoutConst(game));
     }
 
     private static PlayScreenLayoutConst customLayoutConst(DemoIdleGame game) {

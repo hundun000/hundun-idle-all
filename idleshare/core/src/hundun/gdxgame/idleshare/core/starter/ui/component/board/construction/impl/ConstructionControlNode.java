@@ -15,6 +15,7 @@ import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
+import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
 
@@ -24,6 +25,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseCo
  */
 public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table {
     BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
+    ISecondaryInfoBoardCallback<BaseConstruction> callback;
     BaseConstruction model;
     Label constructionNameLabel;
     TextButton upWorkingLevelButton;
@@ -42,9 +44,13 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
 
 
 
-    public ConstructionControlNode(BaseIdlePlayScreen<T_GAME, T_SAVE> parent, int index, PlayScreenLayoutConst playScreenLayoutConst) {
+    public ConstructionControlNode(
+            BaseIdlePlayScreen<T_GAME, T_SAVE> parent,
+            ISecondaryInfoBoardCallback<BaseConstruction> callback,
+            int index, PlayScreenLayoutConst playScreenLayoutConst) {
         super();
         this.parent = parent;
+        this.callback = callback;
 
         int CHILD_WIDTH = playScreenLayoutConst.CONSTRUCION_CHILD_WIDTH;
         int CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_BUTTON_HEIGHT;
@@ -76,7 +82,7 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (model != null) {
-                    parent.showAndUpdateGuideInfo(model);
+                    callback.showAndUpdateGuideInfo(model);
                 }
                 Gdx.app.log(ConstructionControlNode.class.getSimpleName(), "this clicked event");
                 super.clicked(event, x, y);
@@ -85,7 +91,7 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 if (model != null && pointer == -1) {
-                    parent.showAndUpdateGuideInfo(model);
+                    callback.showAndUpdateGuideInfo(model);
                 }
                 super.enter(event, x, y, pointer, fromActor);
             }
@@ -93,7 +99,7 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
                 if (pointer == -1) {
-                    parent.hideAndCleanGuideInfo();
+                    callback.hideAndCleanGuideInfo();
                 }
                 super.exit(event, x, y, pointer, toActor);
             }
