@@ -18,9 +18,9 @@ import lombok.Data;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GameplaySaveData {
+    String stageId;
     Map<String, Long> ownResoueces;
     Set<String> unlockedResourceTypes;
     Map<String, ConstructionSaveData> constructionSaveDataMap;
-    Set<String> unlockedAchievementNames;
-
+    Set<String> unlockedAchievementIds;
 }

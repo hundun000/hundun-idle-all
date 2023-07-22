@@ -4,38 +4,64 @@ package hundun.gdxgame.idleshare.gamelib.framework.model.manager;
  * Created on 2021/11/12
  */
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import hundun.gdxgame.gamelib.starter.listerner.IGameStartListener;
 import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IBuffChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
-import hundun.gdxgame.idleshare.gamelib.framework.model.AchievementPrototype;
+import hundun.gdxgame.idleshare.gamelib.framework.model.AbstractAchievement;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Set;
 
 public class AchievementManager implements IBuffChangeListener, IOneFrameResourceChangeListener, IGameStartListener {
     IdleGameplayContext gameContext;
 
-    Map<String, AchievementPrototype> prototypes = new HashMap<>();
-
+    Map<String, AbstractAchievement> prototypes = new HashMap<>();
+    private List<String> totalAchievementIds = new ArrayList<>();
+    private List<String> achievementQueue = new ArrayList<>();
     @Getter
     @Setter
-    Set<String> unlockedAchievementNames = new HashSet<>();
+    Set<String> unlockedAchievementIds = new HashSet<>();
 
+    @AllArgsConstructor
+    public static class AchievementInfoPackage
+    {
+        AbstractAchievement firstLockedAchievement;
+        int total;
+        int unLockedSize;
+        List<AbstractAchievement> allAchievementList;
+        Set<String> unlockedAchievementIds;
+    }
 
     public AchievementManager(IdleGameplayContext gameContext) {
         this.gameContext = gameContext;
         gameContext.getEventManager().registerListener(this);
     }
 
-    public void addPrototype(AchievementPrototype prototype) {
+    public AchievementInfoPackage getAchievementInfoPackage()
+    {
+        List<AbstractAchievement> allAchievementList = achievementQueue.stream()
+                .map(it -> prototypes.get(it))
+                .collect(Collectors.toList());
+
+        AbstractAchievement firstLockedAchievement = allAchievementList.stream()
+                .filter(it -> !unlockedAchievementIds.contains(it.getId()))
+                .findFirst()
+                .orElse(null);
+        return new AchievementInfoPackage(
+                firstLockedAchievement,
+                totalAchievementIds.size(),
+                unlockedAchievementIds.size(),
+                allAchievementList,
+                unlockedAchievementIds
+        );
+    }
+
+    public void addPrototype(AbstractAchievement prototype) {
         prototypes.put(prototype.getName(), prototype);
     }
 
@@ -67,16 +93,18 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
 
     private void checkAllAchievementUnlock() {
         //Gdx.app.log(this.getClass().getSimpleName(), "checkAllAchievementUnlock");
-        for (AchievementPrototype prototype : prototypes.values()) {
-            if (unlockedAchievementNames.contains(prototype.getName())) {
+        for (AbstractAchievement prototype : prototypes.values()) {
+            if (unlockedAchievementIds.contains(prototype.getId())) {
                 continue;
             }
-            boolean resourceMatched = checkRequiredResources(prototype.getRequiredResources());
-            boolean buffMatched = checkRequiredBuffs(prototype.getRequiredBuffs());
-            boolean allMatched = resourceMatched && buffMatched;
-            if (allMatched) {
-                unlockedAchievementNames.add(prototype.getName());
+            boolean resourceMatched = prototype.checkUnlock();
+            if (resourceMatched) {
+                unlockedAchievementIds.add(prototype.getId());
                 gameContext.getEventManager().notifyAchievementUnlock(prototype);
+                if (prototype.getAwardResourceMap() != null)
+                {
+                    gameContext.getStorageManager().modifyAllResourceNum(prototype.getAwardResourceMap(), true);
+                }
             }
         }
     }
@@ -87,12 +115,14 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
         checkAllAchievementUnlock();
     }
 
-    public void lazyInit(List<AchievementPrototype> achievementPrototypes) {
-        achievementPrototypes.forEach(item -> addPrototype(item));
+    public void lazyInit(Map<String, AbstractAchievement> achievementProviderMap, List<String> achievementPrototypeIds) {
+        achievementPrototypeIds.forEach(it -> addPrototype(achievementProviderMap.get(it)));
+        this.totalAchievementIds = achievementPrototypeIds;
+        this.achievementQueue = new ArrayList<>(achievementPrototypeIds);
     }
 
     @Override
-    public void onResourceChange(Map<String, Long> changeMap) {
+    public void onResourceChange(Map<String, Long> changeMap, Map<String, List<Long>> deltaHistoryMap) {
         checkAllAchievementUnlock();
     }
 

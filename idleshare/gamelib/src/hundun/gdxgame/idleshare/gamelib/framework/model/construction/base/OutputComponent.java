@@ -13,8 +13,8 @@ import lombok.Getter;
  * @author hundun
  * Created on 2021/12/17
  */
-public class OutputComponent {
-    private final BaseConstruction construction;
+public abstract class OutputComponent {
+    protected final BaseConstruction construction;
 
     /**
      * 对于Click型，即为基础点击收益；对于Auto型，即为基础自动收益；
@@ -32,10 +32,10 @@ public class OutputComponent {
     protected ResourcePack outputCostPack;
 
 
-    private static final int DEFAULT_AUTO_OUPUT_SECOND_MAX = 1;
+    protected static final int DEFAULT_AUTO_OUPUT_SECOND_MAX = 1;
     @Getter
     @Setter
-    private int autoOutputSecondCountMax = DEFAULT_AUTO_OUPUT_SECOND_MAX;
+    protected int autoOutputSecondCountMax = DEFAULT_AUTO_OUPUT_SECOND_MAX;
 
     public OutputComponent(BaseConstruction construction) {
         this.construction = construction;
@@ -56,7 +56,11 @@ public class OutputComponent {
             outputGainPack.setModifiedValues(
                     outputGainPack.getBaseValues().stream()
                         .map(pair -> {
-                                long newAmout = construction.calculateModifiedOutput(pair.getAmount(), construction.saveData.getWorkingLevel());
+                            long newAmout = this.calculateModifiedOutputGain(
+                                    pair.getAmount(),
+                                    construction.saveData.getWorkingLevel(),
+                                    construction.saveData.getProficiency()
+                            );
                                 return new ResourcePair(pair.getType(), newAmout);
                             })
                         .collect(Collectors.toList())
@@ -73,7 +77,11 @@ public class OutputComponent {
             outputCostPack.setModifiedValues(
                     outputCostPack.getBaseValues().stream()
                         .map(pair -> {
-                                long newAmout = construction.calculateModifiedOutputCost(pair.getAmount(), construction.saveData.getWorkingLevel());
+                                long newAmout = this.calculateModifiedOutputCost(
+                                        pair.getAmount(),
+                                        construction.saveData.getWorkingLevel(),
+                                        construction.saveData.getProficiency()
+                                );
                                 return new ResourcePair(pair.getType(), newAmout);
                             })
                         .collect(Collectors.toList())
@@ -91,12 +99,28 @@ public class OutputComponent {
         return outputCostPack != null;
     }
 
-    protected boolean canOutput() {
+    public boolean canOutput() {
         if (!hasCost()) {
             return true;
         }
 
         List<ResourcePair> compareTarget = outputCostPack.getModifiedValues();
-        return construction.getGameContext().getStorageManager().isEnough(compareTarget);
+        return construction.getGameplayContext().getStorageManager().isEnough(compareTarget);
     }
+
+    public void doOutput()
+    {
+        if (this.hasCost())
+        {
+            construction.getGameplayContext().getStorageManager().modifyAllResourceNum(this.outputCostPack.getModifiedValues(), false);
+        }
+        if (this.outputGainPack != null)
+        {
+            construction.getGameplayContext().getStorageManager().modifyAllResourceNum(this.outputGainPack.getModifiedValues(), true);
+        }
+    }
+
+    public abstract void onSubLogicFrame();
+    public abstract long calculateModifiedOutputGain(long baseValue, int level, int proficiency);
+    public abstract long calculateModifiedOutputCost(long baseValue, int level, int proficiency);
 }

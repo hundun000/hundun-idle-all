@@ -26,7 +26,7 @@ public class AudioPlayManager implements Disposable {
         this.game = game;
     }
 
-    public void lazyInit(Map<String, String> screenIdToFilePathMap) {
+    public void lazyInitOnGameCreate(Map<String, String> screenIdToFilePathMap) {
         if (screenIdToFilePathMap != null) {
             screenIdToFilePathMap.forEach((k, v) -> {
                 try {

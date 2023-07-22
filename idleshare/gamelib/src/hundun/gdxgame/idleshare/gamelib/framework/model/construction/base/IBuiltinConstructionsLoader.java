@@ -1,7 +1,9 @@
 package hundun.gdxgame.idleshare.gamelib.framework.model.construction.base;
 
 import java.util.List;
+import java.util.Map;
 
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.IGameDictionary;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
@@ -10,5 +12,5 @@ import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
  * Created on 2023/03/01
  */
 public interface IBuiltinConstructionsLoader {
-    List<BaseConstruction> provide(Language language);
+    Map<String, AbstractConstructionPrototype> getProviderMap(Language language);
 }

@@ -79,8 +79,8 @@ project(":idleshare:desktop") {
         api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
-        
-        implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.5'
+
+        api group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.5'
         
     }
 }

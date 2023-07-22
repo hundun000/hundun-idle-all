@@ -1,8 +1,5 @@
 package hundun.gdxgame.idledemo.logic;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,7 +12,7 @@ public class DemoTextureManager extends AbstractTextureManager {
     @Override
     public void lazyInitOnGameCreateStage2() {
 
-        winTexture = new Texture(Gdx.files.internal("win.png"));
+        achievementMaskBoardTexture = new Texture(Gdx.files.internal("win.png"));
         menuTexture = new Texture(Gdx.files.internal("menu.png"));
         defaultBoardNinePatchTexture = new Texture(Gdx.files.internal("defaultBoardNinePatch.png"));
         defaultBoardNinePatchEdgeSize = 4;
@@ -42,8 +39,8 @@ public class DemoTextureManager extends AbstractTextureManager {
             Texture texture = new Texture(Gdx.files.internal("constructionEntities.png"));
             TextureRegion[][] regions = TextureRegion.split(texture, 32, 32);
             //constructionEntityMap.put(ConstructionId.COOKIE_CLICK_PROVIDER, regions[0][0]);
-            constructionEntityMap.put(ConstructionId.COOKIE_AUTO_PROVIDER, regions[0][1]);
-            constructionEntityMap.put(ConstructionId.COOKIE_SELLER, regions[0][2]);
+            constructionEntityMap.put(ConstructionPrototypeId.COOKIE_AUTO_PROVIDER, regions[0][1]);
+            //constructionEntityMap.put(ConstructionPrototypeId.COOKIE_SELLER, regions[0][2]);
             //constructionEntityMap.put(ConstructionId.WIN_PROVIDER, regions[0][3]);
         }  
         {

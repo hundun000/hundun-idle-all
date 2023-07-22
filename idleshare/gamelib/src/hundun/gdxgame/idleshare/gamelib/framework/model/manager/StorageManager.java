@@ -1,9 +1,6 @@
 package hundun.gdxgame.idleshare.gamelib.framework.model.manager;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
@@ -11,8 +8,6 @@ import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Set;
 
 /**
  * @author hundun
@@ -33,6 +28,8 @@ public class StorageManager {
 
     Map<String, Long> oneFrameDeltaResoueces = new HashMap<>();
 
+    private Map<String, List<Long>> deltaHistoryMap = new HashMap<>();
+    private final int HISTORY_SIZE = 100;
     public StorageManager(IdleGameplayContext gameContext) {
         this.gameContext = gameContext;
     }
@@ -84,10 +81,16 @@ public class StorageManager {
 
     public void onSubLogicFrame() {
         // ------ frameDeltaAmountClear ------
-        Map<String, Long> temp = new HashMap<>(oneFrameDeltaResoueces);
+        Map<String, Long> changeMap = new HashMap<>(oneFrameDeltaResoueces);
         oneFrameDeltaResoueces.clear();
-        //Gdx.app.log(this.getClass().getSimpleName(), "frameDeltaAmountClear: " + temp);
-        gameContext.getEventManager().notifyOneFrameResourceChange(temp);
+        changeMap.keySet().forEach(resourceType -> deltaHistoryMap.computeIfAbsent(resourceType, it -> new ArrayList<>()));
+        deltaHistoryMap.forEach((resourceType, value) -> {
+            value.add(changeMap.getOrDefault(resourceType, 0L));
+            while (value.size() > HISTORY_SIZE) {
+                value.remove(0);
+            }
+        });
+        gameContext.getEventManager().notifyOneFrameResourceChange(changeMap, deltaHistoryMap);
     }
 
 //    public void addResourceNum(String key, int add) {

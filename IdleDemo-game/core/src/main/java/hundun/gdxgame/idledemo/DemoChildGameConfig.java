@@ -1,24 +1,19 @@
 package hundun.gdxgame.idledemo;
 
-import java.io.File;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.badlogic.gdx.Gdx;
-
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idledemo.logic.BuffId;
-import hundun.gdxgame.idledemo.logic.DemoBuiltinConstructionsLoader;
-import hundun.gdxgame.idledemo.logic.ConstructionId;
+import hundun.gdxgame.idledemo.logic.ConstructionPrototypeId;
 import hundun.gdxgame.idledemo.logic.GameArea;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.ui.screen.DemoMenuScreen;
 import hundun.gdxgame.idledemo.ui.screen.DemoPlayScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
-import hundun.gdxgame.idleshare.gamelib.framework.data.GameplaySaveData;
-import hundun.gdxgame.idleshare.gamelib.framework.model.AchievementPrototype;
+import hundun.gdxgame.idleshare.gamelib.framework.model.AbstractAchievement;
 
 /**
  * @author hundun
@@ -31,20 +26,19 @@ public class DemoChildGameConfig extends ChildGameConfig {
 //        BuiltinConstructionsLoader builtinConstructionsLoader = new BuiltinConstructionsLoader(game);
 //        this.setConstructions(builtinConstructionsLoader.load());
         
-        Map<String, List<String>> areaShownConstructionIds = new HashMap<>(); 
-        areaShownConstructionIds.put(GameArea.AREA_COOKIE, JavaFeatureForGwt.arraysAsList(
-                ConstructionId.COOKIE_CLICK_PROVIDER
+        Map<String, List<String>> areaControlableConstructionVMPrototypeIds = new HashMap<>();
+        areaControlableConstructionVMPrototypeIds.put(GameArea.AREA_COOKIE, JavaFeatureForGwt.arraysAsList(
+                ConstructionPrototypeId.COOKIE_AUTO_PROVIDER
         ));
-        areaShownConstructionIds.put(GameArea.AREA_BUILDING, JavaFeatureForGwt.arraysAsList(
-                ConstructionId.COOKIE_AUTO_PROVIDER,
-                ConstructionId.COOKIE_SELLER
-        ));
-        areaShownConstructionIds.put(GameArea.AREA_WIN, JavaFeatureForGwt.arraysAsList(
-                ConstructionId.WIN_PROVIDER
-        ));
+        this.setAreaControlableConstructionVMPrototypeIds(areaControlableConstructionVMPrototypeIds);
 
-        this.setAreaControlableConstructionIds(areaShownConstructionIds);
-        this.setAreaShowEntityByOwnAmountConstructionIds(areaShownConstructionIds);
+        Map<String, List<String>> areaControlableConstructionPrototypeVMPrototypeIds = new HashMap<>();
+        areaControlableConstructionPrototypeVMPrototypeIds.put(GameArea.AREA_COOKIE, JavaFeatureForGwt.arraysAsList(
+                ConstructionPrototypeId.COOKIE_AUTO_PROVIDER
+        ));
+        this.setAreaControlableConstructionPrototypeVMPrototypeIds(areaControlableConstructionPrototypeVMPrototypeIds);
+
+
         
         Map<String, List<String>> areaShownResourceIds = new HashMap<>(); 
         areaShownResourceIds.put(GameArea.AREA_COOKIE, JavaFeatureForGwt.arraysAsList(
@@ -57,20 +51,16 @@ public class DemoChildGameConfig extends ChildGameConfig {
             ResourceType.COOKIE
         ));
         this.setAreaShowEntityByChangeAmountResourceIds(areaShowEntityByChangeAmountResourceIds);
-        
+
+        this.setAreaShowEntityByOwnAmountConstructionPrototypeIds(new HashMap<>());
+
         Map<String, String> screenIdToFilePathMap = JavaFeatureForGwt.mapOf(
                 DemoMenuScreen.class.getSimpleName(), "audio/Loop-Menu.wav",
                 DemoPlayScreen.class.getSimpleName(), "audio/forest.mp3"
                 );
         this.setScreenIdToFilePathMap(screenIdToFilePathMap);
-        
-        List<AchievementPrototype> achievementPrototypes = JavaFeatureForGwt.arraysAsList(
-                new AchievementPrototype("Game win", "You win the game!",
-                        JavaFeatureForGwt.mapOf(BuffId.WIN, 1),
-                        null
-                        )
-                );
-        this.setAchievementPrototypes(achievementPrototypes);
+
+        this.setAchievementPrototypeIds(new ArrayList<>());
     }
 
     

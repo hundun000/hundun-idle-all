@@ -56,7 +56,7 @@ public abstract class BaseIdleGame<T_SAVE> extends BaseHundunGame<T_SAVE> {
 	protected void createStage3() {
 
 	    
-        audioPlayManager.lazyInit(childGameConfig.getScreenIdToFilePathMap());
+        audioPlayManager.lazyInitOnGameCreate(childGameConfig.getScreenIdToFilePathMap());
         
 	}
 

@@ -11,7 +11,7 @@ import lombok.Getter;
 public abstract class AbstractTextureManager {
 
     @Getter
-    protected Texture winTexture;
+    protected Texture achievementMaskBoardTexture;
 
     @Getter
     protected Texture menuTexture;

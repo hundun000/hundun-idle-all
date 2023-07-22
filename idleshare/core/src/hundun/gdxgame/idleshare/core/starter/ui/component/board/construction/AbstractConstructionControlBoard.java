@@ -17,10 +17,11 @@ import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.ConstructionControlNode;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
-import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport.ConstructionExportProxy;
+import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollectionListener;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
-public abstract class AbstractConstructionControlBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table implements ILogicFrameListener, IGameAreaChangeListener {
+public abstract class AbstractConstructionControlBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table
+        implements ILogicFrameListener, IGameAreaChangeListener, IConstructionCollectionListener {
     protected BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
     /**
      * 显示在当前screen的Construction集合。以ConstructionView形式存在。
@@ -41,20 +42,28 @@ public abstract class AbstractConstructionControlBoard<T_GAME extends BaseIdleGa
 
     @Override
     public void onGameAreaChange(String last, String current) {
+        onConstructionCollectionChange();
+    }
 
-
-        List<ConstructionExportProxy> newConstructions = parent.getGame().getIdleGameplayExport().getAreaShownConstructionsOrEmpty(current);
+    @Override
+    public void onConstructionCollectionChange() {
+        List<BaseConstruction> newConstructions = parent.getGame().getIdleGameplayExport().getGameplayContext()
+                .getConstructionManager().getAreaControlableConstructionsOrEmpty(parent.getArea());
+        newConstructions = filterConstructions(newConstructions);
 
         int childrenSize = initChild(newConstructions.size());
 
-        for (int i = 0; i < childrenSize && i < newConstructions.size(); i++) {
+        for (int i = 0; i < childrenSize && i < newConstructions.size(); i++)
+        {
             constructionControlNodes.get(i).setModel(newConstructions.get(i));
         }
-        for (int i = newConstructions.size(); i < childrenSize; i++) {
+        for (int i = newConstructions.size(); i < childrenSize; i++)
+        {
             constructionControlNodes.get(i).setModel(null);
         }
-        Gdx.app.log("ConstructionInfoBorad", "Constructions change to: " + newConstructions.stream().map(construction -> construction.getName()).collect(Collectors.joining(",")));
-
+        parent.getGame().getFrontend().log("ConstructionInfoBorad",
+                "Constructions change to: " + newConstructions.stream().map(BaseConstruction::getName).collect(Collectors.joining(","))
+            );
     }
 
     /**
@@ -62,4 +71,13 @@ public abstract class AbstractConstructionControlBoard<T_GAME extends BaseIdleGa
      * @return childrenSize
      */
     protected abstract int initChild(int areaShownConstructionsSize);
+
+    /**
+     * 子类可添加筛选
+     */
+    protected List<BaseConstruction> filterConstructions(List<BaseConstruction> constructions)
+    {
+        return constructions;
+    }
+
 }

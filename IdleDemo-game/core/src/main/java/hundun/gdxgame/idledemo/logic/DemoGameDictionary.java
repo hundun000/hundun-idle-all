@@ -14,31 +14,20 @@ import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 public class DemoGameDictionary implements IGameDictionary {
 
     
-    public String constructionIdToShowName(Language language, String constructionId) {
+    public String constructionPrototypeIdToShowName(Language language, String constructionId) {
         switch (language) {
             case CN:
                 switch (constructionId) {
-                    case ConstructionId.COOKIE_CLICK_PROVIDER:
-                        return "大饼干";
-                    case ConstructionId.COOKIE_AUTO_PROVIDER:
+
+                    case ConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
                         return "自动点击器";
-                    case ConstructionId.COOKIE_SELLER:
-                        return "自动销售器";
-                    case ConstructionId.WIN_PROVIDER:
-                        return "奖杯购买处";
                     default:
                         return "口口";
                 }
             default:
                 switch (constructionId) {
-                    case ConstructionId.COOKIE_CLICK_PROVIDER:
-                        return "main cookie";
-                    case ConstructionId.COOKIE_AUTO_PROVIDER:
+                    case ConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
                         return "cliker";
-                    case ConstructionId.COOKIE_SELLER:
-                        return "seller";
-                    case ConstructionId.WIN_PROVIDER:
-                        return "win";
                     default:
                         return "[dic lost]";
                 }
@@ -48,31 +37,19 @@ public class DemoGameDictionary implements IGameDictionary {
     }
 
     @Override
-    public String constructionIdToDetailDescroptionConstPart(Language language, String constructionId) {
+    public String constructionPrototypeIdToDetailDescroptionConstPart(Language language, String constructionId) {
         switch (language) {
             case CN:
-                switch (constructionId) { 
-                    case ConstructionId.COOKIE_CLICK_PROVIDER:
-                        return "戳一戳，获得饼干";
-                    case ConstructionId.COOKIE_AUTO_PROVIDER:
+                switch (constructionId) {
+                    case ConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
                         return "自动获得饼干";
-                    case ConstructionId.COOKIE_SELLER:
-                        return "自动获得饼干";
-                    case ConstructionId.WIN_PROVIDER:
-                        return "购买一个奖杯以赢得胜利";
                     default:
                         return "[dic lost]";
                 }
             default:
                 switch (constructionId) {
-                    case ConstructionId.COOKIE_CLICK_PROVIDER:
-                        return "Click gain some cookie";
-                    case ConstructionId.COOKIE_AUTO_PROVIDER:
+                    case ConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
                         return "Auto gain some cookie";
-                    case ConstructionId.COOKIE_SELLER:
-                        return "Auto sell cookies";
-                    case ConstructionId.WIN_PROVIDER:
-                        return "Get a trophy and win the game";
                     default:
                         return "[dic lost]";
                 }
@@ -97,5 +74,41 @@ public class DemoGameDictionary implements IGameDictionary {
                 Language.CN, "中文",
                 Language.EN, "English"
                 );
+    }
+
+    @Override
+    public List<String> getAchievementTexts(Language language)
+    {
+        switch (language)
+        {
+            case CN:
+                return JavaFeatureForGwt.arraysAsList("当前任务：", "已完成：", "回到游戏");
+            default:
+                return JavaFeatureForGwt.arraysAsList("Quest: ", "Completed: ", "back");
+        }
+    }
+
+    @Override
+    public List<String> getPlayScreenTexts(Language language)
+    {
+        switch (language)
+        {
+            case CN:
+                return JavaFeatureForGwt.arraysAsList("购买", "购买费用");
+            default:
+                return JavaFeatureForGwt.arraysAsList("Build", "Build cost");
+        }
+    }
+
+    @Override
+    public List<String> getStageSelectMaskBoardTexts(Language language)
+    {
+        switch (language)
+        {
+            case CN:
+                return JavaFeatureForGwt.arraysAsList("返回", "关卡1", "关卡2", "关卡3");
+            default:
+                return JavaFeatureForGwt.arraysAsList("Back", "Stage1", "Stage2", "Stage3");
+        }
     }
 }

@@ -1,6 +1,9 @@
 package hundun.gdxgame.idleshare.gamelib.framework.callback;
 
-import hundun.gdxgame.idleshare.gamelib.framework.model.AchievementPrototype;
+import hundun.gdxgame.idleshare.gamelib.framework.model.AbstractAchievement;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author hundun
@@ -8,5 +11,5 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.AchievementPrototype;
  */
 public interface IAchievementUnlockCallback {
     void hideAchievementMaskBoard();
-    void onAchievementUnlock(AchievementPrototype prototype);
+    void showAchievementMaskBoard(AbstractAchievement prototype);
 }

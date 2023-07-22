@@ -86,14 +86,15 @@ public class StorageInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> exten
 //                .collect(Collectors.joining("    "));
 //        text += "\nBuffs = " + parent.game.getModelContext().getBuffManager().getBuffAmounts();
 //        mainLabel.setText(text);
-        boolean needRebuildCells = !shownTypes.equals(parent.getGame().getIdleGameplayExport().getUnlockedResourceTypes());
+        Set<String> unlockedResourceTypes = parent.getGame().getIdleGameplayExport().getGameplayContext().getStorageManager().getUnlockedResourceTypes();
+        boolean needRebuildCells = !shownTypes.equals(unlockedResourceTypes);
         if (needRebuildCells) {
             shownTypes.clear();
-            shownTypes.addAll(parent.getGame().getIdleGameplayExport().getUnlockedResourceTypes());
+            shownTypes.addAll(unlockedResourceTypes);
             rebuildCells();
         }
 
-        nodes.stream().forEach(node -> node.update(parent.getGame().getIdleGameplayExport().getResourceNumOrZero(node.getResourceType())));
+        nodes.stream().forEach(node -> node.update(parent.getGame().getIdleGameplayExport().getGameplayContext().getStorageManager().getResourceNumOrZero(node.getResourceType())));
     }
 
     @Override

@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
-import hundun.gdxgame.idleshare.gamelib.framework.model.AchievementPrototype;
+import hundun.gdxgame.idleshare.gamelib.framework.model.AbstractAchievement;
 
 /**
  * @author hundun
@@ -25,7 +25,7 @@ public class AchievementMaskBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> e
 
     public AchievementMaskBoard(BaseIdlePlayScreen<T_GAME, T_SAVE> parent) {
         this.parent = parent;
-        this.setBackground(new SpriteDrawable(new Sprite(parent.getGame().getTextureManager().getWinTexture())));
+        this.setBackground(new SpriteDrawable(new Sprite(parent.getGame().getTextureManager().getAchievementMaskBoardTexture())));
         this.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         label = new Label("", parent.getGame().getMainSkin());
@@ -43,7 +43,7 @@ public class AchievementMaskBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> e
         this.setVisible(false);
 
     }
-    public void setAchievementPrototype(AchievementPrototype prototype) {
+    public void setAchievementPrototype(AbstractAchievement prototype) {
         label.setText(prototype.getDescription());
     }
 }

@@ -1,20 +1,10 @@
 package hundun.gdxgame.idledemo.ui.entity;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
-import hundun.gdxgame.idledemo.DemoIdleGame;
-import hundun.gdxgame.idledemo.logic.ConstructionId;
+import hundun.gdxgame.idledemo.logic.ConstructionPrototypeId;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.ui.screen.DemoPlayScreen;
-import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.framework.model.entity.BaseGameEntityFactory;
 import hundun.gdxgame.idleshare.core.framework.model.entity.GameEntity;
-import hundun.gdxgame.idleshare.core.framework.model.entity.RandomMoveEntity;
-import hundun.gdxgame.idleshare.core.starter.ui.component.GameAreaControlBoard;
-import hundun.gdxgame.idleshare.core.starter.ui.component.StorageInfoBoard;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
 
 /**
@@ -35,12 +25,8 @@ public class GameEntityFactory extends BaseGameEntityFactory {
     
     public GameEntity newConstructionEntity(String id, int index) {
         switch (id) {
-            case ConstructionId.COOKIE_CLICK_PROVIDER: 
-                return null;
-            case ConstructionId.COOKIE_AUTO_PROVIDER:
+            case ConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
                 return this.rowStableConstructionEntity(id, index, 1);
-            case ConstructionId.COOKIE_SELLER:
-                return this.rowStableConstructionEntity(id, index, 0); 
             default:
                 // no need GameEntity
                 return null;

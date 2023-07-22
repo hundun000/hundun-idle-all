@@ -8,13 +8,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ray3k.stripe.FreeTypeSkin;
 
-import hundun.gdxgame.idledemo.logic.DemoGameDictionary;
-import hundun.gdxgame.idledemo.logic.DemoTextureManager;
+import hundun.gdxgame.idledemo.logic.*;
 import hundun.gdxgame.gamelib.base.save.ISaveTool;
-import hundun.gdxgame.idledemo.logic.DemoBuiltinConstructionsLoader;
-import hundun.gdxgame.idledemo.logic.DemoSaveHandler;
-import hundun.gdxgame.idledemo.logic.GameArea;
-import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.screen.DemoMenuScreen;
 import hundun.gdxgame.idledemo.ui.screen.DemoScreenContext;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
@@ -65,6 +60,7 @@ public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
                 frontend,
                 new DemoGameDictionary(),
                 new DemoBuiltinConstructionsLoader(),
+                new IdleForestAchievementLoader(),
                 BaseIdlePlayScreen.LOGIC_FRAME_PER_SECOND,
                 childGameConfig
                 );

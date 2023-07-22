@@ -24,7 +24,7 @@ public class GameEntityManager {
 
     private BaseIdleGame<?> game;
     @Getter
-    private Map<String, List<GameEntity>> gameEntitiesOfConstructionIds = new HashMap<>();
+    private Map<String, List<GameEntity>> gameEntitiesOfConstructionPrototypeIds = new HashMap<String, List<GameEntity>>();
     @Getter
     private Map<String, List<GameEntity>> gameEntitiesOfResourceIds = new HashMap<>();
     @Getter
@@ -41,7 +41,7 @@ public class GameEntityManager {
     }
 
     public void allEntityMoveForFrame() {
-        for (Entry<String, List<GameEntity>> entry : gameEntitiesOfConstructionIds.entrySet()) {
+        for (Entry<String, List<GameEntity>> entry : gameEntitiesOfConstructionPrototypeIds.entrySet()) {
             List<GameEntity> queue = entry.getValue();
             queue.forEach(entity -> {
                 entity.frameLogic();
@@ -102,7 +102,7 @@ public class GameEntityManager {
     }
 
     private void checkResourceEntityByOwnAmount(String resourceId, BaseGameEntityFactory gameEntityFactory) {
-        long resourceNum = game.getIdleGameplayExport().getResourceNumOrZero(resourceId);
+        long resourceNum = game.getIdleGameplayExport().getGameplayContext().getStorageManager().getResourceNumOrZero(resourceId);
         int drawNum = gameEntityFactory.calculateResourceDrawNum(resourceId, resourceNum);
 
         gameEntitiesOfResourceIds.computeIfAbsent(resourceId, k -> new LinkedList<>());
@@ -139,22 +139,22 @@ public class GameEntityManager {
         }
     }
 
-    private void checkConstructionEntityByOwnAmount(String id, BaseGameEntityFactory gameEntityFactory) {
-        BaseConstruction construction = game.getIdleGameplayExport().getConstruction(id);
-        int resourceNum = construction.getSaveData().getWorkingLevel();
-        int MAX_DRAW_NUM = construction.getMaxDrawNum();
-        int drawNum = gameEntityFactory.calculateConstructionDrawNum(id, resourceNum, MAX_DRAW_NUM);
-        gameEntitiesOfConstructionIds.computeIfAbsent(id, k -> new LinkedList<>());
-        List<GameEntity> gameEntities = gameEntitiesOfConstructionIds.get(id);
+    private void checkConstructionEntityByOwnAmount(String prototypeId, BaseGameEntityFactory gameEntityFactory) {
+        List<BaseConstruction> constructions = game.getIdleGameplayExport().getGameplayContext().getConstructionManager().getConstructionsOfPrototype(prototypeId);
+        int resourceNum = constructions.stream().mapToInt(it -> it.getSaveData().getWorkingLevel()).sum();
+        int MAX_DRAW_NUM = 5;
+        int drawNum = gameEntityFactory.calculateConstructionDrawNum(prototypeId, resourceNum, MAX_DRAW_NUM);
+        gameEntitiesOfConstructionPrototypeIds.computeIfAbsent(prototypeId, k -> new LinkedList<>());
+        List<GameEntity> gameEntities = gameEntitiesOfConstructionPrototypeIds.get(prototypeId);
         while (gameEntities.size() > drawNum) {
-            Gdx.app.log(this.getClass().getSimpleName(), "checkConstructionEntityByOwnAmount " + id + " remove, current = " + gameEntities.size() + " , target = " + drawNum);
+            Gdx.app.log(this.getClass().getSimpleName(), "checkConstructionEntityByOwnAmount " + prototypeId + " remove, current = " + gameEntities.size() + " , target = " + drawNum);
             gameEntities.remove(gameEntities.size() - 1);
         }
         while (gameEntities.size() < drawNum) {
             int newIndex = gameEntities.size();
-            GameEntity gameEntity = gameEntityFactory.newConstructionEntity(id, newIndex);
+            GameEntity gameEntity = gameEntityFactory.newConstructionEntity(prototypeId, newIndex);
             if (gameEntity != null) {
-                Gdx.app.log(this.getClass().getSimpleName(), "checkConstructionEntityByOwnAmount " + id + " new, current = " + gameEntities.size() + " , target = " + drawNum);
+                Gdx.app.log(this.getClass().getSimpleName(), "checkConstructionEntityByOwnAmount " + prototypeId + " new, current = " + gameEntities.size() + " , target = " + drawNum);
                 gameEntities.add(gameEntity);
             } else {
                 //Gdx.app.log(this.getClass().getSimpleName(), "checkConstructionEntityByOwnAmount " + id + " , cannot create new entity.");
@@ -175,7 +175,7 @@ public class GameEntityManager {
      * 某些引擎（如Unity）不光要在此处queue.clear()，还要queue.ForEach(entity => UnityEngine.Object.Destroy(entity.gameObject));
      */
     public void destoryNoNeedDrawConstructionIds(List<String> needDrawConstructionIds) {
-        for (Entry<String, List<GameEntity>> entry : gameEntitiesOfConstructionIds.entrySet()) {
+        for (Entry<String, List<GameEntity>> entry : gameEntitiesOfConstructionPrototypeIds.entrySet()) {
             List<GameEntity> queue = entry.getValue();
             if (!needDrawConstructionIds.contains(entry.getKey())) {
                 queue.clear();

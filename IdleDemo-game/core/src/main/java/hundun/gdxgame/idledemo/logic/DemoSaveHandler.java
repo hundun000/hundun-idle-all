@@ -10,6 +10,7 @@ import hundun.gdxgame.gamelib.starter.save.PairChildrenSaveHandler;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ConstructionSaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.data.GameplaySaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.data.SystemSettingSaveData;
+import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
 /**
@@ -25,18 +26,24 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
 
     @Override
     protected RootSaveData genereateStarterRootSaveData() {
+
+        GridPosition USELESS_POSITON = new GridPosition(0, 0);
+
         return RootSaveData.builder()
                 .gameplaySave(GameplaySaveData.builder()
                         .constructionSaveDataMap(
                                 JavaFeatureForGwt.mapOf(
-                                        ConstructionId.COOKIE_SELLER, 
+                                        ConstructionPrototypeId.COOKIE_AUTO_PROVIDER,
                                         ConstructionSaveData.builder()
+                                                .prototypeId(ConstructionPrototypeId.COOKIE_AUTO_PROVIDER)
                                                 .level(1)
                                                 .workingLevel(0)
-                                                .build()))
+                                                .position(USELESS_POSITON)
+                                                .build())
+                        )
                         .ownResoueces(new HashMap<>())
                         .unlockedResourceTypes(new HashSet<>())
-                        .unlockedAchievementNames(new HashSet<>())
+                        .unlockedAchievementIds(new HashSet<>())
                         .build())
                 .systemSettingSaveData(SystemSettingSaveData.builder()
                         .language(Language.EN)

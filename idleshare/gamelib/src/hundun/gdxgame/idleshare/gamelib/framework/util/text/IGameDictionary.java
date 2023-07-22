@@ -11,8 +11,11 @@ import java.util.Map;
 
 
 public interface IGameDictionary {
-    String constructionIdToShowName(Language language, String constructionId);
-    String constructionIdToDetailDescroptionConstPart(Language language, String constructionId);
+    String constructionPrototypeIdToShowName(Language language, String prototypeId);
+    String constructionPrototypeIdToDetailDescroptionConstPart(Language language, String prototypeId);
     List<String> getMemuScreenTexts(Language language);
+    List<String> getPlayScreenTexts(Language language);
+    List<String> getAchievementTexts(Language language);
     Map<Language, String> getLanguageShowNameMap();
+    List<String> getStageSelectMaskBoardTexts(Language language);
 }

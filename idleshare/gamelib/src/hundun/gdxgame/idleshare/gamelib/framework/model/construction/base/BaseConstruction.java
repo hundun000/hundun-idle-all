@@ -4,19 +4,21 @@ package hundun.gdxgame.idleshare.gamelib.framework.model.construction.base;
  * Created on 2021/11/05
  */
 
+import java.util.Map;
 import java.util.Random;
 
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ConstructionSaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IBuffChangeListener;
-import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackage.ILevelDescroptionProvider;
-import hundun.gdxgame.idleshare.gamelib.framework.util.text.IGameDictionary;
+import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
+import hundun.gdxgame.idleshare.gamelib.framework.model.grid.ITileNode;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 import lombok.Getter;
 import lombok.Setter;
 
-public abstract class BaseConstruction implements ILogicFrameListener, IBuffChangeListener {
+public abstract class BaseConstruction implements IBuffChangeListener, ITileNode<Void> {
+
 
     protected static final int DEFAULT_MAX_LEVEL = 99;
     @Getter
@@ -33,7 +35,7 @@ public abstract class BaseConstruction implements ILogicFrameListener, IBuffChan
 
     protected Random random = new Random();
     @Getter
-    protected IdleGameplayContext gameContext;
+    protected IdleGameplayContext gameplayContext;
 
     /**
      * NotNull
@@ -47,7 +49,8 @@ public abstract class BaseConstruction implements ILogicFrameListener, IBuffChan
 
     @Getter
     protected String id;
-
+    @Getter
+    protected String prototypeId;
     @Getter
     protected String detailDescroptionConstPart;
 
@@ -76,13 +79,51 @@ public abstract class BaseConstruction implements ILogicFrameListener, IBuffChan
     @Getter
     @Setter
     protected LevelComponent levelComponent;
+    /**
+     * NotNull
+     */
+    @Getter
+    @Setter
+    protected ProficiencyComponent proficiencyComponent;
 
+    /**
+     * NotNull
+     */
+    @Getter
+    @Setter
+    protected ExistenceComponent existenceComponent;
+
+    @Getter
+    @Setter
+    protected boolean allowPositionOverwrite = false;
+
+    Map<TileNeighborDirection, ITileNode<Void>> neighbors;
+
+    @Override
+    public GridPosition getPosition() {
+        return saveData.getPosition();
+    }
+
+    @Override
+    public void setPosition(GridPosition position) {
+        saveData.setPosition(position);
+    }
+
+    @Override
+    public Map<TileNeighborDirection, ITileNode<Void>> getNeighbors() {
+        return neighbors;
+    }
+
+    @Override
+    public void setNeighbors(Map<TileNeighborDirection, ITileNode<Void>> neighbors) {
+        this.neighbors = neighbors;
+    }
 
     public void lazyInitDescription(IdleGameplayContext gameContext, Language language) {
-        this.gameContext = gameContext;
+        this.gameplayContext = gameContext;
         
-        this.name = gameContext.getGameDictionary().constructionIdToShowName(language, id);
-        this.detailDescroptionConstPart = gameContext.getGameDictionary().constructionIdToDetailDescroptionConstPart(language, id);
+        this.name = gameContext.getGameDictionary().constructionPrototypeIdToShowName(language, id);
+        this.detailDescroptionConstPart = gameContext.getGameDictionary().constructionPrototypeIdToDetailDescroptionConstPart(language, id);
         
         outputComponent.lazyInitDescription();
         upgradeComponent.lazyInitDescription();
@@ -90,34 +131,20 @@ public abstract class BaseConstruction implements ILogicFrameListener, IBuffChan
         updateModifiedValues();
     }
 
-    public BaseConstruction(String id) {
-        
-        this.saveData = new ConstructionSaveData();
+    public BaseConstruction(String prototypeId, String id) {
+        this.prototypeId = prototypeId;
         this.id = id;
+        this.saveData = new ConstructionSaveData();
+
     }
-
-    public abstract void onClick();
-
-    public abstract boolean canClickEffect();
-
-    public String getButtonDescroption() {
-        return descriptionPackage.getButtonDescroption();
-    }
-
-    //protected abstract long calculateModifiedUpgradeCost(long baseValue, int level);
-    protected abstract long calculateModifiedOutput(long baseValue, int level);
-    protected abstract long calculateModifiedOutputCost(long baseValue, int level);
-
-
 
     /**
      * 重新计算各个数值的加成后的结果
      */
     public void updateModifiedValues() {
-        gameContext.getFrontEnd().log(this.name, "updateCurrentCache called");
+        gameplayContext.getFrontEnd().log(this.name, "updateCurrentCache called");
         // --------------
-        boolean reachMaxLevel = this.getSaveData().getLevel() == this.getMaxLevel();
-        upgradeComponent.updateModifiedValues(reachMaxLevel);
+        upgradeComponent.updateModifiedValues();
         outputComponent.updateModifiedValues();
 
     }
@@ -132,17 +159,10 @@ public abstract class BaseConstruction implements ILogicFrameListener, IBuffChan
         // default do nothing
     }
 
-    protected boolean canOutput() {
-        return outputComponent.canOutput();
-    }
-
-
-    protected boolean canUpgrade() {
-        return upgradeComponent.canUpgrade();
-    }
-
-    public String getSaveDataKey() {
-        return id;
+    public void onSubLogicFrame()
+    {
+        outputComponent.onSubLogicFrame();
+        proficiencyComponent.onSubLogicFrame();
     }
 
 

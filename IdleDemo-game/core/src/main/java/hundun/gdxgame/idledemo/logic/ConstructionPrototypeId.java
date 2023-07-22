@@ -1,0 +1,11 @@
+package hundun.gdxgame.idledemo.logic;
+
+
+
+
+public class ConstructionPrototypeId {
+
+
+    public static final String COOKIE_AUTO_PROVIDER = "ENUM_CSTR@COOKIE_AUTO_PROVIDER";
+
+}

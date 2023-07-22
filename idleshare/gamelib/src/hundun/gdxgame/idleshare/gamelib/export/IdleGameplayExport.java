@@ -13,6 +13,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.data.GameplaySaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.data.SystemSettingSaveData;
+import hundun.gdxgame.idleshare.gamelib.framework.model.IBuiltinAchievementsLoader;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.BaseConstructionFactory;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackage;
@@ -34,32 +35,29 @@ public class IdleGameplayExport implements ILogicFrameListener,
         ISubGameplaySaveHandler<GameplaySaveData>, 
         ISubSystemSettingSaveHandler<SystemSettingSaveData>  {
 
+    @Getter
     private IdleGameplayContext gameplayContext;
     private IBuiltinConstructionsLoader builtinConstructionsLoader;
+    private IBuiltinAchievementsLoader builtinAchievementsLoader;
     private ChildGameConfig childGameConfig;
     @Getter
     private IGameDictionary gameDictionary;
     @Setter
     @Getter
     private Language language;
-    
+    public String stageId;
+
     public IdleGameplayExport(
             IFrontend frontEnd, 
             IGameDictionary gameDictionary,
             IBuiltinConstructionsLoader builtinConstructionsLoader,
+            IBuiltinAchievementsLoader builtinAchievementsLoader,
             int LOGIC_FRAME_PER_SECOND, ChildGameConfig childGameConfig) {
         this.gameDictionary = gameDictionary;
         this.builtinConstructionsLoader = builtinConstructionsLoader;
+        this.builtinAchievementsLoader = builtinAchievementsLoader;
         this.childGameConfig = childGameConfig;
         this.gameplayContext = new IdleGameplayContext(frontEnd, gameDictionary, LOGIC_FRAME_PER_SECOND);
-    }
-
-    public long getResourceNumOrZero(String resourceId) {
-        return gameplayContext.getStorageManager().getResourceNumOrZero(resourceId);
-    }
-
-    public BaseConstruction getConstruction(String id) {
-        return gameplayContext.getConstructionFactory().getConstruction(id);
     }
 
     @Override
@@ -68,110 +66,24 @@ public class IdleGameplayExport implements ILogicFrameListener,
         gameplayContext.getStorageManager().onSubLogicFrame();
     }
     
-
-    public static class ConstructionExportProxy {
-        
-        private BaseConstruction model;
-        @Getter
-        String id;
-        @Getter
-        String name;
-        @Getter
-        DescriptionPackage descriptionPackage;
-        @Getter
-        ResourcePack outputGainPack;
-        @Getter
-        ResourcePack outputCostPack;
-        @Getter
-        UpgradeState upgradeState;
-        @Getter
-        ResourcePack upgradeCostPack;
-        
-        private static ConstructionExportProxy fromModel(BaseConstruction model) {
-            ConstructionExportProxy result = new ConstructionExportProxy();
-            result.model = model;
-            result.id = model.getId();
-            result.name = model.getName();
-            result.outputCostPack = (model.getOutputComponent().getOutputCostPack());
-            result.outputGainPack = (model.getOutputComponent().getOutputGainPack());
-            result.upgradeState = (model.getUpgradeComponent().getUpgradeState());
-            result.upgradeCostPack = (model.getUpgradeComponent().getUpgradeCostPack());
-            result.descriptionPackage = (model.getDescriptionPackage());
-            
-            return result;
-        }
-
-        // ------- need runtime calculate ------
-        
-        public boolean isWorkingLevelChangable() {
-            return model.getLevelComponent().isWorkingLevelChangable();
-        }
-        
-        public String getButtonDescroption() {
-            return model.getButtonDescroption();
-        }
-        
-        public String getDetailDescroptionConstPart() {
-            return model.getDetailDescroptionConstPart();
-        }
-        
-        public String getWorkingLevelDescroption() {
-            return model.getLevelComponent().getWorkingLevelDescroption();
-        }
-    }
-
-    public List<ConstructionExportProxy> getAreaShownConstructionsOrEmpty(String current) {
-        return gameplayContext.getConstructionManager().getAreaShownConstructionsOrEmpty(current).stream()
-                .map(it -> ConstructionExportProxy.fromModel(it))
-                .collect(Collectors.toList())
-                ;
-    }
-
-    public void eventManagerRegisterListener(Object object) {
-        gameplayContext.getEventManager().registerListener(object);
-    }
-
-    public Set<String> getUnlockedResourceTypes() {
-        return gameplayContext.getStorageManager().getUnlockedResourceTypes();
-    }
-
-    public void constructionChangeWorkingLevel(String id, int delta) {
-        BaseConstruction model = gameplayContext.getConstructionFactory().getConstruction(id);
-        model.getLevelComponent().changeWorkingLevel(delta);
-    }
-
-    public void constructionOnClick(String id) {
-        BaseConstruction model = gameplayContext.getConstructionFactory().getConstruction(id);
-        model.onClick();
-    }
-
-    public boolean constructionCanClickEffect(String id) {
-        BaseConstruction model = gameplayContext.getConstructionFactory().getConstruction(id);
-        return model.canClickEffect();
-    }
-
-    public boolean constructionCanChangeWorkingLevel(String id, int delta) {
-        BaseConstruction model = gameplayContext.getConstructionFactory().getConstruction(id);
-        return model.getLevelComponent().canChangeWorkingLevel(delta);
-    }
-    
     @Override
     public void applyGameplaySaveData(GameplaySaveData gameplaySaveData) {
-        Collection<BaseConstruction> constructions = gameplayContext.getConstructionFactory().getConstructions();
-        for (BaseConstruction construction : constructions) {
-            if (gameplaySaveData.getConstructionSaveDataMap().containsKey(construction.getId())) {
-                construction.setSaveData(gameplaySaveData.getConstructionSaveDataMap().get(construction.getId()));
-                construction.updateModifiedValues();
-            }
-        }
+        this.stageId = gameplaySaveData.getStageId();
+
+
+        gameplaySaveData.getConstructionSaveDataMap().values().forEach(it -> {
+            gameplayContext.getConstructionManager().loadInstance(it);
+        });
+
         gameplayContext.getStorageManager().setUnlockedResourceTypes(gameplaySaveData.getUnlockedResourceTypes());
         gameplayContext.getStorageManager().setOwnResoueces(gameplaySaveData.getOwnResoueces());
-        gameplayContext.getAchievementManager().setUnlockedAchievementNames(gameplaySaveData.getUnlockedAchievementNames());
+        gameplayContext.getAchievementManager().setUnlockedAchievementIds(gameplaySaveData.getUnlockedAchievementIds());
     }
 
     @Override
     public void currentSituationToGameplaySaveData(GameplaySaveData gameplaySaveData) {
-        Collection<BaseConstruction> constructions = gameplayContext.getConstructionFactory().getConstructions();
+        gameplaySaveData.setStageId(this.stageId);
+        List<BaseConstruction> constructions = gameplayContext.getConstructionManager().getConstructions();
         gameplaySaveData.setConstructionSaveDataMap(constructions.stream()
                 .collect(Collectors.toMap(
                         it -> it.getId(), 
@@ -180,7 +92,7 @@ public class IdleGameplayExport implements ILogicFrameListener,
                 );
         gameplaySaveData.setUnlockedResourceTypes(gameplayContext.getStorageManager().getUnlockedResourceTypes());
         gameplaySaveData.setOwnResoueces(gameplayContext.getStorageManager().getOwnResoueces());
-        gameplaySaveData.setUnlockedAchievementNames(gameplayContext.getAchievementManager().getUnlockedAchievementNames());
+        gameplaySaveData.setUnlockedAchievementIds(gameplayContext.getAchievementManager().getUnlockedAchievementIds());
     }
 
     @Override
@@ -188,8 +100,9 @@ public class IdleGameplayExport implements ILogicFrameListener,
         this.language = systemSettingSave.getLanguage();
         gameplayContext.allLazyInit(
                 systemSettingSave.getLanguage(), 
-                childGameConfig, 
-                builtinConstructionsLoader.provide(systemSettingSave.getLanguage())
+                childGameConfig,
+                builtinConstructionsLoader.getProviderMap(language),
+                builtinAchievementsLoader.getProviderMap(language)
                 );
         gameplayContext.getFrontEnd().log(this.getClass().getSimpleName(), "applySystemSetting done");
     }
@@ -199,5 +112,4 @@ public class IdleGameplayExport implements ILogicFrameListener,
         systemSettingSave.setLanguage(this.getLanguage());
     }
 
-    
 }

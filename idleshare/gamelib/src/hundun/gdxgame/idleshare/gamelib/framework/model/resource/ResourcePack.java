@@ -1,6 +1,7 @@
 package hundun.gdxgame.idleshare.gamelib.framework.model.resource;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import lombok.Data;
 
@@ -14,4 +15,11 @@ public class ResourcePack {
     List<ResourcePair> baseValues;
     List<ResourcePair> modifiedValues;
     String modifiedValuesDescription;
+
+    public static String toDescription(List<ResourcePair> list) {
+        return list.stream()
+                .map(pair -> pair.getType() + "x" + pair.getAmount())
+                .collect(Collectors.joining(", "))
+                + "; ";
+    }
 }

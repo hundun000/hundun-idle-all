@@ -1,12 +1,12 @@
 package hundun.gdxgame.idleshare.gamelib.framework.model.construction;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
+import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
 /**
@@ -15,25 +15,36 @@ import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
  */
 public class BaseConstructionFactory {
 
-    Map<String, BaseConstruction> constructions = new HashMap<>();
+    IdleGameplayContext gameContext;
+    Language language;
+    Map<String, AbstractConstructionPrototype> providerMap;
 
-    public BaseConstruction getConstruction(String id) {
-        BaseConstruction result = constructions.get(id);
-        if (result == null) {
-            throw new RuntimeException("getConstruction " + id + " not found");
-        }
-        return result;
+    public void lazyInit(
+            IdleGameplayContext gameContext,
+            Language language,
+            Map<String, AbstractConstructionPrototype> providerMap
+    ) {
+        this.language = language;
+        this.providerMap = providerMap;
+        this.gameContext = gameContext;
     }
 
-    public Collection<BaseConstruction> getConstructions() {
-        return constructions.values();
+    public AbstractConstructionPrototype getPrototype(String prototypeId)
+    {
+        AbstractConstructionPrototype prototype = providerMap.get(prototypeId);
+        prototype.lazyInitDescription(gameContext, language);
+        return prototype;
     }
 
-    public void lazyInit(IdleGameplayContext gameContext, Language language, List<BaseConstruction> constructions) {
-        constructions.forEach(item -> this.constructions.put(item.getId(), item));
-        this.constructions.values().forEach(it -> {
-            it.lazyInitDescription(gameContext, language);
-            gameContext.getEventManager().registerListener(it);
-        });
+
+    public BaseConstruction getInstanceOfPrototype(String prototypeId, GridPosition position)
+    {
+        AbstractConstructionPrototype prototype = providerMap.get(prototypeId);
+        BaseConstruction construction = prototype.getInstance(position);
+        construction.lazyInitDescription(gameContext, language);
+        gameContext.getEventManager().registerListener(construction);
+        return construction;
     }
+
+
 }

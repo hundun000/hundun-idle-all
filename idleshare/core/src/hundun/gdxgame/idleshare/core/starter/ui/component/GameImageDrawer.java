@@ -42,7 +42,7 @@ public class GameImageDrawer<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> implem
         
         if (needDrawConstructionIds != null) {
             for (String id : needDrawConstructionIds) {
-                List<GameEntity> queue = manager.getGameEntitiesOfConstructionIds().get(id);
+                List<GameEntity> queue = manager.getGameEntitiesOfConstructionPrototypeIds().get(id);
                 if (queue == null) {
                     continue;
                 }
@@ -83,7 +83,7 @@ public class GameImageDrawer<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> implem
 
 
     @Override
-    public void onResourceChange(Map<String, Long> changeMap) {
+    public void onResourceChange(Map<String, Long> changeMap, Map<String, List<Long>> deltaHistoryMap) {
         GameEntityManager manager = parent.getGameEntityManager();
         String gameArea = parent.getArea();
 

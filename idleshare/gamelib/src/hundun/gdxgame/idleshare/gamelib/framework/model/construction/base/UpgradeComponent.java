@@ -14,42 +14,52 @@ import lombok.Setter;
  * Created on 2021/12/17
  */
 public class UpgradeComponent {
+
+    public static enum UpgradeState {
+        NO_UPGRADE,
+        HAS_NEXT_UPGRADE,
+        REACHED_MAX_UPGRADE_NO_TRANSFER,
+        REACHED_MAX_UPGRADE_HAS_TRANSFER;
+    }
+
     private final BaseConstruction construction;
 
     @Getter
     @Setter
     private ResourcePack upgradeCostPack;
-    
-    public static enum UpgradeState {
-        NO_UPGRADE,
-        HAS_NEXT_UPGRADE,
-        REACHED_MAX_UPGRADE,
-        ;
-    }
+    @Getter
+    @Setter
+    private ResourcePack transformCostPack;
+    @Getter
+    @Setter
+    private String transformConstructionPrototypeId;
+
     @Getter
     private UpgradeState upgradeState;
 
-    
+
     /**
      * 影响升级后下一级费用，详见具体公式
      */
     private static final double upgradeCostLevelUpArg = 1.05;
     private static final BiFunction<Long, Integer, Long> DEFAULT_CALCULATE_COST_FUNCTION = (baseValue, level) -> {
-        return (long)(
+        return (long) (
                 baseValue
-                * (1 + 1 * level)
-                * Math.pow(upgradeCostLevelUpArg, level)
-                );
+                        * (1 + 1 * level)
+                        * Math.pow(upgradeCostLevelUpArg, level)
+        );
     };
     private BiFunction<Long, Integer, Long> calculateCostFunction = DEFAULT_CALCULATE_COST_FUNCTION;
+
     // ------ replace-lombok ------
     public BiFunction<Long, Integer, Long> getCalculateCostFunction() {
         return calculateCostFunction;
     }
+
     public void setCalculateCostFunction(BiFunction<Long, Integer, Long> calculateCostFunction) {
         this.calculateCostFunction = calculateCostFunction;
     }
-    
+
     public UpgradeComponent(BaseConstruction construction) {
         super();
         this.construction = construction;
@@ -62,40 +72,87 @@ public class UpgradeComponent {
             upgradeState = UpgradeState.HAS_NEXT_UPGRADE;
             upgradeCostPack.setDescriptionStart(construction.descriptionPackage.getUpgradeCostDescriptionStart());
         }
+        if (transformCostPack != null) {
+            transformCostPack.setDescriptionStart(construction.descriptionPackage.getTransformCostDescriptionStart());
+        }
     }
 
-    public void updateModifiedValues(boolean reachMaxLevel) {
+    public void updateModifiedValues() {
+        Boolean reachMaxLevel = construction.levelComponent.isReachMaxLevel();
         if (upgradeCostPack != null) {
             if (reachMaxLevel) {
-                upgradeState = UpgradeState.REACHED_MAX_UPGRADE;
                 this.upgradeCostPack.setModifiedValues(null);
                 this.upgradeCostPack.setModifiedValuesDescription(null);
+                if (transformCostPack != null) {
+                    upgradeState = UpgradeState.REACHED_MAX_UPGRADE_HAS_TRANSFER;
+
+                    this.transformCostPack.setModifiedValues(transformCostPack.getBaseValues());
+                    this.transformCostPack.setModifiedValuesDescription(ResourcePack.toDescription(this.transformCostPack.getModifiedValues()));
+                } else {
+                    upgradeState = UpgradeState.REACHED_MAX_UPGRADE_NO_TRANSFER;
+                }
             } else {
                 this.upgradeCostPack.setModifiedValues(
                         upgradeCostPack.getBaseValues().stream()
-                            .map(pair -> {
+                                .map(pair -> {
                                     long newAmout = calculateCostFunction.apply(pair.getAmount(), construction.saveData.getLevel());
                                     return new ResourcePair(pair.getType(), newAmout);
                                 })
-                            .collect(Collectors.toList())
+                                .collect(Collectors.toList())
                 );
-                this.upgradeCostPack.setModifiedValuesDescription(
-                        upgradeCostPack.getModifiedValues().stream()
-                        .map(pair -> pair.getType() + "x" + pair.getAmount())
-                        .collect(Collectors.joining(", "))
-                        + "; "
-                );
+                this.upgradeCostPack.setModifiedValuesDescription(ResourcePack.toDescription(this.upgradeCostPack.getModifiedValues()));
             }
         }
     }
 
     protected boolean canUpgrade() {
-        if (construction.saveData.getLevel() >= construction.maxLevel || upgradeCostPack == null) {
+        if (construction.levelComponent.isReachMaxLevel() || upgradeCostPack == null) {
+            return false;
+        }
+        if (!construction.proficiencyComponent.isMaxProficiency()) {
             return false;
         }
 
         List<ResourcePair> compareTarget = upgradeCostPack.getModifiedValues();
-        return construction.getGameContext().getStorageManager().isEnough(compareTarget);
+        return construction.getGameplayContext().getStorageManager().isEnough(compareTarget);
     }
 
+    public void doUpgrade()
+    {
+        List<ResourcePair> upgradeCostRule = this.upgradeCostPack.getModifiedValues();
+        construction.gameplayContext.getStorageManager().modifyAllResourceNum(upgradeCostRule, false);
+        construction.saveData.setLevel((construction.saveData.getLevel() + 1));
+        if (!construction.levelComponent.isWorkingLevelChangable())
+        {
+            construction.saveData.setWorkingLevel((construction.saveData.getLevel()));
+        }
+        construction.proficiencyComponent.afterUpgrade();
+        construction.updateModifiedValues();
+        construction.gameplayContext.getEventManager().notifyConstructionCollectionChange();
+    }
+
+    public Boolean canTransfer()
+    {
+        if (!construction.levelComponent.isReachMaxLevel() || transformCostPack == null)
+        {
+            return false;
+        }
+        if (!construction.proficiencyComponent.isMaxProficiency())
+        {
+            return false;
+        }
+
+        List<ResourcePair> compareTarget = transformCostPack.getModifiedValues();
+        return construction.gameplayContext.getStorageManager().isEnough(compareTarget);
+    }
+
+    public void doTransfer()
+    {
+        if (construction.upgradeComponent.transformCostPack != null)
+        {
+            construction.gameplayContext.getStorageManager().modifyAllResourceNum(construction.upgradeComponent.transformCostPack.getModifiedValues(), false);
+        }
+        construction.gameplayContext.getConstructionManager().addToRemoveQueue(construction);
+        construction.gameplayContext.getConstructionManager().addToCreateQueue(construction.upgradeComponent.transformConstructionPrototypeId, construction.getPosition());
+    }
 }

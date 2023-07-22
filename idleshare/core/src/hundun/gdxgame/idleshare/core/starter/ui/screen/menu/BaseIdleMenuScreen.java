@@ -42,9 +42,8 @@ public abstract class BaseIdleMenuScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
     TextButton buttonContinueGame;
     TextButton buttonNewGame;
     TextButton buttonIntoSettingScreen;
+    LanguageSwitchBoard<T_GAME, T_SAVE> languageSwitchBoardVM;
 
-
-    
     public BaseIdleMenuScreen(T_GAME game,
             InputListener buttonContinueGameInputListener, 
             InputListener buttonNewGameInputListener) {
@@ -92,14 +91,15 @@ public abstract class BaseIdleMenuScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
             .fillY()
             .padTop(10)
             .row();
-        
-        uiRootTable.add(new LanguageSwitchBoard<>(this, 
-                Language.values(), 
+
+        this.languageSwitchBoardVM = new LanguageSwitchBoard<>(this,
+                Language.values(),
                 game.getIdleGameplayExport().getLanguage(),
                 memuScreenTexts.get(3),
                 memuScreenTexts.get(4),
-                it -> game.getIdleGameplayExport().setLanguage(it))
-                )
+                it -> game.getIdleGameplayExport().setLanguage(it)
+        );
+        uiRootTable.add(languageSwitchBoardVM)
                 .padTop(10);
         
         if (game.debugMode) {

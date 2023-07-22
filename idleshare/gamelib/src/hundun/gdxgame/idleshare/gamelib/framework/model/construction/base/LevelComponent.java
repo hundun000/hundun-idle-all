@@ -13,7 +13,10 @@ public class LevelComponent {
 
     @Getter
     private final boolean workingLevelChangable;
-
+    public static final int DEFAULT_MIN_WORKING_LEVEL = 0;
+    public int minWorkingLevel = DEFAULT_MIN_WORKING_LEVEL;
+    public static final int DEFAULT_MAX_LEVEL = 5;
+    public int maxLevel = DEFAULT_MAX_LEVEL;
     public LevelComponent(BaseConstruction construction, boolean workingLevelChangable) {
         super();
         this.construction = construction;
@@ -21,7 +24,7 @@ public class LevelComponent {
     }
 
     public String getWorkingLevelDescroption() {
-        boolean reachMaxLevel = construction.getSaveData().getLevel() == construction.getMaxLevel();
+        boolean reachMaxLevel = construction.getSaveData().getLevel() == this.maxLevel;
         return construction.descriptionPackage.getLevelDescroptionProvider().provide(construction.saveData.getLevel(), construction.saveData.getWorkingLevel(), reachMaxLevel);
     }
 
@@ -30,7 +33,7 @@ public class LevelComponent {
             return false;
         }
         int next = construction.saveData.getWorkingLevel() + delta;
-        if (next > construction.saveData.getLevel() || next < 0) {
+        if (next > construction.saveData.getLevel() || next < minWorkingLevel) {
             return false;
         }
         return true;
@@ -40,10 +43,15 @@ public class LevelComponent {
         if (canChangeWorkingLevel(delta)) {
             construction.saveData.setWorkingLevel(construction.saveData.getWorkingLevel() + delta);
             construction.updateModifiedValues();
-            construction.getGameContext().getFrontEnd().log(construction.name, "changeWorkingLevel delta = " + delta + ", success to " + construction.saveData.getWorkingLevel());
+            construction.getGameplayContext().getFrontEnd().log(construction.name, "changeWorkingLevel delta = " + delta + ", success to " + construction.saveData.getWorkingLevel());
         } else {
-            construction.getGameContext().getFrontEnd().log(construction.name, "changeWorkingLevel delta = " + delta + ", but cannot!");
+            construction.getGameplayContext().getFrontEnd().log(construction.name, "changeWorkingLevel delta = " + delta + ", but cannot!");
         }
+    }
+
+    public boolean isReachMaxLevel()
+    {
+        return construction.saveData.getLevel() >= this.maxLevel;
     }
 
 }

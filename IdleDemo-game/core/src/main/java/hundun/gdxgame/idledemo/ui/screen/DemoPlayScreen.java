@@ -1,35 +1,16 @@
 package hundun.gdxgame.idledemo.ui.screen;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.logic.GameArea;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.entity.GameEntityFactory;
-import hundun.gdxgame.idleshare.core.starter.ui.component.AchievementMaskBoard;
-import hundun.gdxgame.idleshare.core.starter.ui.component.BackgroundImageBox;
-import hundun.gdxgame.idleshare.core.starter.ui.component.GameAreaControlBoard;
-import hundun.gdxgame.idleshare.core.starter.ui.component.GameImageDrawer;
-import hundun.gdxgame.idleshare.core.starter.ui.component.PopupInfoBoard;
-import hundun.gdxgame.idleshare.core.starter.ui.component.StorageInfoBoard;
-import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.fixed.FixedConstructionControlBoard;
-import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.scroll.ScrollConstructionControlBoard;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
-import hundun.gdxgame.idleshare.gamelib.framework.model.AchievementPrototype;
-import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
 /**
  * @author hundun
