@@ -5,14 +5,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementInfoPackage;
 
 import java.util.List;
 
 public class FirstLockedAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table implements IGameAreaChangeListener {
 
-    BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
+    BaseIdleScreen<T_GAME, T_SAVE> parent;
 
     Label nameStartLabel;
     Label nameValueLabel;
@@ -22,7 +22,7 @@ public class FirstLockedAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>, 
 
     List<String> texts;
 
-    public FirstLockedAchievementBoardVM(BaseIdlePlayScreen<T_GAME, T_SAVE> parent)
+    public FirstLockedAchievementBoardVM(BaseIdleScreen<T_GAME, T_SAVE> parent)
     {
         this.parent = parent;
         this.texts = parent.getGame().getIdleGameplayExport().getGameDictionary()

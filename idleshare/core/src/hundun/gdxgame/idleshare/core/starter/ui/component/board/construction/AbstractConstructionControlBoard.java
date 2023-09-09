@@ -16,14 +16,14 @@ import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.ConstructionControlNode;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollectionListener;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
 public abstract class AbstractConstructionControlBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table
         implements ILogicFrameListener, IGameAreaChangeListener, IConstructionCollectionListener {
-    protected BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
+    protected BaseIdleScreen<T_GAME, T_SAVE> parent;
     protected ISecondaryInfoBoardCallback<BaseConstruction> callback;
     /**
      * 显示在当前screen的Construction集合。以ConstructionView形式存在。
@@ -32,7 +32,7 @@ public abstract class AbstractConstructionControlBoard<T_GAME extends BaseIdleGa
 
 
 
-    public AbstractConstructionControlBoard(BaseIdlePlayScreen<T_GAME, T_SAVE> parent, ISecondaryInfoBoardCallback<BaseConstruction> callback) {
+    public AbstractConstructionControlBoard(BaseIdleScreen<T_GAME, T_SAVE> parent, ISecondaryInfoBoardCallback<BaseConstruction> callback) {
         super();
         this.parent = parent;
         this.callback = callback;

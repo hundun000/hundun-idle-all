@@ -12,7 +12,7 @@ import hundun.gdxgame.idledemo.ui.screen.DemoMenuScreen;
 import hundun.gdxgame.idledemo.ui.screen.DemoScreenContext;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.framework.model.manager.AudioPlayManager;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.TextFormatTool;
 
@@ -53,7 +53,7 @@ public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
                 new DemoGameDictionary(),
                 new DemoBuiltinConstructionsLoader(),
                 new DemoAchievementLoader(),
-                BaseIdlePlayScreen.LOGIC_FRAME_PER_SECOND,
+                BaseIdleScreen.LOGIC_FRAME_PER_SECOND,
                 childGameConfig
                 );
         this.getSaveHandler().registerSubHandler(idleGameplayExport);

@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 
 
 /**
@@ -19,12 +19,12 @@ import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
  */
 public class GameAreaControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Image {
 
-    BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
+    BaseIdleScreen<T_GAME, T_SAVE> parent;
     //Image image;
     Label label;
     String gameArea;
 
-    public GameAreaControlNode(BaseIdlePlayScreen<T_GAME, T_SAVE> parent, String gameArea, boolean longVersion) {
+    public GameAreaControlNode(BaseIdleScreen<T_GAME, T_SAVE> parent, String gameArea, boolean longVersion) {
         this.parent = parent;
         this.gameArea = gameArea;
 

@@ -10,7 +10,7 @@ import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.AbstractConstructionControlBoard;
 import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.ConstructionControlNode;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
@@ -36,7 +36,7 @@ public class ScrollConstructionControlBoard<T_GAME extends BaseIdleGame<T_SAVE>,
 
 
 
-    public ScrollConstructionControlBoard(BaseIdlePlayScreen<T_GAME, T_SAVE> parent, ISecondaryInfoBoardCallback<BaseConstruction> callback) {
+    public ScrollConstructionControlBoard(BaseIdleScreen<T_GAME, T_SAVE> parent, ISecondaryInfoBoardCallback<BaseConstruction> callback) {
         super(parent, callback);
 
         this.LR_BUTTON_HEIGHT = parent.getLayoutConst().CONSTRUCION_BOARD_ROOT_BOX_HEIGHT;

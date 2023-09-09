@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.Align;
 
 import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
@@ -24,7 +24,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseCo
  * Created on 2021/11/05
  */
 public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table {
-    BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
+    BaseIdleScreen<T_GAME, T_SAVE> parent;
     ISecondaryInfoBoardCallback<BaseConstruction> callback;
     BaseConstruction model;
     Label constructionNameLabel;
@@ -45,7 +45,7 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
 
 
     public ConstructionControlNode(
-            BaseIdlePlayScreen<T_GAME, T_SAVE> parent,
+            BaseIdleScreen<T_GAME, T_SAVE> parent,
             ISecondaryInfoBoardCallback<BaseConstruction> callback,
             int index, PlayScreenLayoutConst playScreenLayoutConst) {
         super();

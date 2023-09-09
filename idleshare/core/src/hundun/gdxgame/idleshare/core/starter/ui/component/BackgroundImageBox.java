@@ -15,13 +15,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 
 public class BackgroundImageBox<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Container<Image> implements IGameAreaChangeListener{
-    BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
+    BaseIdleScreen<T_GAME, T_SAVE> parent;
     Map<String, Drawable> imageMap = new HashMap<>();
 
-    public BackgroundImageBox(BaseIdlePlayScreen<T_GAME, T_SAVE> parent) {
+    public BackgroundImageBox(BaseIdleScreen<T_GAME, T_SAVE> parent) {
         this.parent = parent;
         this.setFillParent(true);
         //this.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

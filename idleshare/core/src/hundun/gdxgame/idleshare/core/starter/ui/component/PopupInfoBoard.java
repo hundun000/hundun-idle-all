@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.UpgradeComponent.UpgradeState;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePack;
@@ -20,9 +20,9 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
  */
 public class PopupInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table {
 
-    BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
+    BaseIdleScreen<T_GAME, T_SAVE> parent;
 
-    public PopupInfoBoard(BaseIdlePlayScreen<T_GAME, T_SAVE> parent) {
+    public PopupInfoBoard(BaseIdleScreen<T_GAME, T_SAVE> parent) {
         //super("GUIDE_TEXT", parent.game.getButtonSkin());
         this.parent = parent;
         //this.setBounds(5, GameAreaControlBoard.Y, GameAreaControlBoard.X - 10, 120);

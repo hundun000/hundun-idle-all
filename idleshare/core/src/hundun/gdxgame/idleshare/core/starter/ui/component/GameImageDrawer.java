@@ -9,7 +9,7 @@ import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.framework.model.entity.BaseGameEntityFactory;
 import hundun.gdxgame.idleshare.core.framework.model.entity.GameEntity;
 import hundun.gdxgame.idleshare.core.framework.model.manager.GameEntityManager;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
 
 /**
@@ -19,7 +19,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChan
  */
 public class GameImageDrawer<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> implements IOneFrameResourceChangeListener {
 
-    BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
+    BaseIdleScreen<T_GAME, T_SAVE> parent;
     GameImageDrawerOwner owner;
     BaseGameEntityFactory gameEntityFactory;
 
@@ -28,7 +28,7 @@ public class GameImageDrawer<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> implem
     }
 
 
-    public GameImageDrawer(BaseIdlePlayScreen<T_GAME, T_SAVE> parent, GameImageDrawerOwner owner) {
+    public GameImageDrawer(BaseIdleScreen<T_GAME, T_SAVE> parent, GameImageDrawerOwner owner) {
         this.parent = parent;
         this.owner = owner;
         

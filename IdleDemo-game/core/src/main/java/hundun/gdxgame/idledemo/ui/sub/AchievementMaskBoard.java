@@ -1,4 +1,4 @@
-package hundun.gdxgame.idleshare.core.starter.ui.component;
+package hundun.gdxgame.idledemo.ui.sub;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -13,8 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import com.badlogic.gdx.utils.Null;
+import hundun.gdxgame.idledemo.DemoIdleGame;
+import hundun.gdxgame.idledemo.ui.screen.BaseDemoPlayScreen;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
+import hundun.gdxgame.idleshare.core.starter.ui.component.ResourceAmountPairNode;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
 
@@ -24,14 +27,14 @@ import java.util.List;
  * @author hundun
  * Created on 2021/11/12
  */
-public class AchievementMaskBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table {
+public class AchievementMaskBoard extends Table {
 
-    BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
+    BaseDemoPlayScreen parent;
 
 
     List<String> texts;
 
-    public AchievementMaskBoard(BaseIdlePlayScreen<T_GAME, T_SAVE> parent, List<String> texts) {
+    public AchievementMaskBoard(BaseDemoPlayScreen parent, List<String> texts) {
         this.parent = parent;
         this.texts = texts;
         this.setBackground(new SpriteDrawable(new Sprite(parent.getGame().getTextureManager().getAchievementMaskBoardTexture())));
@@ -51,7 +54,7 @@ public class AchievementMaskBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> e
             Label rewardLabel = new Label(texts.get(3), parent.getGame().getMainSkin());
             this.add(rewardLabel).center().row();
             for (ResourcePair entry : prototype.getAwardResourceMap()) {
-                ResourceAmountPairNode<T_GAME> node = new ResourceAmountPairNode<>(parent.getGame(), entry.getType());
+                ResourceAmountPairNode<DemoIdleGame> node = new ResourceAmountPairNode<>(parent.getGame(), entry.getType());
                 node.update(entry.getAmount());
                 this.add(node)
                         .height(parent.getLayoutConst().RESOURCE_AMOUNT_PAIR_NODE_HEIGHT)

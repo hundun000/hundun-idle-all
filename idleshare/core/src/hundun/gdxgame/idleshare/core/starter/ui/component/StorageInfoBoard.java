@@ -8,7 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.util.Utils;
 
@@ -25,7 +26,7 @@ public class StorageInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> exten
 
     List<String> shownOrders;
     Set<String> shownTypes = new HashSet<>();
-    BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
+    BaseIdleScreen<T_GAME, T_SAVE> parent;
 
     List<StorageResourceAmountPairNode<T_GAME>> nodes = new ArrayList<>();
 
@@ -37,7 +38,7 @@ public class StorageInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> exten
     //Label mainLabel;
 
 
-    public StorageInfoBoard(BaseIdlePlayScreen<T_GAME, T_SAVE> parent) {
+    public StorageInfoBoard(BaseIdleScreen<T_GAME, T_SAVE> parent) {
         this.parent = parent;
         this.setBackground(DrawableFactory.createBorderBoard(
                 25,
@@ -87,7 +88,7 @@ public class StorageInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> exten
             if (deltaHistoryMap.containsKey(node.getResourceType()))
             {
                 historySum = deltaHistoryMap.get(node.getResourceType()).stream()
-                        .collect(Utils.lastN(BaseIdlePlayScreen.LOGIC_FRAME_PER_SECOND))
+                        .collect(Utils.lastN(BaseIdleScreen.LOGIC_FRAME_PER_SECOND))
                         .stream()
                         .mapToLong(it -> it)
                         .sum()

@@ -1,5 +1,6 @@
 package hundun.gdxgame.idledemo.ui.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -11,15 +12,21 @@ import hundun.gdxgame.idledemo.logic.GameArea;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.sub.FirstLockedAchievementBoardVM;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
+import hundun.gdxgame.idledemo.ui.sub.AchievementMaskBoard;
 import hundun.gdxgame.idleshare.core.starter.ui.component.GameAreaControlBoard;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
+import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementUnlockCallback;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
 
 import java.util.Map;
 
-public abstract class BaseDemoPlayScreen extends BaseIdlePlayScreen<DemoIdleGame, RootSaveData> implements IGameAreaChangeListener {
+public abstract class BaseDemoPlayScreen extends BaseIdleScreen<DemoIdleGame, RootSaveData>
+        implements IGameAreaChangeListener, IAchievementUnlockCallback
+{
 
     protected FirstLockedAchievementBoardVM<DemoIdleGame, RootSaveData> firstLockedAchievementBoardVM;
+    protected AchievementMaskBoard achievementMaskBoard;
 
     public BaseDemoPlayScreen(DemoIdleGame game) {
         super(game, customLayoutConst(game));
@@ -82,4 +89,41 @@ public abstract class BaseDemoPlayScreen extends BaseIdlePlayScreen<DemoIdleGame
     }
 
     public abstract void onDeskClicked(HexCellVM vm);
+
+    @Override
+    public void hideAchievementMaskBoard() {
+        game.getFrontend().log(this.getClass().getSimpleName(), "hideAchievementMaskBoard called");
+        achievementMaskBoard.setVisible(false);
+        Gdx.input.setInputProcessor(provideDefaultInputProcessor());
+        logicFrameHelper.setLogicFramePause(false);
+    }
+
+    @Override
+    public void showAchievementMaskBoard(AbstractAchievement prototype) {
+        if (this.hidden) {
+            return;
+        }
+        game.getFrontend().log(this.getClass().getSimpleName(), "onAchievementUnlock called");
+        achievementMaskBoard.setAchievementPrototype(prototype);
+        achievementMaskBoard.setVisible(true);
+        Gdx.input.setInputProcessor(popupUiStage);
+        logicFrameHelper.setLogicFramePause(true);
+    }
+
+    @Override
+    protected void lazyInitBackUiAndPopupUiContent() {
+        super.lazyInitBackUiAndPopupUiContent();
+
+
+        achievementMaskBoard = new AchievementMaskBoard(
+                this,
+                game.getIdleGameplayExport()
+                        .getGameplayContext()
+                        .getGameDictionary()
+                        .getAchievementTexts(game.getIdleGameplayExport().getLanguage())
+        );
+        popupUiStage.addActor(achievementMaskBoard);
+
+
+    }
 }

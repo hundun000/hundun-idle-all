@@ -8,7 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 
 /**
  * @author hundun
@@ -16,11 +17,11 @@ import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
  */
 public class GameAreaControlBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table implements IGameAreaChangeListener {
 
-    BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
+    BaseIdleScreen<T_GAME, T_SAVE> parent;
     Map<String, GameAreaControlNode<T_GAME, T_SAVE>> nodes = new LinkedHashMap<>();
 
 
-    public GameAreaControlBoard(BaseIdlePlayScreen<T_GAME, T_SAVE> parent) {
+    public GameAreaControlBoard(BaseIdleScreen<T_GAME, T_SAVE> parent) {
         super();
         this.parent = parent;
 //        this.setSize(

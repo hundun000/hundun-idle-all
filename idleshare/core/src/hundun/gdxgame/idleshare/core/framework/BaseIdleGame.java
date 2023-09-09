@@ -8,7 +8,7 @@ import hundun.gdxgame.corelib.base.BaseHundunGame;
 import hundun.gdxgame.idleshare.core.framework.model.manager.AbstractIdleScreenContext;
 import hundun.gdxgame.idleshare.core.framework.model.manager.AbstractTextureManager;
 import hundun.gdxgame.idleshare.core.framework.model.manager.AudioPlayManager;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport;
 import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;

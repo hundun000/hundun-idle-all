@@ -2,7 +2,7 @@ package hundun.gdxgame.idleshare.core.framework.model.entity;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
 
 /**
@@ -33,9 +33,9 @@ public abstract class BaseGameEntityFactory {
     protected int ROW_STABLE_INDEX_PADDING_Y = 0;
 
     protected PlayScreenLayoutConst layoutConst;
-    protected BaseIdlePlayScreen<?, ?> parent;
+    protected BaseIdleScreen<?, ?> parent;
 
-    public BaseGameEntityFactory(PlayScreenLayoutConst layoutConst, BaseIdlePlayScreen<?, ?> parent) {
+    public BaseGameEntityFactory(PlayScreenLayoutConst layoutConst, BaseIdleScreen<?, ?> parent) {
         this.layoutConst = layoutConst;
         this.parent = parent;
     }
