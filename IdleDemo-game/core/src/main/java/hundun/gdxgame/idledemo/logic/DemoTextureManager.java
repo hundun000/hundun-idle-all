@@ -61,7 +61,15 @@ public class DemoTextureManager extends AbstractTextureManager {
             gameAreaBackMap.put(GameArea.AREA_FOREST, regions[0][2]);
             //gameAreaBackMap.put(GameArea.AREA_WIN, regions[0][3]);
         }
-        
+        {
+            Texture texture = new Texture(Gdx.files.internal("CellIcons.png"));
+            TextureRegion[][] regions = TextureRegion.split(texture, 675, 733);
+            defaultAreaBack = regions[0][0];
+            constructionHexImageMap.put(ConstructionPrototypeId.COOKIE_CLICK_PROVIDER, regions[0][1]);
+            constructionHexImageMap.put(ConstructionPrototypeId.COOKIE_AUTO_PROVIDER, regions[0][2]);
+            constructionHexImageMap.put(ConstructionPrototypeId.COOKIE_AUTO_SELLER, regions[0][3]);
+            //gameAreaBackMap.put(GameArea.AREA_WIN, regions[0][3]);
+        }
     }
 
 }

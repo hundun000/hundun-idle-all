@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
@@ -54,7 +55,7 @@ public class ChessVM extends Table {
     public void updateUI(){
 
         this.mainLabel.setText(deskData.getId());
-        image.setDrawable(DrawableFactory.createAlphaBoard(1, 1, Color.GRAY, 0.8f));
+        image.setDrawable(new TextureRegionDrawable(game.getTextureManager().getConstructionHexImage(deskData.getPrototypeId())));
         Vector2 uiPosition = calculatePosition(deskData.getSaveData().getPosition().getX(), deskData.getSaveData().getPosition().getY());
         this.setBounds(
                 uiPosition.x,
@@ -66,9 +67,10 @@ public class ChessVM extends Table {
 
     private static Vector2 calculatePosition(int gridX, int gridY)
     {
+        float hexBaseSize = 100;
         Vector2 newposition = new Vector2(0, 0);
-        newposition.y += 0.75f * gridY;
-        newposition.x += Math.sqrt(3) / 2  * (gridX - (Math.abs(gridY) % 2) / 2.0f);
+        newposition.y += hexBaseSize * 0.75f * gridY;
+        newposition.x += hexBaseSize * Math.sqrt(3.0f) / 2  * (gridX - (Math.abs(gridY) % 2) / 2.0f);
         return newposition;
     }
 

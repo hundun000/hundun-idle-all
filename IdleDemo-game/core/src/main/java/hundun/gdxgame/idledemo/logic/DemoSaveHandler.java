@@ -37,21 +37,21 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
                                                 .prototypeId(ConstructionPrototypeId.COOKIE_CLICK_PROVIDER)
                                                 .level(0)
                                                 .workingLevel(0)
-                                                .position( new GridPosition(1, 1))
+                                                .position( new GridPosition(0, 0))
                                                 .build(),
                                         ConstructionPrototypeId.COOKIE_AUTO_PROVIDER,
                                         ConstructionSaveData.builder()
                                                 .prototypeId(ConstructionPrototypeId.COOKIE_AUTO_PROVIDER)
                                                 .level(1)
                                                 .workingLevel(1)
-                                                .position( new GridPosition(1, -1))
+                                                .position( new GridPosition(0, -1))
                                                 .build(),
                                         ConstructionPrototypeId.COOKIE_AUTO_SELLER,
                                         ConstructionSaveData.builder()
                                                 .prototypeId(ConstructionPrototypeId.COOKIE_AUTO_SELLER)
                                                 .level(1)
                                                 .workingLevel(0)
-                                                .position( new GridPosition(-1, 1))
+                                                .position( new GridPosition(-1, 0))
                                                 .build()
                                 )
 
