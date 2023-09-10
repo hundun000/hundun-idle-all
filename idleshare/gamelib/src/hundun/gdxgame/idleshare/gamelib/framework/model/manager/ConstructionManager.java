@@ -182,4 +182,10 @@ public class ConstructionManager implements ITileNodeMap<Void> {
     public ITileNode<Void> getValidNodeOrNull(GridPosition position) {
         return getConstructionAt(position);
     }
+
+    public List<AbstractConstructionPrototype> getAreaShownConstructionPrototypesOrEmpty(String gameArea) {
+        return areaControlableConstructionPrototypeVMPrototypeIds.get(gameArea).stream()
+                .map(it -> gameContext.getConstructionFactory().getPrototype(it))
+                .collect(Collectors.toList());
+    }
 }

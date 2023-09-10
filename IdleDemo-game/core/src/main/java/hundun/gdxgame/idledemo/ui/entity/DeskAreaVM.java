@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.idledemo.ui.screen.BaseDemoPlayScreen;
+import hundun.gdxgame.idledemo.ui.screen.ForestPlayScreen;
 import hundun.gdxgame.idleshare.core.framework.model.CameraDataPackage;
 
 import hundun.gdxgame.idleshare.core.framework.model.CameraGestureListener;
@@ -21,13 +22,13 @@ import java.util.Set;
 
 
 public class DeskAreaVM extends Table {
-    public BaseDemoPlayScreen screen;
+    public ForestPlayScreen screen;
     @Getter
     Map<String, ChessVM> nodes = new LinkedHashMap<>();
     @Getter
     CameraDataPackage cameraDataPackage;
 
-    public DeskAreaVM(BaseDemoPlayScreen screen) {
+    public DeskAreaVM(ForestPlayScreen screen) {
         this.screen = screen;
         this.cameraDataPackage = new CameraDataPackage();
 
@@ -60,7 +61,7 @@ public class DeskAreaVM extends Table {
 
         chessRuntimeDataList.forEach(deskData -> {
 
-            ChessVM actor = new ChessVM(this, deskData);
+            ChessVM actor = new ChessVM(screen, this, deskData);
             nodes.put(deskData.getId(), actor);
             actor.addListener(new DeskClickListener(screen, actor));
             this.addActor(actor);

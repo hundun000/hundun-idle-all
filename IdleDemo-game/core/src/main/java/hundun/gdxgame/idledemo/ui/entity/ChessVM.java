@@ -3,13 +3,16 @@ package hundun.gdxgame.idledemo.ui.entity;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.idledemo.DemoIdleGame;
+import hundun.gdxgame.idledemo.ui.screen.ForestPlayScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import lombok.Getter;
 
@@ -21,11 +24,12 @@ public class ChessVM extends Table {
     DeskAreaVM deskAreaVM;
     @Getter
     BaseConstruction deskData;
+    public ForestPlayScreen parent;
 
     Label mainLabel;
     Image image;
 
-    public ChessVM(DeskAreaVM deskAreaVM, BaseConstruction deskData) {
+    public ChessVM(ForestPlayScreen parent, DeskAreaVM deskAreaVM, BaseConstruction deskData) {
         this.game = deskAreaVM.screen.getGame();
         this.deskAreaVM = deskAreaVM;
         this.deskData = deskData;
