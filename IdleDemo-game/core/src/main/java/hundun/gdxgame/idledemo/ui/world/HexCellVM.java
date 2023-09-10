@@ -12,7 +12,9 @@ import lombok.Getter;
 
 
 public class HexCellVM extends Table {
-
+    static int HEX_SIZE = 128;
+    static float hexBaseSizeX = (float) (HEX_SIZE * Math.sqrt(3.0f) / 2);
+    static float hexBaseSizeY = (float) (HEX_SIZE * 0.75);
     DemoIdleGame game;
 
     HexAreaVM hexAreaVM;
@@ -33,8 +35,8 @@ public class HexCellVM extends Table {
         image.setBounds(
                 0,
                 0,
-                hexAreaVM.screen.getLayoutConst().DESK_WIDTH,
-                hexAreaVM.screen.getLayoutConst().DESK_HEIGHT
+                hexBaseSizeX,
+                HEX_SIZE
         );
         this.addActor(image);
         /*this.setBackground(new TextureRegionDrawable(new TextureRegion(TextureFactory.getSimpleBoardBackground(
@@ -58,17 +60,17 @@ public class HexCellVM extends Table {
         this.setBounds(
                 uiPosition.x,
                 uiPosition.y,
-                hexAreaVM.screen.getLayoutConst().DESK_WIDTH,
-                hexAreaVM.screen.getLayoutConst().DESK_HEIGHT
+                hexBaseSizeX,
+                HEX_SIZE
         );
     }
 
     private static Vector2 calculatePosition(int gridX, int gridY)
     {
-        float hexBaseSize = 100;
+
         Vector2 newposition = new Vector2(0, 0);
-        newposition.y += hexBaseSize * 0.75f * gridY;
-        newposition.x += hexBaseSize * Math.sqrt(3.0f) / 2  * (gridX - (Math.abs(gridY) % 2) / 2.0f);
+        newposition.y += hexBaseSizeY * gridY;
+        newposition.x += hexBaseSizeX * (gridX - (Math.abs(gridY) % 2) / 2.0f);
         return newposition;
     }
 
