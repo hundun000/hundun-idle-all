@@ -28,7 +28,7 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
         Map<String, ConstructionSaveData> map = new HashMap<>();
 
         map.put(
-                ConstructionPrototypeId.COOKIE_CLICK_PROVIDER + "_" + UUID.randomUUID().toString(),
+                ConstructionPrototypeId.COOKIE_CLICK_PROVIDER + "_" + UUID.randomUUID(),
                 ConstructionSaveData.builder()
                         .prototypeId(ConstructionPrototypeId.COOKIE_CLICK_PROVIDER)
                         .level(0)
@@ -37,7 +37,7 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
                         .build()
         );
         map.put(
-                ConstructionPrototypeId.COOKIE_AUTO_PROVIDER + "_" + UUID.randomUUID().toString(),
+                ConstructionPrototypeId.COOKIE_AUTO_PROVIDER + "_" + UUID.randomUUID(),
                 ConstructionSaveData.builder()
                         .prototypeId(ConstructionPrototypeId.COOKIE_AUTO_PROVIDER)
                         .level(1)
@@ -46,7 +46,7 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
                         .build()
         );
         map.put(
-                ConstructionPrototypeId.COOKIE_AUTO_SELLER + "_" + UUID.randomUUID().toString(),
+                ConstructionPrototypeId.COOKIE_AUTO_SELLER + "_" + UUID.randomUUID(),
                 ConstructionSaveData.builder()
                         .prototypeId(ConstructionPrototypeId.COOKIE_AUTO_SELLER)
                         .level(1)
@@ -61,7 +61,7 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
         );
         dirtGridPositions.forEach(it -> {
             map.put(
-                    ConstructionPrototypeId.EMPTY_CELL + "_" + UUID.randomUUID().toString(),
+                    ConstructionPrototypeId.EMPTY_CELL + "_" + UUID.randomUUID(),
                     ConstructionSaveData.builder()
                             .prototypeId(ConstructionPrototypeId.EMPTY_CELL)
                             .level(0)
@@ -70,10 +70,14 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
                             .build()
             );
         });
+
+        Map<String, Long> ownResources = new HashMap<>();
+        ownResources.put(ResourceType.COIN, 500L);
+
         return RootSaveData.builder()
                 .gameplaySave(GameplaySaveData.builder()
                         .constructionSaveDataMap(map)
-                        .ownResoueces(new HashMap<>())
+                        .ownResources(ownResources)
                         .unlockedResourceTypes(new HashSet<>())
                         .unlockedAchievementIds(new HashSet<>())
                         .build())

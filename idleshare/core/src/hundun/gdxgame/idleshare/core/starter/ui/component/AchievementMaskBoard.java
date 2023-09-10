@@ -2,11 +2,13 @@ package hundun.gdxgame.idleshare.core.starter.ui.component;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
@@ -32,9 +34,9 @@ public class AchievementMaskBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> e
         this.add(label).center().row();
 
         Button textButton = new TextButton("continue", parent.getGame().getMainSkin());
-        textButton.addListener(new ClickListener() {
+        textButton.addListener(new ChangeListener() {
             @Override
-            public void clicked(InputEvent event, float x, float y) {
+            public void changed(ChangeEvent event, Actor actor) {
                 parent.hideAchievementMaskBoard();
             }
         });

@@ -20,25 +20,25 @@ public class DemoAchievementLoader implements IBuiltinAchievementsLoader {
             case CN:
                 textMap.put(DemoAchievementId.STEP_1, JavaFeatureForGwt.listOf(
                 "NO.1",
-                        "拥有两个小森林。",
+                        "拥有2级AUTO_PROVIDER。",
                         "你完成了任务NO.1。"
                 ));
                 textMap.put(DemoAchievementId.STEP_2, JavaFeatureForGwt.listOf(
                     "NO.2",
-                            "拥有两个小工厂。",
+                            "拥有2级AUTO_SELLER。",
                             "你完成了任务NO.2。"
                 ));
                 break;
             default:
                 textMap.put(DemoAchievementId.STEP_1, JavaFeatureForGwt.listOf(
                 "NO.1",
-                        "Own two small forests.",
-                        "You completed Quest NO.1.\nThank you for your tireless efforts to protect our planet and make it a better place for future generations."
+                        "Own lv.2 AUTO_PROVIDER.",
+                        "You completed Quest NO.1."
                 ));
                 textMap.put(DemoAchievementId.STEP_2, JavaFeatureForGwt.listOf(
                     "NO.2",
-                            "Own two small factories.",
-                            "You completed Quest NO.2.\nWe are thrilled to see the positive impact on our local economy with more jobs and increased business opportunities. Thank you to all who have contributed to our economic success."
+                            "Own lv.2 AUTO_SELLER.",
+                            "You completed Quest NO.2."
                 ));
                 break;
         }
@@ -51,7 +51,7 @@ public class DemoAchievementLoader implements IBuiltinAchievementsLoader {
                 DemoAchievementId.STEP_1,
                 textMap,
                 JavaFeatureForGwt.mapOf(
-                        ConstructionPrototypeId.COOKIE_AUTO_SELLER, new SimpleEntry<>(1, 2)
+                        ConstructionPrototypeId.COOKIE_AUTO_PROVIDER, new SimpleEntry<>(1, 2)
                 )
         );
         OwnConstructionAchievement.Companion.quickAddOwnConstructionAchievement(

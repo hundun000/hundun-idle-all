@@ -28,12 +28,12 @@ public class IdleGameplayExport implements ILogicFrameListener,
         ISubSystemSettingSaveHandler<SystemSettingSaveData>  {
 
     @Getter
-    private IdleGameplayContext gameplayContext;
-    private IBuiltinConstructionsLoader builtinConstructionsLoader;
-    private IBuiltinAchievementsLoader builtinAchievementsLoader;
-    private ChildGameConfig childGameConfig;
+    private final IdleGameplayContext gameplayContext;
+    private final IBuiltinConstructionsLoader builtinConstructionsLoader;
+    private final IBuiltinAchievementsLoader builtinAchievementsLoader;
+    private final ChildGameConfig childGameConfig;
     @Getter
-    private IGameDictionary gameDictionary;
+    private final IGameDictionary gameDictionary;
     @Setter
     @Getter
     private Language language;
@@ -68,7 +68,7 @@ public class IdleGameplayExport implements ILogicFrameListener,
         });
 
         gameplayContext.getStorageManager().setUnlockedResourceTypes(gameplaySaveData.getUnlockedResourceTypes());
-        gameplayContext.getStorageManager().setOwnResoueces(gameplaySaveData.getOwnResoueces());
+        gameplayContext.getStorageManager().setOwnResoueces(gameplaySaveData.getOwnResources());
         gameplayContext.getAchievementManager().setUnlockedAchievementIds(gameplaySaveData.getUnlockedAchievementIds());
     }
 
@@ -83,7 +83,7 @@ public class IdleGameplayExport implements ILogicFrameListener,
                         ))
                 );
         gameplaySaveData.setUnlockedResourceTypes(gameplayContext.getStorageManager().getUnlockedResourceTypes());
-        gameplaySaveData.setOwnResoueces(gameplayContext.getStorageManager().getOwnResoueces());
+        gameplaySaveData.setOwnResources(gameplayContext.getStorageManager().getOwnResoueces());
         gameplaySaveData.setUnlockedAchievementIds(gameplayContext.getAchievementManager().getUnlockedAchievementIds());
     }
 

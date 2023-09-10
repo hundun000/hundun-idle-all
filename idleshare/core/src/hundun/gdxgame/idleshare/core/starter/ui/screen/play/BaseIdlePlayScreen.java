@@ -32,7 +32,7 @@ public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
     @Getter
     protected final PlayScreenLayoutConst layoutConst;
 
-
+    protected boolean hidden;
     // ====== need child lazy-init start ======
     protected AchievementMaskBoard<T_GAME, T_SAVE> achievementMaskBoard;
 
@@ -75,12 +75,15 @@ public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
     public void hideAchievementMaskBoard() {
         game.getFrontend().log(this.getClass().getSimpleName(), "hideAchievementMaskBoard called");
         achievementMaskBoard.setVisible(false);
-        Gdx.input.setInputProcessor(uiStage);
+        Gdx.input.setInputProcessor(provideDefaultInputProcessor());
         logicFrameHelper.setLogicFramePause(false);
     }
 
     @Override
     public void showAchievementMaskBoard(AbstractAchievement prototype) {
+        if (this.hidden) {
+            return;
+        }
         game.getFrontend().log(this.getClass().getSimpleName(), "onAchievementUnlock called");
         achievementMaskBoard.setAchievementPrototype(prototype);
         achievementMaskBoard.setVisible(true);
@@ -153,7 +156,15 @@ public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
 
         updateUIForShow();
 
+        this.hidden = false;
         Gdx.app.log(this.getClass().getSimpleName(), "show done");
+    }
+
+    @Override
+    public void hide() {
+        super.hide();
+
+        this.hidden = true;
     }
 
     protected abstract void updateUIForShow();
