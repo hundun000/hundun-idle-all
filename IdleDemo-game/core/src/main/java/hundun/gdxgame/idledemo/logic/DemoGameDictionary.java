@@ -50,6 +50,8 @@ public class DemoGameDictionary implements IGameDictionary {
                 switch (constructionId) {
                     case ConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
                         return "自动获得饼干";
+                    case ConstructionPrototypeId.EMPTY_CELL:
+                        return "空位置";
                     default:
                         return "[dic lost]";
                 }
@@ -57,6 +59,8 @@ public class DemoGameDictionary implements IGameDictionary {
                 switch (constructionId) {
                     case ConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
                         return "Auto gain some cookie";
+                    case ConstructionPrototypeId.EMPTY_CELL:
+                        return "Empty";
                     default:
                         return "[dic lost]";
                 }

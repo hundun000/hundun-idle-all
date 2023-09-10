@@ -1,6 +1,5 @@
 package hundun.gdxgame.idledemo;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +7,7 @@ import java.util.Map;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idledemo.logic.ConstructionPrototypeId;
 import hundun.gdxgame.idledemo.logic.GameArea;
+import hundun.gdxgame.idledemo.logic.DemoAchievementId;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.ui.screen.DemoMenuScreen;
 import hundun.gdxgame.idledemo.ui.screen.CookiePlayScreen;
@@ -34,7 +34,7 @@ public class DemoChildGameConfig extends ChildGameConfig {
 
         Map<String, List<String>> areaControlableConstructionPrototypeVMPrototypeIds = new HashMap<>();
         areaControlableConstructionPrototypeVMPrototypeIds.put(GameArea.AREA_FOREST, JavaFeatureForGwt.listOf(
-                ConstructionPrototypeId.DIRT
+                ConstructionPrototypeId.EMPTY_CELL
         ));
         this.setAreaControlableConstructionPrototypeVMPrototypeIds(areaControlableConstructionPrototypeVMPrototypeIds);
 
@@ -60,7 +60,10 @@ public class DemoChildGameConfig extends ChildGameConfig {
                 );
         this.setScreenIdToFilePathMap(screenIdToFilePathMap);
 
-        this.setAchievementPrototypeIds(new ArrayList<>());
+        this.setAchievementPrototypeIds(JavaFeatureForGwt.listOf(
+                DemoAchievementId.STEP_1,
+                DemoAchievementId.STEP_2
+        ));
     }
 
     

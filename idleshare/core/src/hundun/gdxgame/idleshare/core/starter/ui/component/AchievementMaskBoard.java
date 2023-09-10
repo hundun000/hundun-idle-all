@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
-import hundun.gdxgame.idleshare.gamelib.framework.model.AbstractAchievement;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
 
 /**
  * @author hundun

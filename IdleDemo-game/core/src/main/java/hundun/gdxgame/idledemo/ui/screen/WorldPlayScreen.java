@@ -8,8 +8,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.logic.GameArea;
 import hundun.gdxgame.idledemo.logic.ResourceType;
-import hundun.gdxgame.idledemo.ui.entity.HexCellVM;
-import hundun.gdxgame.idledemo.ui.entity.HexAreaVM;
+import hundun.gdxgame.idledemo.ui.world.HexCellVM;
+import hundun.gdxgame.idledemo.ui.world.HexAreaVM;
 import hundun.gdxgame.idledemo.ui.world.WorldCellDetailBoardVM;
 import hundun.gdxgame.idleshare.core.framework.model.CameraDataPackage;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
@@ -100,6 +100,6 @@ public class WorldPlayScreen extends BaseDemoPlayScreen {
 
     @Override
     public void onDeskClicked(HexCellVM vm) {
-        worldCellDetailBoardVM.updateDetail(vm.getDeskData());
+        worldCellDetailBoardVM.updateDetail(vm != null ? vm.getDeskData() : null);
     }
 }

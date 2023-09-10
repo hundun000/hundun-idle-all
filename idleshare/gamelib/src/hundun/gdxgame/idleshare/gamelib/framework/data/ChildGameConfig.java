@@ -3,7 +3,6 @@ package hundun.gdxgame.idleshare.gamelib.framework.data;
 import java.util.List;
 import java.util.Map;
 
-import hundun.gdxgame.idleshare.gamelib.framework.model.AbstractAchievement;
 import lombok.Getter;
 import lombok.Setter;
 

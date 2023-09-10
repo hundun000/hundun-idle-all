@@ -7,7 +7,7 @@ import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.logic.GameArea;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
-import hundun.gdxgame.idledemo.ui.entity.HexCellVM;
+import hundun.gdxgame.idledemo.ui.world.HexCellVM;
 import hundun.gdxgame.idledemo.ui.entity.GameEntityFactory;
 import hundun.gdxgame.idleshare.core.framework.model.manager.GameEntityManager;
 import hundun.gdxgame.idleshare.core.starter.ui.component.GameImageDrawer;

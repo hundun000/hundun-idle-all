@@ -10,7 +10,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollecti
 import hundun.gdxgame.idleshare.gamelib.framework.callback.INotificationBoardCallerAndCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IBuffChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
-import hundun.gdxgame.idleshare.gamelib.framework.model.AbstractAchievement;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
 
 
 

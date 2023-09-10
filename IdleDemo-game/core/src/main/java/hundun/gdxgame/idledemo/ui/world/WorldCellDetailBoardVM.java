@@ -33,7 +33,7 @@ public class WorldCellDetailBoardVM extends BaseCellDetailBoardVM implements ICo
 
         switch (construction.getPrototypeId())
         {
-            case ConstructionPrototypeId.DIRT:
+            case ConstructionPrototypeId.EMPTY_CELL:
                 updateAsConstructionPrototypeDetail(construction);
                 break;
             default:

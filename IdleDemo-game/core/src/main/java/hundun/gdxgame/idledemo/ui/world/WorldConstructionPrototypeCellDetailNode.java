@@ -70,9 +70,14 @@ public class WorldConstructionPrototypeCellDetailNode extends BaseCellDetailNode
             //Gdx.app.log("ConstructionView", model.getName() + " set to its view");
         }
         // ------ update text ------
-        constructionNameLabel.setText(model.getPrototypeId());
-
-
+        constructionNameLabel.setText(parent.getGame()
+                .getIdleGameplayExport()
+                .getGameplayContext()
+                .getGameDictionary()
+                .constructionPrototypeIdToDetailDescroptionConstPart(
+                        parent.getGame().getIdleGameplayExport().getLanguage(),
+                        model.getPrototypeId()
+                ));
     }
 
 

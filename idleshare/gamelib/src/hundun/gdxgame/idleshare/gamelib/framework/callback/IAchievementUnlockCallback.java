@@ -1,9 +1,6 @@
 package hundun.gdxgame.idleshare.gamelib.framework.callback;
 
-import hundun.gdxgame.idleshare.gamelib.framework.model.AbstractAchievement;
-
-import java.util.List;
-import java.util.Map;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
 
 /**
  * @author hundun

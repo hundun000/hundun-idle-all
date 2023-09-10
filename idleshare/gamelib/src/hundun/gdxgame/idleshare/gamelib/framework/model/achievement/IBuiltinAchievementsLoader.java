@@ -1,4 +1,4 @@
-package hundun.gdxgame.idleshare.gamelib.framework.model;
+package hundun.gdxgame.idleshare.gamelib.framework.model.achievement;
 
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 

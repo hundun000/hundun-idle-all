@@ -61,9 +61,9 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
         );
         dirtGridPositions.forEach(it -> {
             map.put(
-                    ConstructionPrototypeId.DIRT + "_" + UUID.randomUUID().toString(),
+                    ConstructionPrototypeId.EMPTY_CELL + "_" + UUID.randomUUID().toString(),
                     ConstructionSaveData.builder()
-                            .prototypeId(ConstructionPrototypeId.DIRT)
+                            .prototypeId(ConstructionPrototypeId.EMPTY_CELL)
                             .level(0)
                             .workingLevel(0)
                             .position(it)

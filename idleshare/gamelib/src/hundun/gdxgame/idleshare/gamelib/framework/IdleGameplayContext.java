@@ -1,18 +1,12 @@
 package hundun.gdxgame.idleshare.gamelib.framework;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import hundun.gdxgame.gamelib.base.IFrontend;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
-import hundun.gdxgame.idleshare.gamelib.framework.data.GameplaySaveData;
-import hundun.gdxgame.idleshare.gamelib.framework.model.AbstractAchievement;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.BaseConstructionFactory;
-import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
-import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackageFactory;
 import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager;
 import hundun.gdxgame.idleshare.gamelib.framework.model.manager.BuffManager;
 import hundun.gdxgame.idleshare.gamelib.framework.model.manager.ConstructionManager;
@@ -21,7 +15,6 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.manager.StorageManager;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.IGameDictionary;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @author hundun
@@ -42,8 +35,7 @@ public class IdleGameplayContext {
     final BaseConstructionFactory constructionFactory;
     final ConstructionManager constructionManager;
     final IGameDictionary gameDictionary;
-    final DescriptionPackageFactory descriptionPackageFactory;
-    
+
     public IdleGameplayContext(
             IFrontend frontEnd, 
             IGameDictionary gameDictionary,
@@ -59,8 +51,7 @@ public class IdleGameplayContext {
         this.constructionFactory = new BaseConstructionFactory();
         this.constructionManager = new ConstructionManager(this);
         this.gameDictionary = gameDictionary; 
-        this.descriptionPackageFactory = new DescriptionPackageFactory();
-        
+
     }
     
     public void allLazyInit(

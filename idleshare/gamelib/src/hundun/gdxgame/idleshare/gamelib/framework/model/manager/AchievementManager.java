@@ -12,8 +12,9 @@ import hundun.gdxgame.gamelib.starter.listerner.IGameStartListener;
 import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IBuffChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
-import hundun.gdxgame.idleshare.gamelib.framework.model.AbstractAchievement;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,6 +29,7 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
     Set<String> unlockedAchievementIds = new HashSet<>();
 
     @AllArgsConstructor
+    @Getter
     public static class AchievementInfoPackage
     {
         AbstractAchievement firstLockedAchievement;
@@ -62,7 +64,8 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
     }
 
     public void addPrototype(AbstractAchievement prototype) {
-        prototypes.put(prototype.getName(), prototype);
+        prototypes.put(prototype.getId(), prototype);
+        prototype.lazyInitDescription(gameContext);
     }
 
     private boolean checkRequiredResources(Map<String, Integer> requiredResources) {
