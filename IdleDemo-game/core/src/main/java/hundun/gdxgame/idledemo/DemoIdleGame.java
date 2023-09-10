@@ -1,8 +1,6 @@
 package hundun.gdxgame.idledemo;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -16,12 +14,6 @@ import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.framework.model.manager.AudioPlayManager;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
 import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport;
-import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
-import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
-import hundun.gdxgame.idleshare.gamelib.framework.data.GameplaySaveData;
-import hundun.gdxgame.idleshare.gamelib.framework.model.construction.BaseConstructionFactory;
-import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
-import hundun.gdxgame.idleshare.gamelib.framework.model.manager.EventManager;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.TextFormatTool;
 
 
@@ -60,7 +52,7 @@ public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
                 frontend,
                 new DemoGameDictionary(),
                 new DemoBuiltinConstructionsLoader(),
-                new IdleForestAchievementLoader(),
+                new DemoAchievementLoader(),
                 BaseIdlePlayScreen.LOGIC_FRAME_PER_SECOND,
                 childGameConfig
                 );

@@ -1,8 +1,7 @@
 package hundun.gdxgame.idledemo.ui.world;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import hundun.gdxgame.idledemo.logic.ConstructionPrototypeId;
-import hundun.gdxgame.idledemo.ui.screen.ForestPlayScreen;
+import hundun.gdxgame.idledemo.ui.screen.WorldPlayScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollectionListener;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
@@ -17,7 +16,7 @@ public class WorldCellDetailBoardVM extends BaseCellDetailBoardVM implements ICo
     public BaseConstruction data;
 
 
-    public WorldCellDetailBoardVM(ForestPlayScreen parent)
+    public WorldCellDetailBoardVM(WorldPlayScreen parent)
     {
         super.postPrefabInitialization(parent);
         updateDetail(null);
@@ -53,9 +52,8 @@ public class WorldCellDetailBoardVM extends BaseCellDetailBoardVM implements ICo
         this.clearChildren();
         contents.clear();
 
-        CellDetailInnerBoardVM innerBoardVM = new CellDetailInnerBoardVM();
-        innerBoardVM.postPrefabInitialization(parent);
-        innerBoardVM.update(construction, construction.getSaveData().getPosition());
+        WorldConstructionInstanceCellDetailNode innerBoardVM = new WorldConstructionInstanceCellDetailNode(parent);
+        innerBoardVM.updateAsConstruction(construction, construction.getSaveData().getPosition());
         this.add(innerBoardVM);
         contents.add(innerBoardVM);
 
@@ -72,9 +70,8 @@ public class WorldCellDetailBoardVM extends BaseCellDetailBoardVM implements ICo
                 .getAreaShownConstructionPrototypesOrEmpty(parent.getArea());
 
         constructionPrototypes.forEach(constructionPrototype -> {
-                CellDetailInnerBoardVM innerBoardVM = new CellDetailInnerBoardVM();
-                innerBoardVM.postPrefabInitialization(parent);
-                innerBoardVM.update(constructionPrototype, construction.getSaveData().getPosition());
+            WorldConstructionPrototypeCellDetailNode innerBoardVM = new WorldConstructionPrototypeCellDetailNode(parent);
+                innerBoardVM.updateAsConstructionPrototype(constructionPrototype, construction.getSaveData().getPosition());
                 this.add(innerBoardVM);
                 contents.add(innerBoardVM);
         });

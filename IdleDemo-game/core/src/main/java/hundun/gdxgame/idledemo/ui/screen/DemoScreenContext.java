@@ -12,7 +12,7 @@ public class DemoScreenContext extends AbstractIdleScreenContext<DemoIdleGame, R
 
     DemoMenuScreen menuScreen;
     CookiePlayScreen cookiePlayScreen;
-    ForestPlayScreen forestPlayScreen;
+    WorldPlayScreen worldPlayScreen;
     
     public DemoScreenContext(DemoIdleGame game) {
         super(game);
@@ -22,11 +22,11 @@ public class DemoScreenContext extends AbstractIdleScreenContext<DemoIdleGame, R
     public void lazyInit() {
         this.menuScreen = new DemoMenuScreen(game);
         this.cookiePlayScreen = new CookiePlayScreen(game);
-        this.forestPlayScreen = new ForestPlayScreen(game);
+        this.worldPlayScreen = new WorldPlayScreen(game);
 
         game.getScreenManager().addScreen(menuScreen.getClass().getSimpleName(), menuScreen);
         game.getScreenManager().addScreen(cookiePlayScreen.getClass().getSimpleName(), cookiePlayScreen);
-        game.getScreenManager().addScreen(forestPlayScreen.getClass().getSimpleName(), forestPlayScreen);
+        game.getScreenManager().addScreen(worldPlayScreen.getClass().getSimpleName(), worldPlayScreen);
     }
 
 }

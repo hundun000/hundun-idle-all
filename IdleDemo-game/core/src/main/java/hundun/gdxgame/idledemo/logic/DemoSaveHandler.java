@@ -1,7 +1,6 @@
 package hundun.gdxgame.idledemo.logic;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 import hundun.gdxgame.gamelib.base.IFrontend;
 import hundun.gdxgame.gamelib.base.save.ISaveTool;
@@ -26,36 +25,54 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
 
     @Override
     protected RootSaveData genereateStarterRootSaveData() {
+        Map<String, ConstructionSaveData> map = new HashMap<>();
 
-
+        map.put(
+                ConstructionPrototypeId.COOKIE_CLICK_PROVIDER + "_" + UUID.randomUUID().toString(),
+                ConstructionSaveData.builder()
+                        .prototypeId(ConstructionPrototypeId.COOKIE_CLICK_PROVIDER)
+                        .level(0)
+                        .workingLevel(0)
+                        .position( new GridPosition(0, 0))
+                        .build()
+        );
+        map.put(
+                ConstructionPrototypeId.COOKIE_AUTO_PROVIDER + "_" + UUID.randomUUID().toString(),
+                ConstructionSaveData.builder()
+                        .prototypeId(ConstructionPrototypeId.COOKIE_AUTO_PROVIDER)
+                        .level(1)
+                        .workingLevel(1)
+                        .position( new GridPosition(0, 1))
+                        .build()
+        );
+        map.put(
+                ConstructionPrototypeId.COOKIE_AUTO_SELLER + "_" + UUID.randomUUID().toString(),
+                ConstructionSaveData.builder()
+                        .prototypeId(ConstructionPrototypeId.COOKIE_AUTO_SELLER)
+                        .level(1)
+                        .workingLevel(0)
+                        .position( new GridPosition(1, 0))
+                        .build()
+        );
+        List<GridPosition> dirtGridPositions = JavaFeatureForGwt.listOf(
+                new GridPosition(-1, 0),
+                new GridPosition(0, -1),
+                new GridPosition(-1, -1)
+        );
+        dirtGridPositions.forEach(it -> {
+            map.put(
+                    ConstructionPrototypeId.DIRT + "_" + UUID.randomUUID().toString(),
+                    ConstructionSaveData.builder()
+                            .prototypeId(ConstructionPrototypeId.DIRT)
+                            .level(0)
+                            .workingLevel(0)
+                            .position(it)
+                            .build()
+            );
+        });
         return RootSaveData.builder()
                 .gameplaySave(GameplaySaveData.builder()
-                        .constructionSaveDataMap(
-                                JavaFeatureForGwt.mapOf(
-                                        ConstructionPrototypeId.COOKIE_CLICK_PROVIDER,
-                                        ConstructionSaveData.builder()
-                                                .prototypeId(ConstructionPrototypeId.COOKIE_CLICK_PROVIDER)
-                                                .level(0)
-                                                .workingLevel(0)
-                                                .position( new GridPosition(0, 0))
-                                                .build(),
-                                        ConstructionPrototypeId.COOKIE_AUTO_PROVIDER,
-                                        ConstructionSaveData.builder()
-                                                .prototypeId(ConstructionPrototypeId.COOKIE_AUTO_PROVIDER)
-                                                .level(1)
-                                                .workingLevel(1)
-                                                .position( new GridPosition(0, -1))
-                                                .build(),
-                                        ConstructionPrototypeId.COOKIE_AUTO_SELLER,
-                                        ConstructionSaveData.builder()
-                                                .prototypeId(ConstructionPrototypeId.COOKIE_AUTO_SELLER)
-                                                .level(1)
-                                                .workingLevel(0)
-                                                .position( new GridPosition(-1, 0))
-                                                .build()
-                                )
-
-                        )
+                        .constructionSaveDataMap(map)
                         .ownResoueces(new HashMap<>())
                         .unlockedResourceTypes(new HashSet<>())
                         .unlockedAchievementIds(new HashSet<>())

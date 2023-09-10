@@ -8,16 +8,11 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.logic.GameArea;
 import hundun.gdxgame.idledemo.logic.ResourceType;
-import hundun.gdxgame.idledemo.logic.RootSaveData;
-import hundun.gdxgame.idledemo.ui.entity.ChessVM;
-import hundun.gdxgame.idledemo.ui.entity.DeskAreaVM;
-import hundun.gdxgame.idledemo.ui.entity.GameEntityFactory;
+import hundun.gdxgame.idledemo.ui.entity.HexCellVM;
+import hundun.gdxgame.idledemo.ui.entity.HexAreaVM;
 import hundun.gdxgame.idledemo.ui.world.WorldCellDetailBoardVM;
 import hundun.gdxgame.idleshare.core.framework.model.CameraDataPackage;
-import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.AbstractConstructionControlBoard;
-import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.fixed.FixedConstructionControlBoard;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
-import lombok.Getter;
 
 import java.util.List;
 
@@ -25,15 +20,15 @@ import java.util.List;
  * @author hundun
  * Created on 2021/11/02
  */
-public class ForestPlayScreen extends BaseDemoPlayScreen {
+public class WorldPlayScreen extends BaseDemoPlayScreen {
 
-    DeskAreaVM deskAreaVM;
+    HexAreaVM hexAreaVM;
     protected OrthographicCamera deskCamera;
     protected Stage deskStage;
 
     protected WorldCellDetailBoardVM worldCellDetailBoardVM;
 
-    public ForestPlayScreen(DemoIdleGame game) {
+    public WorldPlayScreen(DemoIdleGame game) {
         super(game);
 
         this.deskCamera = new OrthographicCamera();
@@ -62,9 +57,9 @@ public class ForestPlayScreen extends BaseDemoPlayScreen {
     protected void lazyInitBackUiAndPopupUiContent() {
         super.lazyInitBackUiAndPopupUiContent();
 
-        deskAreaVM = new DeskAreaVM(this);
-        deskStage.addActor(deskAreaVM);
-        deskStage.setScrollFocus(deskAreaVM);
+        hexAreaVM = new HexAreaVM(this);
+        deskStage.addActor(hexAreaVM);
+        deskStage.setScrollFocus(hexAreaVM);
 
     }
 
@@ -72,7 +67,7 @@ public class ForestPlayScreen extends BaseDemoPlayScreen {
     protected void updateUIForShow() {
         List<BaseConstruction> constructions = game.getIdleGameplayExport().getGameplayContext().getConstructionManager()
                 .getConstructions();
-        deskAreaVM.updateDeskDatas(constructions);
+        hexAreaVM.updateDeskDatas(constructions);
         // start area
         setAreaAndNotifyChildren(GameArea.AREA_FOREST);
     }
@@ -81,11 +76,11 @@ public class ForestPlayScreen extends BaseDemoPlayScreen {
     protected void belowUiStageDraw(float delta) {
         deskStage.act();
         deskStage.getViewport().getCamera().position.set(
-                deskAreaVM.getCameraDataPackage().getCurrentCameraX(),
-                deskAreaVM.getCameraDataPackage().getCurrentCameraY(),
+                hexAreaVM.getCameraDataPackage().getCurrentCameraX(),
+                hexAreaVM.getCameraDataPackage().getCurrentCameraY(),
                 0);
-        if (deskAreaVM.getCameraDataPackage().getAndClearCameraZoomDirty()) {
-            float weight = deskAreaVM.getCameraDataPackage().getCurrentCameraZoomWeight();
+        if (hexAreaVM.getCameraDataPackage().getAndClearCameraZoomDirty()) {
+            float weight = hexAreaVM.getCameraDataPackage().getCurrentCameraZoomWeight();
             deskCamera.zoom = CameraDataPackage.cameraZoomWeightToZoomValue(weight);
             game.getFrontend().log(this.getClass().getSimpleName(), "deskCamera.zoom = %s", deskCamera.zoom);
         }
@@ -104,7 +99,7 @@ public class ForestPlayScreen extends BaseDemoPlayScreen {
     }
 
     @Override
-    public void onDeskClicked(ChessVM vm) {
+    public void onDeskClicked(HexCellVM vm) {
         worldCellDetailBoardVM.updateDetail(vm.getDeskData());
     }
 }

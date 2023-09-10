@@ -33,6 +33,9 @@ public class DemoChildGameConfig extends ChildGameConfig {
         this.setAreaControlableConstructionVMPrototypeIds(areaControlableConstructionVMPrototypeIds);
 
         Map<String, List<String>> areaControlableConstructionPrototypeVMPrototypeIds = new HashMap<>();
+        areaControlableConstructionPrototypeVMPrototypeIds.put(GameArea.AREA_FOREST, JavaFeatureForGwt.listOf(
+                ConstructionPrototypeId.DIRT
+        ));
         this.setAreaControlableConstructionPrototypeVMPrototypeIds(areaControlableConstructionPrototypeVMPrototypeIds);
 
 

@@ -1,6 +1,5 @@
 package hundun.gdxgame.idledemo.ui.world;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
@@ -14,12 +13,12 @@ public class BaseCellDetailBoardVM extends Table implements ILogicFrameListener 
 
 
 
-    protected List<CellDetailInnerBoardVM> contents = new ArrayList<>();
+    protected List<BaseCellDetailNodeVM> contents = new ArrayList<>();
 
     public void onLogicFrame()
     {
         contents.forEach(it -> {
-                it.update();
+                it.subLogicFrame();
             });
     }
 

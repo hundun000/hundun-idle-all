@@ -1,17 +1,13 @@
 package hundun.gdxgame.idledemo.ui.screen;
 
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.logic.GameArea;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
-import hundun.gdxgame.idledemo.ui.entity.ChessVM;
-import hundun.gdxgame.idledemo.ui.entity.DeskAreaVM;
+import hundun.gdxgame.idledemo.ui.entity.HexCellVM;
 import hundun.gdxgame.idledemo.ui.entity.GameEntityFactory;
 import hundun.gdxgame.idleshare.core.framework.model.manager.GameEntityManager;
 import hundun.gdxgame.idleshare.core.starter.ui.component.GameImageDrawer;
@@ -19,10 +15,8 @@ import hundun.gdxgame.idleshare.core.starter.ui.component.GameImageDrawer.GameIm
 import hundun.gdxgame.idleshare.core.starter.ui.component.PopupInfoBoard;
 import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.AbstractConstructionControlBoard;
 import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.fixed.FixedConstructionControlBoard;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
-import lombok.Getter;
 
 /**
  * @author hundun
@@ -81,7 +75,7 @@ public class CookiePlayScreen extends BaseDemoPlayScreen
     }
 
     @Override
-    public void onDeskClicked(ChessVM vm) {
+    public void onDeskClicked(HexCellVM vm) {
         throw new UnsupportedOperationException();
     }
 

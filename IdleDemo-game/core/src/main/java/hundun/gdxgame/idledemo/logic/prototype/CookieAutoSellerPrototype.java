@@ -7,12 +7,35 @@ import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.construction.BaseIdleDemoConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackage;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackageFactory;
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
 import java.util.UUID;
 
 public class CookieAutoSellerPrototype extends AbstractConstructionPrototype {
+
+    public static DescriptionPackage descriptionPackageEN = DescriptionPackage.builder()
+            .upgradeButtonText("Upgrade")
+            .outputCostDescriptionStart("Consume")
+            .outputGainDescriptionStart("Produce")
+            .upgradeCostDescriptionStart("Upgrade cost")
+            .upgradeMaxLevelDescription("(max)")
+            .levelDescriptionProvider(DescriptionPackageFactory.WORKING_LEVEL_IMP)
+            .proficiencyDescriptionProvider(DescriptionPackageFactory.EN_PROFICIENCY_IMP)
+            .build();
+
+
+    public static DescriptionPackage descriptionPackageCN = DescriptionPackage.builder()
+            .upgradeButtonText("升级")
+            .outputCostDescriptionStart("自动消耗")
+            .outputGainDescriptionStart("自动产出")
+            .upgradeCostDescriptionStart("升级费用")
+            .upgradeMaxLevelDescription("(已达到最大等级)")
+            .levelDescriptionProvider(DescriptionPackageFactory.WORKING_LEVEL_IMP)
+            .proficiencyDescriptionProvider(DescriptionPackageFactory.CN_PROFICIENCY_IMP)
+            .build();
 
     public CookieAutoSellerPrototype(Language language) {
         super(
@@ -23,10 +46,10 @@ public class CookieAutoSellerPrototype extends AbstractConstructionPrototype {
         switch (language)
         {
             case CN:
-                this.descriptionPackage = CookieAutoProviderPrototype.descriptionPackageCN;
+                this.descriptionPackage = CookieAutoSellerPrototype.descriptionPackageCN;
                 break;
             default:
-                this.descriptionPackage = CookieAutoProviderPrototype.descriptionPackageEN;
+                this.descriptionPackage = CookieAutoSellerPrototype.descriptionPackageEN;
                 break;
         }
 

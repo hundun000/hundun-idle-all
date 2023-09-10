@@ -7,7 +7,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 import java.util.HashMap;
 import java.util.Map;
 
-public class IdleForestAchievementLoader implements IBuiltinAchievementsLoader {
+public class DemoAchievementLoader implements IBuiltinAchievementsLoader {
     @Override
     public Map<String, AbstractAchievement> getProviderMap(Language language) {
         return new HashMap<>();

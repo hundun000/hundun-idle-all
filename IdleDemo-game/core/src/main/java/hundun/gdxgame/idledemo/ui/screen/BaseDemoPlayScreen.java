@@ -8,7 +8,7 @@ import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.logic.GameArea;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
-import hundun.gdxgame.idledemo.ui.entity.ChessVM;
+import hundun.gdxgame.idledemo.ui.entity.HexCellVM;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
 
@@ -35,7 +35,7 @@ public abstract class BaseDemoPlayScreen extends BaseIdlePlayScreen<DemoIdleGame
 
     Map<String, String> areaToScreenIdMap = JavaFeatureForGwt.mapOf(
             GameArea.AREA_COOKIE, CookiePlayScreen.class.getSimpleName(),
-            GameArea.AREA_FOREST, ForestPlayScreen.class.getSimpleName()
+            GameArea.AREA_FOREST, WorldPlayScreen.class.getSimpleName()
     );
 
     @Override
@@ -57,5 +57,5 @@ public abstract class BaseDemoPlayScreen extends BaseIdlePlayScreen<DemoIdleGame
         }
     }
 
-    public abstract void onDeskClicked(ChessVM vm);
+    public abstract void onDeskClicked(HexCellVM vm);
 }
