@@ -1,6 +1,6 @@
 package hundun.gdxgame.idledemo.ui.world;
 
-import hundun.gdxgame.idledemo.logic.ConstructionPrototypeId;
+import hundun.gdxgame.idledemo.logic.DemoConstructionPrototypeId;
 import hundun.gdxgame.idledemo.ui.screen.WorldPlayScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollectionListener;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
@@ -13,7 +13,7 @@ import java.util.List;
 public class WorldCellDetailBoardVM extends BaseCellDetailBoardVM implements IConstructionCollectionListener {
     @Getter
     @Setter
-    public BaseConstruction data;
+    public BaseConstruction detailingConstruction;
 
 
     public WorldCellDetailBoardVM(WorldPlayScreen parent)
@@ -24,7 +24,7 @@ public class WorldCellDetailBoardVM extends BaseCellDetailBoardVM implements ICo
 
     public void updateDetail(BaseConstruction construction)
     {
-        this.data = construction;
+        this.detailingConstruction = construction;
         if (construction == null)
         {
             updateAsEmpty();
@@ -33,7 +33,7 @@ public class WorldCellDetailBoardVM extends BaseCellDetailBoardVM implements ICo
 
         switch (construction.getPrototypeId())
         {
-            case ConstructionPrototypeId.EMPTY_CELL:
+            case DemoConstructionPrototypeId.EMPTY_CELL:
                 updateAsConstructionPrototypeDetail(construction);
                 break;
             default:
@@ -81,10 +81,10 @@ public class WorldCellDetailBoardVM extends BaseCellDetailBoardVM implements ICo
     @Override
     public void onConstructionCollectionChange()
     {
-        if (data != null)
+        if (detailingConstruction != null)
         {
-            data = parent.getGame().getIdleGameplayExport().getGameplayContext().getConstructionManager().getConstructionAt(data.getPosition());
-            updateDetail(data);
+            detailingConstruction = parent.getGame().getIdleGameplayExport().getGameplayContext().getConstructionManager().getConstructionAt(detailingConstruction.getPosition());
+            updateDetail(detailingConstruction);
         }
     }
 }

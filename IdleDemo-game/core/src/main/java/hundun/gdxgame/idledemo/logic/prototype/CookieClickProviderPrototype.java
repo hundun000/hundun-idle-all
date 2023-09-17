@@ -1,7 +1,7 @@
 package hundun.gdxgame.idledemo.logic.prototype;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.idledemo.logic.ConstructionPrototypeId;
+import hundun.gdxgame.idledemo.logic.DemoConstructionPrototypeId;
 import hundun.gdxgame.idledemo.logic.DemoBuiltinConstructionsLoader;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.construction.BaseIdleDemoConstruction;
@@ -35,7 +35,7 @@ public class CookieClickProviderPrototype extends AbstractConstructionPrototype 
 
     public CookieClickProviderPrototype(Language language) {
         super(
-                ConstructionPrototypeId.COOKIE_CLICK_PROVIDER,
+                DemoConstructionPrototypeId.COOKIE_CLICK_PROVIDER,
                 language,
                 DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf())
         );

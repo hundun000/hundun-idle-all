@@ -21,10 +21,10 @@ public class DemoBuiltinConstructionsLoader implements IBuiltinConstructionsLoad
     @Override
     public Map<String, AbstractConstructionPrototype> getProviderMap(Language language) {
         Map<String, AbstractConstructionPrototype> result = new HashMap<>();
-        result.put(ConstructionPrototypeId.EMPTY_CELL, new DirtPrototype(language));
-        result.put(ConstructionPrototypeId.COOKIE_CLICK_PROVIDER, new CookieClickProviderPrototype(language));
-        result.put(ConstructionPrototypeId.COOKIE_AUTO_PROVIDER, new CookieAutoProviderPrototype(language));
-        result.put(ConstructionPrototypeId.COOKIE_AUTO_SELLER, new CookieAutoSellerPrototype(language));
+        result.put(DemoConstructionPrototypeId.EMPTY_CELL, new DirtPrototype(language));
+        result.put(DemoConstructionPrototypeId.COOKIE_CLICK_PROVIDER, new CookieClickProviderPrototype(language));
+        result.put(DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER, new CookieAutoProviderPrototype(language));
+        result.put(DemoConstructionPrototypeId.COOKIE_AUTO_SELLER, new CookieAutoSellerPrototype(language));
         return result;
     }
     

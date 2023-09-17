@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -11,11 +12,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import hundun.gdxgame.corelib.base.util.DrawableFactory;
+import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
+import hundun.gdxgame.idledemo.logic.DemoConstructionPrototypeId;
 import hundun.gdxgame.idledemo.ui.screen.BaseDemoPlayScreen;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
+
+import java.util.List;
 
 
 /**
@@ -25,9 +30,12 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
 public class WorldConstructionPrototypeCellDetailNode extends BaseCellDetailNodeVM {
     BaseDemoPlayScreen parent;
     AbstractConstructionPrototype model;
+    GridPosition position;
     Label constructionNameLabel;
 
-
+    List<String> buyCandidateConstructionPrototypeIds = JavaFeatureForGwt.listOf(
+            DemoConstructionPrototypeId.COOKIE_CLICK_PROVIDER
+    );
 
 
 
@@ -47,6 +55,19 @@ public class WorldConstructionPrototypeCellDetailNode extends BaseCellDetailNode
 
         // ------ this ------
         this.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
+
+        buyCandidateConstructionPrototypeIds.forEach(constructionPrototypeId -> {
+            Button buyConstructionButton = new TextButton("buy" + constructionPrototypeId,parent.getGame().getMainSkin());
+            buyConstructionButton.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    parent.getGame().getIdleGameplayExport().getGameplayContext()
+                            .getConstructionManager()
+                            .buyInstanceOfPrototype(constructionPrototypeId, position);
+                }
+            });
+            this.add(buyConstructionButton);
+        });
         this.setBackground(DrawableFactory.createBorderBoard(30, 10, 0.8f, 1));
     }
 
@@ -88,6 +109,7 @@ public class WorldConstructionPrototypeCellDetailNode extends BaseCellDetailNode
 
     public void updateAsConstructionPrototype(AbstractConstructionPrototype constructionPrototype, GridPosition position) {
         this.model = constructionPrototype;
+        this.position = position;
         update();
     }
 }

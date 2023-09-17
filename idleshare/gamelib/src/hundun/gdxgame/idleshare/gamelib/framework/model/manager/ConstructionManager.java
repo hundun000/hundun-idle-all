@@ -28,8 +28,8 @@ public class ConstructionManager implements ITileNodeMap<Void> {
      */
     public Map<String, BaseConstruction> runningConstructionModelMap = new HashMap<>();
 
-    private List<BaseConstruction> removeQueue = new ArrayList<>();
-    private List<BaseConstruction> createQueue = new ArrayList<>();
+    private final List<BaseConstruction> removeQueue = new ArrayList<>();
+    private final List<BaseConstruction> createQueue = new ArrayList<>();
 
     public ConstructionManager(IdleGameplayContext gameContext) {
         this.gameContext = gameContext;

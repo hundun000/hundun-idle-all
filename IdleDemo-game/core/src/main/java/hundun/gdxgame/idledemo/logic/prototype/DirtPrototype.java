@@ -1,7 +1,7 @@
 package hundun.gdxgame.idledemo.logic.prototype;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.idledemo.logic.ConstructionPrototypeId;
+import hundun.gdxgame.idledemo.logic.DemoConstructionPrototypeId;
 import hundun.gdxgame.idledemo.logic.DemoBuiltinConstructionsLoader;
 import hundun.gdxgame.idledemo.logic.construction.BaseIdleDemoConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
@@ -27,7 +27,7 @@ public class DirtPrototype extends AbstractConstructionPrototype {
 
     public DirtPrototype(Language language) {
         super(
-                ConstructionPrototypeId.EMPTY_CELL,
+                DemoConstructionPrototypeId.EMPTY_CELL,
                 language,
                 DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf())
         );

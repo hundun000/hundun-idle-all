@@ -10,7 +10,6 @@ import hundun.gdxgame.idleshare.gamelib.framework.data.ConstructionSaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.data.GameplaySaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.data.SystemSettingSaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
-import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager;
 import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementSaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementState;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
@@ -31,27 +30,27 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
         Map<String, ConstructionSaveData> map = new HashMap<>();
 
         map.put(
-                ConstructionPrototypeId.COOKIE_CLICK_PROVIDER + "_" + UUID.randomUUID(),
+                DemoConstructionPrototypeId.COOKIE_CLICK_PROVIDER + "_" + UUID.randomUUID(),
                 ConstructionSaveData.builder()
-                        .prototypeId(ConstructionPrototypeId.COOKIE_CLICK_PROVIDER)
+                        .prototypeId(DemoConstructionPrototypeId.COOKIE_CLICK_PROVIDER)
                         .level(0)
                         .workingLevel(0)
                         .position( new GridPosition(0, 0))
                         .build()
         );
         map.put(
-                ConstructionPrototypeId.COOKIE_AUTO_PROVIDER + "_" + UUID.randomUUID(),
+                DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER + "_" + UUID.randomUUID(),
                 ConstructionSaveData.builder()
-                        .prototypeId(ConstructionPrototypeId.COOKIE_AUTO_PROVIDER)
+                        .prototypeId(DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER)
                         .level(1)
                         .workingLevel(1)
                         .position( new GridPosition(0, 1))
                         .build()
         );
         map.put(
-                ConstructionPrototypeId.COOKIE_AUTO_SELLER + "_" + UUID.randomUUID(),
+                DemoConstructionPrototypeId.COOKIE_AUTO_SELLER + "_" + UUID.randomUUID(),
                 ConstructionSaveData.builder()
-                        .prototypeId(ConstructionPrototypeId.COOKIE_AUTO_SELLER)
+                        .prototypeId(DemoConstructionPrototypeId.COOKIE_AUTO_SELLER)
                         .level(1)
                         .workingLevel(0)
                         .position( new GridPosition(1, 0))
@@ -64,9 +63,9 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
         );
         dirtGridPositions.forEach(it -> {
             map.put(
-                    ConstructionPrototypeId.EMPTY_CELL + "_" + UUID.randomUUID(),
+                    DemoConstructionPrototypeId.EMPTY_CELL + "_" + UUID.randomUUID(),
                     ConstructionSaveData.builder()
-                            .prototypeId(ConstructionPrototypeId.EMPTY_CELL)
+                            .prototypeId(DemoConstructionPrototypeId.EMPTY_CELL)
                             .level(0)
                             .workingLevel(0)
                             .position(it)

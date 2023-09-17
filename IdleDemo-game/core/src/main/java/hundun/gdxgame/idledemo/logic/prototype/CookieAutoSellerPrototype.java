@@ -1,7 +1,7 @@
 package hundun.gdxgame.idledemo.logic.prototype;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.idledemo.logic.ConstructionPrototypeId;
+import hundun.gdxgame.idledemo.logic.DemoConstructionPrototypeId;
 import hundun.gdxgame.idledemo.logic.DemoBuiltinConstructionsLoader;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.construction.BaseIdleDemoConstruction;
@@ -39,7 +39,7 @@ public class CookieAutoSellerPrototype extends AbstractConstructionPrototype {
 
     public CookieAutoSellerPrototype(Language language) {
         super(
-                ConstructionPrototypeId.COOKIE_AUTO_SELLER,
+                DemoConstructionPrototypeId.COOKIE_AUTO_SELLER,
                 language,
                 DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf())
         );

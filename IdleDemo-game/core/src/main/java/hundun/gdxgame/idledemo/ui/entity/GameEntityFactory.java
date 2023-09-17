@@ -1,6 +1,6 @@
 package hundun.gdxgame.idledemo.ui.entity;
 
-import hundun.gdxgame.idledemo.logic.ConstructionPrototypeId;
+import hundun.gdxgame.idledemo.logic.DemoConstructionPrototypeId;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.ui.screen.CookiePlayScreen;
 import hundun.gdxgame.idleshare.core.framework.model.entity.BaseGameEntityFactory;
@@ -25,7 +25,7 @@ public class GameEntityFactory extends BaseGameEntityFactory {
     
     public GameEntity newConstructionEntity(String id, int index) {
         switch (id) {
-            case ConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
+            case DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
                 return this.rowStableConstructionEntity(id, index, 1);
             default:
                 // no need GameEntity

@@ -39,7 +39,7 @@ public class DemoTextureManager extends AbstractTextureManager {
             Texture texture = new Texture(Gdx.files.internal("constructionEntities.png"));
             TextureRegion[][] regions = TextureRegion.split(texture, 32, 32);
             //constructionEntityMap.put(ConstructionId.COOKIE_CLICK_PROVIDER, regions[0][0]);
-            constructionEntityMap.put(ConstructionPrototypeId.COOKIE_AUTO_PROVIDER, regions[0][1]);
+            constructionEntityMap.put(DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER, regions[0][1]);
             //constructionEntityMap.put(ConstructionPrototypeId.COOKIE_SELLER, regions[0][2]);
             //constructionEntityMap.put(ConstructionId.WIN_PROVIDER, regions[0][3]);
         }  
@@ -65,10 +65,10 @@ public class DemoTextureManager extends AbstractTextureManager {
             Texture texture = new Texture(Gdx.files.internal("CellIcons.png"));
             TextureRegion[][] regions = TextureRegion.split(texture, 128, 128);
             defaultAreaBack = regions[0][1];
-            constructionHexImageMap.put(ConstructionPrototypeId.EMPTY_CELL, regions[0][0]);
-            constructionHexImageMap.put(ConstructionPrototypeId.COOKIE_CLICK_PROVIDER, regions[0][1]);
-            constructionHexImageMap.put(ConstructionPrototypeId.COOKIE_AUTO_PROVIDER, regions[0][2]);
-            constructionHexImageMap.put(ConstructionPrototypeId.COOKIE_AUTO_SELLER, regions[0][3]);
+            constructionHexImageMap.put(DemoConstructionPrototypeId.EMPTY_CELL, regions[0][0]);
+            constructionHexImageMap.put(DemoConstructionPrototypeId.COOKIE_CLICK_PROVIDER, regions[0][1]);
+            constructionHexImageMap.put(DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER, regions[0][2]);
+            constructionHexImageMap.put(DemoConstructionPrototypeId.COOKIE_AUTO_SELLER, regions[0][3]);
             //gameAreaBackMap.put(GameArea.AREA_WIN, regions[0][3]);
         }
     }

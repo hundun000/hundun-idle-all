@@ -12,6 +12,7 @@ import hundun.gdxgame.idledemo.ui.world.HexCellVM;
 import hundun.gdxgame.idledemo.ui.world.HexAreaVM;
 import hundun.gdxgame.idledemo.ui.world.WorldCellDetailBoardVM;
 import hundun.gdxgame.idleshare.core.framework.model.CameraDataPackage;
+import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollectionListener;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
  * @author hundun
  * Created on 2021/11/02
  */
-public class WorldPlayScreen extends BaseDemoPlayScreen {
+public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstructionCollectionListener {
 
     HexAreaVM hexAreaVM;
     protected OrthographicCamera deskCamera;
@@ -101,5 +102,12 @@ public class WorldPlayScreen extends BaseDemoPlayScreen {
     @Override
     public void onDeskClicked(HexCellVM vm) {
         worldCellDetailBoardVM.updateDetail(vm != null ? vm.getDeskData() : null);
+    }
+
+    @Override
+    public void onConstructionCollectionChange() {
+        List<BaseConstruction> constructions = game.getIdleGameplayExport().getGameplayContext().getConstructionManager()
+                .getConstructions();
+        hexAreaVM.updateDeskDatas(constructions);
     }
 }

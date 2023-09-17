@@ -5,9 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.idledemo.logic.ConstructionPrototypeId;
+import hundun.gdxgame.idledemo.logic.DemoConstructionPrototypeId;
 import hundun.gdxgame.idledemo.logic.GameArea;
-import hundun.gdxgame.idledemo.logic.DemoAchievementId;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.ui.screen.DemoMenuScreen;
 import hundun.gdxgame.idledemo.ui.screen.CookiePlayScreen;
@@ -26,15 +25,15 @@ public class DemoChildGameConfig extends ChildGameConfig {
         
         Map<String, List<String>> areaControlableConstructionVMPrototypeIds = new HashMap<>();
         areaControlableConstructionVMPrototypeIds.put(GameArea.AREA_COOKIE, JavaFeatureForGwt.arraysAsList(
-                ConstructionPrototypeId.COOKIE_CLICK_PROVIDER,
-                ConstructionPrototypeId.COOKIE_AUTO_PROVIDER,
-                ConstructionPrototypeId.COOKIE_AUTO_SELLER
+                DemoConstructionPrototypeId.COOKIE_CLICK_PROVIDER,
+                DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER,
+                DemoConstructionPrototypeId.COOKIE_AUTO_SELLER
         ));
         this.setAreaControlableConstructionVMPrototypeIds(areaControlableConstructionVMPrototypeIds);
 
         Map<String, List<String>> areaControlableConstructionPrototypeVMPrototypeIds = new HashMap<>();
         areaControlableConstructionPrototypeVMPrototypeIds.put(GameArea.AREA_FOREST, JavaFeatureForGwt.listOf(
-                ConstructionPrototypeId.EMPTY_CELL
+                DemoConstructionPrototypeId.EMPTY_CELL
         ));
         this.setAreaControlableConstructionPrototypeVMPrototypeIds(areaControlableConstructionPrototypeVMPrototypeIds);
 

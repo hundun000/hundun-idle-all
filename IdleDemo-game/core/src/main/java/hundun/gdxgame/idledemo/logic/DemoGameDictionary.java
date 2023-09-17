@@ -18,22 +18,22 @@ public class DemoGameDictionary implements IGameDictionary {
         switch (language) {
             case CN:
                 switch (constructionId) {
-                    case ConstructionPrototypeId.COOKIE_CLICK_PROVIDER:
+                    case DemoConstructionPrototypeId.COOKIE_CLICK_PROVIDER:
                         return "点击器";
-                    case ConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
+                    case DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
                         return "自动点击器";
-                    case ConstructionPrototypeId.COOKIE_AUTO_SELLER:
+                    case DemoConstructionPrototypeId.COOKIE_AUTO_SELLER:
                         return "自动出售器";
                     default:
                         return "口口";
                 }
             default:
                 switch (constructionId) {
-                    case ConstructionPrototypeId.COOKIE_CLICK_PROVIDER:
+                    case DemoConstructionPrototypeId.COOKIE_CLICK_PROVIDER:
                         return "Clicker";
-                    case ConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
+                    case DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
                         return "AutoClicker";
-                    case ConstructionPrototypeId.COOKIE_AUTO_SELLER:
+                    case DemoConstructionPrototypeId.COOKIE_AUTO_SELLER:
                         return "AutoSeller";
                     default:
                         return "[dic lost]";
@@ -48,18 +48,18 @@ public class DemoGameDictionary implements IGameDictionary {
         switch (language) {
             case CN:
                 switch (constructionId) {
-                    case ConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
+                    case DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
                         return "自动获得饼干";
-                    case ConstructionPrototypeId.EMPTY_CELL:
+                    case DemoConstructionPrototypeId.EMPTY_CELL:
                         return "空位置";
                     default:
                         return "[dic lost]";
                 }
             default:
                 switch (constructionId) {
-                    case ConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
+                    case DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
                         return "Auto gain some cookie";
-                    case ConstructionPrototypeId.EMPTY_CELL:
+                    case DemoConstructionPrototypeId.EMPTY_CELL:
                         return "Empty";
                     default:
                         return "[dic lost]";
