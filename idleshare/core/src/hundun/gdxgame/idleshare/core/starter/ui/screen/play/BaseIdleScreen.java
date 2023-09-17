@@ -35,7 +35,7 @@ public abstract class BaseIdleScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
     protected StorageInfoBoard<T_GAME, T_SAVE> storageInfoTable;
 
     protected BackgroundImageBox<T_GAME, T_SAVE> backgroundImageBox;
-    protected GameAreaControlBoard<T_GAME, T_SAVE> gameAreaControlBoard;
+
     // ----- not ui ------
 
     @Getter
@@ -83,7 +83,7 @@ public abstract class BaseIdleScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
         logicFrameListeners.add(game.getIdleGameplayExport());
 
         gameAreaChangeListeners.add(backgroundImageBox);
-        gameAreaChangeListeners.add(gameAreaControlBoard);
+
 
         this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(this);
         this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(storageInfoTable);

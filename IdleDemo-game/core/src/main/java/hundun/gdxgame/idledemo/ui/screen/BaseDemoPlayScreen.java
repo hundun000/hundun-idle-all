@@ -1,10 +1,10 @@
 package hundun.gdxgame.idledemo.ui.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.idledemo.DemoIdleGame;
@@ -15,7 +15,6 @@ import hundun.gdxgame.idledemo.ui.world.HexCellVM;
 import hundun.gdxgame.idledemo.ui.sub.AchievementMaskBoard;
 import hundun.gdxgame.idleshare.core.starter.ui.component.GameAreaControlBoard;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementStateChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
@@ -31,25 +30,15 @@ public abstract class BaseDemoPlayScreen extends BaseIdleScreen<DemoIdleGame, Ro
 
     protected FirstRunningAchievementBoardVM<DemoIdleGame, RootSaveData> firstRunningAchievementBoardVM;
     protected AchievementMaskBoard achievementMaskBoard;
-
+    DemoIdleGame demoIdleGame;
     protected List<AbstractAchievement> showAchievementMaskBoardQueue = new ArrayList<>();
 
     public BaseDemoPlayScreen(DemoIdleGame game) {
-        super(game, customLayoutConst(game));
+        super(game, DemoScreenContext.customLayoutConst(game));
+        this.demoIdleGame = game;
     }
 
-    private static PlayScreenLayoutConst customLayoutConst(DemoIdleGame game) {
-        PlayScreenLayoutConst layoutConst = new PlayScreenLayoutConst(game.getWidth(), game.getHeight());
-        NinePatch ninePatch = new NinePatch(game.getTextureManager().getDefaultBoardNinePatchTexture(),
-                game.getTextureManager().getDefaultBoardNinePatchEdgeSize(),
-                game.getTextureManager().getDefaultBoardNinePatchEdgeSize(),
-                game.getTextureManager().getDefaultBoardNinePatchEdgeSize(),
-                game.getTextureManager().getDefaultBoardNinePatchEdgeSize()
-        );
-        layoutConst.simpleBoardBackground = new NinePatchDrawable(ninePatch);
-        layoutConst.simpleBoardBackgroundMiddle = new TextureRegionDrawable(game.getTextureManager().getDefaultBoardNinePatchMiddle());
-        return layoutConst;
-    }
+    protected GameAreaControlBoard<DemoIdleGame, RootSaveData> gameAreaControlBoard;
 
     Map<String, String> areaToScreenIdMap = JavaFeatureForGwt.mapOf(
             GameArea.AREA_COOKIE, CookiePlayScreen.class.getSimpleName(),
@@ -59,7 +48,7 @@ public abstract class BaseDemoPlayScreen extends BaseIdleScreen<DemoIdleGame, Ro
     @Override
     protected void lazyInitLogicContext() {
         super.lazyInitLogicContext();
-
+        gameAreaChangeListeners.add(gameAreaControlBoard);
         gameAreaChangeListeners.add(this);
     }
 
@@ -76,7 +65,19 @@ public abstract class BaseDemoPlayScreen extends BaseIdleScreen<DemoIdleGame, Ro
                 .row();
 
         gameAreaControlBoard = new GameAreaControlBoard<>(this);
-        rightSideGroup.add(gameAreaControlBoard).expand().right();
+        rightSideGroup.add(gameAreaControlBoard).expand().right().row();
+
+        TextButton toAchievementScreenButton = new TextButton("AchievementScreen", game.getMainSkin());
+        toAchievementScreenButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                DemoAchievementScreen demoAchievementScreen = (DemoAchievementScreen) game.getScreenManager().getScreen(DemoAchievementScreen.class.getSimpleName());
+                demoAchievementScreen.setLastScreenId(BaseDemoPlayScreen.this.getClass().getSimpleName());
+                game.getScreenManager().pushScreen(DemoAchievementScreen.class.getSimpleName(), null);
+                game.getAudioPlayManager().intoScreen(DemoAchievementScreen.class.getSimpleName());
+            }
+        });
+        rightSideGroup.add(toAchievementScreenButton).right().row();
 
         uiRootTable.add(rightSideGroup).expand().right().row();
     }
