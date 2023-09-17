@@ -6,7 +6,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchi
  * @author hundun
  * Created on 2022/01/21
  */
-public interface IAchievementUnlockCallback {
+public interface IAchievementBoardCallback {
     void hideAchievementMaskBoard();
     void showAchievementMaskBoard(AbstractAchievement prototype);
 }

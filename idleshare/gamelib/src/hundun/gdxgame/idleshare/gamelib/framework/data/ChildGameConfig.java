@@ -19,5 +19,4 @@ public abstract class ChildGameConfig {
     Map<String, List<String>> areaShowEntityByOwnAmountResourceIds;
     Map<String, List<String>> areaShowEntityByChangeAmountResourceIds;
     Map<String, String> screenIdToFilePathMap;
-    List<String> achievementPrototypeIds;
 }

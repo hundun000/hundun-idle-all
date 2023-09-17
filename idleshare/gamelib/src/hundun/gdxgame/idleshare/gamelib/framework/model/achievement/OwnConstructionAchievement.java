@@ -2,10 +2,9 @@ package hundun.gdxgame.idleshare.gamelib.framework.model.achievement;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
+import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementState;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -17,16 +16,17 @@ public class OwnConstructionAchievement extends AbstractAchievement {
     public OwnConstructionAchievement(
             String id, String name, String description, String congratulationText,
             Map<String, Entry<Integer, Integer>> requireds,
-            List<ResourcePair> awardResourceMap
+            List<ResourcePair> awardResourceMap,
+            String nextAchievementId
     )
 
     {
-        super(id, name, description, congratulationText, awardResourceMap);
+        super(id, name, description, congratulationText, awardResourceMap, nextAchievementId);
         this.requireds = requireds;
     }
 
     @Override
-    public boolean checkUnlock()
+    public boolean checkComplete()
     {
         List<BaseConstruction> allConstructions = gameplayContext.getConstructionManager().getConstructions();
 
@@ -57,6 +57,7 @@ public class OwnConstructionAchievement extends AbstractAchievement {
                 String id,
                 Map<String, List<String>> textMap,
                 Map<String, Entry<Integer, Integer>> requireds,
+                String nextAchievementId,
                 ResourcePair... awardResourceMap
         )
         {
@@ -64,7 +65,8 @@ public class OwnConstructionAchievement extends AbstractAchievement {
                     id,
                     textMap.get(id).get(0), textMap.get(id).get(1), textMap.get(id).get(2),
                     requireds,
-                    JavaFeatureForGwt.listOf(awardResourceMap)
+                    JavaFeatureForGwt.listOf(awardResourceMap),
+                    nextAchievementId
             );
             map.put(id, achievement);
         }

@@ -10,23 +10,29 @@ import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.logic.GameArea;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
-import hundun.gdxgame.idledemo.ui.sub.FirstLockedAchievementBoardVM;
+import hundun.gdxgame.idledemo.ui.sub.FirstRunningAchievementBoardVM;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
 import hundun.gdxgame.idledemo.ui.sub.AchievementMaskBoard;
 import hundun.gdxgame.idleshare.core.starter.ui.component.GameAreaControlBoard;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
-import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementUnlockCallback;
+import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementBoardCallback;
+import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementStateChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
+import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementState;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public abstract class BaseDemoPlayScreen extends BaseIdleScreen<DemoIdleGame, RootSaveData>
-        implements IGameAreaChangeListener, IAchievementUnlockCallback
+        implements IGameAreaChangeListener, IAchievementBoardCallback, IAchievementStateChangeListener
 {
 
-    protected FirstLockedAchievementBoardVM<DemoIdleGame, RootSaveData> firstLockedAchievementBoardVM;
+    protected FirstRunningAchievementBoardVM<DemoIdleGame, RootSaveData> firstRunningAchievementBoardVM;
     protected AchievementMaskBoard achievementMaskBoard;
+
+    protected List<AbstractAchievement> showAchievementMaskBoardQueue = new ArrayList<>();
 
     public BaseDemoPlayScreen(DemoIdleGame game) {
         super(game, customLayoutConst(game));
@@ -55,7 +61,6 @@ public abstract class BaseDemoPlayScreen extends BaseIdleScreen<DemoIdleGame, Ro
         super.lazyInitLogicContext();
 
         gameAreaChangeListeners.add(this);
-        gameAreaChangeListeners.add(firstLockedAchievementBoardVM);
     }
 
     @Override
@@ -64,8 +69,8 @@ public abstract class BaseDemoPlayScreen extends BaseIdleScreen<DemoIdleGame, Ro
 
         Table rightSideGroup = new Table();
 
-        firstLockedAchievementBoardVM = new FirstLockedAchievementBoardVM<>(this);
-        rightSideGroup.add(firstLockedAchievementBoardVM)
+        firstRunningAchievementBoardVM = new FirstRunningAchievementBoardVM<>(this);
+        rightSideGroup.add(firstRunningAchievementBoardVM)
                 .width(getLayoutConst().FIRST_LOCKED_ACHIEVEMENT_BOARD_WIDTH)
                 .height(getLayoutConst().FIRST_LOCKED_ACHIEVEMENT_BOARD_HEIGHT)
                 .row();
@@ -86,9 +91,25 @@ public abstract class BaseDemoPlayScreen extends BaseIdleScreen<DemoIdleGame, Ro
             game.getScreenManager().pushScreen(currentScreen, null);
             game.getAudioPlayManager().intoScreen(currentScreen);
         }
+        firstRunningAchievementBoardVM.updateData();
     }
 
     public abstract void onDeskClicked(HexCellVM vm);
+
+    @Override
+    protected void onLogicFrame() {
+        super.onLogicFrame();
+
+        if (showAchievementMaskBoardQueue.size() > 0) {
+            AbstractAchievement achievement = showAchievementMaskBoardQueue.remove(0);
+
+            game.getFrontend().log(this.getClass().getSimpleName(), "onAchievementUnlock called");
+            achievementMaskBoard.setAchievementPrototype(achievement);
+            achievementMaskBoard.setVisible(true);
+            Gdx.input.setInputProcessor(popupUiStage);
+            logicFrameHelper.setLogicFramePause(true);
+        }
+    }
 
     @Override
     public void hideAchievementMaskBoard() {
@@ -99,15 +120,11 @@ public abstract class BaseDemoPlayScreen extends BaseIdleScreen<DemoIdleGame, Ro
     }
 
     @Override
-    public void showAchievementMaskBoard(AbstractAchievement prototype) {
+    public void showAchievementMaskBoard(AbstractAchievement achievement) {
         if (this.hidden) {
             return;
         }
-        game.getFrontend().log(this.getClass().getSimpleName(), "onAchievementUnlock called");
-        achievementMaskBoard.setAchievementPrototype(prototype);
-        achievementMaskBoard.setVisible(true);
-        Gdx.input.setInputProcessor(popupUiStage);
-        logicFrameHelper.setLogicFramePause(true);
+        showAchievementMaskBoardQueue.add(achievement);
     }
 
     @Override
@@ -125,5 +142,15 @@ public abstract class BaseDemoPlayScreen extends BaseIdleScreen<DemoIdleGame, Ro
         popupUiStage.addActor(achievementMaskBoard);
 
 
+    }
+
+    @Override
+    public void onAchievementStateChange(AbstractAchievement achievement, AchievementState state) {
+        if (state == AchievementState.COMPLETED) {
+            showAchievementMaskBoard(achievement);
+            firstRunningAchievementBoardVM.updateData();
+        } else if (state == AchievementState.RUNNING) {
+            firstRunningAchievementBoardVM.updateData();
+        }
     }
 }

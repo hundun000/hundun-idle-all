@@ -54,6 +54,7 @@ public class DemoAchievementLoader implements IBuiltinAchievementsLoader {
                 JavaFeatureForGwt.mapOf(
                         ConstructionPrototypeId.COOKIE_AUTO_PROVIDER, new SimpleEntry<>(1, 2)
                 ),
+                DemoAchievementId.STEP_2,
                 new ResourcePair(ResourceType.COIN, 1000L)
         );
         OwnConstructionAchievement.Companion.quickAddOwnConstructionAchievement(
@@ -63,6 +64,7 @@ public class DemoAchievementLoader implements IBuiltinAchievementsLoader {
                 JavaFeatureForGwt.mapOf(
                         ConstructionPrototypeId.COOKIE_AUTO_SELLER, new SimpleEntry<>(1, 2)
                 ),
+                null,
                 new ResourcePair(ResourceType.COIN, 1000L)
         );
         return map;

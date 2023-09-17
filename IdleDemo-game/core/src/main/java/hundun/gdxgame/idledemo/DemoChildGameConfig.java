@@ -60,10 +60,6 @@ public class DemoChildGameConfig extends ChildGameConfig {
                 );
         this.setScreenIdToFilePathMap(screenIdToFilePathMap);
 
-        this.setAchievementPrototypeIds(JavaFeatureForGwt.listOf(
-                DemoAchievementId.STEP_1,
-                DemoAchievementId.STEP_2
-        ));
     }
 
     

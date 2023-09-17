@@ -13,30 +13,50 @@ import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IBuffChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 public class AchievementManager implements IBuffChangeListener, IOneFrameResourceChangeListener, IGameStartListener {
     IdleGameplayContext gameContext;
 
-    Map<String, AbstractAchievement> prototypes = new HashMap<>();
-    private List<String> totalAchievementIds = new ArrayList<>();
-    private List<String> achievementQueue = new ArrayList<>();
     @Getter
-    @Setter
-    Set<String> unlockedAchievementIds = new HashSet<>();
+    Map<String, AchievementAndStatus> models = new HashMap<>();
+
+
+
 
     @AllArgsConstructor
     @Getter
     public static class AchievementInfoPackage
     {
-        AbstractAchievement firstLockedAchievement;
+        AbstractAchievement firstRunningAchievement;
         int total;
-        int unLockedSize;
+        int completedSize;
+        int lockedSize;
         List<AbstractAchievement> allAchievementList;
-        Set<String> unlockedAchievementIds;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class AchievementAndStatus {
+        AbstractAchievement achievement;
+        AchievementSaveData saveData;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class AchievementSaveData {
+        AchievementState state;
+
+    }
+
+    public enum AchievementState {
+        LOCKED,
+        RUNNING,
+        COMPLETED,
+        ;
+
     }
 
     public AchievementManager(IdleGameplayContext gameContext) {
@@ -46,27 +66,34 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
 
     public AchievementInfoPackage getAchievementInfoPackage()
     {
-        List<AbstractAchievement> allAchievementList = achievementQueue.stream()
-                .map(it -> prototypes.get(it))
+        List<AbstractAchievement> allAchievementList = models.values().stream()
+                .map(it -> it.getAchievement())
                 .collect(Collectors.toList());
-
-        AbstractAchievement firstLockedAchievement = allAchievementList.stream()
-                .filter(it -> !unlockedAchievementIds.contains(it.getId()))
+                ;
+        AbstractAchievement firstRunningAchievement = models.values().stream()
+                .filter(it -> it.getSaveData().getState() == AchievementState.RUNNING)
+                .map(it -> it.getAchievement())
                 .findFirst()
                 .orElse(null);
+
+        Set<String> completedAchievementIds = models.values().stream()
+                .filter(it -> it.getSaveData().getState() == AchievementState.COMPLETED)
+                .map(it -> it.getAchievement().getId())
+                .collect(Collectors.toSet());
+        Set<String> lockedAchievementIds = models.values().stream()
+                .filter(it -> it.getSaveData().getState() == AchievementState.LOCKED)
+                .map(it -> it.getAchievement().getId())
+                .collect(Collectors.toSet());
         return new AchievementInfoPackage(
-                firstLockedAchievement,
-                totalAchievementIds.size(),
-                unlockedAchievementIds.size(),
-                allAchievementList,
-                unlockedAchievementIds
+                firstRunningAchievement,
+                models.size(),
+                completedAchievementIds.size(),
+                lockedAchievementIds.size(),
+                allAchievementList
         );
     }
 
-    public void addPrototype(AbstractAchievement prototype) {
-        prototypes.put(prototype.getId(), prototype);
-        prototype.lazyInitDescription(gameContext);
-    }
+
 
     private boolean checkRequiredResources(Map<String, Integer> requiredResources) {
         if (requiredResources == null) {
@@ -94,16 +121,29 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
         return true;
     }
 
-    private void checkAllAchievementUnlock() {
+    private void checkAllAchievementStateChange() {
         //Gdx.app.log(this.getClass().getSimpleName(), "checkAllAchievementUnlock");
-        for (AbstractAchievement prototype : prototypes.values()) {
-            if (unlockedAchievementIds.contains(prototype.getId())) {
+        for (AchievementAndStatus achievementAndStatus : models.values()) {
+            if (achievementAndStatus.getSaveData().getState() != AchievementState.RUNNING) {
                 continue;
             }
-            boolean resourceMatched = prototype.checkUnlock();
-            if (resourceMatched) {
-                unlockedAchievementIds.add(prototype.getId());
-                gameContext.getEventManager().notifyAchievementUnlock(prototype);
+            boolean completed = achievementAndStatus.getAchievement().checkComplete();
+            if (completed) {
+                achievementAndStatus.getSaveData().setState(AchievementState.COMPLETED);
+                if (achievementAndStatus.getAchievement().getNextAchievementId() != null) {
+                    AchievementAndStatus nextAchievementAndStatus = models.get(achievementAndStatus.getAchievement().getNextAchievementId());
+                    if (nextAchievementAndStatus.getSaveData().getState() == AchievementState.LOCKED) {
+                        nextAchievementAndStatus.getSaveData().setState(AchievementState.RUNNING);
+                        gameContext.getEventManager().notifyAchievementComplete(
+                                nextAchievementAndStatus.getAchievement(),
+                                nextAchievementAndStatus.getSaveData().getState()
+                        );
+                    }
+                }
+                gameContext.getEventManager().notifyAchievementComplete(
+                        achievementAndStatus.getAchievement(),
+                        achievementAndStatus.getSaveData().getState()
+                );
             }
         }
     }
@@ -111,23 +151,41 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
 
     @Override
     public void onBuffChange() {
-        checkAllAchievementUnlock();
+        checkAllAchievementStateChange();
     }
 
-    public void lazyInit(Map<String, AbstractAchievement> achievementProviderMap, List<String> achievementPrototypeIds) {
-        achievementPrototypeIds.forEach(it -> addPrototype(achievementProviderMap.get(it)));
-        this.totalAchievementIds = achievementPrototypeIds;
-        this.achievementQueue = new ArrayList<>(achievementPrototypeIds);
+    public void subApplyGameplaySaveData(
+            Map<String, AbstractAchievement> achievementProviderMap,
+            Map<String, AchievementSaveData> statusDataMap
+    ) {
+        achievementProviderMap.values().forEach(it -> {
+            AchievementSaveData statusData;
+            if (statusDataMap.containsKey(it.getId())) {
+                statusData = statusDataMap.get(it.getId());
+            } else {
+                statusData = new AchievementSaveData(AchievementState.LOCKED);
+            }
+            it.lazyInitDescription(gameContext);
+            models.put(it.getId(), new AchievementAndStatus(it, statusData));
+        });
+    }
+
+    public Map<String, AchievementSaveData> getAchievementSaveDataMap() {
+        return models.values().stream()
+                .collect(Collectors.toMap(
+                        it -> it.getAchievement().getId(),
+                        it -> it.getSaveData()
+                ));
     }
 
     @Override
     public void onResourceChange(Map<String, Long> changeMap, Map<String, List<Long>> deltaHistoryMap) {
-        checkAllAchievementUnlock();
+        checkAllAchievementStateChange();
     }
 
     @Override
     public void onGameStart() {
-        checkAllAchievementUnlock();
+        checkAllAchievementStateChange();
     }
 
 

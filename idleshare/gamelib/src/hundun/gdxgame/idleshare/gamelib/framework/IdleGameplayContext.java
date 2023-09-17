@@ -63,7 +63,6 @@ public class IdleGameplayContext {
         this.getConstructionFactory().lazyInit(this, language, providerMap);
         this.getConstructionManager().lazyInit(childGameConfig.getAreaControlableConstructionVMPrototypeIds(),
                 childGameConfig.getAreaControlableConstructionPrototypeVMPrototypeIds());
-        this.getAchievementManager().lazyInit(achievementProviderMap, childGameConfig.getAchievementPrototypeIds());
     }
 
 }

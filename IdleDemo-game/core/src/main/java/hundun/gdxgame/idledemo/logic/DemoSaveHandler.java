@@ -10,6 +10,9 @@ import hundun.gdxgame.idleshare.gamelib.framework.data.ConstructionSaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.data.GameplaySaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.data.SystemSettingSaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
+import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager;
+import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementSaveData;
+import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementState;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
 /**
@@ -79,7 +82,10 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
                         .constructionSaveDataMap(map)
                         .ownResources(ownResources)
                         .unlockedResourceTypes(new HashSet<>())
-                        .unlockedAchievementIds(new HashSet<>())
+                        .achievementSaveDataMap(JavaFeatureForGwt.mapOf(
+                                DemoAchievementId.STEP_1,
+                                new AchievementSaveData(AchievementState.RUNNING)
+                        ))
                         .build())
                 .systemSettingSaveData(SystemSettingSaveData.builder()
                         .language(Language.EN)

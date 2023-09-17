@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
-import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementUnlockCallback;
+import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementBoardCallback;
+import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementStateChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollectionListener;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.INotificationBoardCallerAndCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IBuffChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
-
+import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementState;
 
 
 /**
@@ -20,7 +21,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchi
  */
 public class EventManager {
     List<IBuffChangeListener> buffChangeListeners = new ArrayList<>();
-    List<IAchievementUnlockCallback> achievementUnlockListeners = new ArrayList<>();
+    List<IAchievementStateChangeListener> achievementStateChangeListeners = new ArrayList<>();
     List<INotificationBoardCallerAndCallback> notificationBoardCallerAndCallbacks = new ArrayList<>();
     List<IOneFrameResourceChangeListener> oneFrameResourceChangeListeners = new ArrayList<>();
     List<IConstructionCollectionListener> constructionCollectionListeners = new ArrayList<>();
@@ -35,8 +36,8 @@ public class EventManager {
         if (listener instanceof IBuffChangeListener && !buffChangeListeners.contains(listener)) {
             buffChangeListeners.add((IBuffChangeListener) listener);
         }
-        if (listener instanceof IAchievementUnlockCallback && !achievementUnlockListeners.contains(listener)) {
-            achievementUnlockListeners.add((IAchievementUnlockCallback) listener);
+        if (listener instanceof IAchievementStateChangeListener && !achievementStateChangeListeners.contains(listener)) {
+            achievementStateChangeListeners.add((IAchievementStateChangeListener) listener);
         }
         if (listener instanceof INotificationBoardCallerAndCallback && !notificationBoardCallerAndCallbacks.contains(listener))
         {
@@ -57,9 +58,9 @@ public class EventManager {
         {
             buffChangeListeners.remove((IBuffChangeListener)listener);
         }
-        if (listener instanceof IAchievementUnlockCallback)
+        if (listener instanceof IAchievementBoardCallback)
         {
-            achievementUnlockListeners.remove((IAchievementUnlockCallback)listener);
+            achievementStateChangeListeners.remove((IAchievementStateChangeListener)listener);
         }
         if (listener instanceof INotificationBoardCallerAndCallback)
         {
@@ -96,10 +97,10 @@ public class EventManager {
         }
     }
 
-    public void notifyAchievementUnlock(AbstractAchievement prototype) {
+    public void notifyAchievementComplete(AbstractAchievement achievement, AchievementState state) {
         gameContext.getFrontEnd().log(this.getClass().getSimpleName(), "notifyAchievementUnlock");
-        for (IAchievementUnlockCallback listener : achievementUnlockListeners) {
-            listener.showAchievementMaskBoard(prototype);
+        for (IAchievementStateChangeListener listener : achievementStateChangeListeners) {
+            listener.onAchievementStateChange(achievement, state);
         }
     }
 

@@ -3,14 +3,14 @@ package hundun.gdxgame.idledemo.ui.sub;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
+import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementInfoPackage;
 
 import java.util.List;
 
-public class FirstLockedAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table implements IGameAreaChangeListener {
+public class FirstRunningAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table {
 
     BaseIdleScreen<T_GAME, T_SAVE> parent;
 
@@ -22,7 +22,7 @@ public class FirstLockedAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>, 
 
     List<String> texts;
 
-    public FirstLockedAchievementBoardVM(BaseIdleScreen<T_GAME, T_SAVE> parent)
+    public FirstRunningAchievementBoardVM(BaseIdleScreen<T_GAME, T_SAVE> parent)
     {
         this.parent = parent;
         this.texts = parent.getGame().getIdleGameplayExport().getGameDictionary()
@@ -46,13 +46,13 @@ public class FirstLockedAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>, 
         updateData();
     }
 
-    private void updateData()
+    public void updateData()
     {
         AchievementInfoPackage data = parent.getGame().getIdleGameplayExport().getGameplayContext().getAchievementManager().getAchievementInfoPackage();
-        if (data.getFirstLockedAchievement() != null)
+        if (data.getFirstRunningAchievement() != null)
         {
-            nameValueLabel.setText(data.getFirstLockedAchievement().getName());
-            descriptionLabel.setText(data.getFirstLockedAchievement().getDescription());
+            nameValueLabel.setText(data.getFirstRunningAchievement().getName());
+            descriptionLabel.setText(data.getFirstRunningAchievement().getDescription());
         }
         else
         {
@@ -60,13 +60,13 @@ public class FirstLockedAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>, 
             descriptionLabel.setText(texts.get(5));
         }
 
-        countValueLabel.setText(" " + data.getUnLockedSize() + "/" + data.getTotal());
+        countValueLabel.setText(JavaFeatureForGwt.stringFormat(
+                "已完成：%s；未解锁：%s",
+                data.getCompletedSize(),
+                data.getLockedSize()
+        ));
 
 
     }
 
-    @Override
-    public void onGameAreaChange(String last, String current) {
-        updateData();
-    }
 }

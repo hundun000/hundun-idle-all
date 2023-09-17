@@ -69,7 +69,10 @@ public class IdleGameplayExport implements ILogicFrameListener,
 
         gameplayContext.getStorageManager().setUnlockedResourceTypes(gameplaySaveData.getUnlockedResourceTypes());
         gameplayContext.getStorageManager().setOwnResoueces(gameplaySaveData.getOwnResources());
-        gameplayContext.getAchievementManager().setUnlockedAchievementIds(gameplaySaveData.getUnlockedAchievementIds());
+        gameplayContext.getAchievementManager().subApplyGameplaySaveData(
+                builtinAchievementsLoader.getProviderMap(language),
+                gameplaySaveData.getAchievementSaveDataMap()
+        );
     }
 
     @Override
@@ -84,7 +87,7 @@ public class IdleGameplayExport implements ILogicFrameListener,
                 );
         gameplaySaveData.setUnlockedResourceTypes(gameplayContext.getStorageManager().getUnlockedResourceTypes());
         gameplaySaveData.setOwnResources(gameplayContext.getStorageManager().getOwnResoueces());
-        gameplaySaveData.setUnlockedAchievementIds(gameplayContext.getAchievementManager().getUnlockedAchievementIds());
+        gameplaySaveData.setAchievementSaveDataMap(gameplayContext.getAchievementManager().getAchievementSaveDataMap());
     }
 
     @Override
