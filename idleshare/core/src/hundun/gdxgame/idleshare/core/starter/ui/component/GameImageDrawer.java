@@ -40,7 +40,7 @@ public class GameImageDrawer<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> implem
         GameEntityManager manager = owner.getGameEntityManager();
 
         
-        String gameArea = parent.getArea();
+        String gameArea = parent.getScreenId();
         List<String> needDrawConstructionIds = manager.getAreaShowEntityByOwnAmountConstructionIds().get(gameArea);
         manager.destoryNoNeedDrawConstructionIds(needDrawConstructionIds);
         manager.allEntityMoveForFrame();
@@ -90,7 +90,7 @@ public class GameImageDrawer<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> implem
     @Override
     public void onResourceChange(Map<String, Long> changeMap, Map<String, List<Long>> deltaHistoryMap) {
         GameEntityManager manager = owner.getGameEntityManager();
-        String gameArea = parent.getArea();
+        String gameArea = parent.getScreenId();
 
         manager.areaEntityCheckByOwnAmount(gameArea, gameEntityFactory);
         manager.areaEntityCheckByChangeAmount(gameArea, gameEntityFactory, changeMap);

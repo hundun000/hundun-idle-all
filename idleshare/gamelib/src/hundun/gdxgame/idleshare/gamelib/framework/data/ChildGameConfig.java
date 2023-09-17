@@ -3,8 +3,7 @@ package hundun.gdxgame.idleshare.gamelib.framework.data;
 import java.util.List;
 import java.util.Map;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * @author hundun
@@ -13,10 +12,27 @@ import lombok.Setter;
 @Getter
 @Setter
 public abstract class ChildGameConfig {
-    Map<String, List<String>> areaControlableConstructionVMPrototypeIds;
-    Map<String, List<String>> areaControlableConstructionPrototypeVMPrototypeIds;
+    ConstructionConfig constructionConfig;
     Map<String, List<String>> areaShowEntityByOwnAmountConstructionPrototypeIds;
     Map<String, List<String>> areaShowEntityByOwnAmountResourceIds;
     Map<String, List<String>> areaShowEntityByChangeAmountResourceIds;
     Map<String, String> screenIdToFilePathMap;
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    public static class ConstructionConfig {
+        EmptyConstructionConfig emptyConstructionConfig;
+        List<String> singletonPrototypeIds;
+        List<String> worldPrototypeIds;
+    }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    public static class EmptyConstructionConfig {
+        String prototypeId;
+        List<String> buyCandidatePrototypeIds;
+    }
+
 }

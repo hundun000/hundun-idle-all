@@ -18,22 +18,22 @@ public class DemoGameDictionary implements IGameDictionary {
         switch (language) {
             case CN:
                 switch (constructionId) {
-                    case DemoConstructionPrototypeId.COOKIE_CLICK_PROVIDER:
+                    case DemoConstructionPrototypeId.SINGLETON_COOKIE_CLICK_PROVIDER:
                         return "点击器";
                     case DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
                         return "自动点击器";
-                    case DemoConstructionPrototypeId.COOKIE_AUTO_SELLER:
+                    case DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER:
                         return "自动出售器";
                     default:
                         return "口口";
                 }
             default:
                 switch (constructionId) {
-                    case DemoConstructionPrototypeId.COOKIE_CLICK_PROVIDER:
+                    case DemoConstructionPrototypeId.SINGLETON_COOKIE_CLICK_PROVIDER:
                         return "Clicker";
                     case DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
                         return "AutoClicker";
-                    case DemoConstructionPrototypeId.COOKIE_AUTO_SELLER:
+                    case DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER:
                         return "AutoSeller";
                     default:
                         return "[dic lost]";

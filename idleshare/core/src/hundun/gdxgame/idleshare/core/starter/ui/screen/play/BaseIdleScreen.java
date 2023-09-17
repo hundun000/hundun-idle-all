@@ -2,6 +2,7 @@ package hundun.gdxgame.idleshare.core.starter.ui.screen.play;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import hundun.gdxgame.corelib.base.BaseHundunScreen;
 import hundun.gdxgame.gamelib.base.LogicFrameHelper;
 import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
@@ -11,6 +12,7 @@ import hundun.gdxgame.idleshare.core.starter.ui.component.BackgroundImageBox;
 import hundun.gdxgame.idleshare.core.starter.ui.component.GameAreaControlBoard;
 import hundun.gdxgame.idleshare.core.starter.ui.component.StorageInfoBoard;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,17 +37,21 @@ public abstract class BaseIdleScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
     protected StorageInfoBoard<T_GAME, T_SAVE> storageInfoTable;
 
     protected BackgroundImageBox<T_GAME, T_SAVE> backgroundImageBox;
+    protected GameAreaControlBoard<T_GAME, T_SAVE> gameAreaControlBoard;
 
+    protected Table leftSideGroup;
     // ----- not ui ------
 
-    @Getter
-    protected String area;
 
     protected List<ILogicFrameListener> logicFrameListeners;
     protected List<IGameAreaChangeListener> gameAreaChangeListeners;
 
-    public BaseIdleScreen(T_GAME game, PlayScreenLayoutConst layoutConst) {
+    @Getter
+    protected final String screenId;
+
+    public BaseIdleScreen(T_GAME game, String screenId, PlayScreenLayoutConst layoutConst) {
         super(game, game.getSharedViewport());
+        this.screenId = screenId;
         this.layoutConst = layoutConst;
         this.logicFrameHelper = new LogicFrameHelper(LOGIC_FRAME_PER_SECOND);
         this.logicFrameListeners = new ArrayList<>();
@@ -76,14 +82,12 @@ public abstract class BaseIdleScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
 
 
     protected void lazyInitLogicContext() {
-
-
-        
-
         logicFrameListeners.add(game.getIdleGameplayExport());
 
         gameAreaChangeListeners.add(backgroundImageBox);
+        gameAreaChangeListeners.add(gameAreaControlBoard);
 
+        gameAreaControlBoard.lazyInit(game.getControlBoardScreenIds());
 
         this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(this);
         this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(storageInfoTable);
@@ -94,9 +98,17 @@ public abstract class BaseIdleScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
     protected void lazyInitUiRootContext() {
         
         storageInfoTable = new StorageInfoBoard<>(this);
-        uiRootTable.add(storageInfoTable).height(layoutConst.STORAGE_BOARD_BORDER_HEIGHT).fill().row();
+        uiRootTable.add(storageInfoTable)
+                .height(layoutConst.STORAGE_BOARD_BORDER_HEIGHT)
+                .fill()
+                .colspan(2)
+                .row();
 
+        leftSideGroup = new Table();
+        uiRootTable.add(leftSideGroup).expand().left();
 
+        gameAreaControlBoard = new GameAreaControlBoard<>(this);
+        uiRootTable.add(gameAreaControlBoard).expand().right().top().row();
 
     }
 
@@ -105,7 +117,6 @@ public abstract class BaseIdleScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
         this.backgroundImageBox = new BackgroundImageBox<>(this);
         backUiStage.addActor(backgroundImageBox);
 
-        
     }
 
 
@@ -127,6 +138,10 @@ public abstract class BaseIdleScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
 
         updateUIForShow();
 
+        for (IGameAreaChangeListener gameAreaChangeListener : gameAreaChangeListeners) {
+            gameAreaChangeListener.onGameAreaChange(game.getLastScreenId(), this.getScreenId());
+        }
+
         this.hidden = false;
         Gdx.app.log(this.getClass().getSimpleName(), "show done");
     }
@@ -142,13 +157,5 @@ public abstract class BaseIdleScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
 
     protected abstract InputProcessor provideDefaultInputProcessor();
 
-    public void setAreaAndNotifyChildren(String current) {
-        String last = this.area;
-        this.area = current;
 
-        for (IGameAreaChangeListener gameAreaChangeListener : gameAreaChangeListeners) {
-            gameAreaChangeListener.onGameAreaChange(last, current);
-        }
-
-    }
 }

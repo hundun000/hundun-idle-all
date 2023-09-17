@@ -18,12 +18,12 @@ import hundun.gdxgame.idleshare.gamelib.framework.util.text.IGameDictionary;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.TextFormatTool;
 import lombok.Getter;
+import lombok.Setter;
 
 
 public abstract class BaseIdleGame<T_SAVE> extends BaseHundunGame<T_SAVE> {
 
-    @Getter
-    protected AbstractIdleScreenContext<? extends BaseIdleGame<T_SAVE>, T_SAVE> screenContext;
+
     @Getter
     protected AudioPlayManager audioPlayManager;
     
@@ -39,7 +39,13 @@ public abstract class BaseIdleGame<T_SAVE> extends BaseHundunGame<T_SAVE> {
     protected IdleGameplayExport idleGameplayExport;
     @Getter
     protected ChildGameConfig childGameConfig;
-    
+    @Setter
+    @Getter
+    protected String lastScreenId;
+    @Getter
+    protected
+    List<String> controlBoardScreenIds;
+
     public BaseIdleGame(int viewportWidth, int viewportHeight) {
         super(viewportWidth, viewportHeight);
     }
@@ -48,7 +54,7 @@ public abstract class BaseIdleGame<T_SAVE> extends BaseHundunGame<T_SAVE> {
 	@Override
 	protected void createStage2() {
 	    textureManager.lazyInitOnGameCreateStage2();
-	    screenContext.lazyInit();
+
 	}
 	
 	
@@ -59,8 +65,6 @@ public abstract class BaseIdleGame<T_SAVE> extends BaseHundunGame<T_SAVE> {
         audioPlayManager.lazyInitOnGameCreate(childGameConfig.getScreenIdToFilePathMap());
         
 	}
-
-    public abstract List<String> getGameAreaValues();
 
 //    /**
 //     * 作为新存档，也需要修改ModelContext

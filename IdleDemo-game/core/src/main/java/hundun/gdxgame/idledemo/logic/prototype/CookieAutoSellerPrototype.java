@@ -39,7 +39,7 @@ public class CookieAutoSellerPrototype extends AbstractConstructionPrototype {
 
     public CookieAutoSellerPrototype(Language language) {
         super(
-                DemoConstructionPrototypeId.COOKIE_AUTO_SELLER,
+                DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER,
                 language,
                 DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf())
         );

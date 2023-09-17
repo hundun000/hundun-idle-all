@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import hundun.gdxgame.idledemo.DemoIdleGame;
-import hundun.gdxgame.idledemo.logic.GameArea;
+import hundun.gdxgame.idledemo.logic.DemoScreenId;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
 import hundun.gdxgame.idledemo.ui.world.HexAreaVM;
@@ -30,7 +30,7 @@ public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstruction
     protected WorldCellDetailBoardVM worldCellDetailBoardVM;
 
     public WorldPlayScreen(DemoIdleGame game) {
-        super(game);
+        super(game, DemoScreenId.SCREEN_WORLD);
 
         this.deskCamera = new OrthographicCamera();
         this.deskStage = new Stage(new ScreenViewport(deskCamera), game.getBatch());
@@ -42,14 +42,18 @@ public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstruction
         super.lazyInitUiRootContext();
 
         worldCellDetailBoardVM = new WorldCellDetailBoardVM(this);
-        uiRootTable.add(worldCellDetailBoardVM).height(layoutConst.CONSTRUCION_BOARD_ROOT_BOX_HEIGHT).fill();
+        uiRootTable.add(worldCellDetailBoardVM)
+                .height(layoutConst.CONSTRUCION_BOARD_ROOT_BOX_HEIGHT)
+                .fill()
+                .colspan(2)
+        ;
     }
 
     protected void lazyInitLogicContext() {
         super.lazyInitLogicContext();
         
         storageInfoTable.lazyInit(ResourceType.VALUES_FOR_SHOW_ORDER);
-        gameAreaControlBoard.lazyInit(GameArea.values);
+
 
         this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(worldCellDetailBoardVM);
     }
@@ -67,10 +71,8 @@ public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstruction
     @Override
     protected void updateUIForShow() {
         List<BaseConstruction> constructions = game.getIdleGameplayExport().getGameplayContext().getConstructionManager()
-                .getConstructions();
+                .getWorldConstructionInstances();
         hexAreaVM.updateDeskDatas(constructions);
-        // start area
-        setAreaAndNotifyChildren(GameArea.AREA_FOREST);
     }
 
     @Override
@@ -107,7 +109,7 @@ public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstruction
     @Override
     public void onConstructionCollectionChange() {
         List<BaseConstruction> constructions = game.getIdleGameplayExport().getGameplayContext().getConstructionManager()
-                .getConstructions();
+                .getWorldConstructionInstances();
         hexAreaVM.updateDeskDatas(constructions);
     }
 }

@@ -61,8 +61,7 @@ public class IdleGameplayContext {
             Map<String, AbstractAchievement> achievementProviderMap
     ) {
         this.getConstructionFactory().lazyInit(this, language, providerMap);
-        this.getConstructionManager().lazyInit(childGameConfig.getAreaControlableConstructionVMPrototypeIds(),
-                childGameConfig.getAreaControlableConstructionPrototypeVMPrototypeIds());
+        this.getConstructionManager().lazyInit(childGameConfig.getConstructionConfig());
     }
 
 }

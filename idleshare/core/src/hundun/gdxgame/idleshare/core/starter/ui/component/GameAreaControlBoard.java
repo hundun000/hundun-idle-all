@@ -3,12 +3,12 @@ package hundun.gdxgame.idleshare.core.starter.ui.component;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 
 /**
@@ -31,12 +31,6 @@ public class GameAreaControlBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> e
         
     }
 
-    private void initButtonMap(String gameArea, boolean longVersion) {
-        GameAreaControlNode<T_GAME, T_SAVE> node = new GameAreaControlNode<>(parent, gameArea, longVersion);
-        nodes.put(gameArea, node);
-        this.add(node).width(parent.getLayoutConst().AREA_BOARD_BORDER_WIDTH).height(parent.getLayoutConst().AREA_BOARD_CELL_HEIGHT).row();
-    }
-
 
 
     @Override
@@ -47,7 +41,7 @@ public class GameAreaControlBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> e
     private void rebuildChild(String current) {
 
         nodes.entrySet().forEach(entry -> {
-            if (entry.getKey() == current) {
+            if (Objects.equals(entry.getKey(), current)) {
                 entry.getValue().changeVersion(true);
             } else {
                 entry.getValue().changeVersion(false);
@@ -57,9 +51,16 @@ public class GameAreaControlBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> e
 
     }
 
-    public void lazyInit(List<String> gameAreas) {
-        for (String gameArea : gameAreas) {
-            initButtonMap(gameArea, false);
+    public void lazyInit(List<String> controlBoardScreenIds) {
+
+        nodes.clear();
+        this.clear();
+
+        for (String controlBoardScreenId : controlBoardScreenIds) {
+
+            GameAreaControlNode<T_GAME, T_SAVE> node = new GameAreaControlNode<>(parent, controlBoardScreenId, false);
+            nodes.put(controlBoardScreenId, node);
+            this.add(node).width(parent.getLayoutConst().AREA_BOARD_BORDER_WIDTH).height(parent.getLayoutConst().AREA_BOARD_CELL_HEIGHT).row();
         }
 
         rebuildChild(null);

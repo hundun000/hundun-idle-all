@@ -30,9 +30,9 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
         Map<String, ConstructionSaveData> map = new HashMap<>();
 
         map.put(
-                DemoConstructionPrototypeId.COOKIE_CLICK_PROVIDER + "_" + UUID.randomUUID(),
+                DemoConstructionPrototypeId.SINGLETON_COOKIE_CLICK_PROVIDER + "_" + UUID.randomUUID(),
                 ConstructionSaveData.builder()
-                        .prototypeId(DemoConstructionPrototypeId.COOKIE_CLICK_PROVIDER)
+                        .prototypeId(DemoConstructionPrototypeId.SINGLETON_COOKIE_CLICK_PROVIDER)
                         .level(0)
                         .workingLevel(0)
                         .position( new GridPosition(0, 0))
@@ -48,9 +48,9 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
                         .build()
         );
         map.put(
-                DemoConstructionPrototypeId.COOKIE_AUTO_SELLER + "_" + UUID.randomUUID(),
+                DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER + "_" + UUID.randomUUID(),
                 ConstructionSaveData.builder()
-                        .prototypeId(DemoConstructionPrototypeId.COOKIE_AUTO_SELLER)
+                        .prototypeId(DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER)
                         .level(1)
                         .workingLevel(0)
                         .position( new GridPosition(1, 0))

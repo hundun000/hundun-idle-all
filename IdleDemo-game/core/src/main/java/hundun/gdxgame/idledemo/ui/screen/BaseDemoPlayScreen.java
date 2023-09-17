@@ -5,10 +5,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import hundun.gdxgame.corelib.base.BaseHundunGame;
+import hundun.gdxgame.corelib.base.BaseHundunScreen;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.idledemo.DemoIdleGame;
-import hundun.gdxgame.idledemo.logic.GameArea;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.sub.FirstRunningAchievementBoardVM;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
@@ -33,22 +34,19 @@ public abstract class BaseDemoPlayScreen extends BaseIdleScreen<DemoIdleGame, Ro
     DemoIdleGame demoIdleGame;
     protected List<AbstractAchievement> showAchievementMaskBoardQueue = new ArrayList<>();
 
-    public BaseDemoPlayScreen(DemoIdleGame game) {
-        super(game, DemoScreenContext.customLayoutConst(game));
+    public BaseDemoPlayScreen(DemoIdleGame game, String screenId) {
+        super(game, screenId, DemoScreenContext.customLayoutConst(game));
         this.demoIdleGame = game;
     }
 
-    protected GameAreaControlBoard<DemoIdleGame, RootSaveData> gameAreaControlBoard;
 
-    Map<String, String> areaToScreenIdMap = JavaFeatureForGwt.mapOf(
-            GameArea.AREA_COOKIE, CookiePlayScreen.class.getSimpleName(),
-            GameArea.AREA_FOREST, WorldPlayScreen.class.getSimpleName()
-    );
+
+
 
     @Override
     protected void lazyInitLogicContext() {
         super.lazyInitLogicContext();
-        gameAreaChangeListeners.add(gameAreaControlBoard);
+
         gameAreaChangeListeners.add(this);
     }
 
@@ -56,42 +54,18 @@ public abstract class BaseDemoPlayScreen extends BaseIdleScreen<DemoIdleGame, Ro
     protected void lazyInitUiRootContext() {
         super.lazyInitUiRootContext();
 
-        Table rightSideGroup = new Table();
 
         firstRunningAchievementBoardVM = new FirstRunningAchievementBoardVM<>(this);
-        rightSideGroup.add(firstRunningAchievementBoardVM)
+        leftSideGroup.add(firstRunningAchievementBoardVM)
                 .width(getLayoutConst().FIRST_LOCKED_ACHIEVEMENT_BOARD_WIDTH)
                 .height(getLayoutConst().FIRST_LOCKED_ACHIEVEMENT_BOARD_HEIGHT)
-                .row();
-
-        gameAreaControlBoard = new GameAreaControlBoard<>(this);
-        rightSideGroup.add(gameAreaControlBoard).expand().right().row();
-
-        TextButton toAchievementScreenButton = new TextButton("AchievementScreen", game.getMainSkin());
-        toAchievementScreenButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                DemoAchievementScreen demoAchievementScreen = (DemoAchievementScreen) game.getScreenManager().getScreen(DemoAchievementScreen.class.getSimpleName());
-                demoAchievementScreen.setLastScreenId(BaseDemoPlayScreen.this.getClass().getSimpleName());
-                game.getScreenManager().pushScreen(DemoAchievementScreen.class.getSimpleName(), null);
-                game.getAudioPlayManager().intoScreen(DemoAchievementScreen.class.getSimpleName());
-            }
-        });
-        rightSideGroup.add(toAchievementScreenButton).right().row();
-
-        uiRootTable.add(rightSideGroup).expand().right().row();
+                .left()
+                .top()
+        ;
     }
 
     @Override
     public void onGameAreaChange(String last, String current) {
-        String lastScreen = areaToScreenIdMap.get(last);
-        String currentScreen = areaToScreenIdMap.get(current);
-
-        if (lastScreen != null && !currentScreen.equals(lastScreen))
-        {
-            game.getScreenManager().pushScreen(currentScreen, null);
-            game.getAudioPlayManager().intoScreen(currentScreen);
-        }
         firstRunningAchievementBoardVM.updateData();
     }
 

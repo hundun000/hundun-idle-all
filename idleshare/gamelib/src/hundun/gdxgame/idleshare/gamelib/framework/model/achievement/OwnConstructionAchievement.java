@@ -2,7 +2,6 @@ package hundun.gdxgame.idleshare.gamelib.framework.model.achievement;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
-import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementState;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
 
 import java.util.List;
@@ -28,7 +27,7 @@ public class OwnConstructionAchievement extends AbstractAchievement {
     @Override
     public boolean checkComplete()
     {
-        List<BaseConstruction> allConstructions = gameplayContext.getConstructionManager().getConstructions();
+        List<BaseConstruction> allConstructions = gameplayContext.getConstructionManager().getAllConstructionInstances();
 
         for (Entry<String, Entry<Integer, Integer>> requiredEntry : requireds.entrySet())
         {

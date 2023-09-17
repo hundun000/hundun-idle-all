@@ -62,7 +62,7 @@ public class DemoAchievementLoader implements IBuiltinAchievementsLoader {
                 DemoAchievementId.STEP_2,
                 textMap,
                 JavaFeatureForGwt.mapOf(
-                        DemoConstructionPrototypeId.COOKIE_AUTO_SELLER, new SimpleEntry<>(1, 2)
+                        DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER, new SimpleEntry<>(1, 2)
                 ),
                 null,
                 new ResourcePair(ResourceType.COIN, 1000L)

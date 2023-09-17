@@ -46,19 +46,19 @@ public class DemoTextureManager extends AbstractTextureManager {
         {
             Texture texture = new Texture(Gdx.files.internal("gameAreaIcons.png"));
             TextureRegion[][] regions = TextureRegion.split(texture, 100, 50);
-            gameAreaLeftPartRegionMap.put(GameArea.AREA_COOKIE, regions[0][0]);
-            gameAreaLeftPartRegionMap.put(GameArea.AREA_FOREST, regions[1][0]);
+            gameAreaLeftPartRegionMap.put(DemoScreenId.SCREEN_COOKIE, regions[0][0]);
+            gameAreaLeftPartRegionMap.put(DemoScreenId.SCREEN_WORLD, regions[1][0]);
             //gameAreaLeftPartRegionMap.put(GameArea.AREA_WIN, regions[2][0]);
-            gameAreaRightPartRegionMap.put(GameArea.AREA_COOKIE, regions[0][1]);
-            gameAreaRightPartRegionMap.put(GameArea.AREA_FOREST, regions[1][1]);
+            gameAreaRightPartRegionMap.put(DemoScreenId.SCREEN_COOKIE, regions[0][1]);
+            gameAreaRightPartRegionMap.put(DemoScreenId.SCREEN_WORLD, regions[1][1]);
             //gameAreaRightPartRegionMap.put(GameArea.AREA_WIN, regions[2][1]);
         }
         {
             Texture texture = new Texture(Gdx.files.internal("areas.png"));
             TextureRegion[][] regions = TextureRegion.split(texture, 640, 480);
             defaultAreaBack = regions[0][0];
-            gameAreaBackMap.put(GameArea.AREA_COOKIE, regions[0][1]);
-            gameAreaBackMap.put(GameArea.AREA_FOREST, regions[0][2]);
+            gameAreaBackMap.put(DemoScreenId.SCREEN_COOKIE, regions[0][1]);
+            gameAreaBackMap.put(DemoScreenId.SCREEN_WORLD, regions[0][2]);
             //gameAreaBackMap.put(GameArea.AREA_WIN, regions[0][3]);
         }
         {
@@ -66,9 +66,9 @@ public class DemoTextureManager extends AbstractTextureManager {
             TextureRegion[][] regions = TextureRegion.split(texture, 128, 128);
             defaultAreaBack = regions[0][1];
             constructionHexImageMap.put(DemoConstructionPrototypeId.EMPTY_CELL, regions[0][0]);
-            constructionHexImageMap.put(DemoConstructionPrototypeId.COOKIE_CLICK_PROVIDER, regions[0][1]);
+            constructionHexImageMap.put(DemoConstructionPrototypeId.SINGLETON_COOKIE_CLICK_PROVIDER, regions[0][1]);
             constructionHexImageMap.put(DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER, regions[0][2]);
-            constructionHexImageMap.put(DemoConstructionPrototypeId.COOKIE_AUTO_SELLER, regions[0][3]);
+            constructionHexImageMap.put(DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER, regions[0][3]);
             //gameAreaBackMap.put(GameArea.AREA_WIN, regions[0][3]);
         }
     }

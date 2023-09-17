@@ -78,7 +78,7 @@ public class IdleGameplayExport implements ILogicFrameListener,
     @Override
     public void currentSituationToGameplaySaveData(GameplaySaveData gameplaySaveData) {
         gameplaySaveData.setStageId(this.stageId);
-        List<BaseConstruction> constructions = gameplayContext.getConstructionManager().getConstructions();
+        List<BaseConstruction> constructions = gameplayContext.getConstructionManager().getAllConstructionInstances();
         gameplaySaveData.setConstructionSaveDataMap(constructions.stream()
                 .collect(Collectors.toMap(
                         it -> it.getId(), 

@@ -6,10 +6,8 @@ import java.util.Map;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idledemo.logic.DemoConstructionPrototypeId;
-import hundun.gdxgame.idledemo.logic.GameArea;
+import hundun.gdxgame.idledemo.logic.DemoScreenId;
 import hundun.gdxgame.idledemo.logic.ResourceType;
-import hundun.gdxgame.idledemo.ui.screen.DemoMenuScreen;
-import hundun.gdxgame.idledemo.ui.screen.CookiePlayScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
 
 /**
@@ -22,31 +20,35 @@ public class DemoChildGameConfig extends ChildGameConfig {
 
 //        BuiltinConstructionsLoader builtinConstructionsLoader = new BuiltinConstructionsLoader(game);
 //        this.setConstructions(builtinConstructionsLoader.load());
+
+
+        this.setConstructionConfig(
+                ConstructionConfig.builder()
+                        .emptyConstructionConfig(EmptyConstructionConfig.builder()
+                                .prototypeId(DemoConstructionPrototypeId.EMPTY_CELL)
+                                .buyCandidatePrototypeIds(JavaFeatureForGwt.listOf(
+                                        DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER
+                                ))
+                                .build()
+                        )
+                        .singletonPrototypeIds(JavaFeatureForGwt.listOf(
+                                DemoConstructionPrototypeId.SINGLETON_COOKIE_CLICK_PROVIDER,
+                                DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER
+                        ))
+                        .worldPrototypeIds(JavaFeatureForGwt.listOf(
+                                DemoConstructionPrototypeId.EMPTY_CELL,
+                                DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER
+                        ))
+                        .build()
+        );
+
+
         
-        Map<String, List<String>> areaControlableConstructionVMPrototypeIds = new HashMap<>();
-        areaControlableConstructionVMPrototypeIds.put(GameArea.AREA_COOKIE, JavaFeatureForGwt.arraysAsList(
-                DemoConstructionPrototypeId.COOKIE_CLICK_PROVIDER,
-                DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER,
-                DemoConstructionPrototypeId.COOKIE_AUTO_SELLER
-        ));
-        this.setAreaControlableConstructionVMPrototypeIds(areaControlableConstructionVMPrototypeIds);
-
-        Map<String, List<String>> areaControlableConstructionPrototypeVMPrototypeIds = new HashMap<>();
-        areaControlableConstructionPrototypeVMPrototypeIds.put(GameArea.AREA_FOREST, JavaFeatureForGwt.listOf(
-                DemoConstructionPrototypeId.EMPTY_CELL
-        ));
-        this.setAreaControlableConstructionPrototypeVMPrototypeIds(areaControlableConstructionPrototypeVMPrototypeIds);
-
-
-        
-        Map<String, List<String>> areaShownResourceIds = new HashMap<>(); 
-        areaShownResourceIds.put(GameArea.AREA_COOKIE, JavaFeatureForGwt.arraysAsList(
-            ResourceType.COIN
-        ));
+        Map<String, List<String>> areaShownResourceIds = new HashMap<>();
         this.setAreaShowEntityByOwnAmountResourceIds(areaShownResourceIds);
         
         Map<String, List<String>> areaShowEntityByChangeAmountResourceIds = new HashMap<>(); 
-        areaShowEntityByChangeAmountResourceIds.put(GameArea.AREA_COOKIE, JavaFeatureForGwt.arraysAsList(
+        areaShowEntityByChangeAmountResourceIds.put(DemoScreenId.SCREEN_COOKIE, JavaFeatureForGwt.arraysAsList(
             ResourceType.COOKIE
         ));
         this.setAreaShowEntityByChangeAmountResourceIds(areaShowEntityByChangeAmountResourceIds);
@@ -54,8 +56,8 @@ public class DemoChildGameConfig extends ChildGameConfig {
         this.setAreaShowEntityByOwnAmountConstructionPrototypeIds(new HashMap<>());
 
         Map<String, String> screenIdToFilePathMap = JavaFeatureForGwt.mapOf(
-                DemoMenuScreen.class.getSimpleName(), "audio/Loop-Menu.wav",
-                CookiePlayScreen.class.getSimpleName(), "audio/forest.mp3"
+                DemoScreenId.SCREEN_COOKIE, "audio/Loop-Menu.wav",
+                DemoScreenId.SCREEN_WORLD, "audio/forest.mp3"
                 );
         this.setScreenIdToFilePathMap(screenIdToFilePathMap);
 

@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
@@ -20,23 +21,17 @@ import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 
 public class BackgroundImageBox<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Container<Image> implements IGameAreaChangeListener{
     BaseIdleScreen<T_GAME, T_SAVE> parent;
-    Map<String, Drawable> imageMap = new HashMap<>();
 
     public BackgroundImageBox(BaseIdleScreen<T_GAME, T_SAVE> parent) {
         this.parent = parent;
         this.setFillParent(true);
         //this.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-
-        for (String gameArea : parent.getGame().getGameAreaValues()) {
-            imageMap.put(gameArea, new SpriteDrawable(new Sprite(parent.getGame().getTextureManager().getBackgroundTexture(gameArea))));
-        }
-
     }
 
     @Override
     public void onGameAreaChange(String last, String current) {
-        Drawable image = imageMap.get(current);
+        Drawable image = new TextureRegionDrawable(parent.getGame().getTextureManager().getBackgroundTexture(current));
         this.setBackground(image);
     }
 

@@ -4,7 +4,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import hundun.gdxgame.idledemo.DemoIdleGame;
-import hundun.gdxgame.idledemo.logic.GameArea;
+import hundun.gdxgame.idledemo.logic.DemoScreenId;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
@@ -30,7 +30,7 @@ public class CookiePlayScreen extends BaseDemoPlayScreen
     protected AbstractConstructionControlBoard<DemoIdleGame, RootSaveData> constructionControlBoard;
 
     public CookiePlayScreen(DemoIdleGame game) {
-        super(game);
+        super(game, DemoScreenId.SCREEN_COOKIE);
     }
 
 
@@ -40,7 +40,11 @@ public class CookiePlayScreen extends BaseDemoPlayScreen
 
         // impl switchable
         constructionControlBoard = new FixedConstructionControlBoard<>(this, this);
-        uiRootTable.add(constructionControlBoard).height(layoutConst.CONSTRUCION_BOARD_ROOT_BOX_HEIGHT).fill();
+        uiRootTable.add(constructionControlBoard)
+                .height(layoutConst.CONSTRUCION_BOARD_ROOT_BOX_HEIGHT)
+                .fill()
+                .colspan(2)
+        ;
     }
 
     protected void lazyInitLogicContext() {
@@ -58,7 +62,7 @@ public class CookiePlayScreen extends BaseDemoPlayScreen
 
         logicFrameListeners.add(constructionControlBoard);
         storageInfoTable.lazyInit(ResourceType.VALUES_FOR_SHOW_ORDER);
-        gameAreaControlBoard.lazyInit(GameArea.values);
+
         gameAreaChangeListeners.add(constructionControlBoard);
 
         this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(gameImageDrawer);
@@ -109,7 +113,6 @@ public class CookiePlayScreen extends BaseDemoPlayScreen
 
     @Override
     protected void updateUIForShow() {
-        // start area
-        setAreaAndNotifyChildren(GameArea.AREA_COOKIE);
+
     }
 }

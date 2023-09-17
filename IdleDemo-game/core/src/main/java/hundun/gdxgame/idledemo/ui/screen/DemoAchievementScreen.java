@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import hundun.gdxgame.idledemo.DemoIdleGame;
-import hundun.gdxgame.idledemo.logic.GameArea;
+import hundun.gdxgame.idledemo.logic.DemoScreenId;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.sub.AllAchievementBoardVM;
@@ -18,13 +18,10 @@ public class DemoAchievementScreen extends BaseIdleScreen<DemoIdleGame, RootSave
 
     AllAchievementBoardVM<DemoIdleGame, RootSaveData> allAchievementBoardVM;
 
-    Button backButton;
 
-    @Setter
-    String lastScreenId;
 
     public DemoAchievementScreen(DemoIdleGame game) {
-        super(game, DemoScreenContext.customLayoutConst(game));
+        super(game, DemoScreenId.SCREEN_ACHIEVEMENT, DemoScreenContext.customLayoutConst(game));
     }
 
     @Override
@@ -42,17 +39,10 @@ public class DemoAchievementScreen extends BaseIdleScreen<DemoIdleGame, RootSave
         super.lazyInitUiRootContext();
 
         allAchievementBoardVM = new AllAchievementBoardVM<>(this);
-        backButton = new TextButton("back", game.getMainSkin());
-        backButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                game.getScreenManager().pushScreen(lastScreenId, null);
-                game.getAudioPlayManager().intoScreen(lastScreenId);
-            }
-        });
 
-        uiRootTable.add(allAchievementBoardVM).expand().row();
-        uiRootTable.add(backButton);
+
+        leftSideGroup.add(allAchievementBoardVM).expand().row();
+
     }
 
     @Override

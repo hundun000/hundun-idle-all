@@ -6,20 +6,24 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ray3k.stripe.FreeTypeSkin;
 
+import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idledemo.logic.*;
 import hundun.gdxgame.gamelib.base.save.ISaveTool;
 import hundun.gdxgame.idledemo.ui.screen.DemoMenuScreen;
 import hundun.gdxgame.idledemo.ui.screen.DemoScreenContext;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
+import hundun.gdxgame.idleshare.core.framework.model.manager.AbstractIdleScreenContext;
 import hundun.gdxgame.idleshare.core.framework.model.manager.AudioPlayManager;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.TextFormatTool;
+import lombok.Getter;
 
 
 public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
 
-
+    @Getter
+    protected AbstractIdleScreenContext<DemoIdleGame, RootSaveData> screenContext;
     
     
     
@@ -35,14 +39,15 @@ public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
         this.screenContext = new DemoScreenContext(this);
         this.audioPlayManager = new AudioPlayManager(this);
         this.childGameConfig = new DemoChildGameConfig();
-        
-        
+
+        this.controlBoardScreenIds = JavaFeatureForGwt.listOf(
+                DemoScreenId.SCREEN_COOKIE,
+                DemoScreenId.SCREEN_WORLD,
+                DemoScreenId.SCREEN_ACHIEVEMENT
+        );
     }
 
-    @Override
-    public List<String> getGameAreaValues() {
-        return GameArea.values;
-    }
+
     
     @Override
     protected void createStage1() {
@@ -59,15 +64,21 @@ public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
         this.getSaveHandler().registerSubHandler(idleGameplayExport);
         saveHandler.systemSettingLoadOrStarter();
     }
-    
+
+    @Override
+    protected void createStage2() {
+        super.createStage2();
+        screenContext.lazyInit();
+    }
+
     @Override
     protected void createStage3() {
         super.createStage3();
         
         
         
-        screenManager.pushScreen(DemoMenuScreen.class.getSimpleName(), null);
-        getAudioPlayManager().intoScreen(DemoMenuScreen.class.getSimpleName());
+        screenManager.pushScreen(DemoScreenId.SCREEN_MENU, null);
+        getAudioPlayManager().intoScreen(DemoScreenId.SCREEN_MENU);
     }
 
     

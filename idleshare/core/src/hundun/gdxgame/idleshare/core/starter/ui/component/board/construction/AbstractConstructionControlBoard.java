@@ -51,7 +51,7 @@ public abstract class AbstractConstructionControlBoard<T_GAME extends BaseIdleGa
     @Override
     public void onConstructionCollectionChange() {
         List<BaseConstruction> newConstructions = parent.getGame().getIdleGameplayExport().getGameplayContext()
-                .getConstructionManager().getAreaControlableConstructionsOrEmpty(parent.getArea());
+                .getConstructionManager().getSingletonConstructionInstancesOrEmpty();
         newConstructions = filterConstructions(newConstructions);
 
         int childrenSize = initChild(newConstructions.size());

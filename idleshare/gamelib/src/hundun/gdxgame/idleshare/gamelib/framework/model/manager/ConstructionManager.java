@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
+import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig.ConstructionConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ConstructionSaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
@@ -15,6 +15,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.ITileNode;
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.ITileNodeMap;
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.TileNodeUtils;
+import lombok.Getter;
 
 /**
  * @author hundun
@@ -31,28 +32,14 @@ public class ConstructionManager implements ITileNodeMap<Void> {
     private final List<BaseConstruction> removeQueue = new ArrayList<>();
     private final List<BaseConstruction> createQueue = new ArrayList<>();
 
+    @Getter
+    ConstructionConfig constructionConfig;
+
     public ConstructionManager(IdleGameplayContext gameContext) {
         this.gameContext = gameContext;
     }
 
-    /**
-     * 根据GameArea显示不同的ConstructionVM集合
-     */
-    Map<String, List<String>> areaControlableConstructionVMPrototypeIds;
 
-    /**
-     * 根据GameArea显示不同的ConstructionPrototypeVM集合
-     */
-    Map<String, List<String>> areaControlableConstructionPrototypeVMPrototypeIds;
-
-    public void lazyInit(
-            Map<String, List<String>> areaControlableConstructionVMPrototypeIds,
-            Map<String, List<String>> areaControlableConstructionPrototypeVMPrototypeIds
-    ) {
-        this.areaControlableConstructionVMPrototypeIds = areaControlableConstructionVMPrototypeIds;
-        this.areaControlableConstructionPrototypeVMPrototypeIds = areaControlableConstructionPrototypeVMPrototypeIds;
-
-    }
 
     public void onSubLogicFrame() {
         createQueue.forEach(it -> {
@@ -75,11 +62,10 @@ public class ConstructionManager implements ITileNodeMap<Void> {
         runningConstructionModelMap.values().forEach(item -> item.onSubLogicFrame());
     }
 
-    public List<BaseConstruction> getAreaControlableConstructionsOrEmpty(String gameArea)
+    public List<BaseConstruction> getSingletonConstructionInstancesOrEmpty()
     {
         return runningConstructionModelMap.values().stream()
-                .filter(it -> areaControlableConstructionVMPrototypeIds.containsKey(gameArea)
-                        && areaControlableConstructionVMPrototypeIds.get(gameArea).contains(it.getPrototypeId()))
+                .filter(it -> constructionConfig.getSingletonPrototypeIds().contains(it.getPrototypeId()))
                 .collect(Collectors.toList());
     }
 
@@ -101,9 +87,17 @@ public class ConstructionManager implements ITileNodeMap<Void> {
                 .orElse(null);
     }
 
-    public List<BaseConstruction> getConstructions()
+    public List<BaseConstruction> getWorldConstructionInstances()
     {
-        return runningConstructionModelMap.values().stream().collect(Collectors.toList());
+        return runningConstructionModelMap.values().stream()
+                .filter(it -> constructionConfig.getWorldPrototypeIds().contains(it.getPrototypeId()))
+                .collect(Collectors.toList());
+    }
+
+    public List<BaseConstruction> getAllConstructionInstances()
+    {
+        return runningConstructionModelMap.values().stream()
+                .collect(Collectors.toList());
     }
 
     public List<BaseConstruction> getConstructionsOfPrototype(String prototypeId)
@@ -183,9 +177,17 @@ public class ConstructionManager implements ITileNodeMap<Void> {
         return getConstructionAt(position);
     }
 
-    public List<AbstractConstructionPrototype> getAreaShownConstructionPrototypesOrEmpty(String gameArea) {
-        return areaControlableConstructionPrototypeVMPrototypeIds.get(gameArea).stream()
-                .map(it -> gameContext.getConstructionFactory().getPrototype(it))
+    public List<String> getByCandidatePrototypeIds() {
+        return constructionConfig.getEmptyConstructionConfig().getBuyCandidatePrototypeIds().stream()
                 .collect(Collectors.toList());
     }
+
+    public void lazyInit(ConstructionConfig constructionConfig) {
+        this.constructionConfig = constructionConfig;
+    }
+
+    public AbstractConstructionPrototype getEmptyConstructionPrototype() {
+        return gameContext.getConstructionFactory().getPrototype(constructionConfig.getEmptyConstructionConfig().getPrototypeId());
+    }
+
 }

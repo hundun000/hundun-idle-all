@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 import hundun.gdxgame.idledemo.DemoIdleGame;
+import hundun.gdxgame.idledemo.logic.DemoScreenId;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.menu.BaseIdleMenuScreen;
 
@@ -19,8 +20,8 @@ public class DemoMenuScreen extends BaseIdleMenuScreen<DemoIdleGame, RootSaveDat
                     @Override
                     public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                         game.getSaveHandler().gameplayLoadOrStarter(true);
-                        game.getScreenManager().pushScreen(CookiePlayScreen.class.getSimpleName(), null);
-                        game.getAudioPlayManager().intoScreen(CookiePlayScreen.class.getSimpleName());
+                        game.getScreenManager().pushScreen(DemoScreenId.SCREEN_COOKIE, null);
+                        game.getAudioPlayManager().intoScreen(DemoScreenId.SCREEN_COOKIE);
                     }
                     @Override
                     public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -31,8 +32,8 @@ public class DemoMenuScreen extends BaseIdleMenuScreen<DemoIdleGame, RootSaveDat
                     @Override
                     public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                         game.getSaveHandler().gameplayLoadOrStarter(false);
-                        game.getScreenManager().pushScreen(CookiePlayScreen.class.getSimpleName(), null);
-                        game.getAudioPlayManager().intoScreen(CookiePlayScreen.class.getSimpleName());
+                        game.getScreenManager().pushScreen(DemoScreenId.SCREEN_COOKIE, null);
+                        game.getAudioPlayManager().intoScreen(DemoScreenId.SCREEN_COOKIE);
                     }
                     @Override
                     public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
