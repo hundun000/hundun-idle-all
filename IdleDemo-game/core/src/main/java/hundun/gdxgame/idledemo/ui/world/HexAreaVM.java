@@ -19,6 +19,9 @@ import java.util.Map;
 
 
 public class HexAreaVM extends Table {
+    public static final int roomWidth = 5000;
+    public static final int roomHeight = 5000;
+
     public WorldPlayScreen screen;
     @Getter
     Map<String, HexCellVM> nodes = new LinkedHashMap<>();
@@ -49,16 +52,15 @@ public class HexAreaVM extends Table {
             }
         });
 
-        int roomWidth = 5000;
-        int roomHeight = 5000;
+
 
         background.setBounds(0, 0, roomWidth, roomHeight);
         this.addActor(background);
         this.addListener(new CameraGestureListener(cameraDataPackage));
         this.addListener(new CameraMouseListener(cameraDataPackage));
         this.getCameraDataPackage().forceSet(
-                0.0f,
-                0.0f,
+                roomWidth / 2.0f,
+                roomHeight / 2.0f,
                 null
         );
 

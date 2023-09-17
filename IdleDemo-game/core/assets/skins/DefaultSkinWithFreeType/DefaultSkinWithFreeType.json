@@ -47,7 +47,7 @@
 		"font": "MiSans-Bold.ttf",
 		"size": 16,
 		"mono": false,
-		"color": "black",
+		"color": "white",
 		"gamma": 1.8,
 		"renderCount": 2,
 		"borderWidth": 0,
@@ -108,6 +108,14 @@
 	"default": {
 		"font": "MiSans-Bold",
 		"fontColor": "black"
+	},
+	"green_style": {
+		"font": "MiSans-Bold",
+		"fontColor": "green"
+	},
+	"red_style": {
+		"font": "MiSans-Bold",
+		"fontColor": "red"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle": {

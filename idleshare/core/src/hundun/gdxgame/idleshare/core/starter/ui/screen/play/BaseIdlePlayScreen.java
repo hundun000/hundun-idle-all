@@ -101,10 +101,10 @@ public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
         logicFrameListeners.add(game.getIdleGameplayExport());
 
         gameAreaChangeListeners.add(backgroundImageBox);
-
         gameAreaChangeListeners.add(gameAreaControlBoard);
-        this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(this);
 
+        this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(this);
+        this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(storageInfoTable);
     }
     
 

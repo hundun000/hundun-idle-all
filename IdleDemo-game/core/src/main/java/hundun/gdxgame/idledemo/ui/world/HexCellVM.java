@@ -68,7 +68,7 @@ public class HexCellVM extends Table {
     private static Vector2 calculatePosition(int gridX, int gridY)
     {
 
-        Vector2 newposition = new Vector2(0, 0);
+        Vector2 newposition = new Vector2(HexAreaVM.roomWidth / 2.0f, HexAreaVM.roomHeight / 2.0f);
         newposition.y += hexBaseSizeY * gridY;
         newposition.x += hexBaseSizeX * (gridX - (Math.abs(gridY) % 2) / 2.0f);
         return newposition;

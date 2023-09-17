@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
+import lombok.Getter;
 
 /**
  * @author hundun
@@ -15,11 +16,8 @@ public class ResourceAmountPairNode<T_GAME extends BaseIdleGame<?>> extends Hori
 
     T_GAME game;
 
+    @Getter
     String resourceType;
-    // ------ replace-lombok ------
-    public String getResourceType() {
-        return resourceType;
-    }
 
     Image image;
     Label label;
