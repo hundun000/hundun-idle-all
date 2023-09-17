@@ -8,6 +8,8 @@ import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementInfoPackage;
 
+import java.util.List;
+
 public class FirstLockedAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table implements IGameAreaChangeListener {
 
     BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
@@ -18,10 +20,13 @@ public class FirstLockedAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>, 
     Label countStartLabel;
     Label countValueLabel;
 
+    List<String> texts;
 
     public FirstLockedAchievementBoardVM(BaseIdlePlayScreen<T_GAME, T_SAVE> parent)
     {
         this.parent = parent;
+        this.texts = parent.getGame().getIdleGameplayExport().getGameDictionary()
+                .getAchievementTexts(parent.getGame().getIdleGameplayExport().getLanguage());
         this.setBackground(new TextureRegionDrawable(parent.getGame().getTextureManager().getDefaultBoardNinePatchTexture()));
 
 
@@ -36,8 +41,8 @@ public class FirstLockedAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>, 
         countValueLabel = new Label("", parent.getGame().getMainSkin());
         this.add(countValueLabel).center().row();
 
-        nameStartLabel.setText(parent.getGame().getIdleGameplayExport().getGameDictionary().getAchievementTexts(parent.getGame().getIdleGameplayExport().getLanguage()).get(0));
-        countStartLabel.setText(parent.getGame().getIdleGameplayExport().getGameDictionary().getAchievementTexts(parent.getGame().getIdleGameplayExport().getLanguage()).get(1));
+        nameStartLabel.setText(texts.get(0));
+        countStartLabel.setText(texts.get(1));
         updateData();
     }
 
@@ -51,8 +56,8 @@ public class FirstLockedAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>, 
         }
         else
         {
-            nameValueLabel.setText("已完成");
-            descriptionLabel.setText("无");
+            nameValueLabel.setText("");
+            descriptionLabel.setText(texts.get(5));
         }
 
         countValueLabel.setText(" " + data.getUnLockedSize() + "/" + data.getTotal());

@@ -4,6 +4,7 @@ import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.IBuiltinAchievementsLoader;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.OwnConstructionAchievement;
+import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
 import java.util.AbstractMap.SimpleEntry;
@@ -52,7 +53,8 @@ public class DemoAchievementLoader implements IBuiltinAchievementsLoader {
                 textMap,
                 JavaFeatureForGwt.mapOf(
                         ConstructionPrototypeId.COOKIE_AUTO_PROVIDER, new SimpleEntry<>(1, 2)
-                )
+                ),
+                new ResourcePair(ResourceType.COIN, 1000L)
         );
         OwnConstructionAchievement.Companion.quickAddOwnConstructionAchievement(
                 map,
@@ -60,7 +62,8 @@ public class DemoAchievementLoader implements IBuiltinAchievementsLoader {
                 textMap,
                 JavaFeatureForGwt.mapOf(
                         ConstructionPrototypeId.COOKIE_AUTO_SELLER, new SimpleEntry<>(1, 2)
-                )
+                ),
+                new ResourcePair(ResourceType.COIN, 1000L)
         );
         return map;
     }

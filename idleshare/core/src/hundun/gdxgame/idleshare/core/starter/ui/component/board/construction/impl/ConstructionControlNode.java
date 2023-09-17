@@ -116,11 +116,11 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
                 model.getLevelComponent().changeWorkingLevel(-1);
             }
         });
-        changeWorkingLevelGroup.add(downWorkingLevelButton).size(CHILD_WIDTH / 4, CHILD_HEIGHT);
+        changeWorkingLevelGroup.add(downWorkingLevelButton).size(CHILD_WIDTH / 4.0f, CHILD_HEIGHT);
 
         this.workingLevelLabel = new Label("", parent.getGame().getMainSkin());
         workingLevelLabel.setAlignment(Align.center);
-        changeWorkingLevelGroup.add(workingLevelLabel).size(CHILD_WIDTH / 2, CHILD_HEIGHT);
+        changeWorkingLevelGroup.add(workingLevelLabel).size(CHILD_WIDTH / 2.0f, CHILD_HEIGHT);
 
         this.upWorkingLevelButton = new TextButton("+", parent.getGame().getMainSkin());
         upWorkingLevelButton.addListener(new ClickListener() {
@@ -130,7 +130,7 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
                 model.getLevelComponent().changeWorkingLevel(1);
             }
         });
-        changeWorkingLevelGroup.add(upWorkingLevelButton).size(CHILD_WIDTH / 4, CHILD_HEIGHT);
+        changeWorkingLevelGroup.add(upWorkingLevelButton).size(CHILD_WIDTH / 4.0f, CHILD_HEIGHT);
 
         this.proficiencyLabel = new Label("", parent.getGame().getMainSkin());
         this.positionLabel = new Label("", parent.getGame().getMainSkin());

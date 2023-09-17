@@ -1,10 +1,13 @@
 package hundun.gdxgame.idleshare.gamelib.framework.model.achievement;
 
 import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
+import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePack;
+import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,11 +23,11 @@ public abstract class AbstractAchievement {
     protected String name;
     protected String description;
     protected String congratulationText;
-    protected Map<String, Long> awardResourceMap;
+    protected List<ResourcePair> awardResourceMap;
 
     public abstract boolean checkUnlock();
 
-    public AbstractAchievement(String id, String name, String description, String congratulationText, Map<String, Long> awardResourceMap) {
+    public AbstractAchievement(String id, String name, String description, String congratulationText, List<ResourcePair> awardResourceMap) {
         this.id = id;
         this.name = name;
         this.description = description;

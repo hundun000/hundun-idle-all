@@ -93,9 +93,15 @@ public class DemoGameDictionary implements IGameDictionary {
         switch (language)
         {
             case CN:
-                return JavaFeatureForGwt.arraysAsList("当前任务：", "已完成：", "回到游戏");
+                return JavaFeatureForGwt.listOf(
+                        "当前任务：", "已完成：", "回到游戏", "奖励内容：", "领取",
+                        "无"
+                );
             default:
-                return JavaFeatureForGwt.arraysAsList("Quest: ", "Completed: ", "back");
+                return JavaFeatureForGwt.listOf(
+                        "Quest: ", "Completed: ", "back", "reward: ", "Get it",
+                        "None"
+                );
         }
     }
 

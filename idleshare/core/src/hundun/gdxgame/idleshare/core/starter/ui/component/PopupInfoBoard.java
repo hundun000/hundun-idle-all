@@ -19,8 +19,6 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
  * Created on 2021/11/08
  */
 public class PopupInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table {
-    private static int NODE_HEIGHT = 25;
-    private static int NODE_WIDTH = 70;
 
     BaseIdlePlayScreen<T_GAME, T_SAVE> parent;
 
@@ -74,7 +72,9 @@ public class PopupInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends
             for (ResourcePair entry : pack.getModifiedValues()) {
                 ResourceAmountPairNode<T_GAME> node = new ResourceAmountPairNode<>(parent.getGame(), entry.getType());
                 node.update(entry.getAmount());
-                this.add(wapperContainer(node)).height(NODE_HEIGHT).width(NODE_WIDTH);
+                this.add(wapperContainer(node))
+                        .height(parent.getLayoutConst().RESOURCE_AMOUNT_PAIR_NODE_HEIGHT)
+                        .width(parent.getLayoutConst().RESOURCE_AMOUNT_PAIR_NODE_WIDTH);
             }
             this.row();
         }

@@ -46,7 +46,7 @@ public class FixedConstructionControlBoard<T_GAME extends BaseIdleGame<T_SAVE>, 
         childTable.clearChildren();
 
         for (int i = 0; i < childrenSize; i++) {
-            ConstructionControlNode constructionView = new ConstructionControlNode(parent, callback, i, parent.getLayoutConst());
+            ConstructionControlNode<T_GAME, T_SAVE> constructionView = new ConstructionControlNode<>(parent, callback, i, parent.getLayoutConst());
             constructionControlNodes.add(constructionView);
             childTable.add(constructionView).spaceRight(10).expand();
         }

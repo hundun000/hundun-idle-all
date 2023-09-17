@@ -58,7 +58,10 @@ public abstract class BaseDemoPlayScreen extends BaseIdlePlayScreen<DemoIdleGame
         Table rightSideGroup = new Table();
 
         firstLockedAchievementBoardVM = new FirstLockedAchievementBoardVM<>(this);
-        rightSideGroup.add(firstLockedAchievementBoardVM).expandX().height(200).row();
+        rightSideGroup.add(firstLockedAchievementBoardVM)
+                .width(getLayoutConst().FIRST_LOCKED_ACHIEVEMENT_BOARD_WIDTH)
+                .height(getLayoutConst().FIRST_LOCKED_ACHIEVEMENT_BOARD_HEIGHT)
+                .row();
 
         gameAreaControlBoard = new GameAreaControlBoard<>(this);
         rightSideGroup.add(gameAreaControlBoard).expand().right();

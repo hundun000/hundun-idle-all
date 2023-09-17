@@ -125,10 +125,13 @@ public abstract class BaseIdlePlayScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
         this.backgroundImageBox = new BackgroundImageBox<>(this);
         backUiStage.addActor(backgroundImageBox);
 
-        
-        
-        
-        achievementMaskBoard = new AchievementMaskBoard<>(this);
+        achievementMaskBoard = new AchievementMaskBoard<>(
+                this,
+                game.getIdleGameplayExport()
+                        .getGameplayContext()
+                        .getGameDictionary()
+                        .getAchievementTexts(game.getIdleGameplayExport().getLanguage())
+        );
         popupUiStage.addActor(achievementMaskBoard);
         
         if (game.debugMode) {

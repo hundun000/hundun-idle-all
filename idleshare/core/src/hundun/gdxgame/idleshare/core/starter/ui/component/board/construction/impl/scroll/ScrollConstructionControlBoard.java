@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import hundun.gdxgame.corelib.base.util.DrawableFactory;
+import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.AbstractConstructionControlBoard;
 import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.ConstructionControlNode;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdlePlayScreen;
@@ -18,7 +19,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseCo
  * @author hundun
  * Created on 2021/11/05
  */
-public class ScrollConstructionControlBoard extends AbstractConstructionControlBoard {
+public class ScrollConstructionControlBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends AbstractConstructionControlBoard<T_GAME, T_SAVE> {
 
 
 
@@ -35,7 +36,7 @@ public class ScrollConstructionControlBoard extends AbstractConstructionControlB
 
 
 
-    public ScrollConstructionControlBoard(BaseIdlePlayScreen<?, ?> parent, ISecondaryInfoBoardCallback<BaseConstruction> callback) {
+    public ScrollConstructionControlBoard(BaseIdlePlayScreen<T_GAME, T_SAVE> parent, ISecondaryInfoBoardCallback<BaseConstruction> callback) {
         super(parent, callback);
 
         this.LR_BUTTON_HEIGHT = parent.getLayoutConst().CONSTRUCION_BOARD_ROOT_BOX_HEIGHT;
@@ -76,17 +77,16 @@ public class ScrollConstructionControlBoard extends AbstractConstructionControlB
 
     @Override
     protected int initChild(int areaShownConstructionsSize) {
-        int childrenSize = areaShownConstructionsSize;
 
         constructionControlNodes.clear();
         childTable.clearChildren();
 
-        for (int i = 0; i < childrenSize; i++) {
-            ConstructionControlNode constructionView = new ConstructionControlNode(parent, callback, i, parent.getLayoutConst());
+        for (int i = 0; i < areaShownConstructionsSize; i++) {
+            ConstructionControlNode<T_GAME, T_SAVE> constructionView = new ConstructionControlNode<>(parent, callback, i, parent.getLayoutConst());
             constructionControlNodes.add(constructionView);
             childTable.add(constructionView).spaceRight(10).expand();
         }
-        return childrenSize;
+        return areaShownConstructionsSize;
     }
 
 

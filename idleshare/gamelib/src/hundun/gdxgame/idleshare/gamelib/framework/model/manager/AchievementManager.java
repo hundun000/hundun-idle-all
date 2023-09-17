@@ -104,10 +104,6 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
             if (resourceMatched) {
                 unlockedAchievementIds.add(prototype.getId());
                 gameContext.getEventManager().notifyAchievementUnlock(prototype);
-                if (prototype.getAwardResourceMap() != null)
-                {
-                    gameContext.getStorageManager().modifyAllResourceNum(prototype.getAwardResourceMap(), true);
-                }
             }
         }
     }

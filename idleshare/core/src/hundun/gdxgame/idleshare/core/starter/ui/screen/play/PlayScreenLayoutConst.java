@@ -30,6 +30,10 @@ public class PlayScreenLayoutConst {
     public int EXPECTED_DRAW_MIN_Y;
     public int EXPECTED_DRAW_MAX_Y;
 
+    public int RESOURCE_AMOUNT_PAIR_NODE_HEIGHT = 25;
+    public int RESOURCE_AMOUNT_PAIR_NODE_WIDTH = 70;
+    public int FIRST_LOCKED_ACHIEVEMENT_BOARD_WIDTH = 150;
+    public int FIRST_LOCKED_ACHIEVEMENT_BOARD_HEIGHT = 150;
     public PlayScreenLayoutConst(int gameLogicWidth, int gameLogicHeight) {
         this.EXPECTED_DRAW_MIN_X = 0;
         this.EXPECTED_DRAW_MAX_X = gameLogicWidth;
