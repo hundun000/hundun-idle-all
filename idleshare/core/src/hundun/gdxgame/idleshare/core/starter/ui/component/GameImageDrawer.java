@@ -20,28 +20,24 @@ import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChan
 public class GameImageDrawer<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> implements IOneFrameResourceChangeListener {
 
     BaseIdleScreen<T_GAME, T_SAVE> parent;
-    GameImageDrawerOwner owner;
+
     BaseGameEntityFactory gameEntityFactory;
-
-    public static interface GameImageDrawerOwner {
-        GameEntityManager getGameEntityManager();
-    }
+    GameEntityManager manager;
 
 
-    public GameImageDrawer(BaseIdleScreen<T_GAME, T_SAVE> parent, GameImageDrawerOwner owner) {
+
+    public GameImageDrawer(BaseIdleScreen<T_GAME, T_SAVE> parent) {
         this.parent = parent;
-        this.owner = owner;
+
         
     }
 
 
     public void allEntitiesMoveForFrameAndDraw() {
         parent.getGame().getBatch().begin();
-        GameEntityManager manager = owner.getGameEntityManager();
 
-        
         String gameArea = parent.getScreenId();
-        List<String> needDrawConstructionIds = manager.getAreaShowEntityByOwnAmountConstructionIds().get(gameArea);
+        List<String> needDrawConstructionIds = manager.getAreaEntityEffectConfigMap().get(gameArea).getOwnAmountConstructionPrototypeIds();
         manager.destoryNoNeedDrawConstructionIds(needDrawConstructionIds);
         manager.allEntityMoveForFrame();
         
@@ -57,7 +53,7 @@ public class GameImageDrawer<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> implem
             }
         }
 
-        List<String> needDrawByOwnAmountResourceIds = manager.getAreaShowEntityByOwnAmountResourceIds().get(gameArea);
+        List<String> needDrawByOwnAmountResourceIds = manager.getAreaEntityEffectConfigMap().get(gameArea).getOwnAmountResourceIds();
         if (needDrawByOwnAmountResourceIds != null) {
             for (String id : needDrawByOwnAmountResourceIds) {
                 List<GameEntity> queue = manager.getGameEntitiesOfResourceIds().get(id);
@@ -70,7 +66,7 @@ public class GameImageDrawer<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> implem
             }
         }
 
-        List<String> needDrawByChangeAmountResourceIds = manager.getAreaShowEntityByChangeAmountResourceIds().get(gameArea);
+        List<String> needDrawByChangeAmountResourceIds = manager.getAreaEntityEffectConfigMap().get(gameArea).getChangeAmountResourceIds();
         if (needDrawByChangeAmountResourceIds != null) {
             for (String id : needDrawByChangeAmountResourceIds) {
                 List<GameEntity> queue = manager.getGameEntitiesOfResourceIds().get(id);
@@ -89,7 +85,6 @@ public class GameImageDrawer<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> implem
 
     @Override
     public void onResourceChange(Map<String, Long> changeMap, Map<String, List<Long>> deltaHistoryMap) {
-        GameEntityManager manager = owner.getGameEntityManager();
         String gameArea = parent.getScreenId();
 
         manager.areaEntityCheckByOwnAmount(gameArea, gameEntityFactory);
@@ -97,8 +92,9 @@ public class GameImageDrawer<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> implem
     }
 
 
-    public void lazyInit(BaseGameEntityFactory gameEntityFactory) {
+    public void lazyInit(BaseGameEntityFactory gameEntityFactory, GameEntityManager manager) {
         this.gameEntityFactory = gameEntityFactory;
+        this.manager = manager;
     }
 
 

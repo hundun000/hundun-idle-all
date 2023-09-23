@@ -13,15 +13,23 @@ import lombok.*;
 @Setter
 public abstract class ChildGameConfig {
     ConstructionConfig constructionConfig;
-    Map<String, List<String>> areaShowEntityByOwnAmountConstructionPrototypeIds;
-    Map<String, List<String>> areaShowEntityByOwnAmountResourceIds;
-    Map<String, List<String>> areaShowEntityByChangeAmountResourceIds;
+    Map<String, AreaEntityEffectConfig> areaEntityEffectConfigMap;
     Map<String, String> screenIdToFilePathMap;
 
     @Getter
     @Builder
     @AllArgsConstructor
+    public static class AreaEntityEffectConfig {
+        List<String> ownAmountConstructionPrototypeIds;
+        List<String> ownAmountResourceIds;
+        List<String> changeAmountResourceIds;
+    }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
     public static class ConstructionConfig {
+        String mainClickerConstructionPrototypeId;
         EmptyConstructionConfig emptyConstructionConfig;
         List<String> singletonPrototypeIds;
         List<String> worldPrototypeIds;

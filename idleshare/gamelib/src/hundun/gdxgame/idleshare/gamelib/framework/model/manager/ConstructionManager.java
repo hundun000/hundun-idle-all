@@ -190,4 +190,10 @@ public class ConstructionManager implements ITileNodeMap<Void> {
         return gameContext.getConstructionFactory().getPrototype(constructionConfig.getEmptyConstructionConfig().getPrototypeId());
     }
 
+    public BaseConstruction getMainClickConstructionInstances() {
+        return runningConstructionModelMap.values().stream()
+                .filter(it -> it.getPrototypeId().equals(constructionConfig.getMainClickerConstructionPrototypeId()))
+                .findFirst()
+                .orElse(null);
+    }
 }

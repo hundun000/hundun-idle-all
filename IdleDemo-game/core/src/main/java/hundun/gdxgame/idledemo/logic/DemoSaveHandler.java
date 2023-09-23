@@ -30,9 +30,9 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
         Map<String, ConstructionSaveData> map = new HashMap<>();
 
         map.put(
-                DemoConstructionPrototypeId.SINGLETON_COOKIE_CLICK_PROVIDER + "_" + UUID.randomUUID(),
+                DemoConstructionPrototypeId.SINGLETON_COOKIE_MAIN_CLICKER + "_" + UUID.randomUUID(),
                 ConstructionSaveData.builder()
-                        .prototypeId(DemoConstructionPrototypeId.SINGLETON_COOKIE_CLICK_PROVIDER)
+                        .prototypeId(DemoConstructionPrototypeId.SINGLETON_COOKIE_MAIN_CLICKER)
                         .level(0)
                         .workingLevel(0)
                         .position( new GridPosition(0, 0))

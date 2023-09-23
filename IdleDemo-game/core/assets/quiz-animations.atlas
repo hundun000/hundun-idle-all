@@ -1,0 +1,118 @@
+
+quiz-animations.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+break
+  rotate: false
+  xy: 2, 1208
+  size: 800, 400
+  orig: 800, 400
+  offset: 0, 0
+  index: 1
+break
+  rotate: false
+  xy: 804, 1610
+  size: 800, 400
+  orig: 800, 400
+  offset: 0, 0
+  index: 6
+break
+  rotate: false
+  xy: 804, 1610
+  size: 800, 400
+  orig: 800, 400
+  offset: 0, 0
+  index: 4
+break
+  rotate: false
+  xy: 804, 1610
+  size: 800, 400
+  orig: 800, 400
+  offset: 0, 0
+  index: 7
+break
+  rotate: false
+  xy: 804, 1610
+  size: 800, 400
+  orig: 800, 400
+  offset: 0, 0
+  index: 5
+break
+  rotate: false
+  xy: 804, 1208
+  size: 800, 400
+  orig: 800, 400
+  offset: 0, 0
+  index: 3
+break
+  rotate: false
+  xy: 2, 404
+  size: 800, 400
+  orig: 800, 400
+  offset: 0, 0
+  index: 0
+break
+  rotate: false
+  xy: 2, 2
+  size: 800, 400
+  orig: 800, 400
+  offset: 0, 0
+  index: 2
+continue
+  rotate: false
+  xy: 2, 1610
+  size: 800, 400
+  orig: 800, 400
+  offset: 0, 0
+  index: 5
+continue
+  rotate: false
+  xy: 2, 1610
+  size: 800, 400
+  orig: 800, 400
+  offset: 0, 0
+  index: 7
+continue
+  rotate: false
+  xy: 2, 1610
+  size: 800, 400
+  orig: 800, 400
+  offset: 0, 0
+  index: 4
+continue
+  rotate: false
+  xy: 2, 1610
+  size: 800, 400
+  orig: 800, 400
+  offset: 0, 0
+  index: 6
+continue
+  rotate: false
+  xy: 2, 806
+  size: 800, 400
+  orig: 800, 400
+  offset: 0, 0
+  index: 2
+continue
+  rotate: false
+  xy: 804, 806
+  size: 800, 400
+  orig: 800, 400
+  offset: 0, 0
+  index: 1
+continue
+  rotate: false
+  xy: 804, 404
+  size: 800, 400
+  orig: 800, 400
+  offset: 0, 0
+  index: 3
+continue
+  rotate: false
+  xy: 804, 2
+  size: 800, 400
+  orig: 800, 400
+  offset: 0, 0
+  index: 0

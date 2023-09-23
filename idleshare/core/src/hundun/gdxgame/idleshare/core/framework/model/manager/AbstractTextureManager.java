@@ -6,7 +6,6 @@ import java.util.Map;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import lombok.Getter;
 
 public abstract class AbstractTextureManager {
@@ -22,7 +21,8 @@ public abstract class AbstractTextureManager {
 
     @Getter
     protected TextureRegion defaultBoardNinePatchMiddle;
-
+    @Getter
+    protected TextureRegion[][] mainClickAnimationTextureAtlas;
     @Getter
     protected int defaultBoardNinePatchEdgeSize;
 

@@ -12,6 +12,7 @@ import com.badlogic.gdx.Gdx;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.framework.model.entity.BaseGameEntityFactory;
 import hundun.gdxgame.idleshare.core.framework.model.entity.GameEntity;
+import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig.AreaEntityEffectConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import lombok.Getter;
 
@@ -28,11 +29,7 @@ public class GameEntityManager {
     @Getter
     private Map<String, List<GameEntity>> gameEntitiesOfResourceIds = new HashMap<>();
     @Getter
-    private Map<String, List<String>> areaShowEntityByOwnAmountConstructionIds;
-    @Getter
-    private Map<String, List<String>> areaShowEntityByOwnAmountResourceIds;
-    @Getter
-    private Map<String, List<String>> areaShowEntityByChangeAmountResourceIds;
+    private Map<String, AreaEntityEffectConfig> areaEntityEffectConfigMap;
 
 
     public GameEntityManager(BaseIdleGame<?> game) {
@@ -67,14 +64,14 @@ public class GameEntityManager {
     }
 
     public void areaEntityCheckByOwnAmount(String gameArea, BaseGameEntityFactory gameEntityFactory) {
-        List<String> shownConstructionIds = this.areaShowEntityByOwnAmountConstructionIds.get(gameArea);
+        List<String> shownConstructionIds = this.areaEntityEffectConfigMap.get(gameArea).getOwnAmountConstructionPrototypeIds();
         if (shownConstructionIds != null) {
             for (String shownConstructionId : shownConstructionIds) {
                 checkConstructionEntityByOwnAmount(shownConstructionId, gameEntityFactory);
             }
         }
 
-        List<String> shownResourceIds = this.areaShowEntityByOwnAmountResourceIds.get(gameArea);
+        List<String> shownResourceIds = this.areaEntityEffectConfigMap.get(gameArea).getOwnAmountResourceIds();
         if (shownResourceIds != null) {
             for (String resourceId : shownResourceIds) {
                 checkResourceEntityByOwnAmount(resourceId, gameEntityFactory);
@@ -84,7 +81,7 @@ public class GameEntityManager {
 
     public void areaEntityCheckByChangeAmount(String gameArea, BaseGameEntityFactory gameEntityFactory, Map<String, Long> changeMap) {
 
-        List<String> shownResourceIds = this.areaShowEntityByChangeAmountResourceIds.get(gameArea);
+        List<String> shownResourceIds = this.areaEntityEffectConfigMap.get(gameArea).getChangeAmountResourceIds();
         if (shownResourceIds != null) {
             for (String resourceId : shownResourceIds) {
                 if (changeMap.getOrDefault(resourceId, 0L) > 0) {
@@ -163,12 +160,8 @@ public class GameEntityManager {
         }
     }
 
-    public void lazyInit(Map<String, List<String>> areaShowEntityByOwnAmountConstructionIds,
-            Map<String, List<String>> areaShowEntityByOwnAmountResourceIds,
-            Map<String, List<String>> areaShowEntityByChangeAmountResourceIds) {
-        this.areaShowEntityByOwnAmountConstructionIds = areaShowEntityByOwnAmountConstructionIds;
-        this.areaShowEntityByOwnAmountResourceIds = areaShowEntityByOwnAmountResourceIds;
-        this.areaShowEntityByChangeAmountResourceIds = areaShowEntityByChangeAmountResourceIds;
+    public void lazyInit(Map<String, AreaEntityEffectConfig> areaEntityEffectConfigMap) {
+        this.areaEntityEffectConfigMap = areaEntityEffectConfigMap;
     }
 
     /**

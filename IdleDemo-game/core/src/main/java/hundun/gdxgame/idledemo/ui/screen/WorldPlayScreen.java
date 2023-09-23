@@ -45,7 +45,7 @@ public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstruction
         uiRootTable.add(worldCellDetailBoardVM)
                 .height(layoutConst.CONSTRUCION_BOARD_ROOT_BOX_HEIGHT)
                 .fill()
-                .colspan(2)
+                .colspan(UI_ROOT_TABLE_COLSPAN_SIZE)
         ;
     }
 
@@ -102,7 +102,7 @@ public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstruction
     }
 
     @Override
-    public void onDeskClicked(HexCellVM vm) {
+    public void onCellClicked(HexCellVM vm) {
         worldCellDetailBoardVM.updateDetail(vm != null ? vm.getDeskData() : null);
     }
 

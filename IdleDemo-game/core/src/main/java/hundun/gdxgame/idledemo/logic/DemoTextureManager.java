@@ -15,6 +15,10 @@ public class DemoTextureManager extends AbstractTextureManager {
         achievementMaskBoardTexture = new Texture(Gdx.files.internal("win.png"));
         menuTexture = new Texture(Gdx.files.internal("menu.png"));
         defaultBoardNinePatchTexture = new Texture(Gdx.files.internal("defaultBoardNinePatch.png"));
+        {
+            Texture texture = new Texture(Gdx.files.internal("mainCokie.png"));
+             mainClickAnimationTextureAtlas = TextureRegion.split(texture, 256, 256);
+        }
         defaultBoardNinePatchEdgeSize = 4;
         defaultBoardNinePatchMiddle = new TextureRegion(
                 defaultBoardNinePatchTexture, 
@@ -66,7 +70,7 @@ public class DemoTextureManager extends AbstractTextureManager {
             TextureRegion[][] regions = TextureRegion.split(texture, 128, 128);
             defaultAreaBack = regions[0][1];
             constructionHexImageMap.put(DemoConstructionPrototypeId.EMPTY_CELL, regions[0][0]);
-            constructionHexImageMap.put(DemoConstructionPrototypeId.SINGLETON_COOKIE_CLICK_PROVIDER, regions[0][1]);
+            constructionHexImageMap.put(DemoConstructionPrototypeId.SINGLETON_COOKIE_MAIN_CLICKER, regions[0][1]);
             constructionHexImageMap.put(DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER, regions[0][2]);
             constructionHexImageMap.put(DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER, regions[0][3]);
             //gameAreaBackMap.put(GameArea.AREA_WIN, regions[0][3]);

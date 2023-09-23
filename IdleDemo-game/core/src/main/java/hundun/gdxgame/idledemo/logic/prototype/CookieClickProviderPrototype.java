@@ -35,7 +35,7 @@ public class CookieClickProviderPrototype extends AbstractConstructionPrototype 
 
     public CookieClickProviderPrototype(Language language) {
         super(
-                DemoConstructionPrototypeId.SINGLETON_COOKIE_CLICK_PROVIDER,
+                DemoConstructionPrototypeId.SINGLETON_COOKIE_MAIN_CLICKER,
                 language,
                 DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf())
         );

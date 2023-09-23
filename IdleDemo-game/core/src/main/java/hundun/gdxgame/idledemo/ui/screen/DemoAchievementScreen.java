@@ -41,7 +41,7 @@ public class DemoAchievementScreen extends BaseIdleScreen<DemoIdleGame, RootSave
         allAchievementBoardVM = new AllAchievementBoardVM<>(this);
 
 
-        leftSideGroup.add(allAchievementBoardVM).expand().row();
+        middleGroup.add(allAchievementBoardVM).expand().row();
 
     }
 

@@ -1,20 +1,12 @@
 package hundun.gdxgame.idledemo.ui.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import hundun.gdxgame.corelib.base.BaseHundunGame;
-import hundun.gdxgame.corelib.base.BaseHundunScreen;
-import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.sub.FirstRunningAchievementBoardVM;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
 import hundun.gdxgame.idledemo.ui.sub.AchievementMaskBoard;
-import hundun.gdxgame.idleshare.core.starter.ui.component.GameAreaControlBoard;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementStateChangeListener;
@@ -23,7 +15,6 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManag
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public abstract class BaseDemoPlayScreen extends BaseIdleScreen<DemoIdleGame, RootSaveData>
         implements IGameAreaChangeListener, IAchievementBoardCallback, IAchievementStateChangeListener
@@ -69,7 +60,7 @@ public abstract class BaseDemoPlayScreen extends BaseIdleScreen<DemoIdleGame, Ro
         firstRunningAchievementBoardVM.updateData();
     }
 
-    public abstract void onDeskClicked(HexCellVM vm);
+    public abstract void onCellClicked(HexCellVM vm);
 
     @Override
     protected void onLogicFrame() {

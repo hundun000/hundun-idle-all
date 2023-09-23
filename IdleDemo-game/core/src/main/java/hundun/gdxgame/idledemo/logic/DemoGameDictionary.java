@@ -18,7 +18,7 @@ public class DemoGameDictionary implements IGameDictionary {
         switch (language) {
             case CN:
                 switch (constructionId) {
-                    case DemoConstructionPrototypeId.SINGLETON_COOKIE_CLICK_PROVIDER:
+                    case DemoConstructionPrototypeId.SINGLETON_COOKIE_MAIN_CLICKER:
                         return "点击器";
                     case DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
                         return "自动点击器";
@@ -29,7 +29,7 @@ public class DemoGameDictionary implements IGameDictionary {
                 }
             default:
                 switch (constructionId) {
-                    case DemoConstructionPrototypeId.SINGLETON_COOKIE_CLICK_PROVIDER:
+                    case DemoConstructionPrototypeId.SINGLETON_COOKIE_MAIN_CLICKER:
                         return "Clicker";
                     case DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
                         return "AutoClicker";

@@ -40,6 +40,9 @@ public abstract class BaseIdleScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
     protected GameAreaControlBoard<T_GAME, T_SAVE> gameAreaControlBoard;
 
     protected Table leftSideGroup;
+    protected Table middleGroup;
+
+    protected static int UI_ROOT_TABLE_COLSPAN_SIZE = 3;
     // ----- not ui ------
 
 
@@ -101,14 +104,17 @@ public abstract class BaseIdleScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
         uiRootTable.add(storageInfoTable)
                 .height(layoutConst.STORAGE_BOARD_BORDER_HEIGHT)
                 .fill()
-                .colspan(2)
+                .colspan(UI_ROOT_TABLE_COLSPAN_SIZE)
                 .row();
 
         leftSideGroup = new Table();
-        uiRootTable.add(leftSideGroup).expand().left();
+        uiRootTable.add(leftSideGroup).expandY().left();
+
+        middleGroup = new Table();
+        uiRootTable.add(middleGroup).expand();
 
         gameAreaControlBoard = new GameAreaControlBoard<>(this);
-        uiRootTable.add(gameAreaControlBoard).expand().right().top().row();
+        uiRootTable.add(gameAreaControlBoard).expandY().right().top().row();
 
     }
 

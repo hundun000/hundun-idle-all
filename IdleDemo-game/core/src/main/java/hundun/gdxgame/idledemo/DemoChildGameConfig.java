@@ -1,5 +1,6 @@
 package hundun.gdxgame.idledemo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,12 +19,9 @@ public class DemoChildGameConfig extends ChildGameConfig {
     
     public DemoChildGameConfig() {
 
-//        BuiltinConstructionsLoader builtinConstructionsLoader = new BuiltinConstructionsLoader(game);
-//        this.setConstructions(builtinConstructionsLoader.load());
-
-
         this.setConstructionConfig(
                 ConstructionConfig.builder()
+                        .mainClickerConstructionPrototypeId(DemoConstructionPrototypeId.SINGLETON_COOKIE_MAIN_CLICKER)
                         .emptyConstructionConfig(EmptyConstructionConfig.builder()
                                 .prototypeId(DemoConstructionPrototypeId.EMPTY_CELL)
                                 .buyCandidatePrototypeIds(JavaFeatureForGwt.listOf(
@@ -32,7 +30,6 @@ public class DemoChildGameConfig extends ChildGameConfig {
                                 .build()
                         )
                         .singletonPrototypeIds(JavaFeatureForGwt.listOf(
-                                DemoConstructionPrototypeId.SINGLETON_COOKIE_CLICK_PROVIDER,
                                 DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER
                         ))
                         .worldPrototypeIds(JavaFeatureForGwt.listOf(
@@ -41,19 +38,16 @@ public class DemoChildGameConfig extends ChildGameConfig {
                         ))
                         .build()
         );
-
-
         
         Map<String, List<String>> areaShownResourceIds = new HashMap<>();
-        this.setAreaShowEntityByOwnAmountResourceIds(areaShownResourceIds);
-        
-        Map<String, List<String>> areaShowEntityByChangeAmountResourceIds = new HashMap<>(); 
-        areaShowEntityByChangeAmountResourceIds.put(DemoScreenId.SCREEN_COOKIE, JavaFeatureForGwt.arraysAsList(
-            ResourceType.COOKIE
+        this.setAreaEntityEffectConfigMap(JavaFeatureForGwt.mapOf(
+                DemoScreenId.SCREEN_COOKIE,
+                AreaEntityEffectConfig.builder()
+                        .changeAmountResourceIds(JavaFeatureForGwt.listOf(ResourceType.COOKIE))
+                        .ownAmountConstructionPrototypeIds(new ArrayList<>(0))
+                        .ownAmountResourceIds(new ArrayList<>(0))
+                        .build()
         ));
-        this.setAreaShowEntityByChangeAmountResourceIds(areaShowEntityByChangeAmountResourceIds);
-
-        this.setAreaShowEntityByOwnAmountConstructionPrototypeIds(new HashMap<>());
 
         Map<String, String> screenIdToFilePathMap = JavaFeatureForGwt.mapOf(
                 DemoScreenId.SCREEN_COOKIE, "audio/Loop-Menu.wav",

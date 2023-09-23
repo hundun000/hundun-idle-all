@@ -20,7 +20,7 @@ public class HexCellClickListener extends ClickListener {
 
     @Override
     public void clicked(InputEvent event, float x, float y) {
-        screen.onDeskClicked(vm);
+        screen.onCellClicked(vm);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(vm.getDeskData().getId()
             + " has been clicked."
