@@ -5,10 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import hundun.gdxgame.idledemo.logic.prototype.CookieAutoProviderPrototype;
-import hundun.gdxgame.idledemo.logic.prototype.CookieAutoSellerPrototype;
-import hundun.gdxgame.idledemo.logic.prototype.CookieClickProviderPrototype;
-import hundun.gdxgame.idledemo.logic.prototype.DirtPrototype;
+import hundun.gdxgame.idledemo.logic.prototype.*;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.*;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.IBuiltinConstructionsLoader;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePack;
@@ -22,9 +19,10 @@ public class DemoBuiltinConstructionsLoader implements IBuiltinConstructionsLoad
     public Map<String, AbstractConstructionPrototype> getProviderMap(Language language) {
         Map<String, AbstractConstructionPrototype> result = new HashMap<>();
         result.put(DemoConstructionPrototypeId.EMPTY_CELL, new DirtPrototype(language));
-        result.put(DemoConstructionPrototypeId.SINGLETON_COOKIE_MAIN_CLICKER, new CookieClickProviderPrototype(language));
-        result.put(DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER, new CookieAutoProviderPrototype(language));
-        result.put(DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER, new CookieAutoSellerPrototype(language));
+        result.put(DemoConstructionPrototypeId.SINGLETON_COOKIE_MAIN_CLICKER, new CookieMainClickerPrototype(language));
+        result.put(DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER, new CookieSimpleAutoProviderPrototype(language));
+        result.put(DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER, new CookieSingletonAutoSellerPrototype(language));
+        result.put(DemoConstructionPrototypeId.COOKIE_COMPLEX_AUTO_PROVIDER, new CookieComplexAutoProviderPrototype(language));
         return result;
     }
     

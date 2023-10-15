@@ -25,7 +25,7 @@ public class GameEntityFactory extends BaseGameEntityFactory {
     
     public GameEntity newConstructionEntity(String id, int index) {
         switch (id) {
-            case DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
+            case DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER:
                 return this.rowStableConstructionEntity(id, index, 1);
             default:
                 // no need GameEntity

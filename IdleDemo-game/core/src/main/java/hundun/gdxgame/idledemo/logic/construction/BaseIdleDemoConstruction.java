@@ -32,37 +32,5 @@ public class BaseIdleDemoConstruction extends BaseConstruction {
         this.saveData.setProficiency(0);
     }
 
-    public static BaseIdleDemoConstruction typeAutoConstProficienc(String prototypeId,
-                                                                   String id,
-                                                                   GridPosition position,
-                                                                   DescriptionPackage descriptionPackage)
-    {
-        BaseIdleDemoConstruction thiz = new BaseIdleDemoConstruction(prototypeId, id, position, descriptionPackage);
-
-        ConstProficiencyComponent proficiencyComponent = new ConstProficiencyComponent(thiz);
-        thiz.proficiencyComponent = proficiencyComponent;
-
-        DemoSimpleAutoOutputComponent outputComponent = new DemoSimpleAutoOutputComponent(thiz);
-        thiz.outputComponent = outputComponent;
-
-        return thiz;
-    }
-
-    public static BaseIdleDemoConstruction typeClick(String prototypeId,
-                                                     String id,
-                                                     GridPosition position,
-                                                     DescriptionPackage descriptionPackage)
-    {
-        BaseIdleDemoConstruction thiz = new BaseIdleDemoConstruction(prototypeId, id, position, descriptionPackage);
-
-        ConstProficiencyComponent proficiencyComponent = new ConstProficiencyComponent(thiz);
-        thiz.proficiencyComponent = proficiencyComponent;
-
-        EmptyAutoOutputComponent outputComponent = new EmptyAutoOutputComponent(thiz);
-        outputComponent.setTypeClickOutput(true);
-        thiz.outputComponent = outputComponent;
-
-        return thiz;
-    }
 
 }

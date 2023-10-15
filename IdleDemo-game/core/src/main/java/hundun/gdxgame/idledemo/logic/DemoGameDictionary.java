@@ -20,7 +20,7 @@ public class DemoGameDictionary implements IGameDictionary {
                 switch (constructionId) {
                     case DemoConstructionPrototypeId.SINGLETON_COOKIE_MAIN_CLICKER:
                         return "点击器";
-                    case DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
+                    case DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER:
                         return "自动点击器";
                     case DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER:
                         return "自动出售器";
@@ -31,7 +31,7 @@ public class DemoGameDictionary implements IGameDictionary {
                 switch (constructionId) {
                     case DemoConstructionPrototypeId.SINGLETON_COOKIE_MAIN_CLICKER:
                         return "Clicker";
-                    case DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
+                    case DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER:
                         return "AutoClicker";
                     case DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER:
                         return "AutoSeller";
@@ -48,7 +48,7 @@ public class DemoGameDictionary implements IGameDictionary {
         switch (language) {
             case CN:
                 switch (constructionId) {
-                    case DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
+                    case DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER:
                         return "自动获得饼干";
                     case DemoConstructionPrototypeId.EMPTY_CELL:
                         return "空位置";
@@ -57,7 +57,7 @@ public class DemoGameDictionary implements IGameDictionary {
                 }
             default:
                 switch (constructionId) {
-                    case DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER:
+                    case DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER:
                         return "Auto gain some cookie";
                     case DemoConstructionPrototypeId.EMPTY_CELL:
                         return "Empty";

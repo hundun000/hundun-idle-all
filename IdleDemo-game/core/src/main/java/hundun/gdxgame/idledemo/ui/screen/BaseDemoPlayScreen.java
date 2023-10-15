@@ -6,7 +6,7 @@ import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.sub.FirstRunningAchievementBoardVM;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
-import hundun.gdxgame.idledemo.ui.sub.AchievementMaskBoard;
+import hundun.gdxgame.idledemo.ui.sub.AchievementPopupBoard;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementStateChangeListener;
@@ -21,7 +21,7 @@ public abstract class BaseDemoPlayScreen extends BaseIdleScreen<DemoIdleGame, Ro
 {
 
     protected FirstRunningAchievementBoardVM<DemoIdleGame, RootSaveData> firstRunningAchievementBoardVM;
-    protected AchievementMaskBoard achievementMaskBoard;
+    protected AchievementPopupBoard achievementPopupBoard;
     DemoIdleGame demoIdleGame;
     protected List<AbstractAchievement> showAchievementMaskBoardQueue = new ArrayList<>();
 
@@ -70,8 +70,8 @@ public abstract class BaseDemoPlayScreen extends BaseIdleScreen<DemoIdleGame, Ro
             AbstractAchievement achievement = showAchievementMaskBoardQueue.remove(0);
 
             game.getFrontend().log(this.getClass().getSimpleName(), "onAchievementUnlock called");
-            achievementMaskBoard.setAchievementPrototype(achievement);
-            achievementMaskBoard.setVisible(true);
+            achievementPopupBoard.setAchievementPrototype(achievement);
+            achievementPopupBoard.setVisible(true);
             Gdx.input.setInputProcessor(popupUiStage);
             logicFrameHelper.setLogicFramePause(true);
         }
@@ -80,7 +80,7 @@ public abstract class BaseDemoPlayScreen extends BaseIdleScreen<DemoIdleGame, Ro
     @Override
     public void hideAchievementMaskBoard() {
         game.getFrontend().log(this.getClass().getSimpleName(), "hideAchievementMaskBoard called");
-        achievementMaskBoard.setVisible(false);
+        achievementPopupBoard.setVisible(false);
         Gdx.input.setInputProcessor(provideDefaultInputProcessor());
         logicFrameHelper.setLogicFramePause(false);
     }
@@ -98,14 +98,14 @@ public abstract class BaseDemoPlayScreen extends BaseIdleScreen<DemoIdleGame, Ro
         super.lazyInitBackUiAndPopupUiContent();
 
 
-        achievementMaskBoard = new AchievementMaskBoard(
+        achievementPopupBoard = new AchievementPopupBoard(
                 this,
                 game.getIdleGameplayExport()
                         .getGameplayContext()
                         .getGameDictionary()
                         .getAchievementTexts(game.getIdleGameplayExport().getLanguage())
         );
-        popupUiStage.addActor(achievementMaskBoard);
+        popupUiStage.addActor(achievementPopupBoard);
 
 
     }

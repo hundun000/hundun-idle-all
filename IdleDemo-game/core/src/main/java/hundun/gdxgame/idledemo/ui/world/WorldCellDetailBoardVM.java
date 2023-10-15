@@ -71,7 +71,7 @@ public class WorldCellDetailBoardVM extends BaseCellDetailBoardVM implements ICo
 
 
         WorldConstructionPrototypeCellDetailNode innerBoardVM = new WorldConstructionPrototypeCellDetailNode(parent);
-            innerBoardVM.updateAsConstructionPrototype(constructionPrototype, construction.getSaveData().getPosition());
+            innerBoardVM.updateAsConstructionPrototype(construction, constructionPrototype, construction.getSaveData().getPosition());
             this.add(innerBoardVM);
             contents.add(innerBoardVM);
 

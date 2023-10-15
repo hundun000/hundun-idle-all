@@ -25,7 +25,8 @@ public class DemoChildGameConfig extends ChildGameConfig {
                         .emptyConstructionConfig(EmptyConstructionConfig.builder()
                                 .prototypeId(DemoConstructionPrototypeId.EMPTY_CELL)
                                 .buyCandidatePrototypeIds(JavaFeatureForGwt.listOf(
-                                        DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER
+                                        DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER,
+                                        DemoConstructionPrototypeId.COOKIE_COMPLEX_AUTO_PROVIDER
                                 ))
                                 .build()
                         )
@@ -34,7 +35,8 @@ public class DemoChildGameConfig extends ChildGameConfig {
                         ))
                         .worldPrototypeIds(JavaFeatureForGwt.listOf(
                                 DemoConstructionPrototypeId.EMPTY_CELL,
-                                DemoConstructionPrototypeId.COOKIE_AUTO_PROVIDER
+                                DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER,
+                                DemoConstructionPrototypeId.COOKIE_COMPLEX_AUTO_PROVIDER
                         ))
                         .build()
         );

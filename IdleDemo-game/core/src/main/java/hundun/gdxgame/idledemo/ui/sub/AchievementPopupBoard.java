@@ -3,21 +3,17 @@ package hundun.gdxgame.idledemo.ui.sub;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import com.badlogic.gdx.utils.Null;
 import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.ui.screen.BaseDemoPlayScreen;
-import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.starter.ui.component.ResourceAmountPairNode;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
 
@@ -27,14 +23,14 @@ import java.util.List;
  * @author hundun
  * Created on 2021/11/12
  */
-public class AchievementMaskBoard extends Table {
+public class AchievementPopupBoard extends Table {
 
     BaseDemoPlayScreen parent;
 
 
     List<String> texts;
 
-    public AchievementMaskBoard(BaseDemoPlayScreen parent, List<String> texts) {
+    public AchievementPopupBoard(BaseDemoPlayScreen parent, List<String> texts) {
         this.parent = parent;
         this.texts = texts;
         this.setBackground(new SpriteDrawable(new Sprite(parent.getGame().getTextureManager().getAchievementMaskBoardTexture())));
