@@ -1,6 +1,8 @@
 package hundun.gdxgame.idledemo.ui.world;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -8,23 +10,47 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.ui.screen.WorldPlayScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
+import hundun.gdxgame.idleshare.gamelib.framework.model.grid.TileNodeUtils.HexMode;
 import lombok.Getter;
+import lombok.Setter;
 
 
 public class HexCellVM extends Table {
+
+    static HexMode hexMode = HexMode.ODD_Q;
+
+    public enum MaskMode {
+        NONE,
+        SELECTED,
+        SELECTED_DISTANCE_1,
+    }
+
     static int HEX_SIZE = 128;
-    static float hexBaseSizeX = (float) (HEX_SIZE * Math.sqrt(3.0f) / 2);
-    static float hexBaseSizeY = (float) (HEX_SIZE * 0.75);
+    static int SQR_3_DIV_2_HEX_SIZE = 111;
+    static int TABLE_WIDTH = HEX_SIZE;
+    static int TABLE_HEIGHT = SQR_3_DIV_2_HEX_SIZE;
+    static int IMAGE_WIDTH = 128;
+    static int IMAGE_HEIGHT = 192;
+    static int HIT_BOX_X = 4;
+    static int HIT_BOX_Y = 4;
+    static int HIT_BOX_WIDTH = IMAGE_WIDTH - HIT_BOX_X * 2;
+    static int HIT_BOX_HEIGHT = SQR_3_DIV_2_HEX_SIZE - HIT_BOX_Y * 2;
+
+    static float hexBaseSizeX = (float) (HEX_SIZE);
+    static float hexBaseSizeY = (float) (SQR_3_DIV_2_HEX_SIZE);
+
     DemoIdleGame game;
 
     HexAreaVM hexAreaVM;
     @Getter
     BaseConstruction deskData;
+    @Getter
+    MaskMode maskMode;
     public WorldPlayScreen parent;
 
     Label mainLabel;
+    @Getter
     Image image;
-
     public HexCellVM(WorldPlayScreen parent, HexAreaVM hexAreaVM, BaseConstruction deskData) {
         this.game = hexAreaVM.screen.getGame();
         this.hexAreaVM = hexAreaVM;
@@ -35,8 +61,8 @@ public class HexCellVM extends Table {
         image.setBounds(
                 0,
                 0,
-                hexBaseSizeX,
-                HEX_SIZE
+                IMAGE_WIDTH,
+                IMAGE_HEIGHT
         );
         this.addActor(image);
         /*this.setBackground(new TextureRegionDrawable(new TextureRegion(TextureFactory.getSimpleBoardBackground(
@@ -45,34 +71,49 @@ public class HexCellVM extends Table {
         ))));*/
 
         this.mainLabel = new Label("", game.getMainSkin());
-        this.add(mainLabel);
+        mainLabel.setPosition(
+                TABLE_WIDTH / 2.0f,
+                TABLE_HEIGHT / 2.0f
+        );
+        this.addActor(mainLabel);
 
-        updateUI();
-    }
 
 
 
-    public void updateUI(){
 
         //this.mainLabel.setText(deskData.getId());
+        //this.setBackground(new TextureRegionDrawable(game.getTextureManager().getConstructionHexImage(deskData.getPrototypeId())));
         image.setDrawable(new TextureRegionDrawable(game.getTextureManager().getConstructionHexImage(deskData.getPrototypeId())));
         Vector2 uiPosition = calculatePosition(deskData.getSaveData().getPosition().getX(), deskData.getSaveData().getPosition().getY());
         this.setBounds(
                 uiPosition.x,
                 uiPosition.y,
-                hexBaseSizeX,
-                HEX_SIZE
+                TABLE_WIDTH,
+                TABLE_HEIGHT
         );
+        updateMaskMode(MaskMode.NONE);
     }
 
-    private static Vector2 calculatePosition(int gridX, int gridY)
+    public static Vector2 calculatePosition(int gridX, int gridY)
     {
 
         Vector2 newposition = new Vector2(HexAreaVM.roomWidth / 2.0f, HexAreaVM.roomHeight / 2.0f);
-        newposition.y += hexBaseSizeY * gridY;
-        newposition.x += hexBaseSizeX * (gridX - (Math.abs(gridY) % 2) / 2.0f);
+        if (hexMode == HexMode.ODD_Q) {
+            float yOffset = hexBaseSizeY * (Math.abs(gridX) % 2) * -0.5f;
+            newposition.y += hexBaseSizeY * (-gridY) + yOffset;
+            newposition.x += hexBaseSizeX * gridX * 0.75f;
+        }
         return newposition;
     }
 
 
+    public void updateMaskMode(MaskMode maskMode) {
+        this.maskMode = maskMode;
+        this.mainLabel.setText(String.format(
+                "(%s, %s)%s",
+                deskData.getSaveData().getPosition().getX(),
+                deskData.getSaveData().getPosition().getY(),
+                maskMode.ordinal()
+        ) );
+    }
 }

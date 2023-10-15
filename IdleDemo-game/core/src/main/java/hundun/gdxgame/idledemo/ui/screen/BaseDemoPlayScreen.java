@@ -49,9 +49,7 @@ public abstract class BaseDemoPlayScreen extends BaseIdleScreen<DemoIdleGame, Ro
         firstRunningAchievementBoardVM = new FirstRunningAchievementBoardVM<>(this);
         leftSideGroup.add(firstRunningAchievementBoardVM)
                 .width(getLayoutConst().FIRST_LOCKED_ACHIEVEMENT_BOARD_WIDTH)
-                .height(getLayoutConst().FIRST_LOCKED_ACHIEVEMENT_BOARD_HEIGHT)
-                .left()
-                .top()
+                .growY()
         ;
     }
 

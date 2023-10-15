@@ -122,7 +122,7 @@ public class UpgradeComponent {
         List<ResourcePair> upgradeCostRule = this.upgradeCostPack.getModifiedValues();
         construction.gameplayContext.getStorageManager().modifyAllResourceNum(upgradeCostRule, false);
         construction.saveData.setLevel((construction.saveData.getLevel() + 1));
-        if (!construction.levelComponent.isWorkingLevelChangable())
+        if (!construction.levelComponent.isTypeWorkingLevelChangeable())
         {
             construction.saveData.setWorkingLevel((construction.saveData.getLevel()));
         }

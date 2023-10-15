@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import hundun.gdxgame.corelib.base.util.DrawableFactory;
+import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idledemo.ui.screen.BaseDemoPlayScreen;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
@@ -122,7 +123,7 @@ public class WorldConstructionInstanceCellDetailNode extends BaseCellDetailNodeV
     private void setModel(BaseConstruction constructionExportProxy) {
         this.model = constructionExportProxy;
         if (constructionExportProxy != null) {
-            if (constructionExportProxy.getLevelComponent().isWorkingLevelChangable()) {
+            if (constructionExportProxy.getLevelComponent().isTypeWorkingLevelChangeable()) {
                 this.upWorkingLevelButton.setVisible(true);
                 this.downWorkingLevelButton.setVisible(true);
             } else {
@@ -153,10 +154,15 @@ public class WorldConstructionInstanceCellDetailNode extends BaseCellDetailNodeV
             //Gdx.app.log("ConstructionView", model.getName() + " set to its view");
         }
         // ------ update text ------
-        constructionNameLabel.setText(model.getName());
+        constructionNameLabel.setText(JavaFeatureForGwt.stringFormat(
+                "%s (%s, %s)",
+                model.getName(),
+                model.getSaveData().getPosition().getX(),
+                model.getSaveData().getPosition().getY()
+        ));
         clickOutputButton.setText(model.getDescriptionPackage().getClickOutputButtonText());
         upgradeButton.setText(model.getDescriptionPackage().getUpgradeButtonText());
-        workingLevelLabel.setText(model.getLevelComponent().getWorkingLevelDescroption());
+        workingLevelLabel.setText(model.getLevelComponent().getWorkingLevelDescription());
         proficiencyLabel.setText(model.getProficiencyComponent().getProficiencyDescroption());
         positionLabel.setText(model.getSaveData().getPosition().toShowText());
         destoryButton.setText(model.descriptionPackage.getDestroyButtonText());

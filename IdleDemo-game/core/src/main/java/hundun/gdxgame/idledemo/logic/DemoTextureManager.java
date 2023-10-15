@@ -67,8 +67,8 @@ public class DemoTextureManager extends AbstractTextureManager {
             //gameAreaBackMap.put(GameArea.AREA_WIN, regions[0][3]);
         }
         {
-            Texture texture = new Texture(Gdx.files.internal("CellIcons.png"));
-            TextureRegion[][] regions = TextureRegion.split(texture, 128, 128);
+            Texture texture = new Texture(Gdx.files.internal("fantasyhextiles_v3.png"));
+            TextureRegion[][] regions = TextureRegion.split(texture, 32, 48);
             defaultAreaBack = regions[0][1];
             constructionHexImageMap.put(DemoConstructionPrototypeId.EMPTY_CELL, regions[0][0]);
             constructionHexImageMap.put(DemoConstructionPrototypeId.SINGLETON_COOKIE_MAIN_CLICKER, regions[0][1]);

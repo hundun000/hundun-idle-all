@@ -7,7 +7,6 @@ package hundun.gdxgame.idleshare.gamelib.framework.model.construction.base;
 import java.util.Map;
 import java.util.Random;
 
-import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ConstructionSaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IBuffChangeListener;
@@ -123,7 +122,7 @@ public abstract class BaseConstruction implements IBuffChangeListener, ITileNode
         this.gameplayContext = gameContext;
         
         this.name = gameContext.getGameDictionary().constructionPrototypeIdToShowName(language, prototypeId);
-        this.detailDescroptionConstPart = gameContext.getGameDictionary().constructionPrototypeIdToDetailDescroptionConstPart(language, prototypeId);
+        this.detailDescroptionConstPart = gameContext.getGameDictionary().constructionPrototypeIdToDetailDescriptionConstPart(language, prototypeId);
         
         outputComponent.lazyInitDescription();
         upgradeComponent.lazyInitDescription();
@@ -135,7 +134,7 @@ public abstract class BaseConstruction implements IBuffChangeListener, ITileNode
         this.prototypeId = prototypeId;
         this.id = id;
         this.saveData = new ConstructionSaveData();
-
+        this.saveData.setPrototypeId(prototypeId);
     }
 
     /**

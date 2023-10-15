@@ -1,5 +1,8 @@
 package hundun.gdxgame.idledemo.ui.world;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import hundun.gdxgame.idledemo.logic.DemoConstructionPrototypeId;
 import hundun.gdxgame.idledemo.ui.screen.WorldPlayScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollectionListener;
@@ -7,8 +10,6 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractCon
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 public class WorldCellDetailBoardVM extends BaseCellDetailBoardVM implements IConstructionCollectionListener {
     @Getter
@@ -19,10 +20,10 @@ public class WorldCellDetailBoardVM extends BaseCellDetailBoardVM implements ICo
     public WorldCellDetailBoardVM(WorldPlayScreen parent)
     {
         super.postPrefabInitialization(parent);
-        updateDetail(null);
+        selectCell(null);
     }
 
-    public void updateDetail(BaseConstruction construction)
+    public void selectCell(BaseConstruction construction)
     {
         this.detailingConstruction = construction;
         if (construction == null)
@@ -52,11 +53,19 @@ public class WorldCellDetailBoardVM extends BaseCellDetailBoardVM implements ICo
         this.clearChildren();
         contents.clear();
 
-        WorldConstructionInstanceCellDetailNode innerBoardVM = new WorldConstructionInstanceCellDetailNode(parent);
+        WorldConstructionInstanceCellDetailNode innerBoardVM = new WorldConstructionInstanceCellDetailNode(screen);
         innerBoardVM.updateAsConstruction(construction, construction.getSaveData().getPosition());
         this.add(innerBoardVM);
         contents.add(innerBoardVM);
 
+        TextButton textButton = new TextButton("clear", screen.getGame().getMainSkin());
+        textButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                screen.onCellClicked(null);
+            }
+        });
+        this.add(textButton);
     }
 
     private void updateAsConstructionPrototypeDetail(BaseConstruction construction)
@@ -64,18 +73,25 @@ public class WorldCellDetailBoardVM extends BaseCellDetailBoardVM implements ICo
         this.clearChildren();
         contents.clear();
 
-        AbstractConstructionPrototype constructionPrototype = parent.getGame().getIdleGameplayExport()
+        AbstractConstructionPrototype constructionPrototype = screen.getGame().getIdleGameplayExport()
                 .getGameplayContext()
                 .getConstructionManager()
                 .getEmptyConstructionPrototype();
 
 
-        WorldConstructionPrototypeCellDetailNode innerBoardVM = new WorldConstructionPrototypeCellDetailNode(parent);
+        WorldConstructionPrototypeCellDetailNode innerBoardVM = new WorldConstructionPrototypeCellDetailNode(screen);
             innerBoardVM.updateAsConstructionPrototype(construction, constructionPrototype, construction.getSaveData().getPosition());
             this.add(innerBoardVM);
             contents.add(innerBoardVM);
 
-
+        TextButton textButton = new TextButton("clear", screen.getGame().getMainSkin());
+        textButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                screen.onCellClicked(null);
+            }
+        });
+        this.add(textButton);
     }
 
     @Override
@@ -83,8 +99,8 @@ public class WorldCellDetailBoardVM extends BaseCellDetailBoardVM implements ICo
     {
         if (detailingConstruction != null)
         {
-            detailingConstruction = parent.getGame().getIdleGameplayExport().getGameplayContext().getConstructionManager().getConstructionAt(detailingConstruction.getPosition());
-            updateDetail(detailingConstruction);
+            detailingConstruction = screen.getGame().getIdleGameplayExport().getGameplayContext().getConstructionManager().getConstructionAt(detailingConstruction.getPosition());
+            selectCell(detailingConstruction);
         }
     }
 }

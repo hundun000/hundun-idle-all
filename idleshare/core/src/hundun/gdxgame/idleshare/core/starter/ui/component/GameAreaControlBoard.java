@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
@@ -24,9 +25,7 @@ public class GameAreaControlBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> e
     public GameAreaControlBoard(BaseIdleScreen<T_GAME, T_SAVE> parent) {
         super();
         this.parent = parent;
-//        this.setSize(
-//                WIDTH,
-//                HEIGHT);
+        this.setBackground(new TextureRegionDrawable(parent.getGame().getTextureManager().getDefaultBoardNinePatchTexture()));
 
         
     }
@@ -60,7 +59,10 @@ public class GameAreaControlBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> e
 
             GameAreaControlNode<T_GAME, T_SAVE> node = new GameAreaControlNode<>(parent, controlBoardScreenId, false);
             nodes.put(controlBoardScreenId, node);
-            this.add(node).width(parent.getLayoutConst().AREA_BOARD_BORDER_WIDTH).height(parent.getLayoutConst().AREA_BOARD_CELL_HEIGHT).row();
+            this.add(node)
+                    .width(parent.getLayoutConst().AREA_BOARD_BORDER_WIDTH)
+                    .height(parent.getLayoutConst().AREA_BOARD_CELL_HEIGHT)
+                    .row();
         }
 
         rebuildChild(null);

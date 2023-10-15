@@ -12,9 +12,12 @@ import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.sub.AllAchievementBoardVM;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
+import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementStateChangeListener;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
+import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementState;
 import lombok.Setter;
 
-public class DemoAchievementScreen extends BaseIdleScreen<DemoIdleGame, RootSaveData> {
+public class DemoAchievementScreen extends BaseIdleScreen<DemoIdleGame, RootSaveData> implements IAchievementStateChangeListener {
 
     AllAchievementBoardVM<DemoIdleGame, RootSaveData> allAchievementBoardVM;
 
@@ -50,5 +53,10 @@ public class DemoAchievementScreen extends BaseIdleScreen<DemoIdleGame, RootSave
         super.lazyInitLogicContext();
 
         storageInfoTable.lazyInit(ResourceType.VALUES_FOR_SHOW_ORDER);
+    }
+
+    @Override
+    public void onAchievementStateChange(AbstractAchievement achievement, AchievementState state) {
+        allAchievementBoardVM.updateData();
     }
 }

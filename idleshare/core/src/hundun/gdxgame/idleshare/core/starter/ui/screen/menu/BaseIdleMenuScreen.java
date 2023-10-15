@@ -3,17 +3,11 @@ package hundun.gdxgame.idleshare.core.starter.ui.screen.menu;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
-import hundun.gdxgame.corelib.base.BaseHundunGame;
 import hundun.gdxgame.corelib.base.BaseHundunScreen;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
@@ -56,13 +50,14 @@ public abstract class BaseIdleMenuScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
     }
 
     private void initScene2d() {
-        List<String> memuScreenTexts = game.getIdleGameplayExport().getGameDictionary().getMemuScreenTexts(game.getIdleGameplayExport().getLanguage());
+        List<String> memuScreenTexts = game.getIdleGameplayExport().getGameDictionary().getMenuScreenTexts(game.getIdleGameplayExport().getLanguage());
         this.titleLabel = new Label(
                 JavaFeatureForGwt.stringFormat("     %s     ", memuScreenTexts.get(0)), 
                 game.getMainSkin());
         titleLabel.setFontScale(1.5f);
         this.backImage = new Image(game.getTextureManager().getMenuTexture());
-        
+        backImage.setFillParent(true);
+
         buttonContinueGame = new TextButton(memuScreenTexts.get(2), game.getMainSkin());
         buttonContinueGame.addListener(buttonContinueGameInputListener);
 

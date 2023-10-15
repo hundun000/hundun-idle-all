@@ -28,7 +28,7 @@ public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
     
     
     public DemoIdleGame(ISaveTool<RootSaveData> saveTool) {
-        super(640, 480);
+        super(960, 640);
         this.debugMode = true;
         
         this.sharedViewport = new ScreenViewport();

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BaseCellDetailBoardVM extends Table implements ILogicFrameListener {
-    protected BaseDemoPlayScreen parent;
+    protected BaseDemoPlayScreen screen;
 
 
 
@@ -25,7 +25,7 @@ public class BaseCellDetailBoardVM extends Table implements ILogicFrameListener 
     public void postPrefabInitialization(BaseDemoPlayScreen parent)
     {
         //super("GUIDE_TEXT", parent.game.getButtonSkin());
-        this.parent = parent;
+        this.screen = parent;
         this.setBackground(new TextureRegionDrawable(parent.getGame().getTextureManager().getDefaultBoardNinePatchTexture()));
 
     }

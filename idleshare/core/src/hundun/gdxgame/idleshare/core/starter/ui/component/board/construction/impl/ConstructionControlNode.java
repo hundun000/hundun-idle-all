@@ -36,7 +36,7 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
 
     TextButton clickOutputButton;
     TextButton upgradeButton;
-    TextButton destoryButton;
+    TextButton destroyButton;
     TextButton transformButton;
 
     Table changeWorkingLevelGroup;
@@ -134,7 +134,7 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
 
         this.proficiencyLabel = new Label("", parent.getGame().getMainSkin());
         this.positionLabel = new Label("", parent.getGame().getMainSkin());
-        this.destoryButton = new TextButton("-", parent.getGame().getMainSkin());
+        this.destroyButton = new TextButton("-", parent.getGame().getMainSkin());
         this.transformButton = new TextButton("-", parent.getGame().getMainSkin());
         // ------ this ------
         this.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
@@ -154,7 +154,7 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
     public void setModel(BaseConstruction constructionExportProxy) {
         this.model = constructionExportProxy;
         if (constructionExportProxy != null) {
-            if (constructionExportProxy.getLevelComponent().isWorkingLevelChangable()) {
+            if (constructionExportProxy.getLevelComponent().isTypeWorkingLevelChangeable()) {
                 this.upWorkingLevelButton.setVisible(true);
                 this.downWorkingLevelButton.setVisible(true);
             } else {
@@ -188,10 +188,10 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
         constructionNameLabel.setText(model.getName());
         clickOutputButton.setText(model.getDescriptionPackage().getClickOutputButtonText());
         upgradeButton.setText(model.getDescriptionPackage().getUpgradeButtonText());
-        workingLevelLabel.setText(model.getLevelComponent().getWorkingLevelDescroption());
+        workingLevelLabel.setText(model.getLevelComponent().getWorkingLevelDescription());
         proficiencyLabel.setText(model.getProficiencyComponent().getProficiencyDescroption());
         positionLabel.setText(model.getSaveData().getPosition().toShowText());
-        destoryButton.setText(model.descriptionPackage.getDestroyButtonText());
+        destroyButton.setText(model.descriptionPackage.getDestroyButtonText());
 
         // ------ update clickable-state ------
         if (model.getOutputComponent().canOutput()) {
@@ -210,13 +210,13 @@ public class ConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
         }
         if (model.getExistenceComponent().canDestory())
         {
-            destoryButton.setDisabled(false);
-            destoryButton.getLabel().setColor(Color.WHITE);
+            destroyButton.setDisabled(false);
+            destroyButton.getLabel().setColor(Color.WHITE);
         }
         else
         {
-            destoryButton.setDisabled(true);
-            destoryButton.getLabel().setColor(Color.RED);
+            destroyButton.setDisabled(true);
+            destroyButton.getLabel().setColor(Color.RED);
         }
         if (model.getUpgradeComponent().canTransfer())
         {

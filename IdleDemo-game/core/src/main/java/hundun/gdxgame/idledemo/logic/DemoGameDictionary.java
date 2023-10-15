@@ -20,6 +20,8 @@ public class DemoGameDictionary implements IGameDictionary {
                 switch (constructionId) {
                     case DemoConstructionPrototypeId.SINGLETON_COOKIE_MAIN_CLICKER:
                         return "点击器";
+                    case DemoConstructionPrototypeId.COOKIE_COMPLEX_AUTO_PROVIDER:
+                        return "高级自动点击器";
                     case DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER:
                         return "自动点击器";
                     case DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER:
@@ -31,8 +33,10 @@ public class DemoGameDictionary implements IGameDictionary {
                 switch (constructionId) {
                     case DemoConstructionPrototypeId.SINGLETON_COOKIE_MAIN_CLICKER:
                         return "Clicker";
+                    case DemoConstructionPrototypeId.COOKIE_COMPLEX_AUTO_PROVIDER:
+                        return "ComplexAutoClicker";
                     case DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER:
-                        return "AutoClicker";
+                        return "SimpleAutoClicker";
                     case DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER:
                         return "AutoSeller";
                     default:
@@ -44,10 +48,11 @@ public class DemoGameDictionary implements IGameDictionary {
     }
 
     @Override
-    public String constructionPrototypeIdToDetailDescroptionConstPart(Language language, String constructionId) {
+    public String constructionPrototypeIdToDetailDescriptionConstPart(Language language, String constructionId) {
         switch (language) {
             case CN:
                 switch (constructionId) {
+                    case DemoConstructionPrototypeId.COOKIE_COMPLEX_AUTO_PROVIDER:
                     case DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER:
                         return "自动获得饼干";
                     case DemoConstructionPrototypeId.EMPTY_CELL:
@@ -57,6 +62,7 @@ public class DemoGameDictionary implements IGameDictionary {
                 }
             default:
                 switch (constructionId) {
+                    case DemoConstructionPrototypeId.COOKIE_COMPLEX_AUTO_PROVIDER:
                     case DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER:
                         return "Auto gain some cookie";
                     case DemoConstructionPrototypeId.EMPTY_CELL:
@@ -70,7 +76,7 @@ public class DemoGameDictionary implements IGameDictionary {
     }
 
     @Override
-    public List<String> getMemuScreenTexts(Language language) {
+    public List<String> getMenuScreenTexts(Language language) {
         switch (language) {
             case CN:
                 return JavaFeatureForGwt.arraysAsList("Idle样例", "新游戏", "继续游戏", "语言", "重启后生效");

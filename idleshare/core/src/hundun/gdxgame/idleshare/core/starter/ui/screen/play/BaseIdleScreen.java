@@ -108,13 +108,17 @@ public abstract class BaseIdleScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
                 .row();
 
         leftSideGroup = new Table();
-        uiRootTable.add(leftSideGroup).expandY().left();
+        uiRootTable.add(leftSideGroup)
+                .growY();
 
         middleGroup = new Table();
-        uiRootTable.add(middleGroup).expand();
+        uiRootTable.add(middleGroup).grow();
 
         gameAreaControlBoard = new GameAreaControlBoard<>(this);
-        uiRootTable.add(gameAreaControlBoard).expandY().right().top().row();
+        gameAreaControlBoard.top();
+        uiRootTable.add(gameAreaControlBoard)
+                .growY()
+                .row();
 
     }
 

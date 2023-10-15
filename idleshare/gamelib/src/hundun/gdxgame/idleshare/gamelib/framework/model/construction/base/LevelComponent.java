@@ -14,24 +14,24 @@ public class LevelComponent {
 
     @Setter
     @Getter
-    private boolean workingLevelChangable;
+    private boolean typeWorkingLevelChangeable;
     public static final int DEFAULT_MIN_WORKING_LEVEL = 0;
     public int minWorkingLevel = DEFAULT_MIN_WORKING_LEVEL;
     public static final int DEFAULT_MAX_LEVEL = 5;
     public int maxLevel = DEFAULT_MAX_LEVEL;
-    public LevelComponent(BaseConstruction construction, boolean workingLevelChangable) {
+    public LevelComponent(BaseConstruction construction, boolean typeWorkingLevelChangeable) {
         super();
         this.construction = construction;
-        this.workingLevelChangable = workingLevelChangable;
+        this.typeWorkingLevelChangeable = typeWorkingLevelChangeable;
     }
 
-    public String getWorkingLevelDescroption() {
+    public String getWorkingLevelDescription() {
         boolean reachMaxLevel = construction.getSaveData().getLevel() == this.maxLevel;
         return construction.descriptionPackage.getLevelDescriptionProvider().provide(construction.saveData.getLevel(), construction.saveData.getWorkingLevel(), reachMaxLevel);
     }
 
     public boolean canChangeWorkingLevel(int delta) {
-        if (!workingLevelChangable) {
+        if (!typeWorkingLevelChangeable) {
             return false;
         }
         int next = construction.saveData.getWorkingLevel() + delta;

@@ -2,6 +2,7 @@ package hundun.gdxgame.idledemo.ui.world;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import hundun.gdxgame.corelib.base.util.DrawableFactory;
+import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idledemo.ui.screen.BaseDemoPlayScreen;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
@@ -18,7 +19,7 @@ import java.util.List;
  */
 public class WorldConstructionPrototypeCellDetailNode extends BaseCellDetailNodeVM {
     BaseDemoPlayScreen parent;
-    AbstractConstructionPrototype model;
+    AbstractConstructionPrototype constructionPrototype;
     GridPosition position;
     Label constructionNameLabel;
 
@@ -54,7 +55,7 @@ public class WorldConstructionPrototypeCellDetailNode extends BaseCellDetailNode
 
     private void update() {
         // ------ update show-state ------
-        if (model == null) {
+        if (constructionPrototype == null) {
             setVisible(false);
             //textButton.setVisible(false);
             //Gdx.app.log("ConstructionView", this.hashCode() + " no model");
@@ -65,14 +66,21 @@ public class WorldConstructionPrototypeCellDetailNode extends BaseCellDetailNode
             //Gdx.app.log("ConstructionView", model.getName() + " set to its view");
         }
         // ------ update text ------
-        constructionNameLabel.setText(parent.getGame()
-                .getIdleGameplayExport()
-                .getGameplayContext()
-                .getGameDictionary()
-                .constructionPrototypeIdToDetailDescroptionConstPart(
-                        parent.getGame().getIdleGameplayExport().getLanguage(),
-                        model.getPrototypeId()
-                ));
+
+        constructionNameLabel.setText(JavaFeatureForGwt.stringFormat(
+                "%s (%s, %s)",
+                parent.getGame()
+                        .getIdleGameplayExport()
+                        .getGameplayContext()
+                        .getGameDictionary()
+                        .constructionPrototypeIdToDetailDescriptionConstPart(
+                                parent.getGame().getIdleGameplayExport().getLanguage(),
+                                constructionPrototype.getPrototypeId()
+                        ),
+                position.getX(),
+                position.getY()
+        ));
+
     }
 
 
@@ -82,8 +90,12 @@ public class WorldConstructionPrototypeCellDetailNode extends BaseCellDetailNode
         children.forEach(it -> it.subLogicFrame());
     }
 
-    public void updateAsConstructionPrototype(BaseConstruction construction, AbstractConstructionPrototype constructionPrototype, GridPosition position) {
-        this.model = constructionPrototype;
+    public void updateAsConstructionPrototype(
+            BaseConstruction construction,
+            AbstractConstructionPrototype constructionPrototype,
+            GridPosition position
+    ) {
+        this.constructionPrototype = constructionPrototype;
         this.position = position;
 
         List<String> buyCandidateConstructionPrototypeIds = parent.getGame().getIdleGameplayExport().getGameplayContext()

@@ -35,7 +35,7 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
                         .prototypeId(DemoConstructionPrototypeId.SINGLETON_COOKIE_MAIN_CLICKER)
                         .level(0)
                         .workingLevel(0)
-                        .position( new GridPosition(0, 0))
+                        .position( new GridPosition(999, 999))
                         .build()
         );
         map.put(
@@ -53,13 +53,19 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
                         .prototypeId(DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER)
                         .level(1)
                         .workingLevel(0)
-                        .position( new GridPosition(1, 0))
+                        .position( new GridPosition(999, 999))
                         .build()
         );
         List<GridPosition> dirtGridPositions = JavaFeatureForGwt.listOf(
-                new GridPosition(-1, 0),
-                new GridPosition(0, -1),
-                new GridPosition(-1, -1)
+                new GridPosition(4, 5),
+                new GridPosition(4, 4),
+                new GridPosition(4, 6),
+                new GridPosition(5, 5),
+                new GridPosition(5, 4),
+                new GridPosition(5, 6),
+                new GridPosition(6, 5),
+                new GridPosition(6, 4),
+                new GridPosition(6, 6)
         );
         dirtGridPositions.forEach(it -> {
             map.put(

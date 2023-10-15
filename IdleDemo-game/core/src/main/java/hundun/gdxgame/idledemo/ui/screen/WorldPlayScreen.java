@@ -72,7 +72,8 @@ public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstruction
     protected void updateUIForShow() {
         List<BaseConstruction> constructions = game.getIdleGameplayExport().getGameplayContext().getConstructionManager()
                 .getWorldConstructionInstances();
-        hexAreaVM.updateDeskDatas(constructions);
+        hexAreaVM.updateUIForShow(constructions);
+        worldCellDetailBoardVM.selectCell(null);
     }
 
     @Override
@@ -103,13 +104,14 @@ public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstruction
 
     @Override
     public void onCellClicked(HexCellVM vm) {
-        worldCellDetailBoardVM.updateDetail(vm != null ? vm.getDeskData() : null);
+        worldCellDetailBoardVM.selectCell(vm != null ? vm.getDeskData() : null);
+        hexAreaVM.selectCell(vm != null ? vm.getDeskData() : null);
     }
 
     @Override
     public void onConstructionCollectionChange() {
         List<BaseConstruction> constructions = game.getIdleGameplayExport().getGameplayContext().getConstructionManager()
                 .getWorldConstructionInstances();
-        hexAreaVM.updateDeskDatas(constructions);
+        hexAreaVM.updateUIForConstructionCollectionChange(constructions);
     }
 }

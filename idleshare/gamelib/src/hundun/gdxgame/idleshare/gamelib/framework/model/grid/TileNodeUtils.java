@@ -7,15 +7,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * <a href="https://www.redblobgames.com/grids/hexagons/">hexagons sim online</a>
+ */
 public class TileNodeUtils {
-    public static List<TileNeighborDirection> values = JavaFeatureForGwt.listOf(new TileNeighborDirection[]{
-        TileNeighborDirection.LEFT_UP,
-                TileNeighborDirection.LEFT_MID,
-                TileNeighborDirection.LEFT_DOWN,
-                TileNeighborDirection.RIGHT_UP,
-                TileNeighborDirection.RIGHT_MID,
-                TileNeighborDirection.RIGHT_DOWN
-    });
+
+    public enum HexMode {
+        ODD_R,
+        ODD_Q
+    }
+
+    public static HexMode hexMode = HexMode.ODD_Q;
+
+    public static List<TileNeighborDirection> values = JavaFeatureForGwt.listOf(
+            TileNeighborDirection.LEFT_UP,
+            TileNeighborDirection.LEFT_MID,
+            TileNeighborDirection.LEFT_DOWN,
+            TileNeighborDirection.RIGHT_UP,
+            TileNeighborDirection.RIGHT_MID,
+            TileNeighborDirection.RIGHT_DOWN
+    );
 
     public static <T> void updateNeighborsAllStep(ITileNode<T> target, ITileNodeMap<T> map) {
         // update self
@@ -65,8 +76,23 @@ public class TileNodeUtils {
     {
         int y;
         int x;
-        y = target.getPosition().y;
-        x = target.getPosition().x + 1;
+        if (hexMode == HexMode.ODD_R) {
+            y = target.getPosition().y;
+            x = target.getPosition().x + 1;
+        } else {
+            // hexMode == HexMode.ODD_Q
+            boolean evenCol = target.getPosition().x % 2 == 0;
+            if (evenCol)
+            {
+                y = target.getPosition().y;
+                x = target.getPosition().x + 1;
+            }
+            else
+            {
+                y = target.getPosition().y + 1;
+                x = target.getPosition().x + 1;
+            }
+        }
         return new GridPosition(x, y);
     }
 
@@ -75,15 +101,27 @@ public class TileNodeUtils {
     {
         int y;
         int x;
-        if (target.getPosition().y % 2 == 0)
-        {
-            y = target.getPosition().y + 1;
-            x = target.getPosition().x + 1;
-        }
-        else
-        {
-            y = target.getPosition().y + 1;
-            x = target.getPosition().x;
+        if (hexMode == HexMode.ODD_R) {
+            boolean evenRow = target.getPosition().y % 2 == 0;
+            if (evenRow) {
+                y = target.getPosition().y - 1;
+                x = target.getPosition().x + 1;
+            } else {
+                y = target.getPosition().y - 1;
+                x = target.getPosition().x;
+            }
+        } else {
+            // hexMode == HexMode.ODD_Q
+            boolean evenCol = target.getPosition().x % 2 == 0;
+            if (evenCol) {
+                y = target.getPosition().y - 1;
+                x = target.getPosition().x + 1;
+            }
+            else
+            {
+                y = target.getPosition().y;
+                x = target.getPosition().x + 1;
+            }
         }
         return new GridPosition(x, y);
     }
@@ -93,14 +131,18 @@ public class TileNodeUtils {
     {
         int y;
         int x;
-        if (target.getPosition().y % 2 == 0)
-        {
-            y = target.getPosition().y - 1;
-            x = target.getPosition().x + 1;
-        }
-        else
-        {
-            y = target.getPosition().y - 1;
+        if (hexMode == HexMode.ODD_R) {
+            boolean evenRow = target.getPosition().y % 2 == 0;
+            if (evenRow) {
+                y = target.getPosition().y + 1;
+                x = target.getPosition().x + 1;
+            } else {
+                y = target.getPosition().y + 1;
+                x = target.getPosition().x;
+            }
+        } else {
+            // hexMode == HexMode.ODD_Q
+            y = target.getPosition().y + 1;
             x = target.getPosition().x;
         }
         return new GridPosition(x, y);
@@ -110,15 +152,19 @@ public class TileNodeUtils {
     {
         int y;
         int x;
-        if (target.getPosition().y % 2 == 0)
-        {
-            y = target.getPosition().y + 1;
+        if (hexMode == HexMode.ODD_R) {
+            boolean evenRow = target.getPosition().y % 2 == 0;
+            if (evenRow) {
+                y = target.getPosition().y + 1;
+                x = target.getPosition().x;
+            } else {
+                y = target.getPosition().y + 1;
+                x = target.getPosition().x - 1;
+            }
+        } else {
+            // hexMode == HexMode.ODD_Q
+            y = target.getPosition().y - 1;
             x = target.getPosition().x;
-        }
-        else
-        {
-            y = target.getPosition().y + 1;
-            x = target.getPosition().x - 1;
         }
         return new GridPosition(x, y);
     }
@@ -127,8 +173,22 @@ public class TileNodeUtils {
     {
         int y;
         int x;
-        y = target.getPosition().y;
-        x = target.getPosition().x - 1;
+        if (hexMode == HexMode.ODD_R) {
+            y = target.getPosition().y;
+            x = target.getPosition().x - 1;
+        } else {
+            // hexMode == HexMode.ODD_Q
+            boolean evenCol = target.getPosition().x % 2 == 0;
+            if (evenCol) {
+                y = target.getPosition().y - 1;
+                x = target.getPosition().x - 1;
+            }
+            else
+            {
+                y = target.getPosition().y;
+                x = target.getPosition().x - 1;
+            }
+        }
         return new GridPosition(x, y);
     }
 
@@ -136,15 +196,27 @@ public class TileNodeUtils {
     {
         int y;
         int x;
-        if (target.getPosition().y % 2 == 0)
-        {
-            y = target.getPosition().y - 1;
-            x = target.getPosition().x;
-        }
-        else
-        {
-            y = target.getPosition().y - 1;
-            x = target.getPosition().x - 1;
+        if (hexMode == HexMode.ODD_R) {
+            boolean evenRow = target.getPosition().y % 2 == 0;
+            if (evenRow) {
+                y = target.getPosition().y - 1;
+                x = target.getPosition().x;
+            } else {
+                y = target.getPosition().y - 1;
+                x = target.getPosition().x - 1;
+            }
+        } else {
+            // hexMode == HexMode.ODD_Q
+            boolean evenCol = target.getPosition().x % 2 == 0;
+            if (evenCol) {
+                y = target.getPosition().y;
+                x = target.getPosition().x - 1;
+            }
+            else
+            {
+                y = target.getPosition().y + 1;
+                x = target.getPosition().x - 1;
+            }
         }
         return new GridPosition(x, y);
     }

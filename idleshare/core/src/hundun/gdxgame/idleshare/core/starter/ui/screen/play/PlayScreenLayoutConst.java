@@ -12,7 +12,7 @@ import hundun.gdxgame.corelib.base.util.DrawableFactory;
 public class PlayScreenLayoutConst {
     public final float DESK_WIDTH = 100;
     public final float DESK_HEIGHT = 100;
-    public int CONSTRUCION_BOARD_ROOT_BOX_HEIGHT = 120;
+    public int CONSTRUCION_BOARD_ROOT_BOX_HEIGHT = 200;
     public int CONSTRUCION_CHILD_WIDTH = 100;
     public int CONSTRUCION_CHILD_BUTTON_HEIGHT = 30;
     public int CONSTRUCION_CHILD_NAME_HEIGHT = 50;
@@ -32,8 +32,12 @@ public class PlayScreenLayoutConst {
 
     public int RESOURCE_AMOUNT_PAIR_NODE_HEIGHT = 25;
     public int RESOURCE_AMOUNT_PAIR_NODE_WIDTH = 70;
-    public int FIRST_LOCKED_ACHIEVEMENT_BOARD_WIDTH = 250;
-    public int FIRST_LOCKED_ACHIEVEMENT_BOARD_HEIGHT = 150;
+    public int FIRST_LOCKED_ACHIEVEMENT_BOARD_WIDTH = 200;
+    //public int FIRST_LOCKED_ACHIEVEMENT_BOARD_HEIGHT = 150;
+
+    public int ALL_ACHIEVEMENT_BOARD_SCROLL_BORDER_OFFSET = 40;
+    public int ALL_ACHIEVEMENT_BOARD_NODE_WIDTH = 400;
+    public int ALL_ACHIEVEMENT_BOARD_NODE_HEIGHT = 150;
     public PlayScreenLayoutConst(int gameLogicWidth, int gameLogicHeight) {
         this.EXPECTED_DRAW_MIN_X = 0;
         this.EXPECTED_DRAW_MAX_X = gameLogicWidth;
