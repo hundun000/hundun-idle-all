@@ -27,9 +27,9 @@ public class TreePrototype extends AbstractConstructionPrototype {
             .proficiencyDescriptionProvider(DescriptionPackageFactory.CN_PROFICIENCY_IMP)
             .build();
 
-    public TreePrototype(Language language) {
+    public TreePrototype(String prototypeId, Language language) {
         super(
-                DemoConstructionPrototypeId.EPOCH_1_TREE,
+                prototypeId,
                 language,
                 DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf())
         );

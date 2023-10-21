@@ -17,6 +17,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseCo
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.TextFormatTool;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +30,42 @@ public class IdleMushroomGame extends BaseIdleGame<RootSaveData> {
     @Getter
     protected IdleMushroomTextureManager idleMushroomTextureManager;
 
-    Map<Integer, EpochConfig> epochConfigMap;
+    public static Map<Integer, RootEpochConfig> epochConfigMap;
+    static {
+        epochConfigMap = JavaFeatureForGwt.mapOf(
+                1, RootEpochConfig.builder()
+                        .maxLevel(5)
+                        .outputScale(1)
+                        .constructionEpochConfigMap(JavaFeatureForGwt.mapOf(
+                                DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER,
+                                ConstructionEpochConfig.builder()
+                                        .transformToPrototypeId(DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER)
+                                        .build()
+                        ))
+                        .build(),
+                2, RootEpochConfig.builder()
+                        .maxLevel(10)
+                        .outputScale(2)
+                        .constructionEpochConfigMap(JavaFeatureForGwt.mapOf(
+                                DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER,
+                                ConstructionEpochConfig.builder()
+                                        .transformToPrototypeId(DemoConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER)
+                                        .build()
+                        ))
+                        .build(),
+                3, RootEpochConfig.builder()
+                        .maxLevel(15)
+                        .outputScale(4)
+                        .constructionEpochConfigMap(JavaFeatureForGwt.mapOf(
+                                DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER,
+                                ConstructionEpochConfig.builder()
+                                        .transformToPrototypeId(DemoConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER)
+                                        .build()
+                        ))
+                        .build()
+        );
+    }
+
 
     public IdleMushroomGame(ISaveTool<RootSaveData> saveTool) {
         super(960, 640);
@@ -50,16 +86,6 @@ public class IdleMushroomGame extends BaseIdleGame<RootSaveData> {
                 DemoScreenId.SCREEN_WORLD,
                 DemoScreenId.SCREEN_ACHIEVEMENT
         );
-        this.epochConfigMap = JavaFeatureForGwt.mapOf(
-                1, EpochConfig.builder()
-                                .constructionTransformConfigs(JavaFeatureForGwt.listOf(
-                                        EpochConstructionTransformConfig.builder()
-                                                .fromPrototypeId(DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER)
-                                                .toPrototypeId(DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER)
-                                                .build()
-                                ))
-                        .build()
-                );
     }
 
 
@@ -99,32 +125,33 @@ public class IdleMushroomGame extends BaseIdleGame<RootSaveData> {
     @Data
     @AllArgsConstructor
     @Builder
-    public static class EpochConfig {
-        List<EpochConstructionTransformConfig> constructionTransformConfigs;
+    public static class RootEpochConfig {
+        Integer maxLevel;
+        Integer outputScale;
+        Map<String, ConstructionEpochConfig> constructionEpochConfigMap;
     }
 
     @Data
     @AllArgsConstructor
     @Builder
-    public static class EpochConstructionTransformConfig {
-        String fromPrototypeId;
-        String toPrototypeId;
+    public static class ConstructionEpochConfig {
+
+        String transformToPrototypeId;
     }
+
     public void doChangeEpoch(BaseConstruction epochCounter) {
         int currentEpochLevel = epochCounter.getSaveData().getLevel();
-        EpochConfig epochConfig = epochConfigMap.get(currentEpochLevel);
+        RootEpochConfig rootEpochConfig = epochConfigMap.get(currentEpochLevel);
 
         idleGameplayExport.getGameplayContext().getConstructionManager().getWorldConstructionInstances().stream()
-                        .forEach(it -> {
-                            EpochConstructionTransformConfig transformConfig = epochConfig.getConstructionTransformConfigs().stream()
-                                    .filter(itt -> itt.getFromPrototypeId().equals(it.getPrototypeId()))
-                                    .findAny()
-                                    .orElse(null);
-                            if (transformConfig != null) {
-                                idleGameplayExport.getGameplayContext().getConstructionManager().addToRemoveQueue(it);
-                                idleGameplayExport.getGameplayContext().getConstructionManager().addToCreateQueue(transformConfig.getToPrototypeId(), it.getPosition());
-                            }
-                        });
+                .forEach(it -> {
+                    ConstructionEpochConfig constructionEpochConfig = rootEpochConfig.getConstructionEpochConfigMap()
+                            .get(it.getPrototypeId());
+                    if (constructionEpochConfig != null) {
+                        idleGameplayExport.getGameplayContext().getConstructionManager().addToRemoveQueue(it);
+                        idleGameplayExport.getGameplayContext().getConstructionManager().addToCreateQueue(constructionEpochConfig.getTransformToPrototypeId(), it.getPosition());
+                    }
+                });
 
     }
 }
