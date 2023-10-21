@@ -1,8 +1,6 @@
 package hundun.gdxgame.idledemo.logic.construction;
 
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.*;
-import hundun.gdxgame.idleshare.gamelib.framework.model.construction.starter.ConstProficiencyComponent;
-import hundun.gdxgame.idleshare.gamelib.framework.model.construction.starter.EmptyAutoOutputComponent;
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
 
 public class BaseIdleDemoConstruction extends BaseConstruction {

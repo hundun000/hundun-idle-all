@@ -6,6 +6,7 @@ import java.util.Map;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import lombok.Getter;
 
 public abstract class AbstractTextureManager {
@@ -18,7 +19,8 @@ public abstract class AbstractTextureManager {
 
     @Getter
     protected Texture defaultBoardNinePatchTexture;
-
+    @Getter
+    protected Drawable defaultBoardNinePatchDrawable;
     @Getter
     protected TextureRegion defaultBoardNinePatchMiddle;
     @Getter
@@ -34,6 +36,10 @@ public abstract class AbstractTextureManager {
     protected Map<String, TextureRegion> gameAreaRightPartRegionMap = new HashMap<>();
     protected Map<String, TextureRegion> gameAreaBackMap = new HashMap<>();
     protected Map<String, TextureRegion> constructionHexImageMap = new HashMap<>();
+    @Getter
+    protected TextureRegion constructionHexHighLightImage1;
+    @Getter
+    protected TextureRegion constructionHexHighLightImage2;
     protected TextureRegion defaultIcon;
     protected TextureRegion defaultAreaBack;
 

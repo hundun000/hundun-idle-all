@@ -27,7 +27,7 @@ public class FirstRunningAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>,
         this.parent = parent;
         this.texts = parent.getGame().getIdleGameplayExport().getGameDictionary()
                 .getAchievementTexts(parent.getGame().getIdleGameplayExport().getLanguage());
-        this.setBackground(new TextureRegionDrawable(parent.getGame().getTextureManager().getDefaultBoardNinePatchTexture()));
+        this.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
 
 
         nameStartLabel = new Label("", parent.getGame().getMainSkin());

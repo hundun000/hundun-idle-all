@@ -1,6 +1,7 @@
 package hundun.gdxgame.idleshare.core.framework.model;
 
 import lombok.Getter;
+import lombok.Setter;
 
 public class CameraDataPackage {
     public static float DEFAULT_CAMERA_ZOOM_WEIGHT = 3.7f;
@@ -12,6 +13,12 @@ public class CameraDataPackage {
     private float currentCameraZoomWeight;
     @Getter
     private boolean currentCameraZoomDirty;
+    @Setter
+    private boolean cameraZoomWeightOnlyAllowForceSet;
+
+    public CameraDataPackage() {
+
+    }
 
     public static float cameraZoomWeightToZoomValue(float weight){
         //return weight <= 0 ? (float)Math.pow(2, weight) : (float)Math.log(weight + 2);
@@ -29,6 +36,9 @@ public class CameraDataPackage {
     }
 
     public void modifyCurrentCameraZoomWeight(Float delta) {
+        if (cameraZoomWeightOnlyAllowForceSet) {
+            return;
+        }
         currentCameraZoomWeight += delta;
         currentCameraZoomWeight = Math.max(0.1f, currentCameraZoomWeight);
         currentCameraZoomDirty = true;

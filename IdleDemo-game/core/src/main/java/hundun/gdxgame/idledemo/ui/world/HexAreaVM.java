@@ -39,6 +39,7 @@ public class HexAreaVM extends Table {
     public HexAreaVM(WorldPlayScreen screen) {
         this.screen = screen;
         this.cameraDataPackage = new CameraDataPackage();
+        this.cameraDataPackage.setCameraZoomWeightOnlyAllowForceSet(true);
 
         if (screen.getGame().debugMode) {
             this.debugAll();

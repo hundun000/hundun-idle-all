@@ -9,7 +9,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseCo
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackage;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackageFactory;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.starter.ConstProficiencyComponent;
-import hundun.gdxgame.idleshare.gamelib.framework.model.construction.starter.EmptyAutoOutputComponent;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.starter.SimpleAutoOutputComponent;
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
@@ -54,7 +54,7 @@ public class DirtPrototype extends AbstractConstructionPrototype {
         ConstProficiencyComponent proficiencyComponent = new ConstProficiencyComponent(thiz);
         thiz.setProficiencyComponent(proficiencyComponent);
 
-        EmptyAutoOutputComponent outputComponent = new EmptyAutoOutputComponent(thiz);
+        SimpleAutoOutputComponent outputComponent = new SimpleAutoOutputComponent(thiz);
         outputComponent.setTypeClickOutput(true);
         thiz.setOutputComponent(outputComponent);
 

@@ -49,12 +49,9 @@ public class UpgradeComponent {
                         * Math.pow(upgradeCostLevelUpArg, level)
         );
     };
-    private BiFunction<Long, Integer, Long> calculateCostFunction = DEFAULT_CALCULATE_COST_FUNCTION;
 
-    // ------ replace-lombok ------
-    public BiFunction<Long, Integer, Long> getCalculateCostFunction() {
-        return calculateCostFunction;
-    }
+    @Getter
+    private BiFunction<Long, Integer, Long> calculateCostFunction = DEFAULT_CALCULATE_COST_FUNCTION;
 
     public void setCalculateCostFunction(BiFunction<Long, Integer, Long> calculateCostFunction) {
         this.calculateCostFunction = calculateCostFunction;

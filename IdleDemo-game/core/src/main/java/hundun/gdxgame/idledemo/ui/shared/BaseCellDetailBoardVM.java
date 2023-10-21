@@ -26,7 +26,7 @@ public abstract class BaseCellDetailBoardVM extends Table implements ILogicFrame
     {
         //super("GUIDE_TEXT", parent.game.getButtonSkin());
         this.screen = parent;
-        this.setBackground(new TextureRegionDrawable(parent.getGame().getTextureManager().getDefaultBoardNinePatchTexture()));
+        this.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
 
     }
 }

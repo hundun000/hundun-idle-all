@@ -37,6 +37,9 @@ public class IdleGameplayExport implements ILogicFrameListener,
     @Setter
     @Getter
     private Language language;
+    @Setter
+    @Getter
+    int epoch;
     public String stageId;
 
     public IdleGameplayExport(
@@ -59,9 +62,11 @@ public class IdleGameplayExport implements ILogicFrameListener,
     }
     
     @Override
+
+    
     public void applyGameplaySaveData(GameplaySaveData gameplaySaveData) {
         this.stageId = gameplaySaveData.getStageId();
-
+        this.epoch = gameplaySaveData.getEpoch();
 
         gameplaySaveData.getConstructionSaveDataMap().values().forEach(it -> {
             gameplayContext.getConstructionManager().loadInstance(it);
@@ -78,6 +83,7 @@ public class IdleGameplayExport implements ILogicFrameListener,
     @Override
     public void currentSituationToGameplaySaveData(GameplaySaveData gameplaySaveData) {
         gameplaySaveData.setStageId(this.stageId);
+        gameplaySaveData.setEpoch(this.epoch);
         List<BaseConstruction> constructions = gameplayContext.getConstructionManager().getAllConstructionInstances();
         gameplaySaveData.setConstructionSaveDataMap(constructions.stream()
                 .collect(Collectors.toMap(

@@ -25,7 +25,7 @@ public class GameAreaControlBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> e
     public GameAreaControlBoard(BaseIdleScreen<T_GAME, T_SAVE> parent) {
         super();
         this.parent = parent;
-        this.setBackground(new TextureRegionDrawable(parent.getGame().getTextureManager().getDefaultBoardNinePatchTexture()));
+        this.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
 
         
     }

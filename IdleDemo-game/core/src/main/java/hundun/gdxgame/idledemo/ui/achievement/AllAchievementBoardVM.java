@@ -20,7 +20,7 @@ public class AllAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> 
     public AllAchievementBoardVM(BaseIdleScreen<T_GAME, T_SAVE> parent)
     {
         this.parent = parent;
-        this.setBackground(new TextureRegionDrawable(parent.getGame().getTextureManager().getDefaultBoardNinePatchTexture()));
+        this.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
 
         childTable = new Table();
         childTable.setBackground(parent.getLayoutConst().simpleBoardBackgroundMiddle);

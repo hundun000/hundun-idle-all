@@ -30,12 +30,12 @@ public class OneAchievementNodeVM<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> e
 
     public OneAchievementNodeVM(BaseIdleScreen<T_GAME, T_SAVE> parent, AchievementAndStatus achievementAndStatus) {
         this.parent = parent;
-        this.setBackground(new TextureRegionDrawable(parent.getGame().getTextureManager().getDefaultBoardNinePatchTexture()));
+        this.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
         this.achievementAndStatus = achievementAndStatus;
 
         this.texts = parent.getGame().getIdleGameplayExport().getGameDictionary()
                 .getAchievementTexts(parent.getGame().getIdleGameplayExport().getLanguage());
-        this.setBackground(new TextureRegionDrawable(parent.getGame().getTextureManager().getDefaultBoardNinePatchTexture()));
+        this.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
 
 
         nameStartLabel = new Label("", parent.getGame().getMainSkin());
