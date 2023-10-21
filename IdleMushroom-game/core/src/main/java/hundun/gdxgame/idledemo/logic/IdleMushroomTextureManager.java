@@ -7,12 +7,20 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import hundun.gdxgame.idleshare.core.framework.model.manager.AbstractTextureManager;
+import lombok.Getter;
 
 public class IdleMushroomTextureManager extends AbstractTextureManager {
 
+    @Getter
+    TextureRegion questionMarkTexture;
 
     @Override
     public void lazyInitOnGameCreateStage2() {
+        {
+            Texture texture = new Texture(Gdx.files.internal("All Icons.png"));
+            TextureRegion[][] regions = TextureRegion.split(texture, 16, 16);
+            questionMarkTexture = regions[0][13];
+        }
 
         achievementMaskBoardTexture = new Texture(Gdx.files.internal("win.png"));
         menuTexture = new Texture(Gdx.files.internal("menu.png"));

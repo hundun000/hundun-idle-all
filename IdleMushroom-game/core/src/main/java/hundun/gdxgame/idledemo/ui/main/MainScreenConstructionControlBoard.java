@@ -4,9 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
@@ -16,6 +15,7 @@ import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idledemo.logic.DemoConstructionPrototypeId;
 import hundun.gdxgame.idledemo.ui.screen.BaseDemoPlayScreen;
+import hundun.gdxgame.idledemo.ui.screen.MainPlayScreen;
 import hundun.gdxgame.idledemo.ui.shared.BaseCellDetailNodeVM;
 import hundun.gdxgame.idledemo.ui.shared.ConstructionDetailPartVM;
 import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.StarterConstructionControlNode;
@@ -38,13 +38,13 @@ public class MainScreenConstructionControlBoard extends Table
         implements ILogicFrameListener, IGameAreaChangeListener, IConstructionCollectionListener
 {
 
-    BaseDemoPlayScreen parent;
+    MainPlayScreen parent;
     protected ISecondaryInfoBoardCallback<BaseConstruction> callback;
 
     protected SellerPart sellerPart;
     protected EpochPart epochPart;
     protected ConstructionDetailPartVM epochDetailPart;
-    public MainScreenConstructionControlBoard(BaseDemoPlayScreen parent, ISecondaryInfoBoardCallback<BaseConstruction> callback) {
+    public MainScreenConstructionControlBoard(MainPlayScreen parent, ISecondaryInfoBoardCallback<BaseConstruction> callback) {
         this.parent = parent;
         this.callback = callback;
 
@@ -107,7 +107,7 @@ public class MainScreenConstructionControlBoard extends Table
     }
 
     public static class EpochPart extends BaseCellDetailNodeVM {
-        BaseDemoPlayScreen parent;
+        MainPlayScreen parent;
         BaseConstruction model;
         Label constructionNameLabel;
 
@@ -119,13 +119,13 @@ public class MainScreenConstructionControlBoard extends Table
 
 
         public EpochPart(
-                BaseDemoPlayScreen parent,
+                MainPlayScreen parent,
                 ISecondaryInfoBoardCallback<BaseConstruction> callback) {
             super();
             final PlayScreenLayoutConst playScreenLayoutConst = parent.getLayoutConst();
             this.parent = parent;
 
-            int CHILD_WIDTH = playScreenLayoutConst.CONSTRUCION_CHILD_WIDTH;
+            int CHILD_WIDTH = playScreenLayoutConst.EPOCH_PART_CHILD_WIDTH;
             int CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_BUTTON_HEIGHT;
             int NAME_CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_NAME_HEIGHT;
 
@@ -143,17 +143,20 @@ public class MainScreenConstructionControlBoard extends Table
                 }
             });
 
-            // ------ changeWorkingLevelGroup ------
-
             this.workingLevelLabel = new Label("", parent.getGame().getMainSkin());
             workingLevelLabel.setAlignment(Align.center);
 
+            Container<?> questionMarkArea = new Container<>(new Image(parent.getGame().getIdleMushroomTextureManager().getQuestionMarkTexture()));
+            questionMarkArea.setBackground(parent.getGame().getIdleMushroomTextureManager().getDefaultBoardNinePatchDrawable());
+            questionMarkArea.setTouchable(Touchable.enabled);
+            questionMarkArea.addListener(new StarterSecondaryInfoBoardCallerClickListener(() -> model, parent));
+
             // ------ this ------
             this.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
+            this.add(questionMarkArea).height(CHILD_HEIGHT).row();
             this.add(upgradeButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
             this.add(workingLevelLabel).size(CHILD_WIDTH, CHILD_HEIGHT).row();
             this.setBackground(DrawableFactory.createBorderBoard(30, 10, 0.8f, 1));
-            this.addListener(new StarterSecondaryInfoBoardCallerClickListener(model, callback));
         }
 
         private void update() {
@@ -205,7 +208,7 @@ public class MainScreenConstructionControlBoard extends Table
     }
 
     public static class SellerPart extends BaseCellDetailNodeVM {
-        BaseDemoPlayScreen parent;
+        MainPlayScreen parent;
         BaseConstruction model;
         Label constructionNameLabel;
         TextButton upWorkingLevelButton;
@@ -221,13 +224,13 @@ public class MainScreenConstructionControlBoard extends Table
 
 
         public SellerPart(
-                BaseDemoPlayScreen parent,
+                MainPlayScreen parent,
                 ISecondaryInfoBoardCallback<BaseConstruction> callback) {
             super();
             final PlayScreenLayoutConst playScreenLayoutConst = parent.getLayoutConst();
             this.parent = parent;
 
-            int CHILD_WIDTH = playScreenLayoutConst.CONSTRUCION_CHILD_WIDTH;
+            int CHILD_WIDTH = playScreenLayoutConst.SELLER_PART_CHILD_WIDTH;
             int CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_BUTTON_HEIGHT;
             int NAME_CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_NAME_HEIGHT;
 
@@ -273,15 +276,21 @@ public class MainScreenConstructionControlBoard extends Table
             detailGroup = new Table();
 
             this.transformButton = new TextButton("-", parent.getGame().getMainSkin());
+
+            Container<?> questionMarkArea = new Container<>(new Image(parent.getGame().getIdleMushroomTextureManager().getQuestionMarkTexture()));
+            questionMarkArea.setBackground(parent.getGame().getIdleMushroomTextureManager().getDefaultBoardNinePatchDrawable());
+            questionMarkArea.setTouchable(Touchable.enabled);
+            questionMarkArea.addListener(new StarterSecondaryInfoBoardCallerClickListener(() -> model, parent));
+
             // ------ this ------
             this.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
+            this.add(questionMarkArea).height(CHILD_HEIGHT).row();
             this.add(upgradeButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
             this.add(workingLevelLabel).size(CHILD_WIDTH, CHILD_HEIGHT).row();
             this.add(changeWorkingLevelGroup).size(CHILD_WIDTH, CHILD_HEIGHT).row();
             this.add(detailGroup).row();
 
             this.setBackground(DrawableFactory.createBorderBoard(30, 10, 0.8f, 1));
-            this.addListener(new StarterSecondaryInfoBoardCallerClickListener(model, callback));
         }
 
         private void update() {

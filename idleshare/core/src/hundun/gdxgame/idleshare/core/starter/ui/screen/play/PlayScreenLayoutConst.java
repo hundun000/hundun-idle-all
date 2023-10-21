@@ -10,6 +10,8 @@ import hundun.gdxgame.corelib.base.util.DrawableFactory;
  * Created on 2022/01/22
  */
 public class PlayScreenLayoutConst {
+    public static final int EPOCH_PART_CHILD_WIDTH = 200;
+    public static final int SELLER_PART_CHILD_WIDTH = 200;
     public final float DESK_WIDTH = 100;
     public final float DESK_HEIGHT = 100;
     public int CONSTRUCION_BOARD_ROOT_BOX_HEIGHT = 200;

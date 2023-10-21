@@ -18,6 +18,8 @@ import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutCons
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
+import java.util.function.Supplier;
+
 
 /**
  * @author hundun
@@ -42,17 +44,17 @@ public class StarterConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>,
     Table changeWorkingLevelGroup;
 
     public static class StarterSecondaryInfoBoardCallerClickListener extends ClickListener {
-        BaseConstruction model;
+        Supplier<BaseConstruction> modelGetter;
         ISecondaryInfoBoardCallback<BaseConstruction> callback;
 
-        public StarterSecondaryInfoBoardCallerClickListener(BaseConstruction model, ISecondaryInfoBoardCallback<BaseConstruction> callback) {
-            this.model = model;
+        public StarterSecondaryInfoBoardCallerClickListener(Supplier<BaseConstruction> modelGetter, ISecondaryInfoBoardCallback<BaseConstruction> callback) {
+            this.modelGetter = modelGetter;
             this.callback = callback;
         }
         @Override
         public void clicked(InputEvent event, float x, float y) {
-            if (model != null) {
-                callback.showAndUpdateGuideInfo(model);
+            if (modelGetter.get() != null) {
+                callback.showAndUpdateGuideInfo(modelGetter.get());
             }
             Gdx.app.log(StarterConstructionControlNode.class.getSimpleName(), "this clicked event");
             super.clicked(event, x, y);
@@ -60,8 +62,8 @@ public class StarterConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>,
 
         @Override
         public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-            if (model != null && pointer == -1) {
-                callback.showAndUpdateGuideInfo(model);
+            if (modelGetter.get() != null && pointer == -1) {
+                callback.showAndUpdateGuideInfo(modelGetter.get());
             }
             super.enter(event, x, y, pointer, fromActor);
         }
@@ -109,7 +111,7 @@ public class StarterConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>,
             }
         });
 
-        this.addListener(new StarterSecondaryInfoBoardCallerClickListener(model, callback));
+        this.addListener(new StarterSecondaryInfoBoardCallerClickListener(() -> model, callback));
 
         // ------ changeWorkingLevelGroup ------
         this.changeWorkingLevelGroup = new Table();
