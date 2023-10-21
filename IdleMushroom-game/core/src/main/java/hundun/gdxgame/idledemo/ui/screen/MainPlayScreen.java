@@ -2,8 +2,13 @@ package hundun.gdxgame.idledemo.ui.screen;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.logic.DemoScreenId;
 import hundun.gdxgame.idledemo.logic.ResourceType;
@@ -11,12 +16,18 @@ import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.main.MainScreenConstructionControlBoard;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
 import hundun.gdxgame.idledemo.ui.main.GameEntityFactory;
+import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.framework.model.manager.GameEntityManager;
 import hundun.gdxgame.idleshare.core.starter.ui.component.GameImageDrawer;
 import hundun.gdxgame.idleshare.core.starter.ui.component.PopupInfoBoard;
+import hundun.gdxgame.idleshare.core.starter.ui.component.ResourceAmountPairNode;
 import hundun.gdxgame.idleshare.core.starter.ui.component.animation.MainClickerAnimationVM;
+import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.UpgradeComponent.UpgradeState;
+import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePack;
+import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
 
 /**
  * @author hundun
@@ -24,7 +35,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseCo
  */
 public class MainPlayScreen extends BaseDemoPlayScreen
         implements ISecondaryInfoBoardCallback<BaseConstruction> {
-    protected PopupInfoBoard<DemoIdleGame, RootSaveData> secondaryInfoBoard;
+    protected MainScreenPopupInfoBoard secondaryInfoBoard;
     protected GameEntityManager gameEntityManager;
     protected GameImageDrawer<DemoIdleGame, RootSaveData> gameImageDrawer;
     protected MainClickerAnimationVM<DemoIdleGame, RootSaveData> mainClickerAnimationVM;
@@ -33,6 +44,36 @@ public class MainPlayScreen extends BaseDemoPlayScreen
         super(game, DemoScreenId.SCREEN_MAIN);
     }
 
+    public static class MainScreenPopupInfoBoard extends Table {
+
+        MainPlayScreen parent;
+
+        public MainScreenPopupInfoBoard(MainPlayScreen parent) {
+            //super("GUIDE_TEXT", parent.game.getButtonSkin());
+            this.parent = parent;
+            //this.setBounds(5, GameAreaControlBoard.Y, GameAreaControlBoard.X - 10, 120);
+            this.setTouchable(Touchable.disabled);
+            this.setBackground(parent.getLayoutConst().simpleBoardBackground);
+            this.setVisible(false);
+        }
+
+
+        private void rebuildCells(BaseConstruction model) {
+            this.clearChildren();
+
+            add(new Label(model.getDetailDescroptionConstPart(), parent.getGame().getMainSkin()))
+                    .colspan(3)
+                    .left()
+                    .row();
+
+        }
+
+        public void update(BaseConstruction model) {
+            rebuildCells(model);
+        }
+
+
+    }
 
     @Override
     protected void lazyInitUiRootContext() {
@@ -104,7 +145,7 @@ public class MainPlayScreen extends BaseDemoPlayScreen
     protected void lazyInitBackUiAndPopupUiContent() {
         super.lazyInitBackUiAndPopupUiContent();
 
-        this.secondaryInfoBoard = new PopupInfoBoard<>(this);
+        this.secondaryInfoBoard = new MainScreenPopupInfoBoard(this);
         popupRootTable.add(secondaryInfoBoard).bottom().expand().row();
         popupRootTable.add(new Image())
                 .height(layoutConst.CONSTRUCION_BOARD_ROOT_BOX_HEIGHT);

@@ -79,10 +79,10 @@ public class ConstructionManager implements ITileNodeMap<Void> {
         return result;
     }
 
-    public BaseConstruction getConstructionAt(GridPosition target)
+    public BaseConstruction getWorldConstructionAt(GridPosition target)
     {
         return runningConstructionModelMap.values().stream()
-                .filter(it -> !constructionConfig.getSingletonPrototypeIds().contains(it.getPrototypeId()))
+                .filter(it -> constructionConfig.getWorldPrototypeIds().contains(it.getPrototypeId()))
                 .filter(it -> it.getSaveData().getPosition().equals(target))
                 .findAny()
                 .orElse(null);
@@ -115,10 +115,10 @@ public class ConstructionManager implements ITileNodeMap<Void> {
 
     private void addToRemoveQueueAt(GridPosition position)
     {
-        runningConstructionModelMap.entrySet().stream()
-            .filter(pair -> pair.getValue().getPosition().equals(position))
-            .forEach(pair -> removeQueue.add(pair.getValue()));
-
+        BaseConstruction target = getWorldConstructionAt(position);
+        if (target != null) {
+            removeQueue.add(target);
+        }
     }
 
 
@@ -166,16 +166,9 @@ public class ConstructionManager implements ITileNodeMap<Void> {
     }
 
 
-
-    public void AddToRemoveQueue(BaseConstruction construction)
-    {
-        throw new RuntimeException("NotImplementedException");
-    }
-
-
     @Override
     public ITileNode<Void> getValidNodeOrNull(GridPosition position) {
-        return getConstructionAt(position);
+        return getWorldConstructionAt(position);
     }
 
     public List<String> getByCandidatePrototypeIds() {

@@ -41,7 +41,39 @@ public class StarterConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>,
 
     Table changeWorkingLevelGroup;
 
+    public static class StarterSecondaryInfoBoardCallerClickListener extends ClickListener {
+        BaseConstruction model;
+        ISecondaryInfoBoardCallback<BaseConstruction> callback;
 
+        public StarterSecondaryInfoBoardCallerClickListener(BaseConstruction model, ISecondaryInfoBoardCallback<BaseConstruction> callback) {
+            this.model = model;
+            this.callback = callback;
+        }
+        @Override
+        public void clicked(InputEvent event, float x, float y) {
+            if (model != null) {
+                callback.showAndUpdateGuideInfo(model);
+            }
+            Gdx.app.log(StarterConstructionControlNode.class.getSimpleName(), "this clicked event");
+            super.clicked(event, x, y);
+        }
+
+        @Override
+        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+            if (model != null && pointer == -1) {
+                callback.showAndUpdateGuideInfo(model);
+            }
+            super.enter(event, x, y, pointer, fromActor);
+        }
+
+        @Override
+        public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+            if (pointer == -1) {
+                callback.hideAndCleanGuideInfo();
+            }
+            super.exit(event, x, y, pointer, toActor);
+        }
+    }
 
 
     public StarterConstructionControlNode(
@@ -77,33 +109,7 @@ public class StarterConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>,
             }
         });
 
-        this.addListener(new ClickListener() {
-
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                if (model != null) {
-                    callback.showAndUpdateGuideInfo(model);
-                }
-                Gdx.app.log(StarterConstructionControlNode.class.getSimpleName(), "this clicked event");
-                super.clicked(event, x, y);
-            }
-
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                if (model != null && pointer == -1) {
-                    callback.showAndUpdateGuideInfo(model);
-                }
-                super.enter(event, x, y, pointer, fromActor);
-            }
-
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                if (pointer == -1) {
-                    callback.hideAndCleanGuideInfo();
-                }
-                super.exit(event, x, y, pointer, toActor);
-            }
-        });
+        this.addListener(new StarterSecondaryInfoBoardCallerClickListener(model, callback));
 
         // ------ changeWorkingLevelGroup ------
         this.changeWorkingLevelGroup = new Table();

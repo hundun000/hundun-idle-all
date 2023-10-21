@@ -19,10 +19,12 @@ import hundun.gdxgame.idledemo.ui.screen.BaseDemoPlayScreen;
 import hundun.gdxgame.idledemo.ui.shared.BaseCellDetailNodeVM;
 import hundun.gdxgame.idledemo.ui.shared.ConstructionDetailPartVM;
 import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.StarterConstructionControlNode;
+import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.StarterConstructionControlNode.StarterSecondaryInfoBoardCallerClickListener;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollectionListener;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.UpgradeComponent.UpgradeState;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,7 +42,6 @@ public class MainScreenConstructionControlBoard extends Table
     protected ISecondaryInfoBoardCallback<BaseConstruction> callback;
 
     protected SellerPart sellerPart;
-    protected ConstructionDetailPartVM sellerDetailPart;
     protected EpochPart epochPart;
     protected ConstructionDetailPartVM epochDetailPart;
     public MainScreenConstructionControlBoard(BaseDemoPlayScreen parent, ISecondaryInfoBoardCallback<BaseConstruction> callback) {
@@ -81,9 +82,6 @@ public class MainScreenConstructionControlBoard extends Table
         this.sellerPart = new SellerPart(parent, callback);
         this.add(sellerPart).spaceRight(10).expand();
 
-        this.sellerDetailPart = new ConstructionDetailPartVM(parent);
-        this.add(sellerDetailPart).spaceRight(10).expand();
-
         this.epochPart = new EpochPart(parent, callback);
         this.add(epochPart).spaceRight(10).expand();
 
@@ -95,14 +93,13 @@ public class MainScreenConstructionControlBoard extends Table
                 .findAny()
                 .orElse(null);
         this.sellerPart.updateAsConstruction(sellerConstruction);
-        this.sellerDetailPart.rebuildCells(sellerConstruction);
 
         BaseConstruction epochConstruction = singletonConstructions.stream()
                 .filter(it -> it.getPrototypeId().equals(DemoConstructionPrototypeId.EPOCH_COUNTER))
                 .findAny()
                 .orElse(null);
         this.epochPart.updateAsConstruction(epochConstruction);
-        this.epochDetailPart.rebuildCells(sellerConstruction);
+        this.epochDetailPart.rebuildCells(epochConstruction);
 
         parent.getGame().getFrontend().log("ConstructionInfoBorad",
                 "Constructions change to: " + singletonConstructions.stream().map(BaseConstruction::getName).collect(Collectors.joining(","))
@@ -117,7 +114,6 @@ public class MainScreenConstructionControlBoard extends Table
         Label workingLevelLabel;
 
         TextButton upgradeButton;
-
 
 
 
@@ -156,33 +152,7 @@ public class MainScreenConstructionControlBoard extends Table
             this.add(upgradeButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
             this.add(workingLevelLabel).size(CHILD_WIDTH, CHILD_HEIGHT).row();
             this.setBackground(DrawableFactory.createBorderBoard(30, 10, 0.8f, 1));
-            this.addListener(new ClickListener() {
-
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    if (model != null) {
-                        callback.showAndUpdateGuideInfo(model);
-                    }
-                    Gdx.app.log(StarterConstructionControlNode.class.getSimpleName(), "this clicked event");
-                    super.clicked(event, x, y);
-                }
-
-                @Override
-                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                    if (model != null && pointer == -1) {
-                        callback.showAndUpdateGuideInfo(model);
-                    }
-                    super.enter(event, x, y, pointer, fromActor);
-                }
-
-                @Override
-                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                    if (pointer == -1) {
-                        callback.hideAndCleanGuideInfo();
-                    }
-                    super.exit(event, x, y, pointer, toActor);
-                }
-            });
+            this.addListener(new StarterSecondaryInfoBoardCallerClickListener(model, callback));
         }
 
         private void update() {
@@ -199,10 +169,8 @@ public class MainScreenConstructionControlBoard extends Table
             }
             // ------ update text ------
             constructionNameLabel.setText(JavaFeatureForGwt.stringFormat(
-                    "%s (%s, %s)",
-                    model.getName(),
-                    model.getSaveData().getPosition().getX(),
-                    model.getSaveData().getPosition().getY()
+                    "%s",
+                    model.getName()
             ));
             upgradeButton.setText(model.getDescriptionPackage().getUpgradeButtonText());
             workingLevelLabel.setText(model.getLevelComponent().getWorkingLevelDescription());
@@ -248,7 +216,7 @@ public class MainScreenConstructionControlBoard extends Table
 
         Table changeWorkingLevelGroup;
 
-
+        Table detailGroup;
 
 
         public SellerPart(
@@ -302,40 +270,17 @@ public class MainScreenConstructionControlBoard extends Table
             });
             changeWorkingLevelGroup.add(upWorkingLevelButton).size(CHILD_WIDTH / 4, CHILD_HEIGHT);
 
+            detailGroup = new Table();
 
             this.transformButton = new TextButton("-", parent.getGame().getMainSkin());
             // ------ this ------
             this.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
             this.add(upgradeButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
             this.add(changeWorkingLevelGroup).size(CHILD_WIDTH, CHILD_HEIGHT).row();
+            this.add(detailGroup).row();
+
             this.setBackground(DrawableFactory.createBorderBoard(30, 10, 0.8f, 1));
-            this.addListener(new ClickListener() {
-
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    if (model != null) {
-                        callback.showAndUpdateGuideInfo(model);
-                    }
-                    Gdx.app.log(StarterConstructionControlNode.class.getSimpleName(), "this clicked event");
-                    super.clicked(event, x, y);
-                }
-
-                @Override
-                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                    if (model != null && pointer == -1) {
-                        callback.showAndUpdateGuideInfo(model);
-                    }
-                    super.enter(event, x, y, pointer, fromActor);
-                }
-
-                @Override
-                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                    if (pointer == -1) {
-                        callback.hideAndCleanGuideInfo();
-                    }
-                    super.exit(event, x, y, pointer, toActor);
-                }
-            });
+            this.addListener(new StarterSecondaryInfoBoardCallerClickListener(model, callback));
         }
 
         private void update() {
@@ -350,6 +295,16 @@ public class MainScreenConstructionControlBoard extends Table
                 //textButton.setVisible(true);
                 //Gdx.app.log("ConstructionView", model.getName() + " set to its view");
             }
+
+            detailGroup.clearChildren();
+            ConstructionDetailPartVM.resourcePackAsActor(model.getOutputComponent().getOutputCostPack(), detailGroup, parent);
+
+            ConstructionDetailPartVM.resourcePackAsActor(model.getOutputComponent().getOutputGainPack(), detailGroup, parent);
+
+            if (model.getUpgradeComponent().getUpgradeState() == UpgradeState.HAS_NEXT_UPGRADE) {
+                ConstructionDetailPartVM.resourcePackAsActor(model.getUpgradeComponent().getUpgradeCostPack(), detailGroup, parent);
+            }
+
             // ------ update text ------
             constructionNameLabel.setText(JavaFeatureForGwt.stringFormat(
                     "%s (%s, %s)",
@@ -358,7 +313,7 @@ public class MainScreenConstructionControlBoard extends Table
                     model.getSaveData().getPosition().getY()
             ));
             upgradeButton.setText(model.getDescriptionPackage().getUpgradeButtonText());
-            workingLevelLabel.setText(model.getLevelComponent().getWorkingLevelDescription());
+            workingLevelLabel.setText(model.getLevelComponent().getWorkingLevelDescription() + "; max: " + model.getMaxLevel());
 
 
             // ------ update clickable-state ------

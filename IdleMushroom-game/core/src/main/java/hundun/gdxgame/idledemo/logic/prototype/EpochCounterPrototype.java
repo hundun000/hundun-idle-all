@@ -3,6 +3,7 @@ package hundun.gdxgame.idledemo.logic.prototype;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idledemo.logic.DemoBuiltinConstructionsLoader;
 import hundun.gdxgame.idledemo.logic.DemoConstructionPrototypeId;
+import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.construction.BaseIdleDemoConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
@@ -17,13 +18,13 @@ import java.util.UUID;
 
 public class EpochCounterPrototype extends AbstractConstructionPrototype {
     public static DescriptionPackage descriptionPackageEN = DescriptionPackage.builder()
-            .levelDescriptionProvider(DescriptionPackageFactory.NO_LEVEL_IMP)
+            .levelDescriptionProvider(DescriptionPackageFactory.WORKING_LEVEL_IMP)
             .proficiencyDescriptionProvider(DescriptionPackageFactory.EN_PROFICIENCY_IMP)
             .build();
 
 
     public static DescriptionPackage descriptionPackageCN = DescriptionPackage.builder()
-            .levelDescriptionProvider(DescriptionPackageFactory.CN_NO_LEVEL_IMP)
+            .levelDescriptionProvider(DescriptionPackageFactory.CN_WORKING_LEVEL_IMP)
             .proficiencyDescriptionProvider(DescriptionPackageFactory.CN_PROFICIENCY_IMP)
             .build();
 
@@ -56,6 +57,23 @@ public class EpochCounterPrototype extends AbstractConstructionPrototype {
 
         SimpleAutoOutputComponent outputComponent = new SimpleAutoOutputComponent(thiz);
         thiz.setOutputComponent(outputComponent);
+
+        thiz.getUpgradeComponent().setUpgradeCostPack(DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
+                ResourceType.DNA_POINT, 0
+        )));
+        thiz.getUpgradeComponent().setCalculateCostFunction((baseValue, level) -> {
+            switch (level) {
+                case 0:
+                    return 50L;
+                case 1:
+                    return 100L;
+                case 2:
+                    return 150L;
+                default:
+                    return 1L;
+            }
+        });
+        thiz.getLevelComponent().maxLevel = 3;
 
         return thiz;
     }

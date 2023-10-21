@@ -14,6 +14,9 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.Upgrad
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePack;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ConstructionDetailPartVM extends Table {
 
     BaseDemoPlayScreen parent;
@@ -28,7 +31,7 @@ public class ConstructionDetailPartVM extends Table {
     }
 
 
-    private <T extends Actor> Container<T> wapperContainer(T content) {
+    private static  <T extends Actor> Container<T> wapperContainer(T content) {
         Container<T> container = new Container<>(content);
         //container.setBackground(BasePlayScreen.createBorderBoard(1, 1, 0.7f, 0));
         container.fill(true);
@@ -47,12 +50,12 @@ public class ConstructionDetailPartVM extends Table {
                 .left()
                 .row();
 
-        buildOnePack(model.getOutputComponent().getOutputCostPack());
+        resourcePackAsActor(model.getOutputComponent().getOutputCostPack(), this, parent);
 
-        buildOnePack(model.getOutputComponent().getOutputGainPack());
+        resourcePackAsActor(model.getOutputComponent().getOutputGainPack(), this, parent);
 
         if (model.getUpgradeComponent().getUpgradeState() == UpgradeState.HAS_NEXT_UPGRADE) {
-            buildOnePack(model.getUpgradeComponent().getUpgradeCostPack());
+            resourcePackAsActor(model.getUpgradeComponent().getUpgradeCostPack(), this, parent);
         } else if (model.getUpgradeComponent().getUpgradeState() == UpgradeState.REACHED_MAX_UPGRADE_HAS_TRANSFER) {
             this.add(wapperContainer(new Label(model.getUpgradeComponent().getUpgradeCostPack().getDescriptionStart(), parent.getGame().getMainSkin())));
             this.add(wapperContainer(new Label(model.getDescriptionPackage().getUpgradeMaxLevelDescription(), parent.getGame().getMainSkin())));
@@ -65,18 +68,27 @@ public class ConstructionDetailPartVM extends Table {
         }
     }
 
-    private void buildOnePack(ResourcePack pack) {
+    public static void resourcePackAsActor(ResourcePack pack, Table target, BaseDemoPlayScreen parent) {
         if (pack != null && pack.getModifiedValues() != null) {
-            this.add(wapperContainer(new Label(pack.getDescriptionStart(), parent.getGame().getMainSkin())));
-            for (ResourcePair entry : pack.getModifiedValues()) {
-                ResourceAmountPairNode<DemoIdleGame> node = new ResourceAmountPairNode<>(parent.getGame(), entry.getType());
-                node.update(entry.getAmount());
-                this.add(wapperContainer(node))
+            List<Actor> pairsToActors = pairsToActors(pack.getModifiedValues(), parent.getGame());
+            target.add(wapperContainer(new Label(pack.getDescriptionStart(), parent.getGame().getMainSkin())));
+            for (Actor actor : pairsToActors) {
+                target.add(wapperContainer(actor))
                         .height(parent.getLayoutConst().RESOURCE_AMOUNT_PAIR_NODE_HEIGHT)
                         .width(parent.getLayoutConst().RESOURCE_AMOUNT_PAIR_NODE_WIDTH);
             }
-            this.row();
+            target.row();
         }
+    }
+
+    public static List<Actor> pairsToActors(List<ResourcePair> pairs, DemoIdleGame game) {
+        List<Actor> pairsToActors = new ArrayList<>();
+        for (ResourcePair entry : pairs) {
+            ResourceAmountPairNode<DemoIdleGame> node = new ResourceAmountPairNode<>(game, entry.getType());
+            node.update(entry.getAmount());
+            pairsToActors.add(node);
+        }
+        return pairsToActors;
     }
 
 

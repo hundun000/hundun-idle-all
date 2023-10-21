@@ -117,7 +117,7 @@ public class WorldCellDetailBoardVM extends Table implements IConstructionCollec
     {
         if (detailingConstruction != null)
         {
-            detailingConstruction = screen.getGame().getIdleGameplayExport().getGameplayContext().getConstructionManager().getConstructionAt(detailingConstruction.getPosition());
+            detailingConstruction = screen.getGame().getIdleGameplayExport().getGameplayContext().getConstructionManager().getWorldConstructionAt(detailingConstruction.getPosition());
             selectCell(detailingConstruction);
         }
     }
