@@ -55,7 +55,6 @@ public class DirtPrototype extends AbstractConstructionPrototype {
         thiz.setProficiencyComponent(proficiencyComponent);
 
         SimpleAutoOutputComponent outputComponent = new SimpleAutoOutputComponent(thiz);
-        outputComponent.setTypeClickOutput(true);
         thiz.setOutputComponent(outputComponent);
 
         return thiz;

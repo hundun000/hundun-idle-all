@@ -19,7 +19,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
  * Created on 2023/02/17
  */
 public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, SystemSettingSaveData, GameplaySaveData> {
-
+    String SINGLETON = "SINGLETON";
     public DemoSaveHandler(IFrontend frontEnd, ISaveTool<RootSaveData> saveTool) {
         super(frontEnd, RootSaveData.RootSaveExtension.INSTANCE, saveTool);
 
@@ -29,13 +29,43 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
     protected RootSaveData genereateStarterRootSaveData() {
         Map<String, ConstructionSaveData> map = new HashMap<>();
 
+        GridPosition uselessPosition = new GridPosition(0, 0);
+        List<GridPosition> worldGridPositions = JavaFeatureForGwt.listOf(
+                new GridPosition(-1, -1),
+                new GridPosition(-1, 0),
+                new GridPosition(-1, 1),
+                new GridPosition(0, -1),
+                new GridPosition(0, 0),
+                new GridPosition(0, 1),
+                new GridPosition(1, 5),
+                new GridPosition(1, 4),
+                new GridPosition(1, 6)
+        );
         map.put(
-                DemoConstructionPrototypeId.MAIN_MUSHROOM + "_" + UUID.randomUUID(),
+                DemoConstructionPrototypeId.MAIN_MUSHROOM + "_" + SINGLETON,
                 ConstructionSaveData.builder()
                         .prototypeId(DemoConstructionPrototypeId.MAIN_MUSHROOM)
                         .level(0)
                         .workingLevel(0)
-                        .position( new GridPosition(999, 999))
+                        .position(uselessPosition)
+                        .build()
+        );
+        map.put(
+                DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER + "_" + SINGLETON,
+                ConstructionSaveData.builder()
+                        .prototypeId(DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER)
+                        .level(1)
+                        .workingLevel(0)
+                        .position(uselessPosition)
+                        .build()
+        );
+        map.put(
+                DemoConstructionPrototypeId.EPOCH_COUNTER + "_" + SINGLETON,
+                ConstructionSaveData.builder()
+                        .prototypeId(DemoConstructionPrototypeId.EPOCH_COUNTER)
+                        .level(3)
+                        .workingLevel(1)
+                        .position(uselessPosition)
                         .build()
         );
         map.put(
@@ -44,30 +74,12 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
                         .prototypeId(DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER)
                         .level(1)
                         .workingLevel(1)
-                        .position( new GridPosition(0, 1))
+                        .position(worldGridPositions.remove(0))
                         .build()
         );
-        map.put(
-                DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER + "_" + UUID.randomUUID(),
-                ConstructionSaveData.builder()
-                        .prototypeId(DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER)
-                        .level(1)
-                        .workingLevel(0)
-                        .position( new GridPosition(999, 999))
-                        .build()
-        );
-        List<GridPosition> dirtGridPositions = JavaFeatureForGwt.listOf(
-                new GridPosition(4, 5),
-                new GridPosition(4, 4),
-                new GridPosition(4, 6),
-                new GridPosition(5, 5),
-                new GridPosition(5, 4),
-                new GridPosition(5, 6),
-                new GridPosition(6, 5),
-                new GridPosition(6, 4),
-                new GridPosition(6, 6)
-        );
-        dirtGridPositions.forEach(it -> {
+
+
+        worldGridPositions.forEach(it -> {
             map.put(
                     DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL + "_" + UUID.randomUUID(),
                     ConstructionSaveData.builder()

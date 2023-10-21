@@ -82,6 +82,7 @@ public class ConstructionManager implements ITileNodeMap<Void> {
     public BaseConstruction getConstructionAt(GridPosition target)
     {
         return runningConstructionModelMap.values().stream()
+                .filter(it -> !constructionConfig.getSingletonPrototypeIds().contains(it.getPrototypeId()))
                 .filter(it -> it.getSaveData().getPosition().equals(target))
                 .findAny()
                 .orElse(null);

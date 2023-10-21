@@ -68,6 +68,7 @@ public class MainPlayScreen extends BaseDemoPlayScreen
 
         gameAreaChangeListeners.add(constructionControlBoard);
 
+        this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(constructionControlBoard);
         this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(gameImageDrawer);
     }
 

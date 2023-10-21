@@ -19,7 +19,6 @@ import lombok.Data;
 @NoArgsConstructor
 public class GameplaySaveData {
     String stageId;
-    int epoch;
     Map<String, Long> ownResources;
     Set<String> unlockedResourceTypes;
     Map<String, ConstructionSaveData> constructionSaveDataMap;

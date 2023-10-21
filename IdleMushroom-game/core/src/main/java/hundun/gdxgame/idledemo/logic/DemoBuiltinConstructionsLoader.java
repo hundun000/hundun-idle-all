@@ -23,6 +23,7 @@ public class DemoBuiltinConstructionsLoader implements IBuiltinConstructionsLoad
         result.put(DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER, new Epoch1AutoProviderPrototype(language));
         result.put(DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER, new AutoSellerPrototype(language));
         result.put(DemoConstructionPrototypeId.EPOCH_1_TREE, new TreePrototype(language));
+        result.put(DemoConstructionPrototypeId.EPOCH_COUNTER, new EpochCounterPrototype(language));
         return result;
     }
     

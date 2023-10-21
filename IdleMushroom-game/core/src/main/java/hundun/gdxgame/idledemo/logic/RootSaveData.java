@@ -19,7 +19,6 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class RootSaveData {
-    
     GameplaySaveData gameplaySave;
     SystemSettingSaveData systemSettingSaveData;
     

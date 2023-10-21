@@ -30,7 +30,8 @@ public class DemoChildGameConfig extends ChildGameConfig {
                                 .build()
                         )
                         .singletonPrototypeIds(JavaFeatureForGwt.listOf(
-                                DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER
+                                DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER,
+                                DemoConstructionPrototypeId.EPOCH_COUNTER
                         ))
                         .worldPrototypeIds(JavaFeatureForGwt.listOf(
                                 DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL,
