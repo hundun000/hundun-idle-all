@@ -36,12 +36,12 @@ public class DemoChildGameConfig extends ChildGameConfig {
                         .worldPrototypeIds(JavaFeatureForGwt.listOf(
                                 DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL,
                                 DemoConstructionPrototypeId.EPOCH_1_TREE,
-                                DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER
+                                DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER,
+                                DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER
                         ))
                         .build()
         );
         
-        Map<String, List<String>> areaShownResourceIds = new HashMap<>();
         this.setAreaEntityEffectConfigMap(JavaFeatureForGwt.mapOf(
                 DemoScreenId.SCREEN_MAIN,
                 AreaEntityEffectConfig.builder()

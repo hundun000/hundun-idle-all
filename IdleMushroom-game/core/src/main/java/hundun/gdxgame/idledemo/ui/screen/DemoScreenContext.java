@@ -3,7 +3,7 @@ package hundun.gdxgame.idledemo.ui.screen;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import hundun.gdxgame.idledemo.DemoIdleGame;
+import hundun.gdxgame.idledemo.IdleMushroomGame;
 import hundun.gdxgame.idledemo.logic.DemoScreenId;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idleshare.core.framework.model.manager.AbstractIdleScreenContext;
@@ -13,7 +13,7 @@ import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutCons
  * @author hundun
  * Created on 2023/02/17
  */
-public class DemoScreenContext extends AbstractIdleScreenContext<DemoIdleGame, RootSaveData> {
+public class DemoScreenContext extends AbstractIdleScreenContext<IdleMushroomGame, RootSaveData> {
 
     DemoMenuScreen menuScreen;
     MainPlayScreen mainPlayScreen;
@@ -22,7 +22,7 @@ public class DemoScreenContext extends AbstractIdleScreenContext<DemoIdleGame, R
 
 
 
-    public static PlayScreenLayoutConst customLayoutConst(DemoIdleGame game) {
+    public static PlayScreenLayoutConst customLayoutConst(IdleMushroomGame game) {
         PlayScreenLayoutConst layoutConst = new PlayScreenLayoutConst(game.getWidth(), game.getHeight());
         NinePatch ninePatch = new NinePatch(game.getTextureManager().getDefaultBoardNinePatchTexture(),
                 game.getTextureManager().getDefaultBoardNinePatchEdgeSize(),
@@ -35,7 +35,7 @@ public class DemoScreenContext extends AbstractIdleScreenContext<DemoIdleGame, R
         return layoutConst;
     }
 
-    public DemoScreenContext(DemoIdleGame game) {
+    public DemoScreenContext(IdleMushroomGame game) {
         super(game);
     }
 

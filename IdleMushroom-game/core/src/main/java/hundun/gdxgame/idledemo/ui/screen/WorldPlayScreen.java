@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import hundun.gdxgame.idledemo.DemoIdleGame;
+import hundun.gdxgame.idledemo.IdleMushroomGame;
 import hundun.gdxgame.idledemo.logic.DemoScreenId;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
@@ -35,7 +35,7 @@ public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstruction
     @Getter
     private boolean disableHexAreaInput;
 
-    public WorldPlayScreen(DemoIdleGame game) {
+    public WorldPlayScreen(IdleMushroomGame game) {
         super(game, DemoScreenId.SCREEN_WORLD);
 
         this.deskCamera = new OrthographicCamera();

@@ -2,7 +2,7 @@ package hundun.gdxgame.idledemo.ui.screen;
 
 import com.badlogic.gdx.Gdx;
 import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
-import hundun.gdxgame.idledemo.DemoIdleGame;
+import hundun.gdxgame.idledemo.IdleMushroomGame;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.main.FirstRunningAchievementBoardVM;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
@@ -16,18 +16,18 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManag
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseDemoPlayScreen extends BaseIdleScreen<DemoIdleGame, RootSaveData>
+public abstract class BaseDemoPlayScreen extends BaseIdleScreen<IdleMushroomGame, RootSaveData>
         implements IGameAreaChangeListener, IAchievementBoardCallback, IAchievementStateChangeListener
 {
 
-    protected FirstRunningAchievementBoardVM<DemoIdleGame, RootSaveData> firstRunningAchievementBoardVM;
+    protected FirstRunningAchievementBoardVM<IdleMushroomGame, RootSaveData> firstRunningAchievementBoardVM;
     protected AchievementPopupBoard achievementPopupBoard;
-    DemoIdleGame demoIdleGame;
+    IdleMushroomGame idleMushroomGame;
     protected List<AbstractAchievement> showAchievementMaskBoardQueue = new ArrayList<>();
 
-    public BaseDemoPlayScreen(DemoIdleGame game, String screenId) {
+    public BaseDemoPlayScreen(IdleMushroomGame game, String screenId) {
         super(game, screenId, DemoScreenContext.customLayoutConst(game));
-        this.demoIdleGame = game;
+        this.idleMushroomGame = game;
     }
 
 

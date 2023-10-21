@@ -3,14 +3,14 @@ package hundun.gdxgame.idledemo.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-import hundun.gdxgame.idledemo.DemoIdleGame;
+import hundun.gdxgame.idledemo.IdleMushroomGame;
 
 
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		
-	    DemoIdleGame game = new DemoIdleGame(new PreferencesSaveTool("IdleMushroom-destop-save.xml"));
+	    IdleMushroomGame game = new IdleMushroomGame(new PreferencesSaveTool("IdleMushroom-destop-save.xml"));
    
 	    LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = (int) (game.getWidth());

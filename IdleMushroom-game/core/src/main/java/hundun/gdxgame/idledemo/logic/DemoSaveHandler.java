@@ -62,8 +62,8 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
                 DemoConstructionPrototypeId.EPOCH_COUNTER + "_" + SINGLETON,
                 ConstructionSaveData.builder()
                         .prototypeId(DemoConstructionPrototypeId.EPOCH_COUNTER)
-                        .level(3)
-                        .workingLevel(1)
+                        .level(0)
+                        .workingLevel(0)
                         .position(uselessPosition)
                         .build()
         );
@@ -91,6 +91,7 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
         });
 
         Map<String, Long> ownResources = new HashMap<>();
+        ownResources.put(ResourceType.MUSHROOM, 500L);
         ownResources.put(ResourceType.DNA_POINT, 500L);
 
         return RootSaveData.builder()

@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Null;
-import hundun.gdxgame.idledemo.DemoIdleGame;
+import hundun.gdxgame.idledemo.IdleMushroomGame;
 import hundun.gdxgame.idledemo.ui.screen.BaseDemoPlayScreen;
 import hundun.gdxgame.idleshare.core.starter.ui.component.ResourceAmountPairNode;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
@@ -81,10 +81,10 @@ public class ConstructionDetailPartVM extends Table {
         }
     }
 
-    public static List<Actor> pairsToActors(List<ResourcePair> pairs, DemoIdleGame game) {
+    public static List<Actor> pairsToActors(List<ResourcePair> pairs, IdleMushroomGame game) {
         List<Actor> pairsToActors = new ArrayList<>();
         for (ResourcePair entry : pairs) {
-            ResourceAmountPairNode<DemoIdleGame> node = new ResourceAmountPairNode<>(game, entry.getType());
+            ResourceAmountPairNode<IdleMushroomGame> node = new ResourceAmountPairNode<>(game, entry.getType());
             node.update(entry.getAmount());
             pairsToActors.add(node);
         }

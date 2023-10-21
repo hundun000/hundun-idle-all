@@ -18,12 +18,18 @@ import java.util.UUID;
 
 public class EpochCounterPrototype extends AbstractConstructionPrototype {
     public static DescriptionPackage descriptionPackageEN = DescriptionPackage.builder()
+            .upgradeButtonText("Upgrade")
+            .upgradeCostDescriptionStart("Upgrade cost")
+            .upgradeMaxLevelDescription("(max)")
             .levelDescriptionProvider(DescriptionPackageFactory.WORKING_LEVEL_IMP)
             .proficiencyDescriptionProvider(DescriptionPackageFactory.EN_PROFICIENCY_IMP)
             .build();
 
 
     public static DescriptionPackage descriptionPackageCN = DescriptionPackage.builder()
+            .upgradeButtonText("升级")
+            .upgradeCostDescriptionStart("升级费用")
+            .upgradeMaxLevelDescription("(已达到最大等级)")
             .levelDescriptionProvider(DescriptionPackageFactory.CN_WORKING_LEVEL_IMP)
             .proficiencyDescriptionProvider(DescriptionPackageFactory.CN_PROFICIENCY_IMP)
             .build();
@@ -73,7 +79,7 @@ public class EpochCounterPrototype extends AbstractConstructionPrototype {
                     return 1L;
             }
         });
-        thiz.getLevelComponent().maxLevel = 3;
+        thiz.getLevelComponent().maxLevel = 2;
 
         return thiz;
     }

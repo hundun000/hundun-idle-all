@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Null;
-import hundun.gdxgame.idledemo.DemoIdleGame;
+import hundun.gdxgame.idledemo.IdleMushroomGame;
 import hundun.gdxgame.idledemo.ui.screen.WorldPlayScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.TileNodeUtils.HexMode;
@@ -37,7 +37,7 @@ public class HexCellVM extends Table {
     static float hexBaseSizeX = (float) (HEX_SIZE);
     static float hexBaseSizeY = (float) (SQR_3_DIV_2_HEX_SIZE);
 
-    DemoIdleGame game;
+    IdleMushroomGame game;
 
     HexAreaVM hexAreaVM;
     @Getter

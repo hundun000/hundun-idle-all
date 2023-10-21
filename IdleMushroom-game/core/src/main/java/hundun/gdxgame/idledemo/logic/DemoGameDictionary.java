@@ -26,6 +26,8 @@ public class DemoGameDictionary implements IGameDictionary {
                         return "自动点击器";
                     case DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER:
                         return "自动出售器";
+                    case DemoConstructionPrototypeId.EPOCH_COUNTER:
+                        return "EPOCH_COUNTER";
                     default:
                         return "口口";
                 }
@@ -39,6 +41,8 @@ public class DemoGameDictionary implements IGameDictionary {
                         return "SimpleAutoClicker";
                     case DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER:
                         return "AutoSeller";
+                    case DemoConstructionPrototypeId.EPOCH_COUNTER:
+                        return "EPOCH_COUNTER";
                     default:
                         return "[dic lost]";
                 }
@@ -53,24 +57,30 @@ public class DemoGameDictionary implements IGameDictionary {
             case CN:
                 switch (constructionId) {
                     case DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER:
+                        return "EPOCH_2自动获得饼干";
                     case DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER:
-                        return "自动获得饼干";
+                        return "EPOCH_1自动获得饼干";
                     case DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER:
                         return "自动出售饼干";
                     case DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL:
                         return "空位置";
+                    case DemoConstructionPrototypeId.EPOCH_COUNTER:
+                        return "the EPOCH_COUNTER";
                     default:
                         return "[dic lost]";
                 }
             default:
                 switch (constructionId) {
                     case DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER:
+                        return "EPOCH_2 Auto gain some cookie";
                     case DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER:
-                        return "Auto gain some cookie";
+                        return "EPOCH_1 Auto gain some cookie";
                     case DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER:
                         return "Auto sell some cookie";
                     case DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL:
                         return "Empty";
+                    case DemoConstructionPrototypeId.EPOCH_COUNTER:
+                        return "the EPOCH_COUNTER";
                     default:
                         return "[dic lost]";
                 }

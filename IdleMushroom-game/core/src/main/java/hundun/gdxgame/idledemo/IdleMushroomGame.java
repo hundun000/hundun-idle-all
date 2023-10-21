@@ -13,21 +13,25 @@ import hundun.gdxgame.idleshare.core.framework.model.manager.AbstractIdleScreenC
 import hundun.gdxgame.idleshare.core.framework.model.manager.AudioPlayManager;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.TextFormatTool;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.List;
+import java.util.Map;
 
 
-public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
+public class IdleMushroomGame extends BaseIdleGame<RootSaveData> {
 
     @Getter
-    protected AbstractIdleScreenContext<DemoIdleGame, RootSaveData> screenContext;
+    protected AbstractIdleScreenContext<IdleMushroomGame, RootSaveData> screenContext;
 
     @Getter
     protected IdleMushroomTextureManager idleMushroomTextureManager;
 
+    Map<Integer, EpochConfig> epochConfigMap;
 
-    public DemoIdleGame(ISaveTool<RootSaveData> saveTool) {
+    public IdleMushroomGame(ISaveTool<RootSaveData> saveTool) {
         super(960, 640);
         this.debugMode = true;
         
@@ -46,6 +50,16 @@ public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
                 DemoScreenId.SCREEN_WORLD,
                 DemoScreenId.SCREEN_ACHIEVEMENT
         );
+        this.epochConfigMap = JavaFeatureForGwt.mapOf(
+                1, EpochConfig.builder()
+                                .constructionTransformConfigs(JavaFeatureForGwt.listOf(
+                                        EpochConstructionTransformConfig.builder()
+                                                .fromPrototypeId(DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER)
+                                                .toPrototypeId(DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER)
+                                                .build()
+                                ))
+                        .build()
+                );
     }
 
 
@@ -82,5 +96,35 @@ public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
         getAudioPlayManager().intoScreen(DemoScreenId.SCREEN_MENU);
     }
 
-    
+    @Data
+    @AllArgsConstructor
+    @Builder
+    public static class EpochConfig {
+        List<EpochConstructionTransformConfig> constructionTransformConfigs;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @Builder
+    public static class EpochConstructionTransformConfig {
+        String fromPrototypeId;
+        String toPrototypeId;
+    }
+    public void doChangeEpoch(BaseConstruction epochCounter) {
+        int currentEpochLevel = epochCounter.getSaveData().getLevel();
+        EpochConfig epochConfig = epochConfigMap.get(currentEpochLevel);
+
+        idleGameplayExport.getGameplayContext().getConstructionManager().getWorldConstructionInstances().stream()
+                        .forEach(it -> {
+                            EpochConstructionTransformConfig transformConfig = epochConfig.getConstructionTransformConfigs().stream()
+                                    .filter(itt -> itt.getFromPrototypeId().equals(it.getPrototypeId()))
+                                    .findAny()
+                                    .orElse(null);
+                            if (transformConfig != null) {
+                                idleGameplayExport.getGameplayContext().getConstructionManager().addToRemoveQueue(it);
+                                idleGameplayExport.getGameplayContext().getConstructionManager().addToCreateQueue(transformConfig.getToPrototypeId(), it.getPosition());
+                            }
+                        });
+
+    }
 }

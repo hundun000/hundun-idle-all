@@ -1,7 +1,7 @@
 package hundun.gdxgame.idledemo.ui.screen;
 
 import com.badlogic.gdx.InputProcessor;
-import hundun.gdxgame.idledemo.DemoIdleGame;
+import hundun.gdxgame.idledemo.IdleMushroomGame;
 import hundun.gdxgame.idledemo.logic.DemoScreenId;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
@@ -11,13 +11,13 @@ import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementStateChan
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
 import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementState;
 
-public class DemoAchievementScreen extends BaseIdleScreen<DemoIdleGame, RootSaveData> implements IAchievementStateChangeListener {
+public class DemoAchievementScreen extends BaseIdleScreen<IdleMushroomGame, RootSaveData> implements IAchievementStateChangeListener {
 
-    AllAchievementBoardVM<DemoIdleGame, RootSaveData> allAchievementBoardVM;
+    AllAchievementBoardVM<IdleMushroomGame, RootSaveData> allAchievementBoardVM;
 
 
 
-    public DemoAchievementScreen(DemoIdleGame game) {
+    public DemoAchievementScreen(IdleMushroomGame game) {
         super(game, DemoScreenId.SCREEN_ACHIEVEMENT, DemoScreenContext.customLayoutConst(game));
     }
 

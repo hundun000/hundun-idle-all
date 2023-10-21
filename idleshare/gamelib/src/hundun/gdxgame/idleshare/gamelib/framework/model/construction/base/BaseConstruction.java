@@ -19,12 +19,6 @@ import lombok.Setter;
 public abstract class BaseConstruction implements IBuffChangeListener, ITileNode<Void> {
 
 
-    protected static final int DEFAULT_MAX_LEVEL = 99;
-    @Getter
-    @Setter
-    protected int maxLevel = DEFAULT_MAX_LEVEL;
-
-
     protected static final int DEFAULT_MAX_DRAW_NUM = 5;
     @Getter
     @Setter

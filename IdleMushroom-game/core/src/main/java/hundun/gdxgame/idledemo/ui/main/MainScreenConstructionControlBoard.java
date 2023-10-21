@@ -139,6 +139,7 @@ public class MainScreenConstructionControlBoard extends Table
                 public void changed(ChangeEvent event, Actor actor) {
                     Gdx.app.log(SellerPart.class.getSimpleName(), "upgradeButton changed");
                     model.getUpgradeComponent().doUpgrade();
+                    parent.getGame().doChangeEpoch(model);
                 }
             });
 
@@ -258,7 +259,6 @@ public class MainScreenConstructionControlBoard extends Table
 
             this.workingLevelLabel = new Label("", parent.getGame().getMainSkin());
             workingLevelLabel.setAlignment(Align.center);
-            changeWorkingLevelGroup.add(workingLevelLabel).size(CHILD_WIDTH / 2, CHILD_HEIGHT);
 
             this.upWorkingLevelButton = new TextButton("+", parent.getGame().getMainSkin());
             upWorkingLevelButton.addListener(new ClickListener() {
@@ -276,6 +276,7 @@ public class MainScreenConstructionControlBoard extends Table
             // ------ this ------
             this.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
             this.add(upgradeButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
+            this.add(workingLevelLabel).size(CHILD_WIDTH, CHILD_HEIGHT).row();
             this.add(changeWorkingLevelGroup).size(CHILD_WIDTH, CHILD_HEIGHT).row();
             this.add(detailGroup).row();
 
@@ -313,7 +314,7 @@ public class MainScreenConstructionControlBoard extends Table
                     model.getSaveData().getPosition().getY()
             ));
             upgradeButton.setText(model.getDescriptionPackage().getUpgradeButtonText());
-            workingLevelLabel.setText(model.getLevelComponent().getWorkingLevelDescription() + "; max: " + model.getMaxLevel());
+            workingLevelLabel.setText(model.getLevelComponent().getWorkingLevelDescription() + "; max: " + model.getLevelComponent().maxLevel);
 
 
             // ------ update clickable-state ------

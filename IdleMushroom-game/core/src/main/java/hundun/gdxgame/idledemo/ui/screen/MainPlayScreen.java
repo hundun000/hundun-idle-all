@@ -2,32 +2,23 @@ package hundun.gdxgame.idledemo.ui.screen;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import hundun.gdxgame.idledemo.DemoIdleGame;
+import hundun.gdxgame.idledemo.IdleMushroomGame;
 import hundun.gdxgame.idledemo.logic.DemoScreenId;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.main.MainScreenConstructionControlBoard;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
 import hundun.gdxgame.idledemo.ui.main.GameEntityFactory;
-import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.framework.model.manager.GameEntityManager;
 import hundun.gdxgame.idleshare.core.starter.ui.component.GameImageDrawer;
-import hundun.gdxgame.idleshare.core.starter.ui.component.PopupInfoBoard;
-import hundun.gdxgame.idleshare.core.starter.ui.component.ResourceAmountPairNode;
 import hundun.gdxgame.idleshare.core.starter.ui.component.animation.MainClickerAnimationVM;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
-import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.UpgradeComponent.UpgradeState;
-import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePack;
-import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
 
 /**
  * @author hundun
@@ -37,10 +28,10 @@ public class MainPlayScreen extends BaseDemoPlayScreen
         implements ISecondaryInfoBoardCallback<BaseConstruction> {
     protected MainScreenPopupInfoBoard secondaryInfoBoard;
     protected GameEntityManager gameEntityManager;
-    protected GameImageDrawer<DemoIdleGame, RootSaveData> gameImageDrawer;
-    protected MainClickerAnimationVM<DemoIdleGame, RootSaveData> mainClickerAnimationVM;
+    protected GameImageDrawer<IdleMushroomGame, RootSaveData> gameImageDrawer;
+    protected MainClickerAnimationVM<IdleMushroomGame, RootSaveData> mainClickerAnimationVM;
     protected MainScreenConstructionControlBoard constructionControlBoard;
-    public MainPlayScreen(DemoIdleGame game) {
+    public MainPlayScreen(IdleMushroomGame game) {
         super(game, DemoScreenId.SCREEN_MAIN);
     }
 
