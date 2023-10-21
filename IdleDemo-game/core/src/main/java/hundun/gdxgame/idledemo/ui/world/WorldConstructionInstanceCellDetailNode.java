@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Align;
 import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idledemo.ui.screen.BaseDemoPlayScreen;
+import hundun.gdxgame.idledemo.ui.shared.BaseCellDetailNodeVM;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
@@ -26,18 +27,15 @@ public class WorldConstructionInstanceCellDetailNode extends BaseCellDetailNodeV
     BaseDemoPlayScreen parent;
     BaseConstruction model;
     Label constructionNameLabel;
-    TextButton upWorkingLevelButton;
-    TextButton downWorkingLevelButton;
+
     Label workingLevelLabel;
     Label proficiencyLabel;
     Label positionLabel;
 
-    TextButton clickOutputButton;
     TextButton upgradeButton;
     TextButton destoryButton;
     TextButton transformButton;
 
-    Table changeWorkingLevelGroup;
 
 
 
@@ -56,14 +54,6 @@ public class WorldConstructionInstanceCellDetailNode extends BaseCellDetailNodeV
         this.constructionNameLabel = new Label("", parent.getGame().getMainSkin());
         constructionNameLabel.setWrap(true);
 
-        this.clickOutputButton = new TextButton("", parent.getGame().getMainSkin());
-        clickOutputButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Gdx.app.log(WorldConstructionInstanceCellDetailNode.class.getSimpleName(), "clickEffectButton changed");
-                model.getOutputComponent().doOutput();
-            }
-        });
 
         this.upgradeButton = new TextButton("", parent.getGame().getMainSkin());
         upgradeButton.addListener(new ChangeListener() {
@@ -74,32 +64,11 @@ public class WorldConstructionInstanceCellDetailNode extends BaseCellDetailNodeV
             }
         });
 
-        // ------ changeWorkingLevelGroup ------
-        this.changeWorkingLevelGroup = new Table();
-
-        this.downWorkingLevelButton = new TextButton("-", parent.getGame().getMainSkin());
-        downWorkingLevelButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("ConstructionView", "down clicked");
-                model.getLevelComponent().changeWorkingLevel(-1);
-            }
-        });
-        changeWorkingLevelGroup.add(downWorkingLevelButton).size(CHILD_WIDTH / 4, CHILD_HEIGHT);
-
         this.workingLevelLabel = new Label("", parent.getGame().getMainSkin());
         workingLevelLabel.setAlignment(Align.center);
-        changeWorkingLevelGroup.add(workingLevelLabel).size(CHILD_WIDTH / 2, CHILD_HEIGHT);
 
-        this.upWorkingLevelButton = new TextButton("+", parent.getGame().getMainSkin());
-        upWorkingLevelButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log(WorldConstructionInstanceCellDetailNode.class.getSimpleName(), "up clicked");
-                model.getLevelComponent().changeWorkingLevel(1);
-            }
-        });
-        changeWorkingLevelGroup.add(upWorkingLevelButton).size(CHILD_WIDTH / 4, CHILD_HEIGHT);
+
+
 
         this.proficiencyLabel = new Label("", parent.getGame().getMainSkin());
         this.positionLabel = new Label("", parent.getGame().getMainSkin());
@@ -107,9 +76,8 @@ public class WorldConstructionInstanceCellDetailNode extends BaseCellDetailNodeV
         this.transformButton = new TextButton("-", parent.getGame().getMainSkin());
         // ------ this ------
         this.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
-        this.add(clickOutputButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
         this.add(upgradeButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
-        this.add(changeWorkingLevelGroup).size(CHILD_WIDTH, CHILD_HEIGHT).row();
+        this.add(workingLevelLabel).size(CHILD_WIDTH, CHILD_HEIGHT).row();
         this.add(proficiencyLabel).size(CHILD_WIDTH, CHILD_HEIGHT).row();
         this.setBackground(DrawableFactory.createBorderBoard(30, 10, 0.8f, 1));
     }
@@ -122,22 +90,7 @@ public class WorldConstructionInstanceCellDetailNode extends BaseCellDetailNodeV
 
     private void setModel(BaseConstruction constructionExportProxy) {
         this.model = constructionExportProxy;
-        if (constructionExportProxy != null) {
-            if (constructionExportProxy.getLevelComponent().isTypeWorkingLevelChangeable()) {
-                this.upWorkingLevelButton.setVisible(true);
-                this.downWorkingLevelButton.setVisible(true);
-            } else {
-                this.upWorkingLevelButton.setVisible(false);
-                this.downWorkingLevelButton.setVisible(false);
-            }
-            if (constructionExportProxy.getOutputComponent().isTypeClickOutput()) {
-                this.clickOutputButton.setVisible(true);
-                this.upgradeButton.setVisible(false);
-            } else {
-                this.clickOutputButton.setVisible(false);
-                this.upgradeButton.setVisible(true);
-            }
-        }
+
         update();
     }
 
@@ -160,7 +113,6 @@ public class WorldConstructionInstanceCellDetailNode extends BaseCellDetailNodeV
                 model.getSaveData().getPosition().getX(),
                 model.getSaveData().getPosition().getY()
         ));
-        clickOutputButton.setText(model.getDescriptionPackage().getClickOutputButtonText());
         upgradeButton.setText(model.getDescriptionPackage().getUpgradeButtonText());
         workingLevelLabel.setText(model.getLevelComponent().getWorkingLevelDescription());
         proficiencyLabel.setText(model.getProficiencyComponent().getProficiencyDescroption());
@@ -168,13 +120,6 @@ public class WorldConstructionInstanceCellDetailNode extends BaseCellDetailNodeV
         destoryButton.setText(model.descriptionPackage.getDestroyButtonText());
 
         // ------ update clickable-state ------
-        if (model.getOutputComponent().canOutput()) {
-            clickOutputButton.setDisabled(false);
-            clickOutputButton.getLabel().setColor(Color.WHITE);
-        } else {
-            clickOutputButton.setDisabled(true);
-            clickOutputButton.getLabel().setColor(Color.RED);
-        }
         if (model.getUpgradeComponent().canUpgrade()) {
             upgradeButton.setDisabled(false);
             upgradeButton.getLabel().setColor(Color.WHITE);
@@ -203,23 +148,6 @@ public class WorldConstructionInstanceCellDetailNode extends BaseCellDetailNodeV
             transformButton.getLabel().setColor(Color.RED);
         }
 
-        boolean canUpWorkingLevel = model.getLevelComponent().canChangeWorkingLevel(1);
-        if (canUpWorkingLevel) {
-            upWorkingLevelButton.setDisabled(false);
-            upWorkingLevelButton.getLabel().setColor(Color.WHITE);
-        } else {
-            upWorkingLevelButton.setDisabled(true);
-            upWorkingLevelButton.getLabel().setColor(Color.RED);
-        }
-
-        boolean canDownWorkingLevel = model.getLevelComponent().canChangeWorkingLevel(-1);
-        if (canDownWorkingLevel) {
-            downWorkingLevelButton.setDisabled(false);
-            downWorkingLevelButton.getLabel().setColor(Color.WHITE);
-        } else {
-            downWorkingLevelButton.setDisabled(true);
-            downWorkingLevelButton.getLabel().setColor(Color.RED);
-        }
         // ------ update model ------
         //model.onLogicFrame();
 

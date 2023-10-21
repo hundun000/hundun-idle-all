@@ -1,4 +1,4 @@
-package hundun.gdxgame.idledemo.ui.world;
+package hundun.gdxgame.idledemo.ui.shared;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;

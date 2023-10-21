@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import hundun.gdxgame.idledemo.logic.DemoConstructionPrototypeId;
 import hundun.gdxgame.idledemo.ui.screen.WorldPlayScreen;
+import hundun.gdxgame.idledemo.ui.shared.BaseCellDetailBoardVM;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollectionListener;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;

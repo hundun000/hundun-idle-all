@@ -1,8 +1,8 @@
-package hundun.gdxgame.idledemo.ui.entity;
+package hundun.gdxgame.idledemo.ui.main;
 
 import hundun.gdxgame.idledemo.logic.DemoConstructionPrototypeId;
 import hundun.gdxgame.idledemo.logic.ResourceType;
-import hundun.gdxgame.idledemo.ui.screen.CookiePlayScreen;
+import hundun.gdxgame.idledemo.ui.screen.MainPlayScreen;
 import hundun.gdxgame.idleshare.core.framework.model.entity.BaseGameEntityFactory;
 import hundun.gdxgame.idleshare.core.framework.model.entity.GameEntity;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
@@ -19,7 +19,7 @@ public class GameEntityFactory extends BaseGameEntityFactory {
 
     public float RESOURCE_MAX_DRAW_NUM = 15;
     
-    public GameEntityFactory(PlayScreenLayoutConst layoutConst, CookiePlayScreen parent) {
+    public GameEntityFactory(PlayScreenLayoutConst layoutConst, MainPlayScreen parent) {
         super(layoutConst, parent);
     }
     

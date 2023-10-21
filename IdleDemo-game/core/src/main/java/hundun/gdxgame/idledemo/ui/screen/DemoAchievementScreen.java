@@ -1,21 +1,15 @@
 package hundun.gdxgame.idledemo.ui.screen;
 
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.logic.DemoScreenId;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
-import hundun.gdxgame.idledemo.ui.sub.AllAchievementBoardVM;
+import hundun.gdxgame.idledemo.ui.achievement.AllAchievementBoardVM;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementStateChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
 import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementState;
-import lombok.Setter;
 
 public class DemoAchievementScreen extends BaseIdleScreen<DemoIdleGame, RootSaveData> implements IAchievementStateChangeListener {
 

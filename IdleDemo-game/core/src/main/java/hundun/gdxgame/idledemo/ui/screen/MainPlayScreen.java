@@ -8,14 +8,13 @@ import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.logic.DemoScreenId;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
+import hundun.gdxgame.idledemo.ui.main.MainScreenConstructionControlBoard;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
-import hundun.gdxgame.idledemo.ui.entity.GameEntityFactory;
+import hundun.gdxgame.idledemo.ui.main.GameEntityFactory;
 import hundun.gdxgame.idleshare.core.framework.model.manager.GameEntityManager;
 import hundun.gdxgame.idleshare.core.starter.ui.component.GameImageDrawer;
 import hundun.gdxgame.idleshare.core.starter.ui.component.PopupInfoBoard;
 import hundun.gdxgame.idleshare.core.starter.ui.component.animation.MainClickerAnimationVM;
-import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.AbstractConstructionControlBoard;
-import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.fixed.FixedConstructionControlBoard;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
@@ -23,15 +22,14 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseCo
  * @author hundun
  * Created on 2021/11/02
  */
-public class CookiePlayScreen extends BaseDemoPlayScreen
+public class MainPlayScreen extends BaseDemoPlayScreen
         implements ISecondaryInfoBoardCallback<BaseConstruction> {
     protected PopupInfoBoard<DemoIdleGame, RootSaveData> secondaryInfoBoard;
     protected GameEntityManager gameEntityManager;
     protected GameImageDrawer<DemoIdleGame, RootSaveData> gameImageDrawer;
     protected MainClickerAnimationVM<DemoIdleGame, RootSaveData> mainClickerAnimationVM;
-    protected AbstractConstructionControlBoard<DemoIdleGame, RootSaveData> constructionControlBoard;
-
-    public CookiePlayScreen(DemoIdleGame game) {
+    protected MainScreenConstructionControlBoard constructionControlBoard;
+    public MainPlayScreen(DemoIdleGame game) {
         super(game, DemoScreenId.SCREEN_COOKIE);
     }
 
@@ -46,8 +44,7 @@ public class CookiePlayScreen extends BaseDemoPlayScreen
         );
         middleGroup.add(mainClickerAnimationVM);
 
-        // impl switchable
-        constructionControlBoard = new FixedConstructionControlBoard<>(this, this);
+        constructionControlBoard = new MainScreenConstructionControlBoard(this, this);
         uiRootTable.add(constructionControlBoard)
                 .height(layoutConst.CONSTRUCION_BOARD_ROOT_BOX_HEIGHT)
                 .fill()

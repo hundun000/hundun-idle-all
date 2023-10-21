@@ -1,30 +1,38 @@
-package hundun.gdxgame.idledemo.ui.sub;
+package hundun.gdxgame.idledemo.ui.achievement;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
+import hundun.gdxgame.idledemo.ui.screen.BaseDemoPlayScreen;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
+import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementAndStatus;
 import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementInfoPackage;
 
 import java.util.List;
 
-public class FirstRunningAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table {
+public class OneAchievementNodeVM<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table {
 
     BaseIdleScreen<T_GAME, T_SAVE> parent;
+
+    AchievementAndStatus achievementAndStatus;
 
     Label nameStartLabel;
     Label nameValueLabel;
     Label descriptionLabel;
     Label countStartLabel;
     Label countValueLabel;
-
     List<String> texts;
 
-    public FirstRunningAchievementBoardVM(BaseIdleScreen<T_GAME, T_SAVE> parent)
-    {
+    public OneAchievementNodeVM(BaseIdleScreen<T_GAME, T_SAVE> parent, AchievementAndStatus achievementAndStatus) {
         this.parent = parent;
+        this.setBackground(new TextureRegionDrawable(parent.getGame().getTextureManager().getDefaultBoardNinePatchTexture()));
+        this.achievementAndStatus = achievementAndStatus;
+
         this.texts = parent.getGame().getIdleGameplayExport().getGameDictionary()
                 .getAchievementTexts(parent.getGame().getIdleGameplayExport().getLanguage());
         this.setBackground(new TextureRegionDrawable(parent.getGame().getTextureManager().getDefaultBoardNinePatchTexture()));
@@ -43,16 +51,17 @@ public class FirstRunningAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>,
 
         nameStartLabel.setText(texts.get(0));
         countStartLabel.setText(texts.get(1));
+
         updateData();
+
     }
 
-    public void updateData()
-    {
-        AchievementInfoPackage data = parent.getGame().getIdleGameplayExport().getGameplayContext().getAchievementManager().getAchievementInfoPackage();
-        if (data.getFirstRunningAchievement() != null)
+    public void updateData() {
+        
+        if (achievementAndStatus != null)
         {
-            nameValueLabel.setText(data.getFirstRunningAchievement().getName());
-            descriptionLabel.setText(data.getFirstRunningAchievement().getDescription());
+            nameValueLabel.setText(achievementAndStatus.getAchievement().getName());
+            descriptionLabel.setText(achievementAndStatus.getAchievement().getDescription());
         }
         else
         {
@@ -61,12 +70,8 @@ public class FirstRunningAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>,
         }
 
         countValueLabel.setText(JavaFeatureForGwt.stringFormat(
-                "已完成：%s；未解锁：%s",
-                data.getCompletedSize(),
-                data.getLockedSize()
+                "state：%s",
+                achievementAndStatus.getSaveData().getState()
         ));
-
-
     }
-
 }

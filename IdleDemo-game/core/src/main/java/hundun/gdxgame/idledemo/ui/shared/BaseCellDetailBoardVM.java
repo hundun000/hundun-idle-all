@@ -1,4 +1,4 @@
-package hundun.gdxgame.idledemo.ui.world;
+package hundun.gdxgame.idledemo.ui.shared;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -8,7 +8,7 @@ import hundun.gdxgame.idledemo.ui.screen.BaseDemoPlayScreen;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BaseCellDetailBoardVM extends Table implements ILogicFrameListener {
+public abstract class BaseCellDetailBoardVM extends Table implements ILogicFrameListener {
     protected BaseDemoPlayScreen screen;
 
 

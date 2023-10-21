@@ -94,8 +94,10 @@ public class CookieComplexAutoProviderPrototype extends AbstractConstructionProt
             long neighborCount = construction.getNeighbors().values().stream()
                     .map(it -> (BaseConstruction)it)
                     .filter(it -> it != null
-                            && it.getSaveData().prototypeId.equals(DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER)
-                            && it.getSaveData().prototypeId.equals(DemoConstructionPrototypeId.COOKIE_COMPLEX_AUTO_PROVIDER)
+                            && (
+                                    it.getSaveData().prototypeId.equals(DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER)
+                                    || it.getSaveData().prototypeId.equals(DemoConstructionPrototypeId.COOKIE_COMPLEX_AUTO_PROVIDER)
+                            )
                     )
                     .count();
             this.changeProficiency((int) neighborCount);

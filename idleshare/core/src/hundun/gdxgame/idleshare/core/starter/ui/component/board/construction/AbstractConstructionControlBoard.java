@@ -8,14 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
-import hundun.gdxgame.corelib.base.BaseHundunGame;
 import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.ConstructionControlNode;
+import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.StarterConstructionControlNode;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollectionListener;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
@@ -28,7 +26,7 @@ public abstract class AbstractConstructionControlBoard<T_GAME extends BaseIdleGa
     /**
      * 显示在当前screen的Construction集合。以ConstructionView形式存在。
      */
-    protected List<ConstructionControlNode<T_GAME, T_SAVE>> constructionControlNodes = new ArrayList<>();
+    protected List<StarterConstructionControlNode<T_GAME, T_SAVE>> constructionControlNodes = new ArrayList<>();
 
 
 

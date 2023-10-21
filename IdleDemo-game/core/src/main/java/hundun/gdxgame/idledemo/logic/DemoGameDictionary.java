@@ -55,6 +55,8 @@ public class DemoGameDictionary implements IGameDictionary {
                     case DemoConstructionPrototypeId.COOKIE_COMPLEX_AUTO_PROVIDER:
                     case DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER:
                         return "自动获得饼干";
+                    case DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER:
+                        return "自动出售饼干";
                     case DemoConstructionPrototypeId.EMPTY_CELL:
                         return "空位置";
                     default:
@@ -65,6 +67,8 @@ public class DemoGameDictionary implements IGameDictionary {
                     case DemoConstructionPrototypeId.COOKIE_COMPLEX_AUTO_PROVIDER:
                     case DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER:
                         return "Auto gain some cookie";
+                    case DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER:
+                        return "Auto sell some cookie";
                     case DemoConstructionPrototypeId.EMPTY_CELL:
                         return "Empty";
                     default:

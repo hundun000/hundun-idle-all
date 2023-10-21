@@ -1,4 +1,4 @@
-package hundun.gdxgame.idledemo.ui.sub;
+package hundun.gdxgame.idledemo.ui.achievement;
 
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
