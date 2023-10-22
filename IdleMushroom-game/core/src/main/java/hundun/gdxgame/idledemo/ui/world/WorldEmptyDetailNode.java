@@ -23,7 +23,7 @@ import java.util.List;
  * @author hundun
  * Created on 2021/11/05
  */
-public class WorldConstructionPrototypeCellDetailNode extends BaseCellDetailNodeVM {
+public class WorldEmptyDetailNode extends BaseCellDetailNodeVM {
     BaseDemoPlayScreen screen;
     BaseConstruction construction;
     GridPosition position;
@@ -33,7 +33,7 @@ public class WorldConstructionPrototypeCellDetailNode extends BaseCellDetailNode
 
 
 
-    public WorldConstructionPrototypeCellDetailNode(
+    public WorldEmptyDetailNode(
             BaseDemoPlayScreen parent
             ) {
         super();
@@ -96,7 +96,8 @@ public class WorldConstructionPrototypeCellDetailNode extends BaseCellDetailNode
         children.forEach(it -> it.subLogicFrame());
     }
 
-    public void updateAsConstructionPrototype(
+    @Override
+    public void updateForNewConstruction(
             BaseConstruction construction,
             GridPosition position
     ) {

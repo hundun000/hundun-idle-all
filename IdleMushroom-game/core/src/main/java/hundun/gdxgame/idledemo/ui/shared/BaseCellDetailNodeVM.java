@@ -10,5 +10,5 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
 public abstract class BaseCellDetailNodeVM extends Table {
 
     public abstract void subLogicFrame();
-
+    public abstract void updateForNewConstruction(BaseConstruction construction, GridPosition position);
 }

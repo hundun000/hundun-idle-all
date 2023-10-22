@@ -2,16 +2,14 @@ package hundun.gdxgame.idledemo.ui.screen;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import hundun.gdxgame.idledemo.IdleMushroomGame;
 import hundun.gdxgame.idledemo.logic.DemoScreenId;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.main.MainScreenConstructionControlBoard;
+import hundun.gdxgame.idledemo.ui.main.MainScreenPopupInfoBoard;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
 import hundun.gdxgame.idledemo.ui.main.GameEntityFactory;
 import hundun.gdxgame.idleshare.core.framework.model.manager.GameEntityManager;
@@ -33,37 +31,6 @@ public class MainPlayScreen extends BaseDemoPlayScreen
     protected MainScreenConstructionControlBoard constructionControlBoard;
     public MainPlayScreen(IdleMushroomGame game) {
         super(game, DemoScreenId.SCREEN_MAIN);
-    }
-
-    public static class MainScreenPopupInfoBoard extends Table {
-
-        MainPlayScreen parent;
-
-        public MainScreenPopupInfoBoard(MainPlayScreen parent) {
-            //super("GUIDE_TEXT", parent.game.getButtonSkin());
-            this.parent = parent;
-            //this.setBounds(5, GameAreaControlBoard.Y, GameAreaControlBoard.X - 10, 120);
-            this.setTouchable(Touchable.disabled);
-            this.setBackground(parent.getLayoutConst().simpleBoardBackground);
-            this.setVisible(false);
-        }
-
-
-        private void rebuildCells(BaseConstruction model) {
-            this.clearChildren();
-
-            add(new Label(model.getDetailDescroptionConstPart(), parent.getGame().getMainSkin()))
-                    .colspan(3)
-                    .left()
-                    .row();
-
-        }
-
-        public void update(BaseConstruction model) {
-            rebuildCells(model);
-        }
-
-
     }
 
     @Override
@@ -137,9 +104,7 @@ public class MainPlayScreen extends BaseDemoPlayScreen
         super.lazyInitBackUiAndPopupUiContent();
 
         this.secondaryInfoBoard = new MainScreenPopupInfoBoard(this);
-        popupRootTable.add(secondaryInfoBoard).bottom().expand().row();
-        popupRootTable.add(new Image())
-                .height(layoutConst.CONSTRUCION_BOARD_ROOT_BOX_HEIGHT);
+        popupRootTable.add(secondaryInfoBoard).center().expand();
 
     }
 

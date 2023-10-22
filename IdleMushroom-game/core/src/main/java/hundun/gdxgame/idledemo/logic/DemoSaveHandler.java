@@ -63,8 +63,8 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
                 DemoConstructionPrototypeId.EPOCH_COUNTER + "_" + SINGLETON,
                 ConstructionSaveData.builder()
                         .prototypeId(DemoConstructionPrototypeId.EPOCH_COUNTER)
-                        .level(0)
-                        .workingLevel(0)
+                        .level(1)
+                        .workingLevel(1)
                         .position(uselessPosition)
                         .build()
         );

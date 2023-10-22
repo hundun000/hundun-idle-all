@@ -45,11 +45,6 @@ public class ConstructionDetailPartVM extends Table {
 
         this.clearChildren();
 
-        add(wapperContainer(new Label(model.getDetailDescroptionConstPart(), parent.getGame().getMainSkin())))
-                .colspan(3)
-                .left()
-                .row();
-
         resourcePackAsActor(model.getOutputComponent().getOutputCostPack(), this, parent);
 
         resourcePackAsActor(model.getOutputComponent().getOutputGainPack(), this, parent);
@@ -69,15 +64,22 @@ public class ConstructionDetailPartVM extends Table {
     }
 
     public static void resourcePackAsActor(ResourcePack pack, Table target, BaseDemoPlayScreen parent) {
-        if (pack != null && pack.getModifiedValues() != null) {
-            List<Actor> pairsToActors = pairsToActors(pack.getModifiedValues(), parent.getGame());
-            target.add(wapperContainer(new Label(pack.getDescriptionStart(), parent.getGame().getMainSkin())));
-            for (Actor actor : pairsToActors) {
-                target.add(wapperContainer(actor))
-                        .height(parent.getLayoutConst().RESOURCE_AMOUNT_PAIR_NODE_HEIGHT)
-                        .width(parent.getLayoutConst().RESOURCE_AMOUNT_PAIR_NODE_WIDTH);
+        resourcePackAsActor(pack, target, parent, false);
+    }
+
+    public static void resourcePackAsActor(ResourcePack pack, Table target, BaseDemoPlayScreen parent, boolean isPreviewNextLevel) {
+        if (pack != null) {
+            List<ResourcePair> targetValue = isPreviewNextLevel ? pack.getPreviewNextLevelModifiedValues() : pack.getModifiedValues();
+            if (targetValue != null) {
+                List<Actor> pairsToActors = pairsToActors(targetValue, parent.getGame());
+                target.add(wapperContainer(new Label(pack.getDescriptionStart(), parent.getGame().getMainSkin())));
+                for (Actor actor : pairsToActors) {
+                    target.add(wapperContainer(actor))
+                            .height(parent.getLayoutConst().RESOURCE_AMOUNT_PAIR_NODE_HEIGHT)
+                            .width(parent.getLayoutConst().RESOURCE_AMOUNT_PAIR_NODE_WIDTH);
+                }
+                target.row();
             }
-            target.row();
         }
     }
 

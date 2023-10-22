@@ -55,15 +55,12 @@ public class ExistenceComponent {
         if (destroyGainPack != null && destroyCostPack != null)
         {
             destroyCostPack.setModifiedValues(destroyCostPack.getBaseValues());
-            destroyCostPack.setModifiedValuesDescription(ResourcePack.toDescription(destroyCostPack.getModifiedValues()));
             destroyGainPack.setModifiedValues(destroyGainPack.getBaseValues());
-            destroyGainPack.setModifiedValuesDescription(ResourcePack.toDescription(destroyGainPack.getModifiedValues()));
         }
         if (buyCandidateConfigs != null)
         {
             buyCandidateConfigs.forEach(it -> {
                 it.getBuyCostPack().setModifiedValues(it.getBuyCostPack().getBaseValues());
-                it.getBuyCostPack().setModifiedValuesDescription(ResourcePack.toDescription(it.getBuyCostPack().getModifiedValues()));
             });
         }
     }

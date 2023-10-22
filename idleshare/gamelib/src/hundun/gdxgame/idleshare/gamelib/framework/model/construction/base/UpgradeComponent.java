@@ -79,12 +79,9 @@ public class UpgradeComponent {
         if (upgradeCostPack != null) {
             if (reachMaxLevel) {
                 this.upgradeCostPack.setModifiedValues(null);
-                this.upgradeCostPack.setModifiedValuesDescription(null);
                 if (transformCostPack != null) {
                     upgradeState = UpgradeState.REACHED_MAX_UPGRADE_HAS_TRANSFER;
-
                     this.transformCostPack.setModifiedValues(transformCostPack.getBaseValues());
-                    this.transformCostPack.setModifiedValuesDescription(ResourcePack.toDescription(this.transformCostPack.getModifiedValues()));
                 } else {
                     upgradeState = UpgradeState.REACHED_MAX_UPGRADE_NO_TRANSFER;
                 }
@@ -97,7 +94,6 @@ public class UpgradeComponent {
                                 })
                                 .collect(Collectors.toList())
                 );
-                this.upgradeCostPack.setModifiedValuesDescription(ResourcePack.toDescription(this.upgradeCostPack.getModifiedValues()));
             }
         }
     }

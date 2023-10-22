@@ -16,31 +16,25 @@ public class DemoGameDictionary implements IGameDictionary {
     
     public String constructionPrototypeIdToShowName(Language language, String constructionId) {
         switch (language) {
-            case CN:
-                switch (constructionId) {
-                    case DemoConstructionPrototypeId.MAIN_MUSHROOM:
-                        return "点击器";
-                    case DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER:
-                        return "高级自动点击器";
-                    case DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER:
-                        return "自动点击器";
-                    case DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER:
-                        return "自动出售器";
-                    case DemoConstructionPrototypeId.EPOCH_COUNTER:
-                        return "EPOCH_COUNTER";
-                    default:
-                        return "口口";
-                }
             default:
                 switch (constructionId) {
-                    case DemoConstructionPrototypeId.MAIN_MUSHROOM:
-                        return "Clicker";
-                    case DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER:
-                        return "ComplexAutoClicker";
+
                     case DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER:
-                        return "SimpleAutoClicker";
+                    case DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER:
+                    case DemoConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER:
+                        return "自动点击器";
+                    case DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL:
+                    case DemoConstructionPrototypeId.EPOCH_2_EMPTY_CELL:
+                    case DemoConstructionPrototypeId.EPOCH_3_EMPTY_CELL:
+                        return "空地";
+                    case DemoConstructionPrototypeId.EPOCH_1_TREE:
+                        return "灌木丛";
+                    case DemoConstructionPrototypeId.EPOCH_2_TREE:
+                        return "树";
+                    case DemoConstructionPrototypeId.EPOCH_3_TREE:
+                        return "森林";
                     case DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER:
-                        return "AutoSeller";
+                        return "自动出售器";
                     case DemoConstructionPrototypeId.EPOCH_COUNTER:
                         return "EPOCH_COUNTER";
                     default:
@@ -54,31 +48,18 @@ public class DemoGameDictionary implements IGameDictionary {
     @Override
     public String constructionPrototypeIdToDetailDescriptionConstPart(Language language, String constructionId) {
         switch (language) {
-            case CN:
+            default:
                 switch (constructionId) {
-                    case DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER:
-                        return "EPOCH_2自动获得饼干";
                     case DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER:
                         return "EPOCH_1自动获得饼干";
+                    case DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER:
+                        return "EPOCH_2自动获得饼干";
+                    case DemoConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER:
+                        return "EPOCH_3自动获得饼干";
                     case DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER:
                         return "自动出售饼干";
                     case DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL:
                         return "空位置";
-                    case DemoConstructionPrototypeId.EPOCH_COUNTER:
-                        return "the EPOCH_COUNTER";
-                    default:
-                        return "[dic lost]";
-                }
-            default:
-                switch (constructionId) {
-                    case DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER:
-                        return "EPOCH_2 Auto gain some cookie";
-                    case DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER:
-                        return "EPOCH_1 Auto gain some cookie";
-                    case DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER:
-                        return "Auto sell some cookie";
-                    case DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL:
-                        return "Empty";
                     case DemoConstructionPrototypeId.EPOCH_COUNTER:
                         return "the EPOCH_COUNTER";
                     default:

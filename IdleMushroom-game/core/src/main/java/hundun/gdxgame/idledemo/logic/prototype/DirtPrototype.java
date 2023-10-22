@@ -70,6 +70,26 @@ public class DirtPrototype extends AbstractConstructionPrototype {
                                 .build()
                 ));
                 break;
+            case DemoConstructionPrototypeId.EPOCH_2_EMPTY_CELL:
+                thiz.getExistenceComponent().setBuyCandidateConfigs(JavaFeatureForGwt.listOf(
+                        ConstructionBuyCandidateConfig.builder()
+                                .prototypeId(DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER)
+                                .buyCostPack(DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
+                                        ResourceType.MUSHROOM, 50
+                                )))
+                                .build()
+                ));
+                break;
+            case DemoConstructionPrototypeId.EPOCH_3_EMPTY_CELL:
+                thiz.getExistenceComponent().setBuyCandidateConfigs(JavaFeatureForGwt.listOf(
+                        ConstructionBuyCandidateConfig.builder()
+                                .prototypeId(DemoConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER)
+                                .buyCostPack(DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
+                                        ResourceType.MUSHROOM, 50
+                                )))
+                                .build()
+                ));
+                break;
             default:
         }
 

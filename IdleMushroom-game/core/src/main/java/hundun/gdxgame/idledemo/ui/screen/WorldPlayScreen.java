@@ -13,9 +13,11 @@ import hundun.gdxgame.idledemo.logic.DemoScreenId;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
 import hundun.gdxgame.idledemo.ui.world.HexAreaVM;
-import hundun.gdxgame.idledemo.ui.world.WorldCellDetailBoardVM;
+import hundun.gdxgame.idledemo.ui.world.WorldDetailBoardVM;
+import hundun.gdxgame.idledemo.ui.world.WorldScreenPopupInfoBoard;
 import hundun.gdxgame.idleshare.core.framework.model.CameraDataPackage;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollectionListener;
+import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import lombok.Getter;
 
@@ -25,13 +27,13 @@ import java.util.List;
  * @author hundun
  * Created on 2021/11/02
  */
-public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstructionCollectionListener {
+public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstructionCollectionListener, ISecondaryInfoBoardCallback<BaseConstruction> {
 
     HexAreaVM hexAreaVM;
     protected OrthographicCamera deskCamera;
     protected Stage deskStage;
-
-    protected WorldCellDetailBoardVM worldCellDetailBoardVM;
+    protected WorldScreenPopupInfoBoard secondaryInfoBoard;
+    protected WorldDetailBoardVM worldDetailBoardVM;
     @Getter
     private boolean disableHexAreaInput;
 
@@ -47,8 +49,8 @@ public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstruction
     protected void lazyInitUiRootContext() {
         super.lazyInitUiRootContext();
 
-        worldCellDetailBoardVM = new WorldCellDetailBoardVM(this);
-        worldCellDetailBoardVM.addListener(new ClickListener() {
+        worldDetailBoardVM = new WorldDetailBoardVM(this);
+        worldDetailBoardVM.addListener(new ClickListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 super.enter(event, x, y, pointer, fromActor);
@@ -60,7 +62,7 @@ public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstruction
                 disableHexAreaInput = false;
             }
         });
-        uiRootTable.add(worldCellDetailBoardVM)
+        uiRootTable.add(worldDetailBoardVM)
                 .height(layoutConst.CONSTRUCION_BOARD_ROOT_BOX_HEIGHT)
                 .fill()
                 .colspan(UI_ROOT_TABLE_COLSPAN_SIZE)
@@ -72,8 +74,11 @@ public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstruction
         
         storageInfoTable.lazyInit(ResourceType.VALUES_FOR_SHOW_ORDER);
 
-        logicFrameListeners.add(worldCellDetailBoardVM);
-        this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(worldCellDetailBoardVM);
+        this.secondaryInfoBoard = new WorldScreenPopupInfoBoard(this);
+        popupRootTable.add(secondaryInfoBoard).center().expand();
+
+        logicFrameListeners.add(worldDetailBoardVM);
+        this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(worldDetailBoardVM);
     }
 
     @Override
@@ -91,7 +96,7 @@ public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstruction
         List<BaseConstruction> constructions = game.getIdleGameplayExport().getGameplayContext().getConstructionManager()
                 .getWorldConstructionInstances();
         hexAreaVM.updateUIForShow(constructions);
-        worldCellDetailBoardVM.selectCell(null);
+        worldDetailBoardVM.selectCell(null);
     }
 
     @Override
@@ -122,7 +127,7 @@ public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstruction
 
     @Override
     public void onCellClicked(HexCellVM vm) {
-        worldCellDetailBoardVM.selectCell(vm != null ? vm.getDeskData() : null);
+        worldDetailBoardVM.selectCell(vm != null ? vm.getDeskData() : null);
         hexAreaVM.selectCell(vm != null ? vm.getDeskData() : null);
     }
 
@@ -131,5 +136,17 @@ public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstruction
         List<BaseConstruction> constructions = game.getIdleGameplayExport().getGameplayContext().getConstructionManager()
                 .getWorldConstructionInstances();
         hexAreaVM.updateUIForConstructionCollectionChange(constructions);
+    }
+
+    @Override
+    public void showAndUpdateGuideInfo(BaseConstruction model) {
+        secondaryInfoBoard.setVisible(true);
+        secondaryInfoBoard.update(model);
+    }
+
+    @Override
+    public void hideAndCleanGuideInfo() {
+        secondaryInfoBoard.setVisible(false);
+        //popUpInfoBoard.setText("GUIDE_TEXT");
     }
 }

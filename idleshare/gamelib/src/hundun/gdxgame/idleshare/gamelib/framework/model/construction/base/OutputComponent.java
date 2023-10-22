@@ -23,14 +23,12 @@ public abstract class OutputComponent {
     @Setter
     protected ResourcePack outputGainPack;
 
-
     /**
      * output行为所需要支付的费用; 无费用时为null
      */
     @Getter
     @Setter
     protected ResourcePack outputCostPack;
-
 
     protected static final int DEFAULT_AUTO_OUPUT_SECOND_MAX = 1;
     @Getter
@@ -69,11 +67,17 @@ public abstract class OutputComponent {
                         })
                         .collect(Collectors.toList())
             );
-            this.outputGainPack.setModifiedValuesDescription(
-                    outputGainPack.getModifiedValues().stream()
-                    .map(pair -> pair.getType() + "x" + pair.getAmount())
-                    .collect(Collectors.joining(", "))
-                    + "; "
+            outputGainPack.setPreviewNextLevelModifiedValues(
+                    outputGainPack.getBaseValues().stream()
+                            .map(pair -> {
+                                long newAmout = this.calculateModifiedOutputGain(
+                                        pair.getAmount(),
+                                        construction.saveData.getWorkingLevel() + 1,
+                                        construction.saveData.getProficiency()
+                                );
+                                return new ResourcePair(pair.getType(), newAmout);
+                            })
+                            .collect(Collectors.toList())
             );
         }
         // --------------
@@ -90,11 +94,17 @@ public abstract class OutputComponent {
                             })
                         .collect(Collectors.toList())
             );
-            this.outputCostPack.setModifiedValuesDescription(
-                    outputCostPack.getModifiedValues().stream()
-                    .map(pair -> pair.getType() + "x" + pair.getAmount())
-                    .collect(Collectors.joining(", "))
-                    + "; "
+            outputCostPack.setPreviewNextLevelModifiedValues(
+                    outputCostPack.getBaseValues().stream()
+                            .map(pair -> {
+                                long newAmout = this.calculateModifiedOutputGain(
+                                        pair.getAmount(),
+                                        construction.saveData.getWorkingLevel() + 1,
+                                        construction.saveData.getProficiency()
+                                );
+                                return new ResourcePair(pair.getType(), newAmout);
+                            })
+                            .collect(Collectors.toList())
             );
         }
     }

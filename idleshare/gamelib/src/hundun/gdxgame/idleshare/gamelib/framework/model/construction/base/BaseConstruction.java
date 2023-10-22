@@ -45,7 +45,7 @@ public abstract class BaseConstruction implements IBuffChangeListener, ITileNode
     @Getter
     protected String prototypeId;
     @Getter
-    protected String detailDescroptionConstPart;
+    protected String detailDescriptionConstPart;
 
     @Getter
     public DescriptionPackage descriptionPackage;
@@ -116,7 +116,7 @@ public abstract class BaseConstruction implements IBuffChangeListener, ITileNode
         this.gameplayContext = gameContext;
         
         this.name = gameContext.getGameDictionary().constructionPrototypeIdToShowName(language, prototypeId);
-        this.detailDescroptionConstPart = gameContext.getGameDictionary().constructionPrototypeIdToDetailDescriptionConstPart(language, prototypeId);
+        this.detailDescriptionConstPart = gameContext.getGameDictionary().constructionPrototypeIdToDetailDescriptionConstPart(language, prototypeId);
         
         outputComponent.lazyInitDescription();
         upgradeComponent.lazyInitDescription();

@@ -33,7 +33,9 @@ public class IdleMushroomGame extends BaseIdleGame<RootSaveData> {
         epochConfigMap = JavaFeatureForGwt.mapOf(
                 1, RootEpochConfig.builder()
                         .maxLevel(5)
-                        .outputScale(1)
+                        .build(),
+                2, RootEpochConfig.builder()
+                        .maxLevel(10)
                         .constructionEpochConfigMap(JavaFeatureForGwt.mapOf(
                                 DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER,
                                 ConstructionEpochConfig.builder()
@@ -49,23 +51,20 @@ public class IdleMushroomGame extends BaseIdleGame<RootSaveData> {
                                         .build()
                         ))
                         .build(),
-                2, RootEpochConfig.builder()
-                        .maxLevel(10)
-                        .outputScale(2)
-                        .constructionEpochConfigMap(JavaFeatureForGwt.mapOf(
-                                DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER,
-                                ConstructionEpochConfig.builder()
-                                        .transformToPrototypeId(DemoConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER)
-                                        .build()
-                        ))
-                        .build(),
                 3, RootEpochConfig.builder()
                         .maxLevel(15)
-                        .outputScale(4)
                         .constructionEpochConfigMap(JavaFeatureForGwt.mapOf(
                                 DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER,
                                 ConstructionEpochConfig.builder()
                                         .transformToPrototypeId(DemoConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER)
+                                        .build(),
+                                DemoConstructionPrototypeId.EPOCH_2_EMPTY_CELL,
+                                ConstructionEpochConfig.builder()
+                                        .transformToPrototypeId(DemoConstructionPrototypeId.EPOCH_3_EMPTY_CELL)
+                                        .build(),
+                                DemoConstructionPrototypeId.EPOCH_2_TREE,
+                                ConstructionEpochConfig.builder()
+                                        .transformToPrototypeId(DemoConstructionPrototypeId.EPOCH_3_TREE)
                                         .build()
                         ))
                         .build()
@@ -133,7 +132,6 @@ public class IdleMushroomGame extends BaseIdleGame<RootSaveData> {
     @Builder
     public static class RootEpochConfig {
         Integer maxLevel;
-        Integer outputScale;
         Map<String, ConstructionEpochConfig> constructionEpochConfigMap;
     }
 

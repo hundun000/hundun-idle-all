@@ -68,17 +68,17 @@ public class EpochCounterPrototype extends AbstractConstructionPrototype {
         )));
         thiz.getUpgradeComponent().setCalculateCostFunction((baseValue, level) -> {
             switch (level) {
-                case 0:
-                    return 50L;
                 case 1:
-                    return 100L;
+                    return 50L;
                 case 2:
+                    return 100L;
+                case 3:
                     return 150L;
                 default:
                     return 1L;
             }
         });
-        thiz.getLevelComponent().maxLevel = 2;
+        thiz.getLevelComponent().maxLevel = 3;
 
         return thiz;
     }

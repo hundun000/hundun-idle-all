@@ -25,6 +25,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollecti
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.UpgradeComponent.UpgradeState;
+import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,7 +44,7 @@ public class MainScreenConstructionControlBoard extends Table
 
     protected SellerPart sellerPart;
     protected EpochPart epochPart;
-    protected ConstructionDetailPartVM epochDetailPart;
+
     public MainScreenConstructionControlBoard(MainPlayScreen parent, ISecondaryInfoBoardCallback<BaseConstruction> callback) {
         this.parent = parent;
         this.callback = callback;
@@ -85,21 +86,17 @@ public class MainScreenConstructionControlBoard extends Table
         this.epochPart = new EpochPart(parent, callback);
         this.add(epochPart).spaceRight(10).expand();
 
-        this.epochDetailPart = new ConstructionDetailPartVM(parent);
-        this.add(epochDetailPart).spaceRight(10).expand();
-
         BaseConstruction sellerConstruction = singletonConstructions.stream()
                 .filter(it -> it.getPrototypeId().equals(DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER))
                 .findAny()
                 .orElse(null);
-        this.sellerPart.updateAsConstruction(sellerConstruction);
+        this.sellerPart.updateForNewConstruction(sellerConstruction, null);
 
         BaseConstruction epochConstruction = singletonConstructions.stream()
                 .filter(it -> it.getPrototypeId().equals(DemoConstructionPrototypeId.EPOCH_COUNTER))
                 .findAny()
                 .orElse(null);
-        this.epochPart.updateAsConstruction(epochConstruction);
-        this.epochDetailPart.rebuildCells(epochConstruction);
+        this.epochPart.updateForNewConstruction(epochConstruction, null);
 
         parent.getGame().getFrontend().log("ConstructionInfoBorad",
                 "Constructions change to: " + singletonConstructions.stream().map(BaseConstruction::getName).collect(Collectors.joining(","))
@@ -116,6 +113,8 @@ public class MainScreenConstructionControlBoard extends Table
         TextButton upgradeButton;
 
 
+        Table leftPart;
+        protected ConstructionDetailPartVM epochDetailPart;
 
 
         public EpochPart(
@@ -128,6 +127,9 @@ public class MainScreenConstructionControlBoard extends Table
             int CHILD_WIDTH = playScreenLayoutConst.EPOCH_PART_CHILD_WIDTH;
             int CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_BUTTON_HEIGHT;
             int NAME_CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_NAME_HEIGHT;
+
+            this.leftPart = new Table();
+            this.epochDetailPart = new ConstructionDetailPartVM(parent);
 
             this.constructionNameLabel = new Label("", parent.getGame().getMainSkin());
             constructionNameLabel.setWrap(true);
@@ -152,10 +154,14 @@ public class MainScreenConstructionControlBoard extends Table
             questionMarkArea.addListener(new StarterSecondaryInfoBoardCallerClickListener(() -> model, parent));
 
             // ------ this ------
-            this.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
-            this.add(questionMarkArea).height(CHILD_HEIGHT).row();
-            this.add(upgradeButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
-            this.add(workingLevelLabel).size(CHILD_WIDTH, CHILD_HEIGHT).row();
+            leftPart.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
+            leftPart.add(questionMarkArea).height(CHILD_HEIGHT).row();
+            leftPart.add(upgradeButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
+            leftPart.add(workingLevelLabel).size(CHILD_WIDTH, CHILD_HEIGHT).row();
+
+            this.add(leftPart);
+            this.add(epochDetailPart);
+
             this.setBackground(DrawableFactory.createBorderBoard(30, 10, 0.8f, 1));
         }
 
@@ -196,8 +202,10 @@ public class MainScreenConstructionControlBoard extends Table
         }
 
 
-        public void updateAsConstruction(BaseConstruction construction) {
+        @Override
+        public void updateForNewConstruction(BaseConstruction construction, GridPosition position) {
             this.model = construction;
+            this.epochDetailPart.rebuildCells(construction);
             update();
         }
 
@@ -216,10 +224,10 @@ public class MainScreenConstructionControlBoard extends Table
         Label workingLevelLabel;
 
         TextButton upgradeButton;
-        TextButton transformButton;
 
         Table changeWorkingLevelGroup;
 
+        Table leftPart;
         Table detailGroup;
 
 
@@ -233,6 +241,8 @@ public class MainScreenConstructionControlBoard extends Table
             int CHILD_WIDTH = playScreenLayoutConst.SELLER_PART_CHILD_WIDTH;
             int CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_BUTTON_HEIGHT;
             int NAME_CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_NAME_HEIGHT;
+
+            leftPart = new Table();
 
             this.constructionNameLabel = new Label("", parent.getGame().getMainSkin());
             constructionNameLabel.setWrap(true);
@@ -275,20 +285,20 @@ public class MainScreenConstructionControlBoard extends Table
 
             detailGroup = new Table();
 
-            this.transformButton = new TextButton("-", parent.getGame().getMainSkin());
-
             Container<?> questionMarkArea = new Container<>(new Image(parent.getGame().getIdleMushroomTextureManager().getQuestionMarkTexture()));
             questionMarkArea.setBackground(parent.getGame().getIdleMushroomTextureManager().getDefaultBoardNinePatchDrawable());
             questionMarkArea.setTouchable(Touchable.enabled);
             questionMarkArea.addListener(new StarterSecondaryInfoBoardCallerClickListener(() -> model, parent));
 
             // ------ this ------
-            this.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
-            this.add(questionMarkArea).height(CHILD_HEIGHT).row();
-            this.add(upgradeButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
-            this.add(workingLevelLabel).size(CHILD_WIDTH, CHILD_HEIGHT).row();
-            this.add(changeWorkingLevelGroup).size(CHILD_WIDTH, CHILD_HEIGHT).row();
-            this.add(detailGroup).row();
+            leftPart.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
+            leftPart.add(questionMarkArea).height(CHILD_HEIGHT).row();
+            leftPart.add(upgradeButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
+            leftPart.add(workingLevelLabel).size(CHILD_WIDTH, CHILD_HEIGHT).row();
+            leftPart.add(changeWorkingLevelGroup).size(CHILD_WIDTH, CHILD_HEIGHT).row();
+
+            this.add(leftPart);
+            this.add(detailGroup);
 
             this.setBackground(DrawableFactory.createBorderBoard(30, 10, 0.8f, 1));
         }
@@ -335,16 +345,6 @@ public class MainScreenConstructionControlBoard extends Table
                 upgradeButton.setDisabled(true);
                 upgradeButton.getLabel().setColor(Color.RED);
             }
-            if (model.getUpgradeComponent().canTransfer())
-            {
-                transformButton.setDisabled(false);
-                transformButton.getLabel().setColor(Color.WHITE);
-            }
-            else
-            {
-                transformButton.setDisabled(true);
-                transformButton.getLabel().setColor(Color.RED);
-            }
 
             boolean canUpWorkingLevel = model.getLevelComponent().canChangeWorkingLevel(1);
             if (canUpWorkingLevel) {
@@ -369,7 +369,8 @@ public class MainScreenConstructionControlBoard extends Table
         }
 
 
-        public void updateAsConstruction(BaseConstruction construction) {
+        @Override
+        public void updateForNewConstruction(BaseConstruction construction, GridPosition position) {
             this.model = construction;
             if (construction != null) {
                 if (construction.getLevelComponent().isTypeWorkingLevelChangeable()) {

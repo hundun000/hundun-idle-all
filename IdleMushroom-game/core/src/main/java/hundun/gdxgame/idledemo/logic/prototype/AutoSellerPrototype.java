@@ -20,7 +20,7 @@ public class AutoSellerPrototype extends AbstractConstructionPrototype {
 
     public static DescriptionPackage descriptionPackageEN = DescriptionPackage.builder()
             .upgradeButtonText("Upgrade")
-            .outputCostDescriptionStart("USELESS")
+            .outputCostDescriptionStart("Cost")
             .outputGainDescriptionStart("Produce")
             .upgradeCostDescriptionStart("Upgrade cost")
             .upgradeMaxLevelDescription("(max)")
@@ -31,8 +31,8 @@ public class AutoSellerPrototype extends AbstractConstructionPrototype {
 
     public static DescriptionPackage descriptionPackageCN = DescriptionPackage.builder()
             .upgradeButtonText("升级")
-            .outputCostDescriptionStart("USELESS")
-            .outputGainDescriptionStart("自动产出")
+            .outputCostDescriptionStart("消耗")
+            .outputGainDescriptionStart("产出")
             .upgradeCostDescriptionStart("升级费用")
             .upgradeMaxLevelDescription("(已达到最大等级)")
             .levelDescriptionProvider(DescriptionPackageFactory.WORKING_LEVEL_IMP)

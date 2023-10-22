@@ -8,7 +8,6 @@ import hundun.gdxgame.idledemo.logic.DemoBuiltinConstructionsLoader;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.construction.BaseIdleDemoConstruction;
 import hundun.gdxgame.idledemo.logic.construction.DemoSimpleAutoOutputComponent;
-import hundun.gdxgame.idledemo.logic.construction.EpochScaleOutputComponent;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackage;
@@ -74,7 +73,7 @@ public class AutoProviderPrototype extends AbstractConstructionPrototype {
         AutoProviderProficiencyComponent proficiencyComponent = new AutoProviderProficiencyComponent(construction);
         construction.setProficiencyComponent(proficiencyComponent);
 
-        EpochScaleOutputComponent outputComponent = new EpochScaleOutputComponent(construction);
+        DemoSimpleAutoOutputComponent outputComponent = new DemoSimpleAutoOutputComponent(construction);
         construction.setOutputComponent(outputComponent);
 
         construction.getOutputComponent().setOutputCostPack(DemoBuiltinConstructionsLoader.toPack(new HashMap<>()));

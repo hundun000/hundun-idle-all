@@ -42,7 +42,7 @@ public class PopupInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends
     private void rebuildCells(BaseConstruction model) {
         this.clearChildren();
 
-        add(wapperContainer(new Label(model.getDetailDescroptionConstPart(), parent.getGame().getMainSkin())))
+        add(wapperContainer(new Label(model.getDetailDescriptionConstPart(), parent.getGame().getMainSkin())))
             .colspan(3)
             .left()
             .row();

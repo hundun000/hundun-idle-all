@@ -14,8 +14,7 @@ public class ResourcePack {
     String descriptionStart;
     List<ResourcePair> baseValues;
     List<ResourcePair> modifiedValues;
-    String modifiedValuesDescription;
-
+    List<ResourcePair> previewNextLevelModifiedValues;
     public static String toDescription(List<ResourcePair> list) {
         return list.stream()
                 .map(pair -> pair.getType() + "x" + pair.getAmount())

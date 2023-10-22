@@ -42,6 +42,8 @@ public class PlayScreenLayoutConst {
     public int ALL_ACHIEVEMENT_BOARD_NODE_HEIGHT = 150;
     public int WorldConstructionCellDetailNodeWidth = 800;
     public int WorldConstructionCellDetailNodeHeight = CONSTRUCION_BOARD_ROOT_BOX_HEIGHT - 20;
+    public float popupInfoBoardWidth = 400;
+    public float popupInfoBoardHeight = 200;
 
     public PlayScreenLayoutConst(int gameLogicWidth, int gameLogicHeight) {
         this.EXPECTED_DRAW_MIN_X = 0;

@@ -7,23 +7,21 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idledemo.logic.DemoConstructionPrototypeId;
-import hundun.gdxgame.idledemo.ui.screen.BaseDemoPlayScreen;
 import hundun.gdxgame.idledemo.ui.screen.WorldPlayScreen;
 import hundun.gdxgame.idledemo.ui.shared.BaseCellDetailNodeVM;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollectionListener;
-import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import lombok.Getter;
 import lombok.Setter;
 
-public class WorldCellDetailBoardVM extends Table implements IConstructionCollectionListener, ILogicFrameListener {
+public class WorldDetailBoardVM extends Table implements IConstructionCollectionListener, ILogicFrameListener {
     @Getter
     @Setter
     public BaseConstruction detailingConstruction;
     BaseCellDetailNodeVM content;
-    protected BaseDemoPlayScreen screen;
+    protected WorldPlayScreen screen;
 
-    public WorldCellDetailBoardVM(WorldPlayScreen parent)
+    public WorldDetailBoardVM(WorldPlayScreen parent)
     {
         this.screen = parent;
         this.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
@@ -51,12 +49,42 @@ public class WorldCellDetailBoardVM extends Table implements IConstructionCollec
         switch (construction.getPrototypeId())
         {
             case DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL:
-                updateAsConstructionPrototypeDetail(construction);
+            case DemoConstructionPrototypeId.EPOCH_2_EMPTY_CELL:
+            case DemoConstructionPrototypeId.EPOCH_3_EMPTY_CELL: {
+                WorldEmptyDetailNode innerBoardVM = new WorldEmptyDetailNode(screen);
+                content = innerBoardVM;
                 break;
+            }
+            case DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER:
+            case DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER:
+            case DemoConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER: {
+                WorldMushroomDetailNode innerBoardVM = new WorldMushroomDetailNode(screen);
+                content = innerBoardVM;
+                break;
+            }
+            case DemoConstructionPrototypeId.EPOCH_1_TREE:
+            case DemoConstructionPrototypeId.EPOCH_2_TREE:
+            case DemoConstructionPrototypeId.EPOCH_3_TREE: {
+                WorldTreeDetailNode innerBoardVM = new WorldTreeDetailNode(screen);
+                content = innerBoardVM;
+                break;
+            }
             default:
-                updateAsConstructionDetail(construction);
-                break;
         }
+
+        this.clearChildren();
+
+        content.updateForNewConstruction(construction, construction.getSaveData().getPosition());
+        this.add(content);
+
+        TextButton textButton = new TextButton("clear", screen.getGame().getMainSkin());
+        textButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                screen.onCellClicked(null);
+            }
+        });
+        this.add(textButton);
     }
     private void updateAsEmpty()
     {
@@ -64,48 +92,6 @@ public class WorldCellDetailBoardVM extends Table implements IConstructionCollec
         content = null;
     }
 
-    private void updateAsConstructionDetail(BaseConstruction construction)
-    {
-        this.clearChildren();
-
-        WorldConstructionInstanceCellDetailNode innerBoardVM = new WorldConstructionInstanceCellDetailNode(screen);
-        innerBoardVM.updateAsConstruction(construction, construction.getSaveData().getPosition());
-        this.add(innerBoardVM)
-                .width(screen.getLayoutConst().WorldConstructionCellDetailNodeWidth)
-                .height(screen.getLayoutConst().WorldConstructionCellDetailNodeHeight);
-        content = innerBoardVM;
-
-        TextButton textButton = new TextButton("clear", screen.getGame().getMainSkin());
-        textButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                screen.onCellClicked(null);
-            }
-        });
-        this.add(textButton);
-    }
-
-    private void updateAsConstructionPrototypeDetail(BaseConstruction construction)
-    {
-        this.clearChildren();
-
-
-        WorldConstructionPrototypeCellDetailNode innerBoardVM = new WorldConstructionPrototypeCellDetailNode(screen);
-        innerBoardVM.updateAsConstructionPrototype(construction, construction.getSaveData().getPosition());
-        this.add(innerBoardVM)
-                .width(screen.getLayoutConst().WorldConstructionCellDetailNodeWidth)
-                .height(screen.getLayoutConst().WorldConstructionCellDetailNodeHeight);
-        content = innerBoardVM;
-
-        TextButton textButton = new TextButton("clear", screen.getGame().getMainSkin());
-        textButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                screen.onCellClicked(null);
-            }
-        });
-        this.add(textButton);
-    }
 
     @Override
     public void onConstructionCollectionChange()
