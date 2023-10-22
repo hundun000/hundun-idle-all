@@ -17,8 +17,6 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseCo
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.TextFormatTool;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 
@@ -40,6 +38,14 @@ public class IdleMushroomGame extends BaseIdleGame<RootSaveData> {
                                 DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER,
                                 ConstructionEpochConfig.builder()
                                         .transformToPrototypeId(DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER)
+                                        .build(),
+                                DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL,
+                                ConstructionEpochConfig.builder()
+                                        .transformToPrototypeId(DemoConstructionPrototypeId.EPOCH_2_EMPTY_CELL)
+                                        .build(),
+                                DemoConstructionPrototypeId.EPOCH_1_TREE,
+                                ConstructionEpochConfig.builder()
+                                        .transformToPrototypeId(DemoConstructionPrototypeId.EPOCH_2_TREE)
                                         .build()
                         ))
                         .build(),
@@ -79,7 +85,7 @@ public class IdleMushroomGame extends BaseIdleGame<RootSaveData> {
         this.textureManager = this.idleMushroomTextureManager;
         this.screenContext = new DemoScreenContext(this);
         this.audioPlayManager = new AudioPlayManager(this);
-        this.childGameConfig = new DemoChildGameConfig();
+        this.childGameConfig = new IdleMushroomChildGameConfig();
 
         this.controlBoardScreenIds = JavaFeatureForGwt.listOf(
                 DemoScreenId.SCREEN_MAIN,

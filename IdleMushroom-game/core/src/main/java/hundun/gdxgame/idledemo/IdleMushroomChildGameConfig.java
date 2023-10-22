@@ -13,9 +13,9 @@ import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
  * @author hundun
  * Created on 2022/01/11
  */
-public class DemoChildGameConfig extends ChildGameConfig {
+public class IdleMushroomChildGameConfig extends ChildGameConfig {
     
-    public DemoChildGameConfig() {
+    public IdleMushroomChildGameConfig() {
 
         this.setConstructionConfig(
                 ConstructionConfig.builder()
@@ -26,9 +26,14 @@ public class DemoChildGameConfig extends ChildGameConfig {
                         ))
                         .worldPrototypeIds(JavaFeatureForGwt.listOf(
                                 DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL,
+                                DemoConstructionPrototypeId.EPOCH_2_EMPTY_CELL,
+                                DemoConstructionPrototypeId.EPOCH_3_EMPTY_CELL,
                                 DemoConstructionPrototypeId.EPOCH_1_TREE,
+                                DemoConstructionPrototypeId.EPOCH_2_TREE,
+                                DemoConstructionPrototypeId.EPOCH_3_TREE,
                                 DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER,
-                                DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER
+                                DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER,
+                                DemoConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER
                         ))
                         .build()
         );

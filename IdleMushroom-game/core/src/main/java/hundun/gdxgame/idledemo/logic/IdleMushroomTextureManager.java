@@ -86,9 +86,14 @@ public class IdleMushroomTextureManager extends AbstractTextureManager {
             constructionHexHighLightImage1 = regions[0][0];
             constructionHexHighLightImage2 = regions[0][1];
             constructionHexImageMap.put(DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL, regions[0][2]);
+            constructionHexImageMap.put(DemoConstructionPrototypeId.EPOCH_2_EMPTY_CELL, regions[0][2]);
+            constructionHexImageMap.put(DemoConstructionPrototypeId.EPOCH_3_EMPTY_CELL, regions[0][3]);
             constructionHexImageMap.put(DemoConstructionPrototypeId.EPOCH_1_TREE, regions[0][4]);
             constructionHexImageMap.put(DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER, regions[0][5]);
+            constructionHexImageMap.put(DemoConstructionPrototypeId.EPOCH_2_TREE, regions[0][6]);
             constructionHexImageMap.put(DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER, regions[0][7]);
+            constructionHexImageMap.put(DemoConstructionPrototypeId.EPOCH_3_TREE, regions[0][8]);
+            constructionHexImageMap.put(DemoConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER, regions[0][9]);
             //gameAreaBackMap.put(GameArea.AREA_WIN, regions[0][3]);
         }
     }

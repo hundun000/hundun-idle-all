@@ -32,8 +32,9 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
         GridPosition uselessPosition = new GridPosition(0, 0);
         GridPosition providerPosition = new GridPosition(1, 1);
         List<GridPosition> worldGridPositions = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 2; j++) {
+        int size = 5;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
                 GridPosition emptyPosition = new GridPosition(i, j);
                 if (!emptyPosition.equals(providerPosition)) {
                     worldGridPositions.add(emptyPosition);
@@ -79,15 +80,29 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
 
 
         worldGridPositions.forEach(it -> {
-            map.put(
-                    DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL + "_" + UUID.randomUUID(),
-                    ConstructionSaveData.builder()
-                            .prototypeId(DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL)
-                            .level(0)
-                            .workingLevel(0)
-                            .position(it)
-                            .build()
-            );
+            double rand = Math.random();
+            if (rand > 0.3) {
+                map.put(
+                        DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL + "_" + UUID.randomUUID(),
+                        ConstructionSaveData.builder()
+                                .prototypeId(DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL)
+                                .level(0)
+                                .workingLevel(0)
+                                .position(it)
+                                .build()
+                );
+            } else {
+                map.put(
+                        DemoConstructionPrototypeId.EPOCH_1_TREE + "_" + UUID.randomUUID(),
+                        ConstructionSaveData.builder()
+                                .prototypeId(DemoConstructionPrototypeId.EPOCH_1_TREE)
+                                .level(0)
+                                .workingLevel(0)
+                                .position(it)
+                                .build()
+                );
+            }
+
         });
 
         Map<String, Long> ownResources = new HashMap<>();

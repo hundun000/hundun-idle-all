@@ -29,9 +29,9 @@ public class DirtPrototype extends AbstractConstructionPrototype {
             .proficiencyDescriptionProvider(DescriptionPackageFactory.CN_PROFICIENCY_IMP)
             .build();
 
-    public DirtPrototype(Language language) {
+    public DirtPrototype(String prototypeId, Language language) {
         super(
-                DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL,
+                prototypeId,
                 language
         );
         switch (language)

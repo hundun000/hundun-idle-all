@@ -23,9 +23,28 @@ public class DemoBuiltinConstructionsLoader implements IBuiltinConstructionsLoad
         RootEpochConfig epochConfig2 = IdleMushroomGame.epochConfigMap.get(2);
         RootEpochConfig epochConfig3 = IdleMushroomGame.epochConfigMap.get(3);
         Map<String, AbstractConstructionPrototype> result = new HashMap<>();
-        result.put(DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL, new DirtPrototype(language));
+        result.put(DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL, new DirtPrototype(
+                DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL,
+                language
+        ));
+        result.put(DemoConstructionPrototypeId.EPOCH_2_EMPTY_CELL, new DirtPrototype(
+                DemoConstructionPrototypeId.EPOCH_2_EMPTY_CELL,
+                language
+        ));
+        result.put(DemoConstructionPrototypeId.EPOCH_3_EMPTY_CELL, new DirtPrototype(
+                DemoConstructionPrototypeId.EPOCH_3_EMPTY_CELL,
+                language
+        ));
         result.put(DemoConstructionPrototypeId.EPOCH_1_TREE, new TreePrototype(
                 DemoConstructionPrototypeId.EPOCH_1_TREE,
+                language
+        ));
+        result.put(DemoConstructionPrototypeId.EPOCH_2_TREE, new TreePrototype(
+                DemoConstructionPrototypeId.EPOCH_2_TREE,
+                language
+        ));
+        result.put(DemoConstructionPrototypeId.EPOCH_3_TREE, new TreePrototype(
+                DemoConstructionPrototypeId.EPOCH_3_TREE,
                 language
         ));
         result.put(DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER, new AutoProviderPrototype(
