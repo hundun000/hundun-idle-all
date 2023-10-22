@@ -42,8 +42,7 @@ public class CookieSingletonAutoSellerPrototype extends AbstractConstructionProt
     public CookieSingletonAutoSellerPrototype(Language language) {
         super(
                 DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER,
-                language,
-                DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf())
+                language
         );
         switch (language)
         {

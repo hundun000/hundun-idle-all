@@ -13,32 +13,20 @@ public abstract class AbstractConstructionPrototype {
 
     protected String prototypeId;
     protected Language language;
-    protected ResourcePack buyInstanceCostPack;
 
     protected DescriptionPackage descriptionPackage;
 
-    public AbstractConstructionPrototype(String prototypeId,
-                                            Language language,
-                                            ResourcePack buyInstanceCostPack
+    public AbstractConstructionPrototype(
+            String prototypeId,
+            Language language
     )
     {
         this.prototypeId = prototypeId;
         this.language = language;
-        this.buyInstanceCostPack = buyInstanceCostPack;
 
-        if (buyInstanceCostPack != null)
-        {
-            buyInstanceCostPack.setModifiedValues(buyInstanceCostPack.getBaseValues());
-            buyInstanceCostPack.setModifiedValuesDescription(ResourcePack.toDescription(buyInstanceCostPack.getModifiedValues()));
-        }
+
     }
 
-    public void lazyInitDescription(IdleGameplayContext gameContext, Language language) {
-        if (buyInstanceCostPack != null)
-        {
-            buyInstanceCostPack.setDescriptionStart(gameContext.getGameDictionary().getPlayScreenTexts(language).get(1));
-        }
-    }
 
     public abstract BaseConstruction getInstance(GridPosition position);
 }

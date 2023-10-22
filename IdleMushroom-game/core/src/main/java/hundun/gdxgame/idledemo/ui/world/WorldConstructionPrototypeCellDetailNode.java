@@ -11,7 +11,7 @@ import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idledemo.ui.screen.BaseDemoPlayScreen;
 import hundun.gdxgame.idledemo.ui.shared.BaseCellDetailNodeVM;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
-import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
+import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig.ConstructionBuyCandidateConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
 
@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class WorldConstructionPrototypeCellDetailNode extends BaseCellDetailNodeVM {
     BaseDemoPlayScreen screen;
-    AbstractConstructionPrototype constructionPrototype;
+    BaseConstruction construction;
     GridPosition position;
     Label constructionNameLabel;
 
@@ -61,7 +61,7 @@ public class WorldConstructionPrototypeCellDetailNode extends BaseCellDetailNode
 
     private void update() {
         // ------ update show-state ------
-        if (constructionPrototype == null) {
+        if (construction == null) {
             setVisible(false);
             //textButton.setVisible(false);
             //Gdx.app.log("ConstructionView", this.hashCode() + " no model");
@@ -81,7 +81,7 @@ public class WorldConstructionPrototypeCellDetailNode extends BaseCellDetailNode
                         .getGameDictionary()
                         .constructionPrototypeIdToDetailDescriptionConstPart(
                                 screen.getGame().getIdleGameplayExport().getLanguage(),
-                                constructionPrototype.getPrototypeId()
+                                construction.getPrototypeId()
                         ),
                 position.getX(),
                 position.getY()
@@ -98,20 +98,16 @@ public class WorldConstructionPrototypeCellDetailNode extends BaseCellDetailNode
 
     public void updateAsConstructionPrototype(
             BaseConstruction construction,
-            AbstractConstructionPrototype constructionPrototype,
             GridPosition position
     ) {
-        this.constructionPrototype = constructionPrototype;
+        this.construction = construction;
         this.position = position;
 
-        List<String> buyCandidateConstructionPrototypeIds = screen.getGame().getIdleGameplayExport().getGameplayContext()
-                .getConstructionManager()
-                .getByCandidatePrototypeIds();
-        buyCandidateConstructionPrototypeIds.forEach(constructionPrototypeId -> {
+        construction.getExistenceComponent().getBuyCandidateConfigs().forEach(constructionBuyCandidateConfig -> {
             WorldBuyConstructionInfoNodeVM vm = new WorldBuyConstructionInfoNodeVM(
                     screen,
                     construction,
-                    constructionPrototypeId
+                    constructionBuyCandidateConfig
             );
             vm.update();
             this.add(vm);
@@ -126,24 +122,24 @@ public class WorldConstructionPrototypeCellDetailNode extends BaseCellDetailNode
         BaseConstruction model;
         Label constructionNameLabel;
         TextButton buyButton;
-        String buyTargetConstructionPrototypeId;
+        ConstructionBuyCandidateConfig constructionBuyCandidateConfig;
 
         public WorldBuyConstructionInfoNodeVM(
                 BaseDemoPlayScreen parent,
                 BaseConstruction model,
-                String buyTargetConstructionPrototypeId
+                ConstructionBuyCandidateConfig constructionBuyCandidateConfig
         ) {
             super();
             final PlayScreenLayoutConst playScreenLayoutConst = parent.getLayoutConst();
             this.parent = parent;
-            this.buyTargetConstructionPrototypeId = buyTargetConstructionPrototypeId;
+            this.constructionBuyCandidateConfig = constructionBuyCandidateConfig;
             this.model = model;
 
             int CHILD_WIDTH = playScreenLayoutConst.CONSTRUCION_CHILD_WIDTH;
             int CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_BUTTON_HEIGHT;
             int NAME_CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_NAME_HEIGHT;
 
-            this.constructionNameLabel = new Label(buyTargetConstructionPrototypeId, parent.getGame().getMainSkin());
+            this.constructionNameLabel = new Label(constructionBuyCandidateConfig.getPrototypeId(), parent.getGame().getMainSkin());
             constructionNameLabel.setWrap(true);
 
             this.buyButton = new TextButton("buy", parent.getGame().getMainSkin());
@@ -152,7 +148,7 @@ public class WorldConstructionPrototypeCellDetailNode extends BaseCellDetailNode
                 public void changed(ChangeEvent event, Actor actor) {
                     parent.getGame().getIdleGameplayExport().getGameplayContext()
                             .getConstructionManager()
-                            .buyInstanceOfPrototype(buyTargetConstructionPrototypeId, model.getPosition());
+                            .buyInstanceOfPrototype(constructionBuyCandidateConfig, model.getPosition());
                 }
             });
 
@@ -183,14 +179,14 @@ public class WorldConstructionPrototypeCellDetailNode extends BaseCellDetailNode
                             .getGameDictionary()
                             .constructionPrototypeIdToShowName(
                                     parent.getGame().getIdleGameplayExport().getLanguage(),
-                                    buyTargetConstructionPrototypeId
+                                    constructionBuyCandidateConfig.getPrototypeId()
                             )
             );
 
             // ------ update clickable-state ------
             boolean canBuyInstanceOfPrototype = parent.getGame().getIdleGameplayExport().getGameplayContext()
                     .getConstructionManager()
-                    .canBuyInstanceOfPrototype(buyTargetConstructionPrototypeId, model.getPosition());
+                    .canBuyInstanceOfPrototype(constructionBuyCandidateConfig, model.getPosition());
             if (!canBuyInstanceOfPrototype) {
                 buyButton.setDisabled(false);
                 buyButton.getLabel().setColor(Color.WHITE);

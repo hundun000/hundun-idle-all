@@ -120,7 +120,8 @@ public abstract class BaseConstruction implements IBuffChangeListener, ITileNode
         
         outputComponent.lazyInitDescription();
         upgradeComponent.lazyInitDescription();
-        
+        existenceComponent.lazyInitDescription(gameContext, language);
+
         updateModifiedValues();
     }
 
@@ -139,7 +140,7 @@ public abstract class BaseConstruction implements IBuffChangeListener, ITileNode
         // --------------
         upgradeComponent.updateModifiedValues();
         outputComponent.updateModifiedValues();
-
+        existenceComponent.updateModifiedValues();
     }
 
     @Override

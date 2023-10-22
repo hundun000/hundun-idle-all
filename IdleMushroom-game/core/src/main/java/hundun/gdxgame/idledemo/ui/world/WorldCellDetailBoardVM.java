@@ -89,14 +89,9 @@ public class WorldCellDetailBoardVM extends Table implements IConstructionCollec
     {
         this.clearChildren();
 
-        AbstractConstructionPrototype constructionPrototype = screen.getGame().getIdleGameplayExport()
-                .getGameplayContext()
-                .getConstructionManager()
-                .getEmptyConstructionPrototype();
-
 
         WorldConstructionPrototypeCellDetailNode innerBoardVM = new WorldConstructionPrototypeCellDetailNode(screen);
-        innerBoardVM.updateAsConstructionPrototype(construction, constructionPrototype, construction.getSaveData().getPosition());
+        innerBoardVM.updateAsConstructionPrototype(construction, construction.getSaveData().getPosition());
         this.add(innerBoardVM)
                 .width(screen.getLayoutConst().WorldConstructionCellDetailNodeWidth)
                 .height(screen.getLayoutConst().WorldConstructionCellDetailNodeHeight);

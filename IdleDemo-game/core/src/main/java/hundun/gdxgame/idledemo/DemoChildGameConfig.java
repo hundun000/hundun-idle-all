@@ -22,14 +22,6 @@ public class DemoChildGameConfig extends ChildGameConfig {
         this.setConstructionConfig(
                 ConstructionConfig.builder()
                         .mainClickerConstructionPrototypeId(DemoConstructionPrototypeId.SINGLETON_COOKIE_MAIN_CLICKER)
-                        .emptyConstructionConfig(EmptyConstructionConfig.builder()
-                                .prototypeId(DemoConstructionPrototypeId.EMPTY_CELL)
-                                .buyCandidatePrototypeIds(JavaFeatureForGwt.listOf(
-                                        DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER,
-                                        DemoConstructionPrototypeId.COOKIE_COMPLEX_AUTO_PROVIDER
-                                ))
-                                .build()
-                        )
                         .singletonPrototypeIds(JavaFeatureForGwt.listOf(
                                 DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER
                         ))

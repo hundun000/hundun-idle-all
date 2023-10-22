@@ -79,7 +79,7 @@ public class WorldConstructionInstanceCellDetailNode extends BaseCellDetailNodeV
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 parent.getGame().getFrontend().log(this.getClass().getSimpleName(), "transformButton clicked");
-                model.getUpgradeComponent().doTransfer();
+                model.getUpgradeComponent().doTransform();
             }
         });
 

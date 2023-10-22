@@ -143,7 +143,21 @@ public class StarterConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>,
         this.proficiencyLabel = new Label("", parent.getGame().getMainSkin());
         this.positionLabel = new Label("", parent.getGame().getMainSkin());
         this.destroyButton = new TextButton("-", parent.getGame().getMainSkin());
+        destroyButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.log(StarterConstructionControlNode.class.getSimpleName(), "upgradeButton changed");
+                model.getExistenceComponent().doDestroy();
+            }
+        });
         this.transformButton = new TextButton("-", parent.getGame().getMainSkin());
+        transformButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.log(StarterConstructionControlNode.class.getSimpleName(), "upgradeButton changed");
+                model.getUpgradeComponent().doTransform();
+            }
+        });
         // ------ this ------
         this.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
         this.add(clickOutputButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
@@ -216,7 +230,7 @@ public class StarterConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>,
             upgradeButton.setDisabled(true);
             upgradeButton.getLabel().setColor(Color.RED);
         }
-        if (model.getExistenceComponent().canDestory())
+        if (model.getExistenceComponent().canDestroy())
         {
             destroyButton.setDisabled(false);
             destroyButton.getLabel().setColor(Color.WHITE);

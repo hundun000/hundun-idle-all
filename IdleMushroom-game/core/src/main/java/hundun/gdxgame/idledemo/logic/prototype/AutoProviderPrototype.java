@@ -51,8 +51,7 @@ public class AutoProviderPrototype extends AbstractConstructionPrototype {
     public AutoProviderPrototype(String prototypeId, RootEpochConfig rootEpochConfig, Language language) {
         super(
                 prototypeId,
-                language,
-                DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf())
+                language
         );
         this.rootEpochConfig = rootEpochConfig;
         switch (language)

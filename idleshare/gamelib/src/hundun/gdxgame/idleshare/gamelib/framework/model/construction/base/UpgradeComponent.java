@@ -143,7 +143,7 @@ public class UpgradeComponent {
         return construction.gameplayContext.getStorageManager().isEnough(compareTarget);
     }
 
-    public void doTransfer()
+    public void doTransform()
     {
         if (construction.upgradeComponent.transformCostPack != null)
         {

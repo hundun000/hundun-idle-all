@@ -3,12 +3,9 @@ package hundun.gdxgame.idledemo.ui.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
@@ -127,7 +124,7 @@ public class WorldConstructionInstanceCellDetailNode extends BaseCellDetailNodeV
             upgradeButton.setDisabled(true);
             upgradeButton.getLabel().setColor(Color.RED);
         }
-        if (model.getExistenceComponent().canDestory())
+        if (model.getExistenceComponent().canDestroy())
         {
             destoryButton.setDisabled(false);
             destoryButton.getLabel().setColor(Color.WHITE);

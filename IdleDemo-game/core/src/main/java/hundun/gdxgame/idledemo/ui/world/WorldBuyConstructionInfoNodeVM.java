@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.idledemo.ui.screen.BaseDemoPlayScreen;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
+import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig.ConstructionBuyCandidateConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
 public class WorldBuyConstructionInfoNodeVM extends Table  {
@@ -16,24 +17,24 @@ public class WorldBuyConstructionInfoNodeVM extends Table  {
     BaseConstruction model;
     Label constructionNameLabel;
     TextButton buyButton;
-    String buyTargetConstructionPrototypeId;
+    ConstructionBuyCandidateConfig constructionBuyCandidateConfig;
 
     public WorldBuyConstructionInfoNodeVM(
             BaseDemoPlayScreen parent,
             BaseConstruction model,
-            String buyTargetConstructionPrototypeId
+            ConstructionBuyCandidateConfig constructionBuyCandidateConfig
     ) {
         super();
         final PlayScreenLayoutConst playScreenLayoutConst = parent.getLayoutConst();
         this.parent = parent;
-        this.buyTargetConstructionPrototypeId = buyTargetConstructionPrototypeId;
+        this.constructionBuyCandidateConfig = constructionBuyCandidateConfig;
         this.model = model;
 
         int CHILD_WIDTH = playScreenLayoutConst.CONSTRUCION_CHILD_WIDTH;
         int CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_BUTTON_HEIGHT;
         int NAME_CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_NAME_HEIGHT;
 
-        this.constructionNameLabel = new Label(buyTargetConstructionPrototypeId, parent.getGame().getMainSkin());
+        this.constructionNameLabel = new Label(constructionBuyCandidateConfig.getPrototypeId(), parent.getGame().getMainSkin());
         constructionNameLabel.setWrap(true);
 
         this.buyButton = new TextButton("buy", parent.getGame().getMainSkin());
@@ -42,7 +43,7 @@ public class WorldBuyConstructionInfoNodeVM extends Table  {
             public void changed(ChangeEvent event, Actor actor) {
                 parent.getGame().getIdleGameplayExport().getGameplayContext()
                         .getConstructionManager()
-                        .buyInstanceOfPrototype(buyTargetConstructionPrototypeId, model.getPosition());
+                        .buyInstanceOfPrototype(constructionBuyCandidateConfig, model.getPosition());
             }
         });
 
@@ -73,14 +74,14 @@ public class WorldBuyConstructionInfoNodeVM extends Table  {
                         .getGameDictionary()
                         .constructionPrototypeIdToShowName(
                                 parent.getGame().getIdleGameplayExport().getLanguage(),
-                                buyTargetConstructionPrototypeId
+                                constructionBuyCandidateConfig.getPrototypeId()
                         )
         );
 
         // ------ update clickable-state ------
         boolean canBuyInstanceOfPrototype = parent.getGame().getIdleGameplayExport().getGameplayContext()
                 .getConstructionManager()
-                .canBuyInstanceOfPrototype(buyTargetConstructionPrototypeId, model.getPosition());
+                .canBuyInstanceOfPrototype(constructionBuyCandidateConfig, model.getPosition());
         if (!canBuyInstanceOfPrototype) {
             buyButton.setDisabled(false);
             buyButton.getLabel().setColor(Color.WHITE);

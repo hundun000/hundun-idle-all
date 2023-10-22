@@ -38,8 +38,7 @@ public class CookieMainClickerPrototype extends AbstractConstructionPrototype {
     public CookieMainClickerPrototype(Language language) {
         super(
                 DemoConstructionPrototypeId.SINGLETON_COOKIE_MAIN_CLICKER,
-                language,
-                DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf())
+                language
         );
         switch (language)
         {

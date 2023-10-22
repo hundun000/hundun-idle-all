@@ -30,8 +30,7 @@ public class TreePrototype extends AbstractConstructionPrototype {
     public TreePrototype(String prototypeId, Language language) {
         super(
                 prototypeId,
-                language,
-                DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf())
+                language
         );
         switch (language)
         {

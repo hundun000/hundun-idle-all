@@ -42,8 +42,7 @@ public class CookieSimpleAutoProviderPrototype extends AbstractConstructionProto
     public CookieSimpleAutoProviderPrototype(Language language) {
         super(
                 DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER,
-                language,
-                DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf())
+                language
         );
         switch (language)
         {

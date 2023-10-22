@@ -32,8 +32,7 @@ public class MainMushroomPrototype extends AbstractConstructionPrototype {
     public MainMushroomPrototype(Language language) {
         super(
                 DemoConstructionPrototypeId.MAIN_MUSHROOM,
-                language,
-                DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf())
+                language
         );
         switch (language)
         {

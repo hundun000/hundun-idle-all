@@ -42,8 +42,7 @@ public class AutoSellerPrototype extends AbstractConstructionPrototype {
     public AutoSellerPrototype(Language language) {
         super(
                 DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER,
-                language,
-                DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf())
+                language
         );
         switch (language)
         {

@@ -1,8 +1,6 @@
 package hundun.gdxgame.idledemo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
@@ -22,13 +20,6 @@ public class DemoChildGameConfig extends ChildGameConfig {
         this.setConstructionConfig(
                 ConstructionConfig.builder()
                         .mainClickerConstructionPrototypeId(DemoConstructionPrototypeId.MAIN_MUSHROOM)
-                        .emptyConstructionConfig(EmptyConstructionConfig.builder()
-                                .prototypeId(DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL)
-                                .buyCandidatePrototypeIds(JavaFeatureForGwt.listOf(
-                                        DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER
-                                ))
-                                .build()
-                        )
                         .singletonPrototypeIds(JavaFeatureForGwt.listOf(
                                 DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER,
                                 DemoConstructionPrototypeId.EPOCH_COUNTER

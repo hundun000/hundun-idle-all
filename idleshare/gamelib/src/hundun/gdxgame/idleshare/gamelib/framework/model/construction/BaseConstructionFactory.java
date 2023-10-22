@@ -32,7 +32,6 @@ public class BaseConstructionFactory {
     public AbstractConstructionPrototype getPrototype(String prototypeId)
     {
         AbstractConstructionPrototype prototype = providerMap.get(prototypeId);
-        prototype.lazyInitDescription(gameContext, language);
         return prototype;
     }
 

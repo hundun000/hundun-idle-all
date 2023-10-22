@@ -3,6 +3,7 @@ package hundun.gdxgame.idleshare.gamelib.framework.data;
 import java.util.List;
 import java.util.Map;
 
+import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePack;
 import lombok.*;
 
 /**
@@ -30,7 +31,6 @@ public abstract class ChildGameConfig {
     @AllArgsConstructor
     public static class ConstructionConfig {
         String mainClickerConstructionPrototypeId;
-        EmptyConstructionConfig emptyConstructionConfig;
         List<String> singletonPrototypeIds;
         List<String> worldPrototypeIds;
     }
@@ -38,9 +38,9 @@ public abstract class ChildGameConfig {
     @Getter
     @Builder
     @AllArgsConstructor
-    public static class EmptyConstructionConfig {
+    public static class ConstructionBuyCandidateConfig {
         String prototypeId;
-        List<String> buyCandidatePrototypeIds;
+        ResourcePack buyCostPack;
     }
 
 }

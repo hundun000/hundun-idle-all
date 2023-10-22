@@ -30,8 +30,7 @@ public class DirtPrototype extends AbstractConstructionPrototype {
     public DirtPrototype(Language language) {
         super(
                 DemoConstructionPrototypeId.EMPTY_CELL,
-                language,
-                DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf())
+                language
         );
         switch (language)
         {

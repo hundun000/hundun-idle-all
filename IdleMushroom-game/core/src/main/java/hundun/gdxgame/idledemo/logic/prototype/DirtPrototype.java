@@ -3,7 +3,9 @@ package hundun.gdxgame.idledemo.logic.prototype;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idledemo.logic.DemoConstructionPrototypeId;
 import hundun.gdxgame.idledemo.logic.DemoBuiltinConstructionsLoader;
+import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.construction.BaseIdleDemoConstruction;
+import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig.ConstructionBuyCandidateConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackage;
@@ -30,8 +32,7 @@ public class DirtPrototype extends AbstractConstructionPrototype {
     public DirtPrototype(Language language) {
         super(
                 DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL,
-                language,
-                DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf())
+                language
         );
         switch (language)
         {
@@ -56,6 +57,22 @@ public class DirtPrototype extends AbstractConstructionPrototype {
 
         SimpleAutoOutputComponent outputComponent = new SimpleAutoOutputComponent(thiz);
         thiz.setOutputComponent(outputComponent);
+
+
+        switch (prototypeId) {
+            case DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL:
+                thiz.getExistenceComponent().setBuyCandidateConfigs(JavaFeatureForGwt.listOf(
+                        ConstructionBuyCandidateConfig.builder()
+                                .prototypeId(DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER)
+                                .buyCostPack(DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
+                                        ResourceType.MUSHROOM, 50
+                                )))
+                                .build()
+                ));
+                break;
+            default:
+        }
+
 
         return thiz;
     }

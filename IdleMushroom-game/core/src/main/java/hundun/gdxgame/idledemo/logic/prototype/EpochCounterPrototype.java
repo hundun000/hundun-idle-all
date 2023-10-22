@@ -37,8 +37,7 @@ public class EpochCounterPrototype extends AbstractConstructionPrototype {
     public EpochCounterPrototype(Language language) {
         super(
                 DemoConstructionPrototypeId.EPOCH_COUNTER,
-                language,
-                DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf())
+                language
         );
         switch (language)
         {

@@ -74,14 +74,10 @@ public class WorldCellDetailBoardVM extends BaseCellDetailBoardVM implements ICo
         this.clearChildren();
         contents.clear();
 
-        AbstractConstructionPrototype constructionPrototype = screen.getGame().getIdleGameplayExport()
-                .getGameplayContext()
-                .getConstructionManager()
-                .getEmptyConstructionPrototype();
 
 
         WorldConstructionPrototypeCellDetailNode innerBoardVM = new WorldConstructionPrototypeCellDetailNode(screen);
-            innerBoardVM.updateAsConstructionPrototype(construction, constructionPrototype, construction.getSaveData().getPosition());
+            innerBoardVM.updateAsConstructionPrototype(construction, construction.getSaveData().getPosition());
             this.add(innerBoardVM);
             contents.add(innerBoardVM);
 

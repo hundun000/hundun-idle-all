@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
+import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig.ConstructionBuyCandidateConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig.ConstructionConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ConstructionSaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
@@ -139,10 +140,9 @@ public class ConstructionManager implements ITileNodeMap<Void> {
         TileNodeUtils.updateNeighborsAllStep(construction, this);
     }
 
-    public boolean canBuyInstanceOfPrototype(String prototypeId, GridPosition position)
+    public boolean canBuyInstanceOfPrototype(ConstructionBuyCandidateConfig config, GridPosition position)
     {
-        AbstractConstructionPrototype prototype = gameContext.getConstructionFactory().getPrototype(prototypeId);
-        boolean isCostEnough = this.gameContext.getStorageManager().isEnough(prototype.getBuyInstanceCostPack().getModifiedValues());
+        boolean isCostEnough = this.gameContext.getStorageManager().isEnough(config.getBuyCostPack().getModifiedValues());
         boolean positionAllowCase1 = runningConstructionModelMap.entrySet().stream().noneMatch(pair -> pair.getValue().getPosition().equals(position));
         boolean positionAllowCase2 = runningConstructionModelMap.entrySet().stream().filter(pair -> pair.getValue().getPosition().equals(position) && pair.getValue().isAllowPositionOverwrite()).count() == 1;
         return isCostEnough && (positionAllowCase1 || positionAllowCase2);
@@ -151,12 +151,11 @@ public class ConstructionManager implements ITileNodeMap<Void> {
 
 
 
-    public void buyInstanceOfPrototype(String prototypeId, GridPosition position)
+    public void buyInstanceOfPrototype(ConstructionBuyCandidateConfig config, GridPosition position)
     {
-        AbstractConstructionPrototype prototype = gameContext.getConstructionFactory().getPrototype(prototypeId);
-        this.gameContext.getStorageManager().modifyAllResourceNum(prototype.getBuyInstanceCostPack().getModifiedValues(), false);
+        this.gameContext.getStorageManager().modifyAllResourceNum(config.getBuyCostPack().getModifiedValues(), false);
         addToRemoveQueueAt(position);
-        addToCreateQueue(prototypeId, position);
+        addToCreateQueue(config.getPrototypeId(), position);
     }
 
     public void addToCreateQueue(String prototypeId, GridPosition position)
@@ -171,17 +170,8 @@ public class ConstructionManager implements ITileNodeMap<Void> {
         return getWorldConstructionAt(position);
     }
 
-    public List<String> getByCandidatePrototypeIds() {
-        return constructionConfig.getEmptyConstructionConfig().getBuyCandidatePrototypeIds().stream()
-                .collect(Collectors.toList());
-    }
-
     public void lazyInit(ConstructionConfig constructionConfig) {
         this.constructionConfig = constructionConfig;
-    }
-
-    public AbstractConstructionPrototype getEmptyConstructionPrototype() {
-        return gameContext.getConstructionFactory().getPrototype(constructionConfig.getEmptyConstructionConfig().getPrototypeId());
     }
 
     public BaseConstruction getMainClickConstructionInstances() {
