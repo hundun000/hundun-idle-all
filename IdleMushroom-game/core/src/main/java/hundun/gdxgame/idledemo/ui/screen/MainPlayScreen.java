@@ -2,7 +2,6 @@ package hundun.gdxgame.idledemo.ui.screen;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import hundun.gdxgame.idledemo.IdleMushroomGame;
 import hundun.gdxgame.idledemo.logic.DemoScreenId;
@@ -10,6 +9,7 @@ import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.main.MainScreenConstructionControlBoard;
 import hundun.gdxgame.idledemo.ui.main.MainScreenPopupInfoBoard;
+import hundun.gdxgame.idledemo.ui.shared.BaseIdleMushroomPlayScreen;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
 import hundun.gdxgame.idledemo.ui.main.GameEntityFactory;
 import hundun.gdxgame.idleshare.core.framework.model.manager.GameEntityManager;
@@ -22,7 +22,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseCo
  * @author hundun
  * Created on 2021/11/02
  */
-public class MainPlayScreen extends BaseDemoPlayScreen
+public class MainPlayScreen extends BaseIdleMushroomPlayScreen
         implements ISecondaryInfoBoardCallback<BaseConstruction> {
     protected MainScreenPopupInfoBoard secondaryInfoBoard;
     protected GameEntityManager gameEntityManager;

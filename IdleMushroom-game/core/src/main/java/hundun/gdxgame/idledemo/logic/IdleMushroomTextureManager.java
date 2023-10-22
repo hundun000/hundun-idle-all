@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import hundun.gdxgame.idleshare.core.framework.model.manager.AbstractTextureManager;
 import lombok.Getter;
@@ -13,6 +14,25 @@ public class IdleMushroomTextureManager extends AbstractTextureManager {
 
     @Getter
     TextureRegion questionMarkTexture;
+
+    @Getter
+    Drawable tableType1Drawable;
+
+    @Getter
+    Drawable tableType2Drawable;
+
+    @Getter
+    Drawable tableType3Drawable;
+
+    private Drawable quickTableNinePatchDrawable(Texture texture) {
+        return new NinePatchDrawable(new NinePatch(
+                texture,
+                (texture.getWidth() - 1) / 2,
+                (texture.getWidth() - 1) / 2,
+                (texture.getHeight() - 1) / 2,
+                (texture.getHeight() - 1) / 2
+        ));
+    }
 
     @Override
     public void lazyInitOnGameCreateStage2() {
@@ -24,11 +44,14 @@ public class IdleMushroomTextureManager extends AbstractTextureManager {
 
         achievementMaskBoardTexture = new Texture(Gdx.files.internal("win.png"));
         menuTexture = new Texture(Gdx.files.internal("menu.png"));
+
+        tableType1Drawable = quickTableNinePatchDrawable(new Texture(Gdx.files.internal("table.9.png")));
+        tableType2Drawable = quickTableNinePatchDrawable(new Texture(Gdx.files.internal("table_2.png")));
+        tableType3Drawable = quickTableNinePatchDrawable(new Texture(Gdx.files.internal("table_3.png")));
+
         defaultBoardNinePatchTexture = new Texture(Gdx.files.internal("table.9.png"));
-        defaultBoardNinePatchDrawable = new NinePatchDrawable(new NinePatch(
-                defaultBoardNinePatchTexture,
-                3, 3, 3, 3
-        ));
+        defaultBoardNinePatchDrawable = quickTableNinePatchDrawable(defaultBoardNinePatchTexture);
+
         {
             Texture texture = new Texture(Gdx.files.internal("mainCokie.png"));
              mainClickAnimationTextureAtlas = TextureRegion.split(texture, 256, 256);

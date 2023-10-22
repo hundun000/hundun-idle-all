@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import com.badlogic.gdx.utils.Null;
 import hundun.gdxgame.idledemo.IdleMushroomGame;
-import hundun.gdxgame.idledemo.ui.screen.BaseDemoPlayScreen;
+import hundun.gdxgame.idledemo.ui.shared.BaseIdleMushroomPlayScreen;
 import hundun.gdxgame.idleshare.core.starter.ui.component.ResourceAmountPairNode;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
@@ -25,12 +25,12 @@ import java.util.List;
  */
 public class AchievementPopupBoard extends Table {
 
-    BaseDemoPlayScreen parent;
+    BaseIdleMushroomPlayScreen parent;
 
 
     List<String> texts;
 
-    public AchievementPopupBoard(BaseDemoPlayScreen parent, List<String> texts) {
+    public AchievementPopupBoard(BaseIdleMushroomPlayScreen parent, List<String> texts) {
         this.parent = parent;
         this.texts = texts;
         this.setBackground(new SpriteDrawable(new Sprite(parent.getGame().getTextureManager().getAchievementMaskBoardTexture())));

@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.idledemo.ui.screen.BaseDemoPlayScreen;
+import hundun.gdxgame.idledemo.ui.shared.BaseIdleMushroomPlayScreen;
 import hundun.gdxgame.idledemo.ui.shared.BaseCellDetailNodeVM;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig.ConstructionBuyCandidateConfig;
@@ -24,7 +24,7 @@ import java.util.List;
  * Created on 2021/11/05
  */
 public class WorldEmptyDetailNode extends BaseCellDetailNodeVM {
-    BaseDemoPlayScreen screen;
+    BaseIdleMushroomPlayScreen screen;
     BaseConstruction construction;
     GridPosition position;
     Label constructionNameLabel;
@@ -34,22 +34,18 @@ public class WorldEmptyDetailNode extends BaseCellDetailNodeVM {
 
 
     public WorldEmptyDetailNode(
-            BaseDemoPlayScreen parent
+            BaseIdleMushroomPlayScreen parent
             ) {
         super();
-        final PlayScreenLayoutConst playScreenLayoutConst = parent.getLayoutConst();
         this.screen = parent;
 
-        int CHILD_WIDTH = playScreenLayoutConst.CONSTRUCION_CHILD_WIDTH;
-        int CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_BUTTON_HEIGHT;
-        int NAME_CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_NAME_HEIGHT;
 
         this.constructionNameLabel = new Label("", parent.getGame().getMainSkin());
         constructionNameLabel.setWrap(true);
 
         // ------ this ------
-        this.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
         this.setBackground(DrawableFactory.createBorderBoard(30, 10, 0.8f, 1));
+        this.pad(screen.getLayoutConst().WorldConstructionCellTablePad);
     }
 
 
@@ -104,6 +100,12 @@ public class WorldEmptyDetailNode extends BaseCellDetailNodeVM {
         this.construction = construction;
         this.position = position;
 
+        this.clearChildren();
+        final PlayScreenLayoutConst playScreenLayoutConst = screen.getLayoutConst();
+        int CHILD_WIDTH = playScreenLayoutConst.CONSTRUCION_CHILD_WIDTH;
+        int CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_BUTTON_HEIGHT;
+        int NAME_CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_NAME_HEIGHT;
+        this.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
         construction.getExistenceComponent().getBuyCandidateConfigs().forEach(constructionBuyCandidateConfig -> {
             WorldBuyConstructionInfoNodeVM vm = new WorldBuyConstructionInfoNodeVM(
                     screen,
@@ -119,14 +121,14 @@ public class WorldEmptyDetailNode extends BaseCellDetailNodeVM {
     }
 
     public static class WorldBuyConstructionInfoNodeVM extends Table {
-        BaseDemoPlayScreen parent;
+        BaseIdleMushroomPlayScreen parent;
         BaseConstruction model;
         Label constructionNameLabel;
         TextButton buyButton;
         ConstructionBuyCandidateConfig constructionBuyCandidateConfig;
 
         public WorldBuyConstructionInfoNodeVM(
-                BaseDemoPlayScreen parent,
+                BaseIdleMushroomPlayScreen parent,
                 BaseConstruction model,
                 ConstructionBuyCandidateConfig constructionBuyCandidateConfig
         ) {

@@ -6,12 +6,13 @@ import hundun.gdxgame.idledemo.logic.DemoScreenId;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.achievement.AllAchievementBoardVM;
+import hundun.gdxgame.idledemo.ui.shared.BaseIdleMushroomScreen;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementStateChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
 import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementState;
 
-public class DemoAchievementScreen extends BaseIdleScreen<IdleMushroomGame, RootSaveData> implements IAchievementStateChangeListener {
+public class DemoAchievementScreen extends BaseIdleMushroomScreen implements IAchievementStateChangeListener {
 
     AllAchievementBoardVM<IdleMushroomGame, RootSaveData> allAchievementBoardVM;
 

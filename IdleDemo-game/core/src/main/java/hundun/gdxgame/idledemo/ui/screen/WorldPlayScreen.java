@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.logic.DemoScreenId;
 import hundun.gdxgame.idledemo.logic.ResourceType;
+import hundun.gdxgame.idledemo.ui.shared.BaseDemoPlayScreen;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
 import hundun.gdxgame.idledemo.ui.world.HexAreaVM;
 import hundun.gdxgame.idledemo.ui.world.WorldCellDetailBoardVM;

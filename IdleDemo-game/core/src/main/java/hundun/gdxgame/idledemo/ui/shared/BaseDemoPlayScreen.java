@@ -1,12 +1,16 @@
-package hundun.gdxgame.idledemo.ui.screen;
+package hundun.gdxgame.idledemo.ui.shared;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.main.FirstRunningAchievementBoardVM;
+import hundun.gdxgame.idledemo.ui.screen.DemoScreenContext;
+import hundun.gdxgame.idledemo.ui.shared.BaseIdleDemoScreen;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
 import hundun.gdxgame.idledemo.ui.achievement.AchievementPopupBoard;
+import hundun.gdxgame.idleshare.core.starter.ui.component.StarterStorageInfoBoard;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementStateChangeListener;
@@ -16,7 +20,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManag
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseDemoPlayScreen extends BaseIdleScreen<DemoIdleGame, RootSaveData>
+public abstract class BaseDemoPlayScreen extends BaseIdleDemoScreen
         implements IGameAreaChangeListener, IAchievementBoardCallback, IAchievementStateChangeListener
 {
 

@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.idledemo.ui.screen.BaseDemoPlayScreen;
+import hundun.gdxgame.idledemo.ui.shared.BaseIdleMushroomPlayScreen;
 import hundun.gdxgame.idledemo.ui.screen.WorldPlayScreen;
 import hundun.gdxgame.idledemo.ui.shared.BaseCellDetailNodeVM;
 import hundun.gdxgame.idledemo.ui.shared.ConstructionDetailPartVM;
@@ -24,7 +24,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
  * Created on 2021/11/05
  */
 public class WorldMushroomDetailNode extends BaseCellDetailNodeVM {
-    BaseDemoPlayScreen parent;
+    BaseIdleMushroomPlayScreen parent;
     BaseConstruction model;
     Label constructionNameLabel;
 
@@ -33,7 +33,6 @@ public class WorldMushroomDetailNode extends BaseCellDetailNodeVM {
     Label positionLabel;
 
     TextButton upgradeButton;
-    TextButton transformButton;
 
 
     Table leftPart;
@@ -75,15 +74,6 @@ public class WorldMushroomDetailNode extends BaseCellDetailNodeVM {
         this.proficiencyLabel = new Label("", parent.getGame().getMainSkin());
         this.positionLabel = new Label("", parent.getGame().getMainSkin());
 
-        this.transformButton = new TextButton("-", parent.getGame().getMainSkin());
-        transformButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                parent.getGame().getFrontend().log(this.getClass().getSimpleName(), "transformButton clicked");
-                model.getUpgradeComponent().doTransform();
-            }
-        });
-
         Container<?> questionMarkArea = new Container<>(new Image(parent.getGame().getIdleMushroomTextureManager().getQuestionMarkTexture()));
         questionMarkArea.setBackground(parent.getGame().getIdleMushroomTextureManager().getDefaultBoardNinePatchDrawable());
         questionMarkArea.setTouchable(Touchable.enabled);
@@ -91,16 +81,17 @@ public class WorldMushroomDetailNode extends BaseCellDetailNodeVM {
 
         // ------ leftPart ------
         leftPart.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT);
-        leftPart.add(questionMarkArea);
+        leftPart.add(questionMarkArea).size(parent.getLayoutConst().questionMarkAreaSize, parent.getLayoutConst().questionMarkAreaSize);
         leftPart.row();
-        leftPart.add(workingLevelLabel).size(CHILD_WIDTH, CHILD_HEIGHT);
-        leftPart.add(upgradeButton).size(CHILD_WIDTH, CHILD_HEIGHT);
+        leftPart.add(workingLevelLabel).colspan(2).size(CHILD_WIDTH, CHILD_HEIGHT);
         leftPart.row();
-        leftPart.add(proficiencyLabel).size(CHILD_WIDTH, CHILD_HEIGHT).row();
-        leftPart.add(transformButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
-        leftPart.setBackground(DrawableFactory.createBorderBoard(30, 10, 0.8f, 1));
+        leftPart.add(upgradeButton).colspan(2).size(CHILD_WIDTH, CHILD_HEIGHT);
+        leftPart.row();
+        leftPart.add(proficiencyLabel).colspan(2).size(CHILD_WIDTH, CHILD_HEIGHT);
+        leftPart.row();
 
-        this.add(leftPart);
+        this.setBackground(DrawableFactory.createBorderBoard(30, 10, 0.8f, 1));
+        this.add(leftPart).padRight(20);
         this.add(rightPart);
     }
 
@@ -142,16 +133,7 @@ public class WorldMushroomDetailNode extends BaseCellDetailNodeVM {
             upgradeButton.setDisabled(true);
             upgradeButton.getLabel().setColor(Color.RED);
         }
-        if (model.getUpgradeComponent().canTransfer())
-        {
-            transformButton.setDisabled(false);
-            transformButton.getLabel().setColor(Color.WHITE);
-        }
-        else
-        {
-            transformButton.setDisabled(true);
-            transformButton.getLabel().setColor(Color.RED);
-        }
+
 
         // ------ update model ------
         //model.onLogicFrame();

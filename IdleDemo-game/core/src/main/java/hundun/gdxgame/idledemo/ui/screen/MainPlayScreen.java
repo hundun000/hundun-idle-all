@@ -6,9 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.logic.DemoScreenId;
-import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.main.MainScreenConstructionControlBoard;
+import hundun.gdxgame.idledemo.ui.shared.BaseDemoPlayScreen;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
 import hundun.gdxgame.idledemo.ui.main.GameEntityFactory;
 import hundun.gdxgame.idleshare.core.framework.model.manager.GameEntityManager;
@@ -64,7 +64,6 @@ public class MainPlayScreen extends BaseDemoPlayScreen
         gameImageDrawer.lazyInit(gameEntityFactory, gameEntityManager);
 
         logicFrameListeners.add(constructionControlBoard);
-        storageInfoTable.lazyInit(ResourceType.VALUES_FOR_SHOW_ORDER);
 
         gameAreaChangeListeners.add(constructionControlBoard);
 

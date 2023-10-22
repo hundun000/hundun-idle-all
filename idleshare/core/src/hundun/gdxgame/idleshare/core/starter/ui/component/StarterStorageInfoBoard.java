@@ -2,13 +2,11 @@ package hundun.gdxgame.idleshare.core.starter.ui.component;
 
 import java.util.*;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.util.Utils;
@@ -17,7 +15,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.util.Utils;
  * @author hundun
  * Created on 2021/11/05
  */
-public class StorageInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table implements IOneFrameResourceChangeListener {
+public class StarterStorageInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table implements IOneFrameResourceChangeListener {
 
     private static int NODE_HEIGHT = 25;
     private static int NODE_WIDTH = 120;
@@ -38,7 +36,7 @@ public class StorageInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> exten
     //Label mainLabel;
 
 
-    public StorageInfoBoard(BaseIdleScreen<T_GAME, T_SAVE> parent) {
+    public StarterStorageInfoBoard(BaseIdleScreen<T_GAME, T_SAVE> parent) {
         this.parent = parent;
         this.setBackground(DrawableFactory.createBorderBoard(
                 25,

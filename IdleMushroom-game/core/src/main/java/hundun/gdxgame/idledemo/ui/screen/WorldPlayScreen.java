@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import hundun.gdxgame.idledemo.IdleMushroomGame;
 import hundun.gdxgame.idledemo.logic.DemoScreenId;
 import hundun.gdxgame.idledemo.logic.ResourceType;
+import hundun.gdxgame.idledemo.ui.shared.BaseIdleMushroomPlayScreen;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
 import hundun.gdxgame.idledemo.ui.world.HexAreaVM;
 import hundun.gdxgame.idledemo.ui.world.WorldDetailBoardVM;
@@ -27,7 +28,7 @@ import java.util.List;
  * @author hundun
  * Created on 2021/11/02
  */
-public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstructionCollectionListener, ISecondaryInfoBoardCallback<BaseConstruction> {
+public class WorldPlayScreen extends BaseIdleMushroomPlayScreen implements IConstructionCollectionListener, ISecondaryInfoBoardCallback<BaseConstruction> {
 
     HexAreaVM hexAreaVM;
     protected OrthographicCamera deskCamera;

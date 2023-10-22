@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Null;
 import hundun.gdxgame.idledemo.IdleMushroomGame;
-import hundun.gdxgame.idledemo.ui.screen.BaseDemoPlayScreen;
 import hundun.gdxgame.idleshare.core.starter.ui.component.ResourceAmountPairNode;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.UpgradeComponent.UpgradeState;
@@ -19,10 +18,10 @@ import java.util.List;
 
 public class ConstructionDetailPartVM extends Table {
 
-    BaseDemoPlayScreen parent;
+    BaseIdleMushroomPlayScreen parent;
     BaseConstruction model;
 
-    public ConstructionDetailPartVM(BaseDemoPlayScreen parent) {
+    public ConstructionDetailPartVM(BaseIdleMushroomPlayScreen parent) {
         //super("GUIDE_TEXT", parent.game.getButtonSkin());
         this.parent = parent;
         //this.setBounds(5, GameAreaControlBoard.Y, GameAreaControlBoard.X - 10, 120);
@@ -63,11 +62,11 @@ public class ConstructionDetailPartVM extends Table {
         }
     }
 
-    public static void resourcePackAsActor(ResourcePack pack, Table target, BaseDemoPlayScreen parent) {
+    public static void resourcePackAsActor(ResourcePack pack, Table target, BaseIdleMushroomPlayScreen parent) {
         resourcePackAsActor(pack, target, parent, false);
     }
 
-    public static void resourcePackAsActor(ResourcePack pack, Table target, BaseDemoPlayScreen parent, boolean isPreviewNextLevel) {
+    public static void resourcePackAsActor(ResourcePack pack, Table target, BaseIdleMushroomPlayScreen parent, boolean isPreviewNextLevel) {
         if (pack != null) {
             List<ResourcePair> targetValue = isPreviewNextLevel ? pack.getPreviewNextLevelModifiedValues() : pack.getModifiedValues();
             if (targetValue != null) {

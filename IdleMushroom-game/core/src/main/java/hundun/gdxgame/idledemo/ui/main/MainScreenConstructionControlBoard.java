@@ -14,11 +14,9 @@ import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idledemo.logic.DemoConstructionPrototypeId;
-import hundun.gdxgame.idledemo.ui.screen.BaseDemoPlayScreen;
 import hundun.gdxgame.idledemo.ui.screen.MainPlayScreen;
 import hundun.gdxgame.idledemo.ui.shared.BaseCellDetailNodeVM;
 import hundun.gdxgame.idledemo.ui.shared.ConstructionDetailPartVM;
-import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.StarterConstructionControlNode;
 import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.StarterConstructionControlNode.StarterSecondaryInfoBoardCallerClickListener;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollectionListener;
@@ -51,6 +49,7 @@ public class MainScreenConstructionControlBoard extends Table
 
 
         this.setBackground(parent.getLayoutConst().simpleBoardBackground);
+        this.pad(30);
 
         if (parent.getGame().debugMode) {
             this.debugCell();
@@ -81,10 +80,10 @@ public class MainScreenConstructionControlBoard extends Table
 
 
         this.sellerPart = new SellerPart(parent, callback);
-        this.add(sellerPart).spaceRight(10).expand();
+        this.add(sellerPart).spaceRight(10).grow();
 
         this.epochPart = new EpochPart(parent, callback);
-        this.add(epochPart).spaceRight(10).expand();
+        this.add(epochPart).spaceRight(10).grow();
 
         BaseConstruction sellerConstruction = singletonConstructions.stream()
                 .filter(it -> it.getPrototypeId().equals(DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER))
@@ -154,12 +153,12 @@ public class MainScreenConstructionControlBoard extends Table
             questionMarkArea.addListener(new StarterSecondaryInfoBoardCallerClickListener(() -> model, parent));
 
             // ------ this ------
-            leftPart.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
-            leftPart.add(questionMarkArea).height(CHILD_HEIGHT).row();
-            leftPart.add(upgradeButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
-            leftPart.add(workingLevelLabel).size(CHILD_WIDTH, CHILD_HEIGHT).row();
+            leftPart.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT);
+            leftPart.add(questionMarkArea).size(parent.getLayoutConst().questionMarkAreaSize, parent.getLayoutConst().questionMarkAreaSize).row();
+            leftPart.add(upgradeButton).size(CHILD_WIDTH, CHILD_HEIGHT).colspan(2).row();
+            leftPart.add(workingLevelLabel).size(CHILD_WIDTH, CHILD_HEIGHT).colspan(2).row();
 
-            this.add(leftPart);
+            this.add(leftPart).padRight(20);
             this.add(epochDetailPart);
 
             this.setBackground(DrawableFactory.createBorderBoard(30, 10, 0.8f, 1));
@@ -291,16 +290,16 @@ public class MainScreenConstructionControlBoard extends Table
             questionMarkArea.addListener(new StarterSecondaryInfoBoardCallerClickListener(() -> model, parent));
 
             // ------ this ------
-            leftPart.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
-            leftPart.add(questionMarkArea).height(CHILD_HEIGHT).row();
-            leftPart.add(upgradeButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
-            leftPart.add(workingLevelLabel).size(CHILD_WIDTH, CHILD_HEIGHT).row();
-            leftPart.add(changeWorkingLevelGroup).size(CHILD_WIDTH, CHILD_HEIGHT).row();
+            leftPart.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT);
+            leftPart.add(questionMarkArea).size(parent.getLayoutConst().questionMarkAreaSize, parent.getLayoutConst().questionMarkAreaSize).row();
+            leftPart.add(upgradeButton).size(CHILD_WIDTH, CHILD_HEIGHT).colspan(2).row();
+            leftPart.add(workingLevelLabel).size(CHILD_WIDTH, CHILD_HEIGHT).colspan(2).row();
+            leftPart.add(changeWorkingLevelGroup).size(CHILD_WIDTH, CHILD_HEIGHT).colspan(2).row();
 
-            this.add(leftPart);
+            this.add(leftPart).padRight(20);;
             this.add(detailGroup);
 
-            this.setBackground(DrawableFactory.createBorderBoard(30, 10, 0.8f, 1));
+            this.setBackground(parent.getGame().getIdleMushroomTextureManager().getTableType3Drawable());
         }
 
         private void update() {

@@ -10,7 +10,7 @@ import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.starter.ui.component.BackgroundImageBox;
 import hundun.gdxgame.idleshare.core.starter.ui.component.GameAreaControlBoard;
-import hundun.gdxgame.idleshare.core.starter.ui.component.StorageInfoBoard;
+import hundun.gdxgame.idleshare.core.starter.ui.component.StarterStorageInfoBoard;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,15 +34,7 @@ public abstract class BaseIdleScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
     protected boolean hidden;
     // ====== need child lazy-init start ======
 
-    protected StorageInfoBoard<T_GAME, T_SAVE> storageInfoTable;
 
-    protected BackgroundImageBox<T_GAME, T_SAVE> backgroundImageBox;
-    protected GameAreaControlBoard<T_GAME, T_SAVE> gameAreaControlBoard;
-
-    protected Table leftSideGroup;
-    protected Table middleGroup;
-
-    protected static int UI_ROOT_TABLE_COLSPAN_SIZE = 3;
     // ----- not ui ------
 
 
@@ -84,50 +76,13 @@ public abstract class BaseIdleScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
 
 
 
-    protected void lazyInitLogicContext() {
-        logicFrameListeners.add(game.getIdleGameplayExport());
-
-        gameAreaChangeListeners.add(backgroundImageBox);
-        gameAreaChangeListeners.add(gameAreaControlBoard);
-
-        gameAreaControlBoard.lazyInit(game.getControlBoardScreenIds());
-
-        this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(this);
-        this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(storageInfoTable);
-    }
+    protected abstract void lazyInitLogicContext();
     
 
 
-    protected void lazyInitUiRootContext() {
-        
-        storageInfoTable = new StorageInfoBoard<>(this);
-        uiRootTable.add(storageInfoTable)
-                .height(layoutConst.STORAGE_BOARD_BORDER_HEIGHT)
-                .fill()
-                .colspan(UI_ROOT_TABLE_COLSPAN_SIZE)
-                .row();
+    protected abstract void lazyInitUiRootContext();
 
-        leftSideGroup = new Table();
-        uiRootTable.add(leftSideGroup)
-                .growY();
-
-        middleGroup = new Table();
-        uiRootTable.add(middleGroup).grow();
-
-        gameAreaControlBoard = new GameAreaControlBoard<>(this);
-        gameAreaControlBoard.top();
-        uiRootTable.add(gameAreaControlBoard)
-                .growY()
-                .row();
-
-    }
-
-    protected void lazyInitBackUiAndPopupUiContent() {
-        
-        this.backgroundImageBox = new BackgroundImageBox<>(this);
-        backUiStage.addActor(backgroundImageBox);
-
-    }
+    protected abstract void lazyInitBackUiAndPopupUiContent();
 
 
 

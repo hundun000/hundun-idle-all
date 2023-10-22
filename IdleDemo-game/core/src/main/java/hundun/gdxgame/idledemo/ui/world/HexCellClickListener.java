@@ -3,7 +3,7 @@ package hundun.gdxgame.idledemo.ui.world;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import hundun.gdxgame.idledemo.DemoIdleGame;
-import hundun.gdxgame.idledemo.ui.screen.BaseDemoPlayScreen;
+import hundun.gdxgame.idledemo.ui.shared.BaseDemoPlayScreen;
 
 
 

@@ -1,9 +1,7 @@
 package hundun.gdxgame.idledemo.ui.shared;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
-import hundun.gdxgame.idledemo.ui.screen.BaseDemoPlayScreen;
 
 import java.util.ArrayList;
 import java.util.List;

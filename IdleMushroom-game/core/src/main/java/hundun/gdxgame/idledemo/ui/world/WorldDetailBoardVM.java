@@ -75,16 +75,19 @@ public class WorldDetailBoardVM extends Table implements IConstructionCollection
         this.clearChildren();
 
         content.updateForNewConstruction(construction, construction.getSaveData().getPosition());
-        this.add(content);
+        this.add(content)
+/*                .width(screen.getLayoutConst().WorldConstructionCellDetailNodeWidth)
+                .height(screen.getLayoutConst().WorldConstructionCellDetailNodeHeight)*/
+        ;
 
-        TextButton textButton = new TextButton("clear", screen.getGame().getMainSkin());
+/*        TextButton textButton = new TextButton("clear", screen.getGame().getMainSkin());
         textButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 screen.onCellClicked(null);
             }
         });
-        this.add(textButton);
+        this.add(textButton);*/
     }
     private void updateAsEmpty()
     {
