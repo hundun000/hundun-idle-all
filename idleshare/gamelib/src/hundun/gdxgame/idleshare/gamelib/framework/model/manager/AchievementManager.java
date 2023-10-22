@@ -28,7 +28,7 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
     @Getter
     public static class AchievementInfoPackage
     {
-        AbstractAchievement firstRunningAchievement;
+        AchievementAndStatus firstRunningAchievement;
         int total;
         int completedSize;
         int lockedSize;
@@ -70,9 +70,8 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
                 .map(it -> it.getAchievement())
                 .collect(Collectors.toList());
                 ;
-        AbstractAchievement firstRunningAchievement = models.values().stream()
+        AchievementAndStatus firstRunningAchievement = models.values().stream()
                 .filter(it -> it.getSaveData().getState() == AchievementState.RUNNING)
-                .map(it -> it.getAchievement())
                 .findFirst()
                 .orElse(null);
 
@@ -130,15 +129,17 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
             boolean completed = achievementAndStatus.getAchievement().checkComplete();
             if (completed) {
                 achievementAndStatus.getSaveData().setState(AchievementState.COMPLETED);
-                if (achievementAndStatus.getAchievement().getNextAchievementId() != null) {
-                    AchievementAndStatus nextAchievementAndStatus = models.get(achievementAndStatus.getAchievement().getNextAchievementId());
-                    if (nextAchievementAndStatus.getSaveData().getState() == AchievementState.LOCKED) {
-                        nextAchievementAndStatus.getSaveData().setState(AchievementState.RUNNING);
-                        gameContext.getEventManager().notifyAchievementComplete(
-                                nextAchievementAndStatus.getAchievement(),
-                                nextAchievementAndStatus.getSaveData().getState()
-                        );
-                    }
+                if (achievementAndStatus.getAchievement().getNextAchievementIds() != null) {
+                    achievementAndStatus.getAchievement().getNextAchievementIds().forEach(nextAchievementId -> {
+                        AchievementAndStatus nextAchievementAndStatus = models.get(nextAchievementId);
+                        if (nextAchievementAndStatus.getSaveData().getState() == AchievementState.LOCKED) {
+                            nextAchievementAndStatus.getSaveData().setState(AchievementState.RUNNING);
+                            gameContext.getEventManager().notifyAchievementComplete(
+                                    nextAchievementAndStatus.getAchievement(),
+                                    nextAchievementAndStatus.getSaveData().getState()
+                            );
+                        }
+                    });
                 }
                 gameContext.getEventManager().notifyAchievementComplete(
                         achievementAndStatus.getAchievement(),

@@ -3,7 +3,7 @@ package hundun.gdxgame.idledemo.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-import hundun.gdxgame.idledemo.IdleMushroomGame;
+import hundun.gdxgame.idlemushroom.IdleMushroomGame;
 
 
 

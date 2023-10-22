@@ -63,8 +63,7 @@ public abstract class BaseIdleScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
         lazyInitLogicContext();
 
         if (game.debugMode) {
-            uiRootTable.debugCell();
-            popupRootTable.debugCell();
+            uiRootTable.debugAll();
             popupRootTable.debugCell();
         }
     }

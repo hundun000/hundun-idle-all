@@ -66,9 +66,6 @@ public class GameAreaControlBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> e
         }
 
         rebuildChild(null);
-        if (parent.getGame().debugMode) {
-            this.debugAll();
-        }
         
     }
 

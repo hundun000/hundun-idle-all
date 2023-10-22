@@ -2,7 +2,6 @@ package hundun.gdxgame.idleshare.gamelib.framework.model.achievement;
 
 import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,7 +20,7 @@ public abstract class AbstractAchievement {
     protected String description;
     protected String congratulationText;
     protected List<ResourcePair> awardResourceMap;
-    protected String nextAchievementId;
+    protected List<String> nextAchievementIds;
 
     public abstract boolean checkComplete();
 
@@ -31,14 +30,14 @@ public abstract class AbstractAchievement {
             String description,
             String congratulationText,
             List<ResourcePair> awardResourceMap,
-            String nextAchievementId
+            List<String> nextAchievementIds
     ) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.congratulationText = congratulationText;
         this.awardResourceMap = awardResourceMap;
-        this.nextAchievementId = nextAchievementId;
+        this.nextAchievementIds = nextAchievementIds;
     }
 
     public void lazyInitDescription(IdleGameplayContext gameplayContext)

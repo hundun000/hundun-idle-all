@@ -9,19 +9,19 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class OwnConstructionAchievement extends AbstractAchievement {
-    public Map<String, Entry<Integer, Integer>> requireds;
+    public Map<String, Entry<Integer, Integer>> requirementMap;
 
 
     public OwnConstructionAchievement(
             String id, String name, String description, String congratulationText,
-            Map<String, Entry<Integer, Integer>> requireds,
+            Map<String, Entry<Integer, Integer>> requirementMap,
             List<ResourcePair> awardResourceMap,
-            String nextAchievementId
+            List<String> nextAchievementId
     )
 
     {
         super(id, name, description, congratulationText, awardResourceMap, nextAchievementId);
-        this.requireds = requireds;
+        this.requirementMap = requirementMap;
     }
 
     @Override
@@ -29,7 +29,7 @@ public class OwnConstructionAchievement extends AbstractAchievement {
     {
         List<BaseConstruction> allConstructions = gameplayContext.getConstructionManager().getAllConstructionInstances();
 
-        for (Entry<String, Entry<Integer, Integer>> requiredEntry : requireds.entrySet())
+        for (Entry<String, Entry<Integer, Integer>> requiredEntry : requirementMap.entrySet())
         {
             int requiredAmount = requiredEntry.getValue().getKey();
             int requiredLevel = requiredEntry.getValue().getValue();
@@ -56,7 +56,7 @@ public class OwnConstructionAchievement extends AbstractAchievement {
                 String id,
                 Map<String, List<String>> textMap,
                 Map<String, Entry<Integer, Integer>> requireds,
-                String nextAchievementId,
+                List<String> nextAchievementId,
                 ResourcePair... awardResourceMap
         )
         {
