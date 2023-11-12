@@ -1,7 +1,7 @@
 package hundun.gdxgame.idlemushroom.logic.prototype;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.idlemushroom.logic.DemoConstructionPrototypeId;
+import hundun.gdxgame.idlemushroom.logic.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.logic.DemoBuiltinConstructionsLoader;
 import hundun.gdxgame.idlemushroom.logic.ResourceType;
 import hundun.gdxgame.idlemushroom.logic.construction.BaseIdleDemoConstruction;
@@ -41,7 +41,7 @@ public class AutoSellerPrototype extends AbstractConstructionPrototype {
 
     public AutoSellerPrototype(Language language) {
         super(
-                DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER,
+                IdleMushroomConstructionPrototypeId.MUSHROOM_AUTO_SELLER,
                 language
         );
         switch (language)
@@ -71,11 +71,11 @@ public class AutoSellerPrototype extends AbstractConstructionPrototype {
                 ResourceType.MUSHROOM, 1
         )));
         construction.getOutputComponent().setOutputGainPack(DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
-                ResourceType.DNA_POINT, 5
+                ResourceType.DNA_POINT, 2
         )));
 
         construction.getUpgradeComponent().setUpgradeCostPack(DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
-                ResourceType.DNA_POINT, 50
+                ResourceType.MUSHROOM, 50
         )));
         construction.getLevelComponent().setTypeWorkingLevelChangeable(true);
 

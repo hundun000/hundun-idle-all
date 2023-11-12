@@ -97,7 +97,7 @@ public class WorldPlayScreen extends BaseIdleMushroomPlayScreen implements ICons
         List<BaseConstruction> constructions = game.getIdleGameplayExport().getGameplayContext().getConstructionManager()
                 .getWorldConstructionInstances();
         hexAreaVM.updateUIForShow(constructions);
-        worldDetailBoardVM.selectCell(null);
+        onCellClicked(null);
     }
 
     @Override

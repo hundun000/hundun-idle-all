@@ -11,10 +11,10 @@ public class DescriptionPackageFactory {
 
     public static ILevelDescriptionProvider NO_LEVEL_IMP = (level, workingLevel, reachMaxLevel) -> "";
     public static ILevelDescriptionProvider ONLY_LEVEL_IMP = (level, workingLevel, reachMaxLevel) -> {
-        return "lv." + level;
+        return "lv." + level + (reachMaxLevel ? "(max)" : "");
     };
     public static ILevelDescriptionProvider WORKING_LEVEL_IMP = (level, workingLevel, reachMaxLevel) -> {
-        return "lv." + workingLevel + "/" + level + (reachMaxLevel ? "(max)" : "");
+        return "lv." + level + (reachMaxLevel ? "(max)" : "") + "  active: " + workingLevel;
     };
     public static ILevelDescriptionProvider LOCK_IMP = (level, workingLevel, reachMaxLevel) -> {
         return (reachMaxLevel ? "Unlocked" : "");

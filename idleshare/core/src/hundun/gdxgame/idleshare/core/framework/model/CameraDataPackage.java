@@ -9,6 +9,14 @@ public class CameraDataPackage {
     private float currentCameraX;
     @Getter
     private float currentCameraY;
+    @Setter
+    private Float boundLeft;
+    @Setter
+    private Float boundRight;
+    @Setter
+    private Float boundUp;
+    @Setter
+    private Float boundDown;
     @Getter
     private float currentCameraZoomWeight;
     @Getter
@@ -27,12 +35,28 @@ public class CameraDataPackage {
 
 
     public void modifyCurrentCamera(Float deltaX, Float deltaY) {
+        float totalDeltaX = 0;
+        float totalDeltaY = 0;
         if (deltaX != null) {
-            currentCameraX += deltaX;
+            totalDeltaX += deltaX;
         }
         if (deltaY != null) {
-            currentCameraY += deltaY;
+            totalDeltaY += deltaY;
         }
+        if (boundLeft != null && currentCameraX + totalDeltaX < boundLeft) {
+            totalDeltaX = 0;
+        }
+        if (boundRight != null && currentCameraX + totalDeltaX > boundRight) {
+            totalDeltaX = 0;
+        }
+        if (boundDown != null && currentCameraY + totalDeltaY < boundDown) {
+            totalDeltaY = 0;
+        }
+        if (boundUp != null && currentCameraY + totalDeltaY > boundUp) {
+            totalDeltaY = 0;
+        }
+        currentCameraX += totalDeltaX;
+        currentCameraY += totalDeltaY;
     }
 
     public void modifyCurrentCameraZoomWeight(Float delta) {

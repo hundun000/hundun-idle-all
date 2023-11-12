@@ -43,7 +43,7 @@ public class AllAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> 
         nodes.clear();
         childTable.clearChildren();
 
-        parent.getGame().getIdleGameplayExport().getGameplayContext().getAchievementManager().getModels().values()
+        parent.getGame().getIdleGameplayExport().getGameplayContext().getAchievementManager().getAchievementInfoPackage().getSortedAchievementList()
                 .forEach(it -> {
                     OneAchievementNodeVM<T_GAME, T_SAVE> constructionView = new OneAchievementNodeVM<>(parent, it);
                     nodes.add(constructionView);

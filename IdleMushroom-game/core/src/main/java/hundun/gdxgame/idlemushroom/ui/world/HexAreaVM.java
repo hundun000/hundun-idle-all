@@ -21,8 +21,8 @@ import java.util.Map;
 
 
 public class HexAreaVM extends Table {
-    public static final int roomWidth = 5000;
-    public static final int roomHeight = 5000;
+    public static final int roomWidth = 1000;
+    public static final int roomHeight = 1000;
 
     public WorldPlayScreen screen;
     @Getter

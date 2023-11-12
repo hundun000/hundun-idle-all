@@ -8,6 +8,7 @@ import hundun.gdxgame.idlemushroom.logic.DemoScreenId;
 import hundun.gdxgame.idlemushroom.logic.RootSaveData;
 import hundun.gdxgame.idleshare.core.framework.model.manager.AbstractIdleScreenContext;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
+import lombok.Getter;
 
 /**
  * @author hundun
@@ -16,6 +17,7 @@ import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutCons
 public class IdleMushroomScreenContext extends AbstractIdleScreenContext<IdleMushroomGame, RootSaveData> {
 
     DemoMenuScreen menuScreen;
+    @Getter
     MainPlayScreen mainPlayScreen;
     WorldPlayScreen worldPlayScreen;
     DemoAchievementScreen achievementScreen;

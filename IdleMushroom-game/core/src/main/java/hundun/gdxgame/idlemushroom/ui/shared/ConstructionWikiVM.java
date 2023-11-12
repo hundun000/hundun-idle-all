@@ -16,7 +16,8 @@ public class ConstructionWikiVM extends Table {
         //super("GUIDE_TEXT", parent.game.getButtonSkin());
         this.parent = parent;
         this.label = new Label("", parent.getGame().getMainSkin());
-        this.add(label);
+        label.setWrap(true);
+        this.add(label).grow();
     }
 
 

@@ -125,10 +125,12 @@ public class HexCellVM extends Table {
         } else {
             this.hightLightImage.setDrawable(null);
         }
-        this.mainLabel.setText(String.format(
-                "(%s, %s)",
-                deskData.getSaveData().getPosition().getX(),
-                deskData.getSaveData().getPosition().getY()
-        ) );
+        if (game.debugMode) {
+            this.mainLabel.setText(String.format(
+                    "(%s, %s)",
+                    deskData.getSaveData().getPosition().getX(),
+                    deskData.getSaveData().getPosition().getY()
+            ) );
+        }
     }
 }

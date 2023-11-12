@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author hundun
  * Created on 2021/11/29
@@ -35,6 +37,8 @@ public class DescriptionPackage {
     ILevelDescriptionProvider levelDescriptionProvider;
 
     private IProficiencyDescroptionProvider proficiencyDescriptionProvider;
+
+    List<String> extraTexts;
 
     public static interface ILevelDescriptionProvider {
         String provide(int level, int workingLevel, boolean reachMaxLevel);

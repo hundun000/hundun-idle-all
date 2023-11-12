@@ -26,7 +26,10 @@ public class IdleMushroomGame extends BaseIdleGame<RootSaveData> {
     protected AbstractIdleScreenContext<IdleMushroomGame, RootSaveData> screenContext;
 
     @Getter
-    protected IdleMushroomTextureManager idleMushroomTextureManager;
+    private final IdleMushroomTextureManager idleMushroomTextureManager;
+    private final IdleMushroomScreenContext idleMushroomScreenContext;
+    @Getter
+    private final IdleMushroomGameDictionary idleMushroomGameDictionary;
 
     public static Map<Integer, RootEpochConfig> epochConfigMap;
     static {
@@ -37,34 +40,34 @@ public class IdleMushroomGame extends BaseIdleGame<RootSaveData> {
                 2, RootEpochConfig.builder()
                         .maxLevel(10)
                         .constructionEpochConfigMap(JavaFeatureForGwt.mapOf(
-                                DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER,
+                                IdleMushroomConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER,
                                 ConstructionEpochConfig.builder()
-                                        .transformToPrototypeId(DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER)
+                                        .transformToPrototypeId(null)
                                         .build(),
-                                DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL,
+                                IdleMushroomConstructionPrototypeId.EPOCH_1_EMPTY_CELL,
                                 ConstructionEpochConfig.builder()
-                                        .transformToPrototypeId(DemoConstructionPrototypeId.EPOCH_2_EMPTY_CELL)
+                                        .transformToPrototypeId(IdleMushroomConstructionPrototypeId.EPOCH_2_EMPTY_CELL)
                                         .build(),
-                                DemoConstructionPrototypeId.EPOCH_1_TREE,
+                                IdleMushroomConstructionPrototypeId.EPOCH_1_TREE,
                                 ConstructionEpochConfig.builder()
-                                        .transformToPrototypeId(DemoConstructionPrototypeId.EPOCH_2_TREE)
+                                        .transformToPrototypeId(IdleMushroomConstructionPrototypeId.EPOCH_2_TREE)
                                         .build()
                         ))
                         .build(),
                 3, RootEpochConfig.builder()
                         .maxLevel(15)
                         .constructionEpochConfigMap(JavaFeatureForGwt.mapOf(
-                                DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER,
+                                IdleMushroomConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER,
                                 ConstructionEpochConfig.builder()
-                                        .transformToPrototypeId(DemoConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER)
+                                        .transformToPrototypeId(null)
                                         .build(),
-                                DemoConstructionPrototypeId.EPOCH_2_EMPTY_CELL,
+                                IdleMushroomConstructionPrototypeId.EPOCH_2_EMPTY_CELL,
                                 ConstructionEpochConfig.builder()
-                                        .transformToPrototypeId(DemoConstructionPrototypeId.EPOCH_3_EMPTY_CELL)
+                                        .transformToPrototypeId(IdleMushroomConstructionPrototypeId.EPOCH_3_EMPTY_CELL)
                                         .build(),
-                                DemoConstructionPrototypeId.EPOCH_2_TREE,
+                                IdleMushroomConstructionPrototypeId.EPOCH_2_TREE,
                                 ConstructionEpochConfig.builder()
-                                        .transformToPrototypeId(DemoConstructionPrototypeId.EPOCH_3_TREE)
+                                        .transformToPrototypeId(IdleMushroomConstructionPrototypeId.EPOCH_3_TREE)
                                         .build()
                         ))
                         .build()
@@ -74,7 +77,7 @@ public class IdleMushroomGame extends BaseIdleGame<RootSaveData> {
 
     public IdleMushroomGame(ISaveTool<RootSaveData> saveTool) {
         super(960, 640);
-        this.debugMode = true;
+        this.debugMode = false;
         
         this.sharedViewport = new ScreenViewport();
         this.textFormatTool = new TextFormatTool();
@@ -82,10 +85,11 @@ public class IdleMushroomGame extends BaseIdleGame<RootSaveData> {
         this.mainSkinFilePath = null;
         this.idleMushroomTextureManager = new IdleMushroomTextureManager();
         this.textureManager = this.idleMushroomTextureManager;
-        this.screenContext = new IdleMushroomScreenContext(this);
+        this.idleMushroomScreenContext = new IdleMushroomScreenContext(this);
+        this.screenContext = idleMushroomScreenContext;
         this.audioPlayManager = new AudioPlayManager(this);
         this.childGameConfig = new IdleMushroomChildGameConfig();
-
+        this.idleMushroomGameDictionary = new IdleMushroomGameDictionary();
         this.controlBoardScreenIds = JavaFeatureForGwt.listOf(
                 DemoScreenId.SCREEN_MAIN,
                 DemoScreenId.SCREEN_WORLD,
@@ -101,7 +105,7 @@ public class IdleMushroomGame extends BaseIdleGame<RootSaveData> {
         this.mainSkin = new FreeTypeSkin(Gdx.files.internal("skins/IdleMushroom/IdleMushroom.json"));
         this.idleGameplayExport = new IdleGameplayExport(
                 frontend,
-                new DemoGameDictionary(),
+                idleMushroomGameDictionary,
                 new DemoBuiltinConstructionsLoader(),
                 new DemoAchievementLoader(),
                 BaseIdleScreen.LOGIC_FRAME_PER_SECOND,
@@ -146,14 +150,16 @@ public class IdleMushroomGame extends BaseIdleGame<RootSaveData> {
     public void doChangeEpoch(BaseConstruction epochCounter) {
         int currentEpochLevel = epochCounter.getSaveData().getLevel();
         RootEpochConfig rootEpochConfig = epochConfigMap.get(currentEpochLevel);
-
+        idleMushroomScreenContext.getMainPlayScreen().setMainClickerWithScale();
         idleGameplayExport.getGameplayContext().getConstructionManager().getWorldConstructionInstances().stream()
                 .forEach(it -> {
                     ConstructionEpochConfig constructionEpochConfig = rootEpochConfig.getConstructionEpochConfigMap()
                             .get(it.getPrototypeId());
                     if (constructionEpochConfig != null) {
                         idleGameplayExport.getGameplayContext().getConstructionManager().addToRemoveQueue(it);
-                        idleGameplayExport.getGameplayContext().getConstructionManager().addToCreateQueue(constructionEpochConfig.getTransformToPrototypeId(), it.getPosition());
+                        if (constructionEpochConfig.getTransformToPrototypeId() != null) {
+                            idleGameplayExport.getGameplayContext().getConstructionManager().addToCreateQueue(constructionEpochConfig.getTransformToPrototypeId(), it.getPosition());
+                        }
                     }
                 });
 

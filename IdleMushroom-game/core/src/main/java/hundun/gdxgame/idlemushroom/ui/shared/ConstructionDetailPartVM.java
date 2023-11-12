@@ -50,8 +50,9 @@ public class ConstructionDetailPartVM extends Table {
 
         if (model.getUpgradeComponent().getUpgradeState() == UpgradeState.HAS_NEXT_UPGRADE) {
             resourcePackAsActor(model.getUpgradeComponent().getUpgradeCostPack(), this, parent);
-        } else if (model.getUpgradeComponent().getUpgradeState() == UpgradeState.REACHED_MAX_UPGRADE_HAS_TRANSFER) {
-            this.add(wapperContainer(new Label(model.getUpgradeComponent().getUpgradeCostPack().getDescriptionStart(), parent.getGame().getMainSkin())));
+        } else if (model.getUpgradeComponent().getUpgradeState() == UpgradeState.REACHED_MAX_UPGRADE_HAS_TRANSFER
+            || model.getUpgradeComponent().getUpgradeState() == UpgradeState.REACHED_MAX_UPGRADE_NO_TRANSFER
+        ) {
             this.add(wapperContainer(new Label(model.getDescriptionPackage().getUpgradeMaxLevelDescription(), parent.getGame().getMainSkin())));
             this.row();
         }
@@ -69,7 +70,7 @@ public class ConstructionDetailPartVM extends Table {
     public static void resourcePackAsActor(ResourcePack pack, Table target, BaseIdleMushroomPlayScreen parent, boolean isPreviewNextLevel) {
         if (pack != null) {
             List<ResourcePair> targetValue = isPreviewNextLevel ? pack.getPreviewNextLevelModifiedValues() : pack.getModifiedValues();
-            if (targetValue != null) {
+            if (targetValue != null && !targetValue.isEmpty()) {
                 List<Actor> pairsToActors = pairsToActors(targetValue, parent.getGame());
                 target.add(wapperContainer(new Label(pack.getDescriptionStart(), parent.getGame().getMainSkin())));
                 for (Actor actor : pairsToActors) {

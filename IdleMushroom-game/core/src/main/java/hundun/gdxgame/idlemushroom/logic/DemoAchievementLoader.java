@@ -50,7 +50,7 @@ public class DemoAchievementLoader implements IBuiltinAchievementsLoader {
                 MushroomAchievementId.STEP_1,
                 textMap,
                 JavaFeatureForGwt.mapOf(
-                        DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER, new SimpleEntry<>(1, 2)
+                        IdleMushroomConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER, new SimpleEntry<>(1, 2)
                 ),
                 JavaFeatureForGwt.listOf(MushroomAchievementId.STEP_2, MushroomAchievementId.STEP_3, MushroomAchievementId.STEP_4),
                 new ResourcePair(ResourceType.DNA_POINT, 1000L)
@@ -60,7 +60,7 @@ public class DemoAchievementLoader implements IBuiltinAchievementsLoader {
                 MushroomAchievementId.STEP_2,
                 textMap,
                 JavaFeatureForGwt.mapOf(
-                        DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER, new SimpleEntry<>(1, 2)
+                        IdleMushroomConstructionPrototypeId.MUSHROOM_AUTO_SELLER, new SimpleEntry<>(1, 2)
                 ),
                 null,
                 new ResourcePair(ResourceType.DNA_POINT, 1000L)
@@ -70,7 +70,7 @@ public class DemoAchievementLoader implements IBuiltinAchievementsLoader {
                 MushroomAchievementId.STEP_3,
                 textMap,
                 JavaFeatureForGwt.mapOf(
-                        DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER, new SimpleEntry<>(1, 2)
+                        IdleMushroomConstructionPrototypeId.MUSHROOM_AUTO_SELLER, new SimpleEntry<>(1, 2)
                 ),
                 null,
                 new ResourcePair(ResourceType.DNA_POINT, 1000L)
@@ -80,7 +80,7 @@ public class DemoAchievementLoader implements IBuiltinAchievementsLoader {
                 MushroomAchievementId.STEP_4,
                 textMap,
                 JavaFeatureForGwt.mapOf(
-                        DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER, new SimpleEntry<>(1, 2)
+                        IdleMushroomConstructionPrototypeId.MUSHROOM_AUTO_SELLER, new SimpleEntry<>(1, 2)
                 ),
                 null,
                 new ResourcePair(ResourceType.DNA_POINT, 1000L)

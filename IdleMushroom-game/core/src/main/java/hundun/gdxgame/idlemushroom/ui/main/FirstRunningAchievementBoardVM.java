@@ -37,7 +37,7 @@ public class FirstRunningAchievementBoardVM extends Table {
 
 
         this.node = new OneAchievementNodeVM(parent, null, false);
-        this.add(node);
+        this.add(node).grow();
         updateData();
     }
 

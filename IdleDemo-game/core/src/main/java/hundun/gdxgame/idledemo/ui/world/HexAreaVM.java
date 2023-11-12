@@ -40,7 +40,6 @@ public class HexAreaVM extends Table {
         this.screen = screen;
         this.cameraDataPackage = new CameraDataPackage();
         this.cameraDataPackage.setCameraZoomWeightOnlyAllowForceSet(true);
-
         if (screen.getGame().debugMode) {
             this.debugAll();
         }

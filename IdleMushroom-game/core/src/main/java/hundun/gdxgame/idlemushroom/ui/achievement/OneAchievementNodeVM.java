@@ -83,10 +83,12 @@ public class OneAchievementNodeVM extends Table {
         {
             nameValueLabel.setText(achievementAndStatus.getAchievement().getName());
             descriptionLabel.setText(achievementAndStatus.getAchievement().getDescription());
-            countValueLabel.setText(JavaFeatureForGwt.stringFormat(
-                    "state：%s",
-                    achievementAndStatus.getSaveData().getState()
-            ));
+            countValueLabel.setText(
+                    parent.getGame().getIdleMushroomGameDictionary().achievementStatus(
+                            parent.getGame().getIdleGameplayExport().getLanguage(),
+                            achievementAndStatus.getSaveData().getState()
+                    )
+            );
         }
         else
         {

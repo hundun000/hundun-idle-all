@@ -4,6 +4,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
+import hundun.gdxgame.idlemushroom.logic.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.logic.DemoScreenId;
 import hundun.gdxgame.idlemushroom.logic.ResourceType;
 import hundun.gdxgame.idlemushroom.logic.RootSaveData;
@@ -41,7 +42,7 @@ public class MainPlayScreen extends BaseIdleMushroomPlayScreen
                 this,
                 game.getTextureManager().getMainClickAnimationTextureAtlas()
         );
-        middleGroup.add(mainClickerAnimationVM);
+        setMainClickerWithScale();
 
         constructionControlBoard = new MainScreenConstructionControlBoard(this, this);
         uiRootTable.add(constructionControlBoard)
@@ -49,6 +50,30 @@ public class MainPlayScreen extends BaseIdleMushroomPlayScreen
                 .fill()
                 .colspan(UI_ROOT_TABLE_COLSPAN_SIZE)
         ;
+    }
+
+    public void setMainClickerWithScale() {
+        BaseConstruction epochCounterConstruction = game.getIdleGameplayExport().getGameplayContext()
+                .getConstructionManager()
+                .getSingletonConstructionInstancesOrEmpty()
+                .stream()
+                .filter(it -> it.getPrototypeId().equals(IdleMushroomConstructionPrototypeId.EPOCH_COUNTER))
+                .findAny()
+                .orElse(null);
+        BaseConstruction mainClickerConstruction = game.getIdleGameplayExport().getGameplayContext().getConstructionManager()
+                .getSingletonConstructionInstancesOrEmpty()
+                .stream()
+                .filter(it -> it.getPrototypeId().equals(IdleMushroomConstructionPrototypeId.MAIN_MUSHROOM))
+                .findAny()
+                .orElse(null);
+        if (epochCounterConstruction != null && mainClickerConstruction != null) {
+            int currentEpochLevel = epochCounterConstruction.getSaveData().getLevel();
+            middleGroup.clearChildren();
+            middleGroup.add(mainClickerAnimationVM).size(64 * currentEpochLevel, 64 * currentEpochLevel);
+            while (mainClickerConstruction.getSaveData().getLevel() < currentEpochLevel) {
+                mainClickerConstruction.getUpgradeComponent().doUpgrade();
+            }
+        }
     }
 
     protected void lazyInitLogicContext() {

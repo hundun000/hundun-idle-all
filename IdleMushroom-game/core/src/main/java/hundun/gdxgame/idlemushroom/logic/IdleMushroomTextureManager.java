@@ -68,8 +68,8 @@ public class IdleMushroomTextureManager extends AbstractTextureManager {
         defaultBoardNinePatchDrawable = quickTableNinePatchDrawable(defaultBoardNinePatchTexture);
 
         {
-            Texture texture = new Texture(Gdx.files.internal("mainCokie.png"));
-             mainClickAnimationTextureAtlas = TextureRegion.split(texture, 256, 256);
+            Texture texture = new Texture(Gdx.files.internal("main.png"));
+            mainClickAnimationTextureAtlas = TextureRegion.split(texture, 128, 128);
         }
         defaultBoardNinePatchEdgeSize = 4;
         defaultBoardNinePatchMiddle = new TextureRegion(
@@ -111,11 +111,11 @@ public class IdleMushroomTextureManager extends AbstractTextureManager {
             //gameAreaRightPartRegionMap.put(GameArea.AREA_WIN, regions[2][1]);
         }
         {
-            Texture texture = new Texture(Gdx.files.internal("areas.png"));
-            TextureRegion[][] regions = TextureRegion.split(texture, 640, 480);
-            defaultAreaBack = regions[0][0];
-            gameAreaBackMap.put(DemoScreenId.SCREEN_MAIN, regions[0][1]);
-            gameAreaBackMap.put(DemoScreenId.SCREEN_WORLD, regions[0][2]);
+            Texture texture = new Texture(Gdx.files.internal("bg_shroom.png"));
+            //TextureRegion[][] regions = TextureRegion.split(texture, 640, 480);
+            defaultAreaBack = new TextureRegion(texture);
+            gameAreaBackMap.put(DemoScreenId.SCREEN_MAIN, defaultAreaBack);
+            gameAreaBackMap.put(DemoScreenId.SCREEN_WORLD, defaultAreaBack);
             //gameAreaBackMap.put(GameArea.AREA_WIN, regions[0][3]);
         }
         {
@@ -123,15 +123,15 @@ public class IdleMushroomTextureManager extends AbstractTextureManager {
             TextureRegion[][] regions = TextureRegion.split(texture, 32, 48);
             constructionHexHighLightImage1 = regions[0][0];
             constructionHexHighLightImage2 = regions[0][1];
-            constructionHexImageMap.put(DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL, regions[0][2]);
-            constructionHexImageMap.put(DemoConstructionPrototypeId.EPOCH_2_EMPTY_CELL, regions[0][2]);
-            constructionHexImageMap.put(DemoConstructionPrototypeId.EPOCH_3_EMPTY_CELL, regions[0][3]);
-            constructionHexImageMap.put(DemoConstructionPrototypeId.EPOCH_1_TREE, regions[0][4]);
-            constructionHexImageMap.put(DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER, regions[0][5]);
-            constructionHexImageMap.put(DemoConstructionPrototypeId.EPOCH_2_TREE, regions[0][6]);
-            constructionHexImageMap.put(DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER, regions[0][7]);
-            constructionHexImageMap.put(DemoConstructionPrototypeId.EPOCH_3_TREE, regions[0][8]);
-            constructionHexImageMap.put(DemoConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER, regions[0][9]);
+            constructionHexImageMap.put(IdleMushroomConstructionPrototypeId.EPOCH_1_EMPTY_CELL, regions[0][2]);
+            constructionHexImageMap.put(IdleMushroomConstructionPrototypeId.EPOCH_2_EMPTY_CELL, regions[0][2]);
+            constructionHexImageMap.put(IdleMushroomConstructionPrototypeId.EPOCH_3_EMPTY_CELL, regions[0][3]);
+            constructionHexImageMap.put(IdleMushroomConstructionPrototypeId.EPOCH_1_TREE, regions[0][4]);
+            constructionHexImageMap.put(IdleMushroomConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER, regions[0][5]);
+            constructionHexImageMap.put(IdleMushroomConstructionPrototypeId.EPOCH_2_TREE, regions[0][6]);
+            constructionHexImageMap.put(IdleMushroomConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER, regions[0][7]);
+            constructionHexImageMap.put(IdleMushroomConstructionPrototypeId.EPOCH_3_TREE, regions[0][8]);
+            constructionHexImageMap.put(IdleMushroomConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER, regions[0][9]);
             //gameAreaBackMap.put(GameArea.AREA_WIN, regions[0][3]);
         }
     }

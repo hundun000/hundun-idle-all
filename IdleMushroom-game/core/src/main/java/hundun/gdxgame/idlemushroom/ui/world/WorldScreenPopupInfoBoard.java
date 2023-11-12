@@ -15,7 +15,7 @@ public class WorldScreenPopupInfoBoard extends Table {
         this.parent = parent;
         //this.setBounds(5, GameAreaControlBoard.Y, GameAreaControlBoard.X - 10, 120);
         this.setTouchable(Touchable.disabled);
-        this.setBackground(parent.getLayoutConst().simpleBoardBackground);
+        this.setBackground(parent.getGame().getIdleMushroomTextureManager().getTableType1Drawable());
         this.setVisible(false);
 
         this.constructionWikiVM = new ConstructionWikiVM(parent);

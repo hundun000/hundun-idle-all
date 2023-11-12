@@ -9,17 +9,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
-import hundun.gdxgame.idlemushroom.logic.DemoConstructionPrototypeId;
+import hundun.gdxgame.idlemushroom.logic.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushroomPlayScreenLayoutConst;
 import hundun.gdxgame.idlemushroom.ui.screen.MainPlayScreen;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseCellDetailNodeVM;
 import hundun.gdxgame.idlemushroom.ui.shared.ConstructionDetailPartVM;
 import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.StarterConstructionControlNode.StarterSecondaryInfoBoardCallerClickListener;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollectionListener;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
@@ -87,13 +85,13 @@ public class MainScreenConstructionControlBoard extends Table
         this.add(epochPart).spaceRight(10).grow();
 
         BaseConstruction sellerConstruction = singletonConstructions.stream()
-                .filter(it -> it.getPrototypeId().equals(DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER))
+                .filter(it -> it.getPrototypeId().equals(IdleMushroomConstructionPrototypeId.MUSHROOM_AUTO_SELLER))
                 .findAny()
                 .orElse(null);
         this.sellerPart.updateForNewConstruction(sellerConstruction, null);
 
         BaseConstruction epochConstruction = singletonConstructions.stream()
-                .filter(it -> it.getPrototypeId().equals(DemoConstructionPrototypeId.EPOCH_COUNTER))
+                .filter(it -> it.getPrototypeId().equals(IdleMushroomConstructionPrototypeId.EPOCH_COUNTER))
                 .findAny()
                 .orElse(null);
         this.epochPart.updateForNewConstruction(epochConstruction, null);
@@ -327,6 +325,11 @@ public class MainScreenConstructionControlBoard extends Table
 
             if (model.getUpgradeComponent().getUpgradeState() == UpgradeState.HAS_NEXT_UPGRADE) {
                 ConstructionDetailPartVM.resourcePackAsActor(model.getUpgradeComponent().getUpgradeCostPack(), detailGroup, parent);
+            } else if (model.getUpgradeComponent().getUpgradeState() == UpgradeState.REACHED_MAX_UPGRADE_NO_TRANSFER
+                || model.getUpgradeComponent().getUpgradeState() == UpgradeState.REACHED_MAX_UPGRADE_HAS_TRANSFER
+            ) {
+                detailGroup.add(new Label(model.getDescriptionPackage().getUpgradeMaxLevelDescription(), parent.getGame().getMainSkin()))
+                        .colspan(2);
             }
 
             // ------ update text ------
@@ -335,7 +338,7 @@ public class MainScreenConstructionControlBoard extends Table
                     model.getName()
             ));
             upgradeButton.setText(model.getDescriptionPackage().getUpgradeButtonText());
-            workingLevelLabel.setText(model.getLevelComponent().getWorkingLevelDescription() + "; max: " + model.getLevelComponent().maxLevel);
+            workingLevelLabel.setText(model.getLevelComponent().getWorkingLevelDescription());
 
 
             // ------ update clickable-state ------

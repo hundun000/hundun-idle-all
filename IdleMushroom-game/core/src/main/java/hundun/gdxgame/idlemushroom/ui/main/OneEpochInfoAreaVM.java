@@ -3,23 +3,24 @@ package hundun.gdxgame.idlemushroom.ui.main;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Null;
-import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame.RootEpochConfig;
+import hundun.gdxgame.idlemushroom.logic.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushroomPlayScreenLayoutConst;
 import hundun.gdxgame.idlemushroom.ui.screen.MainPlayScreen;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
+import hundun.gdxgame.idlemushroom.ui.shared.ConstructionDetailPartVM;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
 public class OneEpochInfoAreaVM extends Table {
 
     MainPlayScreen parent;
     BaseConstruction epochCounterConstruction;
+    BaseConstruction mainClickerConstruction;
     @Null
     RootEpochConfig epochConfig;
     int epochLevel;
     Label epochInfoLabel;
     Label maxLevelLabel;
-
+    Table mainClickerPart;
 
     public OneEpochInfoAreaVM(
             MainPlayScreen parent
@@ -39,12 +40,14 @@ public class OneEpochInfoAreaVM extends Table {
         epochInfoLabel.setAlignment(Align.center);
         this.maxLevelLabel = new Label("", parent.getGame().getMainSkin());
         maxLevelLabel.setAlignment(Align.center);
+        this.mainClickerPart = new Table(parent.getGame().getMainSkin());
 
         // ------ this ------
         this.add(epochInfoLabel).row();
         this.add(maxLevelLabel).row();
+        this.add(mainClickerPart).row();
 
-        this.setBackground(DrawableFactory.createBorderBoard(30, 10, 0.8f, 1));
+        this.setBackground(parent.getGame().getIdleMushroomTextureManager().getTableType3Drawable());
     }
 
     private void update() {
@@ -63,11 +66,13 @@ public class OneEpochInfoAreaVM extends Table {
 
 
         // ------ update text ------
+        mainClickerPart.clearChildren();
         if (epochConfig != null) {
             epochInfoLabel.setText("时期：" + epochLevel);
             maxLevelLabel.setText("蘑菇等级上限：" + epochConfig.getMaxLevel());
+            ConstructionDetailPartVM.resourcePackAsActor(mainClickerConstruction.getOutputComponent().getOutputGainPack(), mainClickerPart, parent);
         } else {
-            epochInfoLabel.setText("时期：max");
+            epochInfoLabel.setText("");
             maxLevelLabel.setText("");
         }
 
@@ -75,8 +80,18 @@ public class OneEpochInfoAreaVM extends Table {
     }
 
 
-    public void updateAsConstruction(@Null RootEpochConfig epochConfig, BaseConstruction epochCounterConstruction, int epochLevel) {
+    public void updateAsConstruction(
+            @Null RootEpochConfig epochConfig,
+            BaseConstruction epochCounterConstruction,
+            int epochLevel
+    ) {
         this.epochCounterConstruction = epochCounterConstruction;
+        this.mainClickerConstruction = parent.getGame().getIdleGameplayExport().getGameplayContext().getConstructionManager()
+                .getSingletonConstructionInstancesOrEmpty()
+                .stream()
+                .filter(it -> it.getPrototypeId().equals(IdleMushroomConstructionPrototypeId.MAIN_MUSHROOM))
+                .findAny()
+                .orElse(null);
         this.epochConfig = epochConfig;
         this.epochLevel = epochLevel;
         update();

@@ -2,7 +2,7 @@ package hundun.gdxgame.idlemushroom.logic.prototype;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame.RootEpochConfig;
-import hundun.gdxgame.idlemushroom.logic.DemoConstructionPrototypeId;
+import hundun.gdxgame.idlemushroom.logic.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.logic.DemoBuiltinConstructionsLoader;
 import hundun.gdxgame.idlemushroom.logic.ResourceType;
 import hundun.gdxgame.idlemushroom.logic.construction.BaseIdleDemoConstruction;
@@ -10,6 +10,7 @@ import hundun.gdxgame.idlemushroom.logic.construction.DemoSimpleAutoOutputCompon
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackage;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackage.IProficiencyDescroptionProvider;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackageFactory;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.starter.BaseAutoProficiencyComponent;
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
@@ -19,6 +20,14 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class AutoProviderPrototype extends AbstractConstructionPrototype {
+
+    public static IProficiencyDescroptionProvider CN_PROFICIENCY_IMP = (proficiency, reachMaxProficiency) -> {
+        return "成长度：" + proficiency;
+    };
+
+    public static IProficiencyDescroptionProvider EN_PROFICIENCY_IMP = (proficiency, reachMaxProficiency) -> {
+        return "Growth: " + proficiency;
+    };
     public static DescriptionPackage descriptionPackageEN = DescriptionPackage.builder()
             .upgradeButtonText("Upgrade")
             .outputCostDescriptionStart("Consume")
@@ -26,18 +35,18 @@ public class AutoProviderPrototype extends AbstractConstructionPrototype {
             .upgradeCostDescriptionStart("Upgrade cost")
             .upgradeMaxLevelDescription("(max)")
             .levelDescriptionProvider(DescriptionPackageFactory.ONLY_LEVEL_IMP)
-            .proficiencyDescriptionProvider(DescriptionPackageFactory.EN_PROFICIENCY_IMP)
+            .proficiencyDescriptionProvider(AutoProviderPrototype.EN_PROFICIENCY_IMP)
             .build();
 
 
     public static DescriptionPackage descriptionPackageCN = DescriptionPackage.builder()
             .upgradeButtonText("升级")
-            .outputCostDescriptionStart("自动消耗")
-            .outputGainDescriptionStart("自动产出")
+            .outputCostDescriptionStart("消耗")
+            .outputGainDescriptionStart("产出")
             .upgradeCostDescriptionStart("升级费用")
             .upgradeMaxLevelDescription("(已达到最大等级)")
             .levelDescriptionProvider(DescriptionPackageFactory.ONLY_LEVEL_IMP)
-            .proficiencyDescriptionProvider(DescriptionPackageFactory.CN_PROFICIENCY_IMP)
+            .proficiencyDescriptionProvider(AutoProviderPrototype.CN_PROFICIENCY_IMP)
             .build();
 
 
@@ -91,7 +100,7 @@ public class AutoProviderPrototype extends AbstractConstructionPrototype {
         public AutoProviderProficiencyComponent(
                 BaseConstruction construction
         ) {
-            super(construction, 1, 0);
+            super(construction, 1, 100);
         }
 
         @Override
@@ -100,8 +109,8 @@ public class AutoProviderPrototype extends AbstractConstructionPrototype {
                     .map(it -> (BaseConstruction)it)
                     .filter(it -> it != null
                                     && (
-                                    it.getSaveData().prototypeId.equals(DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER)
-                                            || it.getSaveData().prototypeId.equals(DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER)
+                                    it.getSaveData().prototypeId.equals(IdleMushroomConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER)
+                                            || it.getSaveData().prototypeId.equals(IdleMushroomConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER)
                             )
                     )
                     .count();

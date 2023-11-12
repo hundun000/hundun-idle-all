@@ -115,17 +115,6 @@ public class DemoGameDictionary implements IGameDictionary {
         }
     }
 
-    @Override
-    public List<String> getPlayScreenTexts(Language language)
-    {
-        switch (language)
-        {
-            case CN:
-                return JavaFeatureForGwt.arraysAsList("购买", "购买费用");
-            default:
-                return JavaFeatureForGwt.arraysAsList("Build", "Build cost");
-        }
-    }
 
     @Override
     public List<String> getStageSelectMaskBoardTexts(Language language)

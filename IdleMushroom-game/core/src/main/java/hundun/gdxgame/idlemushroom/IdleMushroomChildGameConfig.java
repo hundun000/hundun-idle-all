@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.idlemushroom.logic.DemoConstructionPrototypeId;
+import hundun.gdxgame.idlemushroom.logic.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.logic.DemoScreenId;
 import hundun.gdxgame.idlemushroom.logic.ResourceType;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
@@ -19,21 +19,22 @@ public class IdleMushroomChildGameConfig extends ChildGameConfig {
 
         this.setConstructionConfig(
                 ConstructionConfig.builder()
-                        .mainClickerConstructionPrototypeId(DemoConstructionPrototypeId.MAIN_MUSHROOM)
+                        .mainClickerConstructionPrototypeId(IdleMushroomConstructionPrototypeId.MAIN_MUSHROOM)
                         .singletonPrototypeIds(JavaFeatureForGwt.listOf(
-                                DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER,
-                                DemoConstructionPrototypeId.EPOCH_COUNTER
+                                IdleMushroomConstructionPrototypeId.MAIN_MUSHROOM,
+                                IdleMushroomConstructionPrototypeId.MUSHROOM_AUTO_SELLER,
+                                IdleMushroomConstructionPrototypeId.EPOCH_COUNTER
                         ))
                         .worldPrototypeIds(JavaFeatureForGwt.listOf(
-                                DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL,
-                                DemoConstructionPrototypeId.EPOCH_2_EMPTY_CELL,
-                                DemoConstructionPrototypeId.EPOCH_3_EMPTY_CELL,
-                                DemoConstructionPrototypeId.EPOCH_1_TREE,
-                                DemoConstructionPrototypeId.EPOCH_2_TREE,
-                                DemoConstructionPrototypeId.EPOCH_3_TREE,
-                                DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER,
-                                DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER,
-                                DemoConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER
+                                IdleMushroomConstructionPrototypeId.EPOCH_1_EMPTY_CELL,
+                                IdleMushroomConstructionPrototypeId.EPOCH_2_EMPTY_CELL,
+                                IdleMushroomConstructionPrototypeId.EPOCH_3_EMPTY_CELL,
+                                IdleMushroomConstructionPrototypeId.EPOCH_1_TREE,
+                                IdleMushroomConstructionPrototypeId.EPOCH_2_TREE,
+                                IdleMushroomConstructionPrototypeId.EPOCH_3_TREE,
+                                IdleMushroomConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER,
+                                IdleMushroomConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER,
+                                IdleMushroomConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER
                         ))
                         .build()
         );

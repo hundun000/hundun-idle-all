@@ -46,7 +46,7 @@ public class ExistenceComponent {
         }
         if (buyCandidateConfigs != null)
         {
-            buyCandidateConfigs.forEach(it -> it.getBuyCostPack().setDescriptionStart(gameContext.getGameDictionary().getPlayScreenTexts(language).get(1)));
+            buyCandidateConfigs.forEach(it -> it.getBuyCostPack().setDescriptionStart(construction.getDescriptionPackage().getTransformCostDescriptionStart()));
         }
     }
 

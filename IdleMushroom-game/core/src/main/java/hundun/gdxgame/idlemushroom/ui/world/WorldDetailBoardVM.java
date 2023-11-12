@@ -3,7 +3,7 @@ package hundun.gdxgame.idlemushroom.ui.world;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
-import hundun.gdxgame.idlemushroom.logic.DemoConstructionPrototypeId;
+import hundun.gdxgame.idlemushroom.logic.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.ui.screen.WorldPlayScreen;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseCellDetailNodeVM;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollectionListener;
@@ -45,23 +45,23 @@ public class WorldDetailBoardVM extends Table implements IConstructionCollection
 
         switch (construction.getPrototypeId())
         {
-            case DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL:
-            case DemoConstructionPrototypeId.EPOCH_2_EMPTY_CELL:
-            case DemoConstructionPrototypeId.EPOCH_3_EMPTY_CELL: {
+            case IdleMushroomConstructionPrototypeId.EPOCH_1_EMPTY_CELL:
+            case IdleMushroomConstructionPrototypeId.EPOCH_2_EMPTY_CELL:
+            case IdleMushroomConstructionPrototypeId.EPOCH_3_EMPTY_CELL: {
                 WorldEmptyDetailNode innerBoardVM = new WorldEmptyDetailNode(screen);
                 content = innerBoardVM;
                 break;
             }
-            case DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER:
-            case DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER:
-            case DemoConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER: {
+            case IdleMushroomConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER:
+            case IdleMushroomConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER:
+            case IdleMushroomConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER: {
                 WorldMushroomDetailNode innerBoardVM = new WorldMushroomDetailNode(screen);
                 content = innerBoardVM;
                 break;
             }
-            case DemoConstructionPrototypeId.EPOCH_1_TREE:
-            case DemoConstructionPrototypeId.EPOCH_2_TREE:
-            case DemoConstructionPrototypeId.EPOCH_3_TREE: {
+            case IdleMushroomConstructionPrototypeId.EPOCH_1_TREE:
+            case IdleMushroomConstructionPrototypeId.EPOCH_2_TREE:
+            case IdleMushroomConstructionPrototypeId.EPOCH_3_TREE: {
                 WorldTreeDetailNode innerBoardVM = new WorldTreeDetailNode(screen);
                 content = innerBoardVM;
                 break;

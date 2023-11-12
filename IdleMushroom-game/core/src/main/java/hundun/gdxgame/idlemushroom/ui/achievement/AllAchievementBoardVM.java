@@ -43,7 +43,7 @@ public class AllAchievementBoardVM extends Table {
         nodes.clear();
         childTable.clearChildren();
 
-        parent.getGame().getIdleGameplayExport().getGameplayContext().getAchievementManager().getModels().values()
+        parent.getGame().getIdleGameplayExport().getGameplayContext().getAchievementManager().getAchievementInfoPackage().getSortedAchievementList()
                 .forEach(it -> {
                     OneAchievementNodeVM constructionView = new OneAchievementNodeVM(parent, it, true);
                     nodes.add(constructionView);

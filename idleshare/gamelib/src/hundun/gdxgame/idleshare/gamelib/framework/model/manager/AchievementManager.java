@@ -18,7 +18,6 @@ import lombok.*;
 public class AchievementManager implements IBuffChangeListener, IOneFrameResourceChangeListener, IGameStartListener {
     IdleGameplayContext gameContext;
 
-    @Getter
     Map<String, AchievementAndStatus> models = new HashMap<>();
 
 
@@ -32,7 +31,7 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
         int total;
         int completedSize;
         int lockedSize;
-        List<AbstractAchievement> allAchievementList;
+        List<AchievementAndStatus> sortedAchievementList;
     }
 
     @Data
@@ -52,8 +51,8 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
     }
 
     public enum AchievementState {
-        LOCKED,
         RUNNING,
+        LOCKED,
         COMPLETED,
         ;
 
@@ -66,8 +65,8 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
 
     public AchievementInfoPackage getAchievementInfoPackage()
     {
-        List<AbstractAchievement> allAchievementList = models.values().stream()
-                .map(it -> it.getAchievement())
+        List<AchievementAndStatus> allAchievementList = models.values().stream()
+                .sorted((o1, o2) -> -1 * Integer.compare(o2.getSaveData().getState().ordinal(), o1.getSaveData().getState().ordinal()))
                 .collect(Collectors.toList());
                 ;
         AchievementAndStatus firstRunningAchievement = models.values().stream()

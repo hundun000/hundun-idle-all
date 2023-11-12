@@ -22,15 +22,17 @@ public class TwoEpochInfoAreaVM extends Table {
         //this.setBounds(5, GameAreaControlBoard.Y, GameAreaControlBoard.X - 10, 120);
 
         this.titleLabel = new Label("", parent.getGame().getMainSkin());
-        this.add(titleLabel).colspan(3).row();
+        titleLabel.setWrap(true);
+        this.add(titleLabel).grow().colspan(3).row();
 
 
         this.currentLevelInfoAreaVM = new OneEpochInfoAreaVM(parent);
         this.add(currentLevelInfoAreaVM);
         this.midPart = new VerticalGroup();
-        this.add(midPart).padLeft(50).padRight(50);
+        this.add(midPart).padLeft(25).padRight(25);
         this.nextLevelInfoAreaVM = new OneEpochInfoAreaVM(parent);
         this.add(nextLevelInfoAreaVM);
+        this.pad(parent.getIdleMushroomPlayScreenLayoutConst().WorldConstructionCellTablePad);
     }
 
     public void rebuildCells(BaseConstruction epochCounterConstruction) {

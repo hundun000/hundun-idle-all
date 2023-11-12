@@ -23,48 +23,48 @@ public class DemoBuiltinConstructionsLoader implements IBuiltinConstructionsLoad
         RootEpochConfig epochConfig2 = IdleMushroomGame.epochConfigMap.get(2);
         RootEpochConfig epochConfig3 = IdleMushroomGame.epochConfigMap.get(3);
         Map<String, AbstractConstructionPrototype> result = new HashMap<>();
-        result.put(DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL, new DirtPrototype(
-                DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL,
+        result.put(IdleMushroomConstructionPrototypeId.EPOCH_1_EMPTY_CELL, new DirtPrototype(
+                IdleMushroomConstructionPrototypeId.EPOCH_1_EMPTY_CELL,
                 language
         ));
-        result.put(DemoConstructionPrototypeId.EPOCH_2_EMPTY_CELL, new DirtPrototype(
-                DemoConstructionPrototypeId.EPOCH_2_EMPTY_CELL,
+        result.put(IdleMushroomConstructionPrototypeId.EPOCH_2_EMPTY_CELL, new DirtPrototype(
+                IdleMushroomConstructionPrototypeId.EPOCH_2_EMPTY_CELL,
                 language
         ));
-        result.put(DemoConstructionPrototypeId.EPOCH_3_EMPTY_CELL, new DirtPrototype(
-                DemoConstructionPrototypeId.EPOCH_3_EMPTY_CELL,
+        result.put(IdleMushroomConstructionPrototypeId.EPOCH_3_EMPTY_CELL, new DirtPrototype(
+                IdleMushroomConstructionPrototypeId.EPOCH_3_EMPTY_CELL,
                 language
         ));
-        result.put(DemoConstructionPrototypeId.EPOCH_1_TREE, new TreePrototype(
-                DemoConstructionPrototypeId.EPOCH_1_TREE,
+        result.put(IdleMushroomConstructionPrototypeId.EPOCH_1_TREE, new TreePrototype(
+                IdleMushroomConstructionPrototypeId.EPOCH_1_TREE,
                 language
         ));
-        result.put(DemoConstructionPrototypeId.EPOCH_2_TREE, new TreePrototype(
-                DemoConstructionPrototypeId.EPOCH_2_TREE,
+        result.put(IdleMushroomConstructionPrototypeId.EPOCH_2_TREE, new TreePrototype(
+                IdleMushroomConstructionPrototypeId.EPOCH_2_TREE,
                 language
         ));
-        result.put(DemoConstructionPrototypeId.EPOCH_3_TREE, new TreePrototype(
-                DemoConstructionPrototypeId.EPOCH_3_TREE,
+        result.put(IdleMushroomConstructionPrototypeId.EPOCH_3_TREE, new TreePrototype(
+                IdleMushroomConstructionPrototypeId.EPOCH_3_TREE,
                 language
         ));
-        result.put(DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER, new AutoProviderPrototype(
-                DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER,
+        result.put(IdleMushroomConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER, new AutoProviderPrototype(
+                IdleMushroomConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER,
                 epochConfig1,
                 language
         ));
-        result.put(DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER, new AutoProviderPrototype(
-                DemoConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER,
+        result.put(IdleMushroomConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER, new AutoProviderPrototype(
+                IdleMushroomConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER,
                 epochConfig2,
                 language
         ));
-        result.put(DemoConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER, new AutoProviderPrototype(
-                DemoConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER,
+        result.put(IdleMushroomConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER, new AutoProviderPrototype(
+                IdleMushroomConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER,
                 epochConfig3,
                 language
         ));
-        result.put(DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER, new AutoSellerPrototype(language));
-        result.put(DemoConstructionPrototypeId.MAIN_MUSHROOM, new MainMushroomPrototype(language));
-        result.put(DemoConstructionPrototypeId.EPOCH_COUNTER, new EpochCounterPrototype(language));
+        result.put(IdleMushroomConstructionPrototypeId.MUSHROOM_AUTO_SELLER, new AutoSellerPrototype(language));
+        result.put(IdleMushroomConstructionPrototypeId.MAIN_MUSHROOM, new MainMushroomPrototype(language));
+        result.put(IdleMushroomConstructionPrototypeId.EPOCH_COUNTER, new EpochCounterPrototype(language));
         return result;
     }
     

@@ -2,7 +2,7 @@ package hundun.gdxgame.idlemushroom.logic.prototype;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idlemushroom.logic.DemoBuiltinConstructionsLoader;
-import hundun.gdxgame.idlemushroom.logic.DemoConstructionPrototypeId;
+import hundun.gdxgame.idlemushroom.logic.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.logic.ResourceType;
 import hundun.gdxgame.idlemushroom.logic.construction.BaseIdleDemoConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
@@ -21,7 +21,7 @@ public class EpochCounterPrototype extends AbstractConstructionPrototype {
             .upgradeButtonText("Upgrade")
             .upgradeCostDescriptionStart("Upgrade cost")
             .upgradeMaxLevelDescription("(max)")
-            .levelDescriptionProvider(DescriptionPackageFactory.WORKING_LEVEL_IMP)
+            .levelDescriptionProvider(DescriptionPackageFactory.ONLY_LEVEL_IMP)
             .proficiencyDescriptionProvider(DescriptionPackageFactory.EN_PROFICIENCY_IMP)
             .build();
 
@@ -30,13 +30,13 @@ public class EpochCounterPrototype extends AbstractConstructionPrototype {
             .upgradeButtonText("升级")
             .upgradeCostDescriptionStart("升级费用")
             .upgradeMaxLevelDescription("(已达到最大等级)")
-            .levelDescriptionProvider(DescriptionPackageFactory.CN_WORKING_LEVEL_IMP)
+            .levelDescriptionProvider(DescriptionPackageFactory.ONLY_LEVEL_IMP)
             .proficiencyDescriptionProvider(DescriptionPackageFactory.CN_PROFICIENCY_IMP)
             .build();
 
     public EpochCounterPrototype(Language language) {
         super(
-                DemoConstructionPrototypeId.EPOCH_COUNTER,
+                IdleMushroomConstructionPrototypeId.EPOCH_COUNTER,
                 language
         );
         switch (language)

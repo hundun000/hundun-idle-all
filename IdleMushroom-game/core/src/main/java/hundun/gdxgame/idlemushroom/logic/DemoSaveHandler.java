@@ -32,9 +32,9 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
         GridPosition uselessPosition = new GridPosition(0, 0);
         GridPosition providerPosition = new GridPosition(1, 1);
         List<GridPosition> worldGridPositions = new ArrayList<>();
-        int size = 5;
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+        int size = 6;
+        for (int i = - size / 2 ; i < size / 2; i++) {
+            for (int j = - size / 2; j < size / 2; j++) {
                 GridPosition emptyPosition = new GridPosition(i, j);
                 if (!emptyPosition.equals(providerPosition)) {
                     worldGridPositions.add(emptyPosition);
@@ -42,36 +42,36 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
             }
         }
         map.put(
-                DemoConstructionPrototypeId.MAIN_MUSHROOM + "_" + SINGLETON,
+                IdleMushroomConstructionPrototypeId.MAIN_MUSHROOM + "_" + SINGLETON,
                 ConstructionSaveData.builder()
-                        .prototypeId(DemoConstructionPrototypeId.MAIN_MUSHROOM)
-                        .level(0)
-                        .workingLevel(0)
-                        .position(uselessPosition)
-                        .build()
-        );
-        map.put(
-                DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER + "_" + SINGLETON,
-                ConstructionSaveData.builder()
-                        .prototypeId(DemoConstructionPrototypeId.MUSHROOM_AUTO_SELLER)
-                        .level(1)
-                        .workingLevel(0)
-                        .position(uselessPosition)
-                        .build()
-        );
-        map.put(
-                DemoConstructionPrototypeId.EPOCH_COUNTER + "_" + SINGLETON,
-                ConstructionSaveData.builder()
-                        .prototypeId(DemoConstructionPrototypeId.EPOCH_COUNTER)
+                        .prototypeId(IdleMushroomConstructionPrototypeId.MAIN_MUSHROOM)
                         .level(1)
                         .workingLevel(1)
                         .position(uselessPosition)
                         .build()
         );
         map.put(
-                DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER + "_" + UUID.randomUUID(),
+                IdleMushroomConstructionPrototypeId.MUSHROOM_AUTO_SELLER + "_" + SINGLETON,
                 ConstructionSaveData.builder()
-                        .prototypeId(DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER)
+                        .prototypeId(IdleMushroomConstructionPrototypeId.MUSHROOM_AUTO_SELLER)
+                        .level(1)
+                        .workingLevel(0)
+                        .position(uselessPosition)
+                        .build()
+        );
+        map.put(
+                IdleMushroomConstructionPrototypeId.EPOCH_COUNTER + "_" + SINGLETON,
+                ConstructionSaveData.builder()
+                        .prototypeId(IdleMushroomConstructionPrototypeId.EPOCH_COUNTER)
+                        .level(1)
+                        .workingLevel(1)
+                        .position(uselessPosition)
+                        .build()
+        );
+        map.put(
+                IdleMushroomConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER + "_" + UUID.randomUUID(),
+                ConstructionSaveData.builder()
+                        .prototypeId(IdleMushroomConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER)
                         .level(1)
                         .workingLevel(1)
                         .position(providerPosition)
@@ -83,9 +83,9 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
             double rand = Math.random();
             if (rand > 0.3) {
                 map.put(
-                        DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL + "_" + UUID.randomUUID(),
+                        IdleMushroomConstructionPrototypeId.EPOCH_1_EMPTY_CELL + "_" + UUID.randomUUID(),
                         ConstructionSaveData.builder()
-                                .prototypeId(DemoConstructionPrototypeId.EPOCH_1_EMPTY_CELL)
+                                .prototypeId(IdleMushroomConstructionPrototypeId.EPOCH_1_EMPTY_CELL)
                                 .level(0)
                                 .workingLevel(0)
                                 .position(it)
@@ -93,9 +93,9 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
                 );
             } else {
                 map.put(
-                        DemoConstructionPrototypeId.EPOCH_1_TREE + "_" + UUID.randomUUID(),
+                        IdleMushroomConstructionPrototypeId.EPOCH_1_TREE + "_" + UUID.randomUUID(),
                         ConstructionSaveData.builder()
-                                .prototypeId(DemoConstructionPrototypeId.EPOCH_1_TREE)
+                                .prototypeId(IdleMushroomConstructionPrototypeId.EPOCH_1_TREE)
                                 .level(0)
                                 .workingLevel(0)
                                 .position(it)
@@ -106,8 +106,8 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
         });
 
         Map<String, Long> ownResources = new HashMap<>();
-        ownResources.put(ResourceType.MUSHROOM, 500L);
-        ownResources.put(ResourceType.DNA_POINT, 500L);
+        ownResources.put(ResourceType.MUSHROOM, 5000L);
+        ownResources.put(ResourceType.DNA_POINT, 5000L);
 
         return RootSaveData.builder()
                 .gameplaySave(GameplaySaveData.builder()

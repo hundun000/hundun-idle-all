@@ -16,11 +16,11 @@ public class SimpleAutoOutputComponent extends OutputComponent {
 
     @Override
     public long calculateModifiedOutputGain(long baseValue, int level, int proficiency) {
-        return baseValue;
+        return baseValue * level;
     }
 
     @Override
     public long calculateModifiedOutputCost(long baseValue, int level, int proficiency) {
-        return baseValue;
+        return baseValue * level;
     }
 }

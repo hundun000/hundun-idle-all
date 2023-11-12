@@ -3,7 +3,7 @@ package hundun.gdxgame.idlemushroom.logic;
 
 
 
-public class DemoConstructionPrototypeId {
+public class IdleMushroomConstructionPrototypeId {
 
     public static final String EPOCH_1_MUSHROOM_AUTO_PROVIDER = "ENUM_CSTR@EPOCH_1_MUSHROOM_AUTO_PROVIDER";
     public static final String EPOCH_2_MUSHROOM_AUTO_PROVIDER =  "ENUM_CSTR@EPOCH_2_MUSHROOM_AUTO_PROVIDER";

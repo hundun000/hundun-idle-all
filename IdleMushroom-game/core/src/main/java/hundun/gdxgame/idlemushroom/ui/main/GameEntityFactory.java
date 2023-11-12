@@ -1,6 +1,6 @@
 package hundun.gdxgame.idlemushroom.ui.main;
 
-import hundun.gdxgame.idlemushroom.logic.DemoConstructionPrototypeId;
+import hundun.gdxgame.idlemushroom.logic.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.logic.ResourceType;
 import hundun.gdxgame.idlemushroom.ui.screen.MainPlayScreen;
 import hundun.gdxgame.idleshare.core.framework.model.entity.BaseGameEntityFactory;
@@ -25,7 +25,7 @@ public class GameEntityFactory extends BaseGameEntityFactory {
     
     public GameEntity newConstructionEntity(String id, int index) {
         switch (id) {
-            case DemoConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER:
+            case IdleMushroomConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER:
                 return this.rowStableConstructionEntity(id, index, 1);
             default:
                 // no need GameEntity
