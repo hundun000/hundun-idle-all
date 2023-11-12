@@ -98,7 +98,7 @@ public class IdleMushroomGame extends BaseIdleGame<RootSaveData> {
     @Override
     protected void createStage1() {
         super.createStage1();
-        this.mainSkin = new FreeTypeSkin(Gdx.files.internal("skins/DefaultSkinWithFreeType/DefaultSkinWithFreeType.json"));
+        this.mainSkin = new FreeTypeSkin(Gdx.files.internal("skins/IdleMushroom/IdleMushroom.json"));
         this.idleGameplayExport = new IdleGameplayExport(
                 frontend,
                 new DemoGameDictionary(),

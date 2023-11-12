@@ -34,7 +34,7 @@ public class WorldMushroomDetailNode extends BaseCellDetailNodeVM {
 
     TextButton upgradeButton;
 
-
+    ProgressBar progressBar;
     Table leftPart;
     ConstructionDetailPartVM rightPart;
 
@@ -72,6 +72,8 @@ public class WorldMushroomDetailNode extends BaseCellDetailNodeVM {
 
 
         this.proficiencyLabel = new Label("", parent.getGame().getMainSkin());
+        this.progressBar = new ProgressBar(0, 100, 1, false, parent.getGame().getMainSkin());
+
         this.positionLabel = new Label("", parent.getGame().getMainSkin());
 
         Container<?> questionMarkArea = new Container<>(new Image(parent.getGame().getIdleMushroomTextureManager().getQuestionMarkTexture()));
@@ -88,6 +90,8 @@ public class WorldMushroomDetailNode extends BaseCellDetailNodeVM {
         leftPart.add(upgradeButton).colspan(2).size(CHILD_WIDTH, CHILD_HEIGHT);
         leftPart.row();
         leftPart.add(proficiencyLabel).colspan(2).size(CHILD_WIDTH, CHILD_HEIGHT);
+        leftPart.row();
+        leftPart.add(progressBar).colspan(2).size(CHILD_WIDTH, CHILD_HEIGHT);
         leftPart.row();
 
         this.setBackground(parent.getGame().getIdleMushroomTextureManager().getTableType3Drawable());
@@ -121,6 +125,8 @@ public class WorldMushroomDetailNode extends BaseCellDetailNodeVM {
         upgradeButton.setText(model.getDescriptionPackage().getUpgradeButtonText());
         workingLevelLabel.setText(model.getLevelComponent().getWorkingLevelDescription());
         proficiencyLabel.setText(model.getProficiencyComponent().getProficiencyDescroption());
+        progressBar.setRange(0, model.getProficiencyComponent().maxProficiency);
+        progressBar.setValue(model.getSaveData().getProficiency());
         positionLabel.setText(model.getSaveData().getPosition().toShowText());
 
         // ------ update clickable-state ------

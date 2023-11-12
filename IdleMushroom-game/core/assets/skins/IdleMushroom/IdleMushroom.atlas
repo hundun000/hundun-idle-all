@@ -1,0 +1,264 @@
+
+IdleMushroom.png
+size: 256, 256
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+bar1
+  rotate: false
+  xy: 47, 136
+  size: 3, 3
+  orig: 3, 3
+  offset: 0, 0
+  index: -1
+bar2
+  rotate: false
+  xy: 1, 168
+  size: 52, 7
+  split: 2, 5, 3, 3
+  pad: 0, 0, 0, 0
+  orig: 52, 7
+  offset: 0, 0
+  index: -1
+bar3
+  rotate: false
+  xy: 17, 24
+  size: 2, 2
+  orig: 2, 2
+  offset: 0, 0
+  index: -1
+button1
+  rotate: false
+  xy: 55, 159
+  size: 14, 16
+  split: 4, 4, 4, 6
+  orig: 14, 16
+  offset: 0, 0
+  index: -1
+button2
+  rotate: false
+  xy: 71, 161
+  size: 14, 14
+  split: 4, 4, 4, 5
+  orig: 14, 14
+  offset: 0, 0
+  index: -1
+button3
+  rotate: false
+  xy: 87, 161
+  size: 14, 14
+  split: 4, 4, 7, 5
+  orig: 14, 14
+  offset: 0, 0
+  index: -1
+check-off
+  rotate: false
+  xy: 31, 130
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: -1
+textfield
+  rotate: false
+  xy: 31, 130
+  size: 14, 14
+  split: 3, 3, 3, 3
+  orig: 14, 14
+  offset: 0, 0
+  index: -1
+check-on
+  rotate: false
+  xy: 1, 17
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: -1
+cursor
+  rotate: false
+  xy: 47, 141
+  size: 3, 3
+  split: 1, 1, 1, 1
+  orig: 3, 3
+  offset: 0, 0
+  index: -1
+default
+  rotate: false
+  xy: 1, 177
+  size: 254, 77
+  orig: 254, 77
+  offset: 0, 0
+  index: -1
+default-pane
+  rotate: false
+  xy: 23, 50
+  size: 5, 3
+  split: 1, 1, 1, 1
+  orig: 5, 3
+  offset: 0, 0
+  index: -1
+default-rect-pad
+  rotate: false
+  xy: 23, 50
+  size: 5, 3
+  split: 1, 1, 1, 1
+  orig: 5, 3
+  offset: 0, 0
+  index: -1
+default-pane-noborder
+  rotate: false
+  xy: 142, 159
+  size: 1, 1
+  split: 0, 0, 0, 0
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+default-rect
+  rotate: false
+  xy: 17, 28
+  size: 3, 3
+  split: 1, 1, 1, 1
+  orig: 3, 3
+  offset: 0, 0
+  index: -1
+default-rect-down
+  rotate: false
+  xy: 142, 162
+  size: 3, 3
+  split: 1, 1, 1, 1
+  orig: 3, 3
+  offset: 0, 0
+  index: -1
+default-round
+  rotate: false
+  xy: 103, 155
+  size: 12, 20
+  split: 5, 5, 5, 4
+  pad: 4, 4, 1, 1
+  orig: 12, 20
+  offset: 0, 0
+  index: -1
+default-round-down
+  rotate: false
+  xy: 117, 155
+  size: 12, 20
+  split: 5, 5, 5, 4
+  pad: 4, 4, 1, 1
+  orig: 12, 20
+  offset: 0, 0
+  index: -1
+default-round-large
+  rotate: false
+  xy: 31, 146
+  size: 20, 20
+  split: 5, 5, 5, 4
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+default-scroll
+  rotate: false
+  xy: 1, 33
+  size: 20, 20
+  split: 2, 2, 2, 2
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+default-select
+  rotate: false
+  xy: 1, 86
+  size: 27, 20
+  split: 4, 14, 4, 4
+  orig: 27, 20
+  offset: 0, 0
+  index: -1
+default-select-selection
+  rotate: false
+  xy: 152, 172
+  size: 3, 3
+  split: 1, 1, 1, 1
+  orig: 3, 3
+  offset: 0, 0
+  index: -1
+default-slider
+  rotate: false
+  xy: 142, 167
+  size: 8, 8
+  split: 2, 2, 2, 2
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+default-slider-knob
+  rotate: false
+  xy: 131, 157
+  size: 9, 18
+  orig: 9, 18
+  offset: 0, 0
+  index: -1
+default-splitpane
+  rotate: false
+  xy: 31, 109
+  size: 5, 3
+  split: 0, 5, 0, 0
+  orig: 5, 3
+  offset: 0, 0
+  index: -1
+default-splitpane-vertical
+  rotate: false
+  xy: 23, 43
+  size: 3, 5
+  split: 0, 0, 0, 5
+  orig: 3, 5
+  offset: 0, 0
+  index: -1
+default-window
+  rotate: false
+  xy: 1, 55
+  size: 27, 29
+  split: 4, 3, 20, 3
+  orig: 27, 29
+  offset: 0, 0
+  index: -1
+selection
+  rotate: false
+  xy: 147, 164
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+testNinePatch
+  rotate: false
+  xy: 1, 138
+  size: 28, 28
+  split: 8, 8, 8, 8
+  pad: 8, 6, 8, 6
+  orig: 28, 28
+  offset: 0, 0
+  index: -1
+testNinePatch_down
+  rotate: false
+  xy: 1, 108
+  size: 28, 28
+  split: 8, 8, 8, 8
+  orig: 28, 28
+  offset: 0, 0
+  index: -1
+tree-minus
+  rotate: false
+  xy: 31, 114
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: -1
+tree-plus
+  rotate: false
+  xy: 1, 1
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: -1
+white
+  rotate: false
+  xy: 38, 109
+  size: 3, 3
+  orig: 3, 3
+  offset: 0, 0
+  index: -1
