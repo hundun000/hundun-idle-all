@@ -1,7 +1,0 @@
-allprojects {
-    ext {
-        appName = "hundun-idle-IdleMushroom"
-    }
-}
-
-eclipse.project.name = appName

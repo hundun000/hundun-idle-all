@@ -142,9 +142,12 @@ public class ConstructionManager implements ITileNodeMap<Void> {
 
     public boolean canBuyInstanceOfPrototype(ConstructionBuyCandidateConfig config, GridPosition position)
     {
-        boolean isCostEnough = this.gameContext.getStorageManager().isEnough(config.getBuyCostPack().getModifiedValues());
-        boolean positionAllowCase1 = runningConstructionModelMap.entrySet().stream().noneMatch(pair -> pair.getValue().getPosition().equals(position));
-        boolean positionAllowCase2 = runningConstructionModelMap.entrySet().stream().filter(pair -> pair.getValue().getPosition().equals(position) && pair.getValue().isAllowPositionOverwrite()).count() == 1;
+        List<BaseConstruction> worldConstructionInstances = gameContext
+                .getConstructionManager()
+                .getWorldConstructionInstances();
+        boolean isCostEnough = gameContext.getStorageManager().isEnough(config.getBuyCostPack().getModifiedValues());
+        boolean positionAllowCase1 = worldConstructionInstances.stream().noneMatch(it -> it.getPosition().equals(position));
+        boolean positionAllowCase2 = worldConstructionInstances.stream().anyMatch(it -> it.getPosition().equals(position) && it.isAllowPositionOverwrite());
         return isCostEnough && (positionAllowCase1 || positionAllowCase2);
 
     }
