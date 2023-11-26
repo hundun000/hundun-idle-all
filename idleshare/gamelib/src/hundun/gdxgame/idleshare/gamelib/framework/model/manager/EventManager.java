@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import hundun.gdxgame.gamelib.starter.listerner.IGameStartListener;
 import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementStateChangeListener;
@@ -20,6 +21,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManag
  * Created on 2021/11/12
  */
 public class EventManager {
+    List<IGameStartListener> gameStartListeners = new ArrayList<>();
     List<IBuffChangeListener> buffChangeListeners = new ArrayList<>();
     List<IAchievementStateChangeListener> achievementStateChangeListeners = new ArrayList<>();
     List<INotificationBoardCallerAndCallback> notificationBoardCallerAndCallbacks = new ArrayList<>();
@@ -33,6 +35,9 @@ public class EventManager {
     }
     
     public void registerListener(Object listener) {
+        if (listener instanceof IGameStartListener && !gameStartListeners.contains(listener)) {
+            gameStartListeners.add((IGameStartListener) listener);
+        }
         if (listener instanceof IBuffChangeListener && !buffChangeListeners.contains(listener)) {
             buffChangeListeners.add((IBuffChangeListener) listener);
         }
@@ -54,6 +59,9 @@ public class EventManager {
 
     public void unregisterListener(Object listener)
     {
+        if (listener instanceof IGameStartListener) {
+            gameStartListeners.remove((IGameStartListener) listener);
+        }
         if (listener instanceof IBuffChangeListener)
         {
             buffChangeListeners.remove((IBuffChangeListener)listener);
@@ -73,6 +81,13 @@ public class EventManager {
         if (listener instanceof IConstructionCollectionListener)
         {
             constructionCollectionListeners.remove((IConstructionCollectionListener)listener);
+        }
+    }
+
+    public void notifyGameStart() {
+        gameContext.getFrontEnd().log(this.getClass().getSimpleName(), "notifyGameStart");
+        for (IGameStartListener listener : gameStartListeners) {
+            listener.onGameStart();
         }
     }
 
