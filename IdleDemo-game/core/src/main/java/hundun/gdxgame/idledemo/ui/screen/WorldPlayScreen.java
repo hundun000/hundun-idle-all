@@ -52,8 +52,6 @@ public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstruction
 
     protected void lazyInitLogicContext() {
         super.lazyInitLogicContext();
-        
-        storageInfoTable.lazyInit(ResourceType.VALUES_FOR_SHOW_ORDER);
 
         logicFrameListeners.add(worldCellDetailBoardVM);
         this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(worldCellDetailBoardVM);

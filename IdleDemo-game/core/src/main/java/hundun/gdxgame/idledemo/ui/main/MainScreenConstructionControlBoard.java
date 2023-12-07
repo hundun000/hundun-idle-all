@@ -36,11 +36,11 @@ public class MainScreenConstructionControlBoard extends Table
         this.callback = callback;
 
         childTable = new Table();
-        childTable.setBackground(parent.getLayoutConst().simpleBoardBackgroundMiddle);
+        childTable.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
 
         this.add(childTable);
 
-        this.setBackground(parent.getLayoutConst().simpleBoardBackground);
+        this.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
 
         if (parent.getGame().debugMode) {
             this.debugCell();

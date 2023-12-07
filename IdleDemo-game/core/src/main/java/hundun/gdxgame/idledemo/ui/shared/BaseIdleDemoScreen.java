@@ -2,6 +2,7 @@ package hundun.gdxgame.idledemo.ui.shared;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import hundun.gdxgame.idledemo.DemoIdleGame;
+import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.starter.ui.component.BackgroundImageBox;
 import hundun.gdxgame.idledemo.starter.ui.component.GameAreaControlBoard;
@@ -33,6 +34,7 @@ public abstract class BaseIdleDemoScreen extends BaseIdleScreen<DemoIdleGame, Ro
         gameAreaChangeListeners.add(gameAreaControlBoard);
 
         gameAreaControlBoard.lazyInit(game.getControlBoardScreenIds());
+        storageInfoTable.lazyInit(ResourceType.VALUES_FOR_SHOW_ORDER);
 
         this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(this);
         this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(storageInfoTable);

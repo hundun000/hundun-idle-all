@@ -27,7 +27,7 @@ public class PopupInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends
         this.parent = parent;
         //this.setBounds(5, GameAreaControlBoard.Y, GameAreaControlBoard.X - 10, 120);
         this.setTouchable(Touchable.disabled);
-        this.setBackground(parent.getLayoutConst().simpleBoardBackground);
+        this.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
         this.setVisible(false);
     }
 

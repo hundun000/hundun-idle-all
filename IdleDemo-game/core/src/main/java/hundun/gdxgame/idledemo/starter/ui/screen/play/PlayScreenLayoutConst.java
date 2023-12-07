@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 import hundun.gdxgame.corelib.base.util.DrawableFactory;
+import hundun.gdxgame.idledemo.ui.main.GameEntityFactory.IdleDemoGameEntityFactoryLayoutConst;
 
 /**
  * @author hundun
@@ -22,13 +23,8 @@ public class PlayScreenLayoutConst {
     public int AREA_BOARD_CELL_HEIGHT = 50;
 //    public static final int STORAGE_BOARD_CONTAIN_WIDTH = 100;
 //    public static final int STORAGE_BOARD_CONTAIN_HEIGHT = 50;
-    public Drawable simpleBoardBackground;
-    public Drawable simpleBoardBackgroundMiddle;
 
-    public int EXPECTED_DRAW_MIN_X;
-    public int EXPECTED_DRAW_MAX_X;
-    public int EXPECTED_DRAW_MIN_Y;
-    public int EXPECTED_DRAW_MAX_Y;
+    public IdleDemoGameEntityFactoryLayoutConst gameEntityFactoryLayoutConst;
 
     public int RESOURCE_AMOUNT_PAIR_NODE_HEIGHT = 25;
     public int RESOURCE_AMOUNT_PAIR_NODE_WIDTH = 70;
@@ -45,13 +41,11 @@ public class PlayScreenLayoutConst {
     public float WorldConstructionCellTablePad = 20;
 
     public PlayScreenLayoutConst(int gameLogicWidth, int gameLogicHeight) {
-        this.EXPECTED_DRAW_MIN_X = 0;
-        this.EXPECTED_DRAW_MAX_X = gameLogicWidth;
-        this.EXPECTED_DRAW_MIN_Y = CONSTRUCION_BOARD_ROOT_BOX_HEIGHT;
-        this.EXPECTED_DRAW_MAX_Y = gameLogicHeight - STORAGE_BOARD_BORDER_HEIGHT;
-        Gdx.app.log(this.getClass().getSimpleName(), "EXPECTED_DRAW_MAX_X = " + EXPECTED_DRAW_MAX_X + ", EXPECTED_DRAW_MAX_Y = " + EXPECTED_DRAW_MAX_Y);
-
-        simpleBoardBackground = DrawableFactory.createBorderBoard(10, 10, 0.8f, 1);
-        simpleBoardBackgroundMiddle = DrawableFactory.createBorderBoard(10, 10, 0.7f, 1);
+        this.gameEntityFactoryLayoutConst = IdleDemoGameEntityFactoryLayoutConst.builder()
+                .EXPECTED_DRAW_MIN_X(0)
+                .EXPECTED_DRAW_MAX_X(gameLogicWidth)
+                .EXPECTED_DRAW_MIN_Y(CONSTRUCION_BOARD_ROOT_BOX_HEIGHT)
+                .EXPECTED_DRAW_MAX_Y(gameLogicHeight - STORAGE_BOARD_BORDER_HEIGHT)
+                .build();
     }
 }

@@ -64,7 +64,7 @@ public class MainPlayScreen extends BaseDemoPlayScreen
         gameEntityManager.lazyInit(
                 game.getChildGameConfig().getAreaEntityEffectConfigMap()
         );
-        GameEntityFactory gameEntityFactory = new GameEntityFactory(this.layoutConst, this);
+        GameEntityFactory gameEntityFactory = new GameEntityFactory(this.layoutConst.gameEntityFactoryLayoutConst, this);
         gameImageDrawer.lazyInit(gameEntityFactory, gameEntityManager);
 
         logicFrameListeners.add(constructionControlBoard);
@@ -139,11 +139,11 @@ public class MainPlayScreen extends BaseDemoPlayScreen
 
     @Override
     public Sprite getResourceEntity(String resourceId) {
-        return null;
+        return new Sprite(game.getTextureManager().getResourceEntity(resourceId));
     }
 
     @Override
     public Sprite getConstructionEntity(String constructionId) {
-        return null;
+        return new Sprite(game.getTextureManager().getConstructionEntity(constructionId));
     }
 }

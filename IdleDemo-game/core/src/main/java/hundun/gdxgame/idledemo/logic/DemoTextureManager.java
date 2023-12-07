@@ -2,8 +2,10 @@ package hundun.gdxgame.idledemo.logic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import hundun.gdxgame.idledemo.AbstractTextureManager;
 
 public class DemoTextureManager extends AbstractTextureManager {
@@ -15,6 +17,13 @@ public class DemoTextureManager extends AbstractTextureManager {
         achievementMaskBoardTexture = new Texture(Gdx.files.internal("win.png"));
         menuTexture = new Texture(Gdx.files.internal("menu.png"));
         defaultBoardNinePatchTexture = new Texture(Gdx.files.internal("defaultBoardNinePatch.png"));
+        defaultBoardNinePatchDrawable = new NinePatchDrawable(new NinePatch(
+                defaultBoardNinePatchTexture,
+                (defaultBoardNinePatchTexture.getWidth() - 1) / 2,
+                (defaultBoardNinePatchTexture.getWidth() - 1) / 2,
+                (defaultBoardNinePatchTexture.getHeight() - 1) / 2,
+                (defaultBoardNinePatchTexture.getHeight() - 1) / 2
+        ));
         {
             Texture texture = new Texture(Gdx.files.internal("mainCokie.png"));
              mainClickAnimationTextureAtlas = TextureRegion.split(texture, 256, 256);

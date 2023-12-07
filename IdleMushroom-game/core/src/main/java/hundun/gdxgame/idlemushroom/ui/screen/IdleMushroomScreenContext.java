@@ -36,8 +36,6 @@ public class IdleMushroomScreenContext {
         public int AREA_BOARD_CELL_HEIGHT = 50;
         //    public static final int STORAGE_BOARD_CONTAIN_WIDTH = 100;
 //    public static final int STORAGE_BOARD_CONTAIN_HEIGHT = 50;
-        public Drawable simpleBoardBackground;
-        public Drawable simpleBoardBackgroundMiddle;
 
         IdleMushroomGameEntityFactoryLayoutConst gameEntityFactoryLayoutConst;
 
@@ -69,9 +67,6 @@ public class IdleMushroomScreenContext {
                     .EXPECTED_DRAW_MIN_Y(CONSTRUCION_BOARD_ROOT_BOX_HEIGHT)
                     .EXPECTED_DRAW_MAX_Y(gameLogicHeight - STORAGE_BOARD_BORDER_HEIGHT)
                     .build();
-
-            simpleBoardBackground = DrawableFactory.createBorderBoard(10, 10, 0.8f, 1);
-            simpleBoardBackgroundMiddle = DrawableFactory.createBorderBoard(10, 10, 0.7f, 1);
 
             CONSTRUCION_CHILD_WIDTH = 150;
         }

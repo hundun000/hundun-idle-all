@@ -60,7 +60,7 @@ public class ScrollConstructionControlBoard<T_GAME extends BaseIdleGame<T_SAVE>,
         });
 
         childTable = new Table();
-        childTable.setBackground(parent.getLayoutConst().simpleBoardBackgroundMiddle);
+        childTable.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
         ScrollPane scrollPane = new ScrollPane(childTable, parent.getGame().getMainSkin());
         scrollPane.setScrollingDisabled(false, true);
 
@@ -68,7 +68,7 @@ public class ScrollConstructionControlBoard<T_GAME extends BaseIdleGame<T_SAVE>,
         this.add(leftButton);
         this.add(scrollPane);
         this.add(rightButton);
-        this.setBackground(parent.getLayoutConst().simpleBoardBackground);
+        this.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
 
         if (parent.getGame().debugMode) {
             this.debugCell();

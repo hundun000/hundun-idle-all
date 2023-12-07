@@ -22,7 +22,7 @@ public class AllAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> 
         this.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
 
         childTable = new Table();
-        childTable.setBackground(parent.getLayoutConst().simpleBoardBackgroundMiddle);
+        childTable.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
         ScrollPane scrollPane = new ScrollPane(childTable, parent.getGame().getMainSkin());
         scrollPane.setScrollingDisabled(false, true);
         scrollPane.setFadeScrollBars(false);

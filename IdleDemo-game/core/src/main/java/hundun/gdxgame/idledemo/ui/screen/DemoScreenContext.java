@@ -30,8 +30,6 @@ public class DemoScreenContext extends AbstractIdleScreenContext<DemoIdleGame, R
                 game.getTextureManager().getDefaultBoardNinePatchEdgeSize(),
                 game.getTextureManager().getDefaultBoardNinePatchEdgeSize()
         );
-        layoutConst.simpleBoardBackground = new NinePatchDrawable(ninePatch);
-        layoutConst.simpleBoardBackgroundMiddle = new TextureRegionDrawable(game.getTextureManager().getDefaultBoardNinePatchMiddle());
         return layoutConst;
     }
 

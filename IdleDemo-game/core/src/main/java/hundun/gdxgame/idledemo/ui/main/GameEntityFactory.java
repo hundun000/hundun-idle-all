@@ -6,6 +6,10 @@ import hundun.gdxgame.idledemo.ui.screen.MainPlayScreen;
 import hundun.gdxgame.idleshare.core.framework.entity.BaseGameEntityFactory;
 import hundun.gdxgame.idleshare.core.framework.entity.GameEntity;
 import hundun.gdxgame.idledemo.starter.ui.screen.play.PlayScreenLayoutConst;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author hundun
@@ -18,9 +22,21 @@ public class GameEntityFactory extends BaseGameEntityFactory {
     public float FLY_UNION_SPEED = 2;
 
     public float RESOURCE_MAX_DRAW_NUM = 15;
-    
-    public GameEntityFactory(PlayScreenLayoutConst layoutConst, MainPlayScreen parent) {
-        super(layoutConst, parent);
+    IdleDemoGameEntityFactoryLayoutConst layoutConst;
+    @Data
+    @AllArgsConstructor
+    @Builder
+    @NoArgsConstructor
+    public static class IdleDemoGameEntityFactoryLayoutConst {
+        public int EXPECTED_DRAW_MIN_X;
+        public int EXPECTED_DRAW_MAX_X;
+        public int EXPECTED_DRAW_MIN_Y;
+        public int EXPECTED_DRAW_MAX_Y;
+    }
+
+    public GameEntityFactory(IdleDemoGameEntityFactoryLayoutConst layoutConst, MainPlayScreen parent) {
+        super(parent);
+        this.layoutConst = layoutConst;
     }
     
     public GameEntity newConstructionEntity(String id, int index) {

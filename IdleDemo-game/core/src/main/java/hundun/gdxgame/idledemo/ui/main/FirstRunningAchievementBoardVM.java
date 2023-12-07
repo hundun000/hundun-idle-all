@@ -50,8 +50,8 @@ public class FirstRunningAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>,
         AchievementInfoPackage data = parent.getGame().getIdleGameplayExport().getGameplayContext().getAchievementManager().getAchievementInfoPackage();
         if (data.getFirstRunningAchievement() != null)
         {
-            nameValueLabel.setText(data.getFirstRunningAchievement().getName());
-            descriptionLabel.setText(data.getFirstRunningAchievement().getDescription());
+            nameValueLabel.setText(data.getFirstRunningAchievement().getAchievement().getName());
+            descriptionLabel.setText(data.getFirstRunningAchievement().getAchievement().getDescription());
         }
         else
         {

@@ -46,7 +46,6 @@ public class DemoAchievementScreen extends BaseIdleDemoScreen implements IAchiev
     protected void lazyInitLogicContext() {
         super.lazyInitLogicContext();
 
-        storageInfoTable.lazyInit(ResourceType.VALUES_FOR_SHOW_ORDER);
     }
 
     @Override

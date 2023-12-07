@@ -47,7 +47,7 @@ public abstract class BaseGameEntityFactory {
             double FAILING_SPEED_RANDOM_RANGE,
             int HIDEN_FRAME_RANGE
             ) {
-        Sprite sprite = new Sprite(holder.getResourceEntity(resourceId));
+        Sprite sprite = holder.getResourceEntity(resourceId);
         MAX_X = (int) (MAX_X - DEFAULT_RESOURCE_WIDTH_SCALE * sprite.getRegionWidth());
         REMOVE_Y = (int) (REMOVE_Y + DEFAULT_RESOURCE_HEIGHT_SCALE * sprite.getRegionHeight());
         int randX = (int) (MIN_X + Math.random() * (MAX_X - MIN_X));
@@ -68,7 +68,7 @@ public abstract class BaseGameEntityFactory {
 
 
     protected GameEntity randomMoveResourcEntity(String resourceId, int MIN_X, int MAX_X, int MIN_Y, int MAX_Y, double FLY_UNION_SPEED) {
-        Sprite sprite = new Sprite(holder.getResourceEntity(resourceId));
+        Sprite sprite = holder.getResourceEntity(resourceId);
         MAX_X = (int) (MAX_X - DEFAULT_RESOURCE_WIDTH_SCALE * sprite.getRegionWidth());
         MAX_Y = (int) (MAX_Y - DEFAULT_RESOURCE_HEIGHT_SCALE * sprite.getRegionHeight());
 
@@ -84,7 +84,7 @@ public abstract class BaseGameEntityFactory {
     }
 
     protected GameEntity randomPositionStableConstructionEntity(String constructionId, int MIN_X, int MAX_X, int MIN_Y, int MAX_Y) {
-        Sprite sprite = new Sprite(holder.getConstructionEntity(constructionId));
+        Sprite sprite = holder.getConstructionEntity(constructionId);
         MAX_X = (int) (MAX_X - DEFAULT_CONSTRUCTION_WIDTH_SCALE * sprite.getRegionWidth());
         MAX_Y = (int) (MAX_Y - DEFAULT_CONSTRUCTION_HEIGHT_SCALE * sprite.getRegionHeight());
         int randX = (int) (MIN_X + Math.random() * (MAX_X - MIN_X));
@@ -103,7 +103,7 @@ public abstract class BaseGameEntityFactory {
         int x = COLUMN_STABLE_FIRST_COL_X + col * COLUMN_STABLE_COL_PADDING_X + COLUMN_STABLE_INDEX_PADDING_X * index;
         int y = COLUMN_STABLE_FIRST_COL_Y + COLUMN_STABLE_INDEX_PADDING_Y * index;
         return stableAnyEntity(
-                new Sprite(holder.getConstructionEntity(constructionId)),
+                holder.getConstructionEntity(constructionId),
                 x,
                 y,
                 DEFAULT_CONSTRUCTION_WIDTH_SCALE,
@@ -115,7 +115,7 @@ public abstract class BaseGameEntityFactory {
         int x = ROW_STABLE_FIRST_COL_X + ROW_STABLE_INDEX_PADDING_X * index;
         int y = ROW_STABLE_FIRST_COL_Y + row * ROW_STABLE_ROW_PADDING_Y + ROW_STABLE_INDEX_PADDING_Y * index;
         return stableAnyEntity(
-                new Sprite(holder.getConstructionEntity(constructionId)),
+                holder.getConstructionEntity(constructionId),
                 x,
                 y,
                 DEFAULT_CONSTRUCTION_WIDTH_SCALE,
