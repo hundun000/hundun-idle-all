@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.8.2//EN" "http://www.gwtproject.org/doctype/2.8.2/gwt-module.dtd">
+<module>
+    <source path="hundun/gdxgame/idlemushroom" />
+    <source path="hundun/gdxgame/idlemushroom/html" />
+    <source path="hundun/gdxgame/idleshare/core" />
+    <source path="hundun/gdxgame/idleshare/gamelib" />
+    <source path="hundun/gdxgame/idleshare/html" />
+    <source path="hundun/gdxgame/corelib" />
+    <source path="hundun/gdxgame/gamelib" />
+</module>

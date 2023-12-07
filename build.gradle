@@ -132,4 +132,22 @@ project(":IdleDemo-game:html") {
     }
 }
 
+project(":IdleMushroom-game:core") {
+
+    dependencies {
+        api project(":idleshare:core")
+
+        compileOnly 'org.projectlombok:lombok:1.18.4'
+        annotationProcessor 'org.projectlombok:lombok:1.18.4'
+    }
+}
+
+project(":IdleMushroom-game:desktop") {
+
+    dependencies {
+        implementation project(":IdleMushroom-game:core")
+        implementation project(":idleshare:desktop")
+    }
+}
+
 eclipse.project.name = appName + "-all"
