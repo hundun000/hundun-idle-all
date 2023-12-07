@@ -1,6 +1,7 @@
 package hundun.gdxgame.idledemo.ui.screen;
 
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
@@ -13,17 +14,20 @@ import hundun.gdxgame.idledemo.ui.world.HexCellVM;
 import hundun.gdxgame.idledemo.ui.main.GameEntityFactory;
 import hundun.gdxgame.idleshare.core.framework.model.manager.GameEntityManager;
 import hundun.gdxgame.idleshare.core.starter.ui.component.GameImageDrawer;
+import hundun.gdxgame.idleshare.core.starter.ui.component.GameImageDrawer.IGameImageDrawerHolder;
 import hundun.gdxgame.idleshare.core.starter.ui.component.PopupInfoBoard;
 import hundun.gdxgame.idleshare.core.starter.ui.component.animation.MainClickerAnimationVM;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
+
+import java.util.List;
 
 /**
  * @author hundun
  * Created on 2021/11/02
  */
 public class MainPlayScreen extends BaseDemoPlayScreen
-        implements ISecondaryInfoBoardCallback<BaseConstruction> {
+        implements ISecondaryInfoBoardCallback<BaseConstruction>, IGameImageDrawerHolder {
     protected PopupInfoBoard<DemoIdleGame, RootSaveData> secondaryInfoBoard;
     protected GameEntityManager gameEntityManager;
     protected GameImageDrawer<DemoIdleGame, RootSaveData> gameImageDrawer;
@@ -55,8 +59,8 @@ public class MainPlayScreen extends BaseDemoPlayScreen
     protected void lazyInitLogicContext() {
         super.lazyInitLogicContext();
 
-        this.gameImageDrawer = new GameImageDrawer<>(this);
-        this.gameEntityManager = new GameEntityManager(game);
+        this.gameImageDrawer = new GameImageDrawer<>(this, this);
+        this.gameEntityManager = new GameEntityManager(this);
         gameEntityManager.lazyInit(
                 game.getChildGameConfig().getAreaEntityEffectConfigMap()
         );
@@ -119,5 +123,27 @@ public class MainPlayScreen extends BaseDemoPlayScreen
         super.renderPopupAnimations(delta, spriteBatch);
 
         mainClickerAnimationVM.updateFrame(delta, spriteBatch);
+    }
+
+
+    @Override
+    public long getResourceNumOrZero(String resourceId) {
+        return game.getIdleGameplayExport().getGameplayContext().getStorageManager().getResourceNumOrZero(resourceId);
+    }
+
+    @Override
+    public int getConstructionWorkingLevelNumOrZero(String prototypeId) {
+        List<BaseConstruction> constructions = game.getIdleGameplayExport().getGameplayContext().getConstructionManager().getConstructionsOfPrototype(prototypeId);
+        return constructions.stream().mapToInt(it -> it.getSaveData().getWorkingLevel()).sum();
+    }
+
+    @Override
+    public Sprite getResourceEntity(String resourceId) {
+        return null;
+    }
+
+    @Override
+    public Sprite getConstructionEntity(String constructionId) {
+        return null;
     }
 }

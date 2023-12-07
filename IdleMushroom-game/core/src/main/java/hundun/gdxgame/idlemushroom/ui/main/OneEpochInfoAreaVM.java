@@ -4,15 +4,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Null;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame.RootEpochConfig;
-import hundun.gdxgame.idlemushroom.logic.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushroomPlayScreenLayoutConst;
-import hundun.gdxgame.idlemushroom.ui.screen.MainPlayScreen;
+import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomMainPlayScreen;
 import hundun.gdxgame.idlemushroom.ui.shared.ConstructionDetailPartVM;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
 public class OneEpochInfoAreaVM extends Table {
 
-    MainPlayScreen parent;
+    IdleMushroomMainPlayScreen parent;
     BaseConstruction epochCounterConstruction;
     BaseConstruction mainClickerConstruction;
     @Null
@@ -23,7 +22,7 @@ public class OneEpochInfoAreaVM extends Table {
     boolean isPreviewNextLevel;
 
     public OneEpochInfoAreaVM(
-            MainPlayScreen parent
+            IdleMushroomMainPlayScreen parent
     ) {
         super();
         final IdleMushroomPlayScreenLayoutConst playScreenLayoutConst = parent.getIdleMushroomPlayScreenLayoutConst();
@@ -47,7 +46,7 @@ public class OneEpochInfoAreaVM extends Table {
         this.add(maxLevelLabel).row();
         this.add(mainClickerPart).row();
 
-        this.setBackground(parent.getGame().getIdleMushroomTextureManager().getTableType3Drawable());
+        this.setBackground(parent.getGame().getTextureManager().getTableType3Drawable());
     }
 
     private void update() {

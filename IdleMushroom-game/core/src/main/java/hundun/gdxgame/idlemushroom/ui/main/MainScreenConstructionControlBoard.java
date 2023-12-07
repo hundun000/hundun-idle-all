@@ -14,7 +14,7 @@ import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idlemushroom.logic.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushroomPlayScreenLayoutConst;
-import hundun.gdxgame.idlemushroom.ui.screen.MainPlayScreen;
+import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomMainPlayScreen;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseCellDetailNodeVM;
 import hundun.gdxgame.idlemushroom.ui.shared.ConstructionDetailPartVM;
 import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.StarterConstructionControlNode.StarterSecondaryInfoBoardCallerClickListener;
@@ -36,18 +36,18 @@ public class MainScreenConstructionControlBoard extends Table
         implements ILogicFrameListener, IGameAreaChangeListener, IConstructionCollectionListener
 {
 
-    MainPlayScreen parent;
+    IdleMushroomMainPlayScreen parent;
     protected ISecondaryInfoBoardCallback<BaseConstruction> callback;
 
     protected SellerPart sellerPart;
     protected EpochPart epochPart;
 
-    public MainScreenConstructionControlBoard(MainPlayScreen parent, ISecondaryInfoBoardCallback<BaseConstruction> callback) {
+    public MainScreenConstructionControlBoard(IdleMushroomMainPlayScreen parent, ISecondaryInfoBoardCallback<BaseConstruction> callback) {
         this.parent = parent;
         this.callback = callback;
 
 
-        this.setBackground(parent.getGame().getIdleMushroomTextureManager().getTableType1Drawable());
+        this.setBackground(parent.getGame().getTextureManager().getTableType1Drawable());
         this.pad(20);
 
         if (parent.getGame().debugMode) {
@@ -102,7 +102,7 @@ public class MainScreenConstructionControlBoard extends Table
     }
 
     public static class EpochPart extends BaseCellDetailNodeVM {
-        MainPlayScreen parent;
+        IdleMushroomMainPlayScreen parent;
         BaseConstruction model;
         Label constructionNameLabel;
 
@@ -116,7 +116,7 @@ public class MainScreenConstructionControlBoard extends Table
 
 
         public EpochPart(
-                MainPlayScreen parent,
+                IdleMushroomMainPlayScreen parent,
                 ISecondaryInfoBoardCallback<BaseConstruction> callback) {
             super();
             final IdleMushroomPlayScreenLayoutConst playScreenLayoutConst = parent.getIdleMushroomPlayScreenLayoutConst();
@@ -146,8 +146,8 @@ public class MainScreenConstructionControlBoard extends Table
             this.workingLevelLabel = new Label("", parent.getGame().getMainSkin());
             workingLevelLabel.setAlignment(Align.center);
 
-            Container<?> questionMarkArea = new Container<>(new Image(parent.getGame().getIdleMushroomTextureManager().getQuestionMarkTexture()));
-            questionMarkArea.setBackground(parent.getGame().getIdleMushroomTextureManager().getQuestionMarkTableDrawable());
+            Container<?> questionMarkArea = new Container<>(new Image(parent.getGame().getTextureManager().getQuestionMarkTexture()));
+            questionMarkArea.setBackground(parent.getGame().getTextureManager().getQuestionMarkTableDrawable());
             questionMarkArea.setTouchable(Touchable.enabled);
             questionMarkArea.addListener(new StarterSecondaryInfoBoardCallerClickListener(() -> model, parent));
 
@@ -162,7 +162,7 @@ public class MainScreenConstructionControlBoard extends Table
             this.add(leftPart).padRight(20);
             this.add(epochDetailPart);
 
-            this.setBackground(parent.getGame().getIdleMushroomTextureManager().getTableType3Drawable());
+            this.setBackground(parent.getGame().getTextureManager().getTableType3Drawable());
         }
 
         private void update() {
@@ -216,7 +216,7 @@ public class MainScreenConstructionControlBoard extends Table
     }
 
     public static class SellerPart extends BaseCellDetailNodeVM {
-        MainPlayScreen parent;
+        IdleMushroomMainPlayScreen parent;
         BaseConstruction model;
         Label constructionNameLabel;
         TextButton upWorkingLevelButton;
@@ -232,7 +232,7 @@ public class MainScreenConstructionControlBoard extends Table
 
 
         public SellerPart(
-                MainPlayScreen parent,
+                IdleMushroomMainPlayScreen parent,
                 ISecondaryInfoBoardCallback<BaseConstruction> callback) {
             super();
             final IdleMushroomPlayScreenLayoutConst playScreenLayoutConst = parent.getIdleMushroomPlayScreenLayoutConst();
@@ -285,8 +285,8 @@ public class MainScreenConstructionControlBoard extends Table
 
             detailGroup = new Table();
 
-            Container<?> questionMarkArea = new Container<>(new Image(parent.getGame().getIdleMushroomTextureManager().getQuestionMarkTexture()));
-            questionMarkArea.setBackground(parent.getGame().getIdleMushroomTextureManager().getQuestionMarkTableDrawable());
+            Container<?> questionMarkArea = new Container<>(new Image(parent.getGame().getTextureManager().getQuestionMarkTexture()));
+            questionMarkArea.setBackground(parent.getGame().getTextureManager().getQuestionMarkTableDrawable());
             questionMarkArea.setTouchable(Touchable.enabled);
             questionMarkArea.addListener(new StarterSecondaryInfoBoardCallerClickListener(() -> model, parent));
 
@@ -302,7 +302,7 @@ public class MainScreenConstructionControlBoard extends Table
             this.add(leftPart).padRight(20);
             this.add(detailGroup);
 
-            this.setBackground(parent.getGame().getIdleMushroomTextureManager().getTableType3Drawable());
+            this.setBackground(parent.getGame().getTextureManager().getTableType3Drawable());
         }
 
         private void update() {

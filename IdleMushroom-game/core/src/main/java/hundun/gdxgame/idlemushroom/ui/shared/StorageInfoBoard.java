@@ -1,14 +1,18 @@
 package hundun.gdxgame.idlemushroom.ui.shared;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
+import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.starter.ui.component.StorageResourceAmountPairNode;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.util.Utils;
+import lombok.Getter;
 
 import java.util.*;
+import java.util.List;
 
 /**
  * @author hundun
@@ -25,8 +29,61 @@ public class StorageInfoBoard extends Table implements IOneFrameResourceChangeLi
     Set<String> shownTypes = new HashSet<>();
     BaseIdleMushroomScreen parent;
 
-    List<StorageResourceAmountPairNode<IdleMushroomGame>> nodes = new ArrayList<>();
+    List<IdleMushroomStorageResourceAmountPairNode> nodes = new ArrayList<>();
 
+    public static class IdleMushroomStorageResourceAmountPairNode extends HorizontalGroup {
+        LabelStyle PLUS_STYLE;
+        LabelStyle MINUS_STYLE;
+        IdleMushroomGame game;
+
+        @Getter
+        String resourceType;
+
+        Image image;
+        Label amountLabel;
+        Label deltaLabel;
+
+        public IdleMushroomStorageResourceAmountPairNode(IdleMushroomGame game, String resourceType) {
+            super();
+            this.game = game;
+            this.resourceType = resourceType;
+            TextureRegion textureRegion = game.getTextureManager().getResourceIcon(resourceType);
+            this.image = new Image(textureRegion);
+            this.addActor(image);
+            this.amountLabel = new Label("", game.getMainSkin());
+            this.addActor(amountLabel);
+            this.deltaLabel = new Label("", game.getMainSkin());
+            this.addActor(deltaLabel);
+
+            this.PLUS_STYLE = game.getMainSkin().get("green_style", LabelStyle.class);
+            this.MINUS_STYLE = game.getMainSkin().get("red_style", LabelStyle.class);
+        }
+
+        public void update(long delta, long amount) {
+            amountLabel.setText(
+                    game.getTextFormatTool().format(amount)
+            );
+            if (delta > 0)
+            {
+                deltaLabel.setText("(+" + delta + ")");
+                deltaLabel.setStyle(PLUS_STYLE);
+            }
+            else if(delta == 0)
+            {
+                deltaLabel.setText("");
+            }
+            else
+            {
+                deltaLabel.setText("(-" + Math.abs(delta) + ")");
+                deltaLabel.setStyle(MINUS_STYLE);
+            }
+        }
+
+
+
+
+    }
+    
     public void lazyInit(List<String> shownOrders) {
         this.shownOrders = shownOrders;
         rebuildCells();
@@ -37,7 +94,7 @@ public class StorageInfoBoard extends Table implements IOneFrameResourceChangeLi
 
     public StorageInfoBoard(BaseIdleMushroomScreen parent) {
         this.parent = parent;
-        this.setBackground(parent.getGame().getIdleMushroomTextureManager().getDefaultBoardNinePatchDrawable());
+        this.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
 
 
         if (parent.getGame().debugMode) {
@@ -54,10 +111,10 @@ public class StorageInfoBoard extends Table implements IOneFrameResourceChangeLi
         for (int i = 0; i < shownOrders.size(); i++) {
             String resourceType = shownOrders.get(i);
             if (shownTypes.contains(resourceType)) {
-                StorageResourceAmountPairNode<IdleMushroomGame> node = new StorageResourceAmountPairNode<>(parent.getGame(), resourceType);
+                IdleMushroomStorageResourceAmountPairNode node = new IdleMushroomStorageResourceAmountPairNode(parent.getGame(), resourceType);
                 nodes.add(node);
                 shownTypes.add(resourceType);
-                Cell<StorageResourceAmountPairNode<IdleMushroomGame>> cell = this.add(node).width(NODE_WIDTH).height(NODE_HEIGHT);
+                Cell<IdleMushroomStorageResourceAmountPairNode> cell = this.add(node).width(NODE_WIDTH).height(NODE_HEIGHT);
                 if ((i + 1) % NUM_NODE_PER_ROW == 0) {
                     cell.row();
                 }

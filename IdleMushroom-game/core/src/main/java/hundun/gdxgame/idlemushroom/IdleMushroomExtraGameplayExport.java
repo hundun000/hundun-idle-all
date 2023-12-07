@@ -85,7 +85,7 @@ public class IdleMushroomExtraGameplayExport implements IGameStartListener {
         this.currentRootEpochConfig = epochConfigMap.get(currentEpochLevel);
         this.nextRootEpochConfig = epochConfigMap.get(currentEpochLevel + 1);
 
-        game.getIdleMushroomScreenContext().getMainPlayScreen().setMainClickerWithScale();
+        game.getScreenContext().getMainPlayScreen().setMainClickerWithScale();
         // ------ UpdateMaxLevel ------
         boolean needUpdateMaxLevel = lastRootEpochConfig == null || lastRootEpochConfig.getMaxLevel() != currentRootEpochConfig.getMaxLevel();
         if (needUpdateMaxLevel) {

@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import hundun.gdxgame.corelib.base.BaseHundunGame;
+import hundun.gdxgame.corelib.base.BaseHundunScreen;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.framework.model.entity.BaseGameEntityFactory;
 import hundun.gdxgame.idleshare.core.framework.model.entity.GameEntity;
@@ -17,18 +21,30 @@ import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChan
  * Created on 2021/11/16
  * @param <T_GAME>
  */
-public class GameImageDrawer<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> implements IOneFrameResourceChangeListener {
+public class GameImageDrawer<T_GAME extends BaseHundunGame<T_SAVE>, T_SAVE> implements IOneFrameResourceChangeListener {
 
-    BaseIdleScreen<T_GAME, T_SAVE> parent;
-
+    BaseHundunScreen<T_GAME, T_SAVE> parent;
+    IGameImageDrawerHolder holder;
     BaseGameEntityFactory gameEntityFactory;
     GameEntityManager manager;
 
 
+    public interface IGameImageDrawerHolder {
+        String getScreenId();
 
-    public GameImageDrawer(BaseIdleScreen<T_GAME, T_SAVE> parent) {
+        long getResourceNumOrZero(String resourceId);
+
+        int getConstructionWorkingLevelNumOrZero(String prototypeId);
+
+        Sprite getResourceEntity(String resourceId);
+
+        Sprite getConstructionEntity(String constructionId);
+    }
+
+
+    public GameImageDrawer(BaseHundunScreen<T_GAME, T_SAVE> parent, IGameImageDrawerHolder holder) {
         this.parent = parent;
-
+        this.holder = holder;
         
     }
 
@@ -36,9 +52,9 @@ public class GameImageDrawer<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> implem
     public void allEntitiesMoveForFrameAndDraw() {
         parent.getGame().getBatch().begin();
 
-        String gameArea = parent.getScreenId();
+        String gameArea = holder.getScreenId();
         List<String> needDrawConstructionIds = manager.getAreaEntityEffectConfigMap().get(gameArea).getOwnAmountConstructionPrototypeIds();
-        manager.destoryNoNeedDrawConstructionIds(needDrawConstructionIds);
+                manager.destoryNoNeedDrawConstructionIds(needDrawConstructionIds);
         manager.allEntityMoveForFrame();
         
         if (needDrawConstructionIds != null) {
@@ -85,7 +101,7 @@ public class GameImageDrawer<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> implem
 
     @Override
     public void onResourceChange(Map<String, Long> changeMap, Map<String, List<Long>> deltaHistoryMap) {
-        String gameArea = parent.getScreenId();
+        String gameArea = holder.getScreenId();
 
         manager.areaEntityCheckByOwnAmount(gameArea, gameEntityFactory);
         manager.areaEntityCheckByChangeAmount(gameArea, gameEntityFactory, changeMap);

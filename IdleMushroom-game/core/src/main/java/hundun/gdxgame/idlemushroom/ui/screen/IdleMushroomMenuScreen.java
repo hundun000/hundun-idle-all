@@ -8,16 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import hundun.gdxgame.corelib.base.BaseHundunScreen;
-import hundun.gdxgame.corelib.base.util.DrawableFactory;
-import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
 import hundun.gdxgame.idlemushroom.logic.DemoScreenId;
 import hundun.gdxgame.idlemushroom.logic.RootSaveData;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushroomPlayScreenLayoutConst;
-import hundun.gdxgame.idlemushroom.ui.shared.BaseIdleMushroomScreen;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.menu.BaseIdleMenuScreen;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 import lombok.Getter;
 
@@ -31,7 +26,7 @@ import java.util.stream.Stream;
  * @author hundun
  * Created on 2023/02/16
  */
-public class DemoMenuScreen extends BaseHundunScreen<IdleMushroomGame, RootSaveData> {
+public class IdleMushroomMenuScreen extends BaseHundunScreen<IdleMushroomGame, RootSaveData> {
     @Getter
     IdleMushroomGame idleMushroomGame;
 
@@ -44,9 +39,9 @@ public class DemoMenuScreen extends BaseHundunScreen<IdleMushroomGame, RootSaveD
     TextButton buttonContinueGame;
     TextButton buttonNewGame;
     TextButton buttonIntoSettingScreen;
-    LanguageSwitchBoard<IdleMushroomGame, RootSaveData> languageSwitchBoardVM;
+    LanguageSwitchBoard languageSwitchBoardVM;
 
-    public DemoMenuScreen(IdleMushroomGame game) {
+    public IdleMushroomMenuScreen(IdleMushroomGame game) {
         super(game, game.getSharedViewport());
         this.idleMushroomGame = game;
         this.buttonContinueGameInputListener = new InputListener(){
@@ -96,7 +91,7 @@ public class DemoMenuScreen extends BaseHundunScreen<IdleMushroomGame, RootSaveD
 
         backUiStage.addActor(backImage);
 
-        uiRootTable.add(new Image(game.getIdleMushroomTextureManager().getTitleImage()))
+        uiRootTable.add(new Image(game.getTextureManager().getTitleImage()))
                 .row();
         IdleMushroomPlayScreenLayoutConst layoutConst = this.getIdleMushroomGame().getIdleMushroomPlayScreenLayoutConst();
 
@@ -114,7 +109,7 @@ public class DemoMenuScreen extends BaseHundunScreen<IdleMushroomGame, RootSaveD
                 .padTop(10)
                 .row();
 
-        this.languageSwitchBoardVM = new LanguageSwitchBoard<>(
+        this.languageSwitchBoardVM = new LanguageSwitchBoard(
                 this,
                 Language.values(),
                 game.getIdleGameplayExport().getLanguage(),
@@ -151,15 +146,15 @@ public class DemoMenuScreen extends BaseHundunScreen<IdleMushroomGame, RootSaveD
 
     }
 
-    public static class LanguageSwitchBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table {
+    public static class LanguageSwitchBoard extends Table {
 
-        DemoMenuScreen parent;
+        IdleMushroomMenuScreen parent;
         @Getter
         SelectBox<String> selectBox;
         Label restartHintLabel;
         private final Map<Language, String> languageShowNameMap;
 
-        LanguageSwitchBoard(DemoMenuScreen parent,
+        LanguageSwitchBoard(IdleMushroomMenuScreen parent,
                             Language[] values,
                             Language current,
                             String startText,
@@ -167,7 +162,7 @@ public class DemoMenuScreen extends BaseHundunScreen<IdleMushroomGame, RootSaveD
                             Consumer<Language> onSelect
         ) {
             this.parent = parent;
-            this.setBackground(parent.getIdleMushroomGame().getIdleMushroomTextureManager().getTableType1Drawable());
+            this.setBackground(parent.getIdleMushroomGame().getTextureManager().getTableType1Drawable());
             this.languageShowNameMap = parent.getGame().getIdleGameplayExport().getGameDictionary().getLanguageShowNameMap();
             this.add(new Label(startText, parent.getGame().getMainSkin()));
 

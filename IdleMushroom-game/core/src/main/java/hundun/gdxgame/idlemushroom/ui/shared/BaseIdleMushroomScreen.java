@@ -1,32 +1,99 @@
 package hundun.gdxgame.idlemushroom.ui.shared;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import hundun.gdxgame.corelib.base.BaseHundunScreen;
+import hundun.gdxgame.gamelib.base.LogicFrameHelper;
+import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
 import hundun.gdxgame.idlemushroom.logic.RootSaveData;
+import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.starter.ui.component.BackgroundImageBox;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
+import lombok.Getter;
 
-public abstract class BaseIdleMushroomScreen extends BaseIdleScreen<IdleMushroomGame, RootSaveData> {
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class BaseIdleMushroomScreen extends BaseHundunScreen<IdleMushroomGame, RootSaveData> {
+    public static final int LOGIC_FRAME_PER_SECOND = 30;
+
+    @Getter
+    protected final PlayScreenLayoutConst layoutConst;
+
+    protected boolean hidden;
+    protected List<ILogicFrameListener> logicFrameListeners;
+    protected List<IGameAreaChangeListener> gameAreaChangeListeners;
+
+    @Getter
+    protected final String screenId;
 
     protected StorageInfoBoard storageInfoTable;
 
-    protected BackgroundImageBox<IdleMushroomGame, RootSaveData> backgroundImageBox;
+    protected BackgroundImageBox backgroundImageBox;
     protected IdleMushroomGameAreaControlBoard gameAreaControlBoard;
 
     protected Table leftSideGroup;
     protected Table middleGroup;
 
     protected static int UI_ROOT_TABLE_COLSPAN_SIZE = 3;
-    
+
+    public static class BackgroundImageBox extends Container<Image> implements IGameAreaChangeListener{
+        BaseIdleMushroomScreen parent;
+
+        public BackgroundImageBox(BaseIdleMushroomScreen parent) {
+            this.parent = parent;
+            this.setFillParent(true);
+            //this.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        }
+
+        @Override
+        public void onGameAreaChange(String last, String current) {
+            Drawable image = new TextureRegionDrawable(parent.getGame().getTextureManager().getBackgroundTexture(current));
+            this.setBackground(image);
+        }
+
+    }
+
     public BaseIdleMushroomScreen(IdleMushroomGame game, String screenId, PlayScreenLayoutConst layoutConst) {
-        super(game, screenId, layoutConst);
+        super(game, game.getSharedViewport());
+        this.screenId = screenId;
+        this.layoutConst = layoutConst;
+        this.logicFrameHelper = new LogicFrameHelper(LOGIC_FRAME_PER_SECOND);
+        this.logicFrameListeners = new ArrayList<>();
+        this.gameAreaChangeListeners = new ArrayList<>();
+    }
+
+    @Override
+    protected void create() {
+
+        lazyInitBackUiAndPopupUiContent();
+
+        lazyInitUiRootContext();
+
+        lazyInitLogicContext();
+
+        if (game.debugMode) {
+            uiRootTable.debugAll();
+            popupRootTable.debugCell();
+        }
     }
 
     @Override
     protected void onLogicFrame() {
         super.onLogicFrame();
+
+        for (ILogicFrameListener logicFrameListener : logicFrameListeners) {
+            logicFrameListener.onLogicFrame();
+        }
 
         if (logicFrameHelper.getClockCount() % logicFrameHelper.secondToFrameNum(10) == 0)
         {
@@ -34,7 +101,6 @@ public abstract class BaseIdleMushroomScreen extends BaseIdleScreen<IdleMushroom
         }
     }
 
-    @Override
     protected void lazyInitLogicContext() {
         logicFrameListeners.add(game.getIdleGameplayExport());
 
@@ -47,7 +113,6 @@ public abstract class BaseIdleMushroomScreen extends BaseIdleScreen<IdleMushroom
         this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(storageInfoTable);
     }
 
-    @Override
     protected void lazyInitUiRootContext() {
 
         storageInfoTable = new StorageInfoBoard(this);
@@ -71,11 +136,42 @@ public abstract class BaseIdleMushroomScreen extends BaseIdleScreen<IdleMushroom
                 .row();
     }
 
-    @Override
     protected void lazyInitBackUiAndPopupUiContent() {
 
-        this.backgroundImageBox = new BackgroundImageBox<>(this);
+        this.backgroundImageBox = new BackgroundImageBox(this);
         backUiStage.addActor(backgroundImageBox);
 
     }
+
+    @Override
+    public void dispose() {
+    }
+
+
+    @Override
+    public void show() {
+        super.show();
+
+        Gdx.input.setInputProcessor(provideDefaultInputProcessor());
+
+        updateUIForShow();
+
+        for (IGameAreaChangeListener gameAreaChangeListener : gameAreaChangeListeners) {
+            gameAreaChangeListener.onGameAreaChange(game.getLastScreenId(), this.getScreenId());
+        }
+
+        this.hidden = false;
+        Gdx.app.log(this.getClass().getSimpleName(), "show done");
+    }
+
+    @Override
+    public void hide() {
+        super.hide();
+
+        this.hidden = true;
+    }
+
+    protected abstract void updateUIForShow();
+
+    protected abstract InputProcessor provideDefaultInputProcessor();
 }

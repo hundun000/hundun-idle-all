@@ -2,7 +2,7 @@ package hundun.gdxgame.idlemushroom.ui.main;
 
 import hundun.gdxgame.idlemushroom.logic.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.logic.ResourceType;
-import hundun.gdxgame.idlemushroom.ui.screen.MainPlayScreen;
+import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomMainPlayScreen;
 import hundun.gdxgame.idleshare.core.framework.model.entity.BaseGameEntityFactory;
 import hundun.gdxgame.idleshare.core.framework.model.entity.GameEntity;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
@@ -19,7 +19,7 @@ public class GameEntityFactory extends BaseGameEntityFactory {
 
     public float RESOURCE_MAX_DRAW_NUM = 15;
     
-    public GameEntityFactory(PlayScreenLayoutConst layoutConst, MainPlayScreen parent) {
+    public GameEntityFactory(PlayScreenLayoutConst layoutConst, IdleMushroomMainPlayScreen parent) {
         super(layoutConst, parent);
     }
     

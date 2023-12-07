@@ -75,8 +75,8 @@ public class WorldMushroomDetailNode extends BaseCellDetailNodeVM {
 
         this.positionLabel = new Label("", parent.getGame().getMainSkin());
 
-        Container<?> questionMarkArea = new Container<>(new Image(parent.getGame().getIdleMushroomTextureManager().getQuestionMarkTexture()));
-        questionMarkArea.setBackground(parent.getGame().getIdleMushroomTextureManager().getQuestionMarkTableDrawable());
+        Container<?> questionMarkArea = new Container<>(new Image(parent.getGame().getTextureManager().getQuestionMarkTexture()));
+        questionMarkArea.setBackground(parent.getGame().getTextureManager().getQuestionMarkTableDrawable());
         questionMarkArea.setTouchable(Touchable.enabled);
         questionMarkArea.addListener(new StarterSecondaryInfoBoardCallerClickListener(() -> model, parent));
 
@@ -93,7 +93,7 @@ public class WorldMushroomDetailNode extends BaseCellDetailNodeVM {
         leftPart.add(progressBar).colspan(2).size(CHILD_WIDTH, CHILD_HEIGHT);
         leftPart.row();
 
-        this.setBackground(parent.getGame().getIdleMushroomTextureManager().getTableType3Drawable());
+        this.setBackground(parent.getGame().getTextureManager().getTableType3Drawable());
         this.add(leftPart).padRight(20);
         this.add(rightPart);
     }

@@ -1,12 +1,7 @@
 package hundun.gdxgame.idlemushroom.ui.screen;
 
-import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
 import hundun.gdxgame.idlemushroom.logic.DemoScreenId;
-import hundun.gdxgame.idlemushroom.logic.RootSaveData;
-import hundun.gdxgame.idleshare.core.framework.model.manager.AbstractIdleScreenContext;
 import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
 import lombok.Getter;
 
@@ -14,11 +9,12 @@ import lombok.Getter;
  * @author hundun
  * Created on 2023/02/17
  */
-public class IdleMushroomScreenContext extends AbstractIdleScreenContext<IdleMushroomGame, RootSaveData> {
+public class IdleMushroomScreenContext {
 
-    DemoMenuScreen menuScreen;
+    protected IdleMushroomGame game;
+    IdleMushroomMenuScreen menuScreen;
     @Getter
-    MainPlayScreen mainPlayScreen;
+    IdleMushroomMainPlayScreen mainPlayScreen;
     WorldPlayScreen worldPlayScreen;
     DemoAchievementScreen achievementScreen;
 
@@ -41,13 +37,12 @@ public class IdleMushroomScreenContext extends AbstractIdleScreenContext<IdleMus
     }
 
     public IdleMushroomScreenContext(IdleMushroomGame game) {
-        super(game);
+        this.game = game;
     }
 
-    @Override
     public void lazyInit() {
-        this.menuScreen = new DemoMenuScreen(game);
-        this.mainPlayScreen = new MainPlayScreen(game);
+        this.menuScreen = new IdleMushroomMenuScreen(game);
+        this.mainPlayScreen = new IdleMushroomMainPlayScreen(game);
         this.worldPlayScreen = new WorldPlayScreen(game);
         this.achievementScreen = new DemoAchievementScreen(game);
 

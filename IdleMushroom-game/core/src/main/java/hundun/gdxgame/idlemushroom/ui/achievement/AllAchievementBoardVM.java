@@ -20,7 +20,7 @@ public class AllAchievementBoardVM extends Table {
     public AllAchievementBoardVM(BaseIdleMushroomScreen parent)
     {
         this.parent = parent;
-        this.setBackground(parent.getGame().getIdleMushroomTextureManager().getTableType2Drawable());
+        this.setBackground(parent.getGame().getTextureManager().getTableType2Drawable());
 
         childTable = new Table();
         //childTable.setBackground(parent.getGame().getIdleMushroomTextureManager().getTableType2Drawable());

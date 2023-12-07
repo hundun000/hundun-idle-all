@@ -1,17 +1,16 @@
 package hundun.gdxgame.idlemushroom.ui.shared;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Null;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
-import hundun.gdxgame.idleshare.core.starter.ui.component.ResourceAmountPairNode;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.UpgradeComponent.UpgradeState;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePack;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +85,7 @@ public class ConstructionDetailPartVM extends Table {
     public static List<Actor> pairsToActors(List<ResourcePair> pairs, IdleMushroomGame game) {
         List<Actor> pairsToActors = new ArrayList<>();
         for (ResourcePair entry : pairs) {
-            ResourceAmountPairNode<IdleMushroomGame> node = new ResourceAmountPairNode<>(game, entry.getType());
+            IdleMushroomResourceAmountPairNode node = new IdleMushroomResourceAmountPairNode(game, entry.getType());
             node.update(entry.getAmount());
             pairsToActors.add(node);
         }
@@ -99,4 +98,35 @@ public class ConstructionDetailPartVM extends Table {
     }
 
 
+    public static class IdleMushroomResourceAmountPairNode extends HorizontalGroup {
+
+        IdleMushroomGame game;
+
+        @Getter
+        String resourceType;
+
+        Image image;
+        Label label;
+
+        public IdleMushroomResourceAmountPairNode(IdleMushroomGame game, String resourceType) {
+            super();
+            this.game = game;
+            this.resourceType = resourceType;
+            TextureRegion textureRegion = game.getTextureManager().getResourceIcon(resourceType);
+            this.image = new Image(textureRegion);
+            this.addActor(image);
+            this.label = new Label("", game.getMainSkin());
+            this.addActor(label);
+        }
+
+        public void update(long amout) {
+            label.setText(
+                    game.getTextFormatTool().format(amout)
+            );
+        }
+
+
+
+
+    }
 }

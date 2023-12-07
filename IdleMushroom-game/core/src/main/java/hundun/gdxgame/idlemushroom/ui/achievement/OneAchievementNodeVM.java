@@ -34,7 +34,7 @@ public class OneAchievementNodeVM extends Table {
 
         this.texts = parent.getGame().getIdleGameplayExport().getGameDictionary()
                 .getAchievementTexts(parent.getGame().getIdleGameplayExport().getLanguage());
-        this.setBackground(parent.getGame().getIdleMushroomTextureManager().getTableType3Drawable());
+        this.setBackground(parent.getGame().getTextureManager().getTableType3Drawable());
 
 
         nameStartLabel = new Label("", parent.getGame().getMainSkin());
@@ -43,7 +43,7 @@ public class OneAchievementNodeVM extends Table {
         descriptionLabel = new Label("", parent.getGame().getMainSkin());
         descriptionLabel.setWrap(true);
         descriptionContainer = new Table();
-        descriptionContainer.setBackground(parent.getGame().getIdleMushroomTextureManager().getTableType5Drawable());
+        descriptionContainer.setBackground(parent.getGame().getTextureManager().getTableType5Drawable());
         descriptionContainer.add(descriptionLabel).grow().center();
 
         countStartLabel = new Label("", parent.getGame().getMainSkin());

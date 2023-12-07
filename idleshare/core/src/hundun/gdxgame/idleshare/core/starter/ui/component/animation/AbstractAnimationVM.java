@@ -12,13 +12,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Null;
+import hundun.gdxgame.corelib.base.BaseHundunGame;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
 
-public abstract class AbstractAnimationVM<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE, T_CALL_ARG> extends Table {
+public abstract class AbstractAnimationVM<T_GAME extends BaseHundunGame<T_SAVE>, T_SAVE, T_CALL_ARG> extends Table {
     @Null
     private final IAnimationCallback callback;
     

@@ -9,9 +9,11 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 
+import hundun.gdxgame.corelib.base.BaseHundunGame;
 import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.core.framework.model.entity.BaseGameEntityFactory;
 import hundun.gdxgame.idleshare.core.framework.model.entity.GameEntity;
+import hundun.gdxgame.idleshare.core.starter.ui.component.GameImageDrawer.IGameImageDrawerHolder;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig.AreaEntityEffectConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import lombok.Getter;
@@ -23,7 +25,7 @@ import lombok.Getter;
  */
 public class GameEntityManager {
 
-    private BaseIdleGame<?> game;
+    IGameImageDrawerHolder holder;
     @Getter
     private Map<String, List<GameEntity>> gameEntitiesOfConstructionPrototypeIds = new HashMap<String, List<GameEntity>>();
     @Getter
@@ -32,9 +34,9 @@ public class GameEntityManager {
     private Map<String, AreaEntityEffectConfig> areaEntityEffectConfigMap;
 
 
-    public GameEntityManager(BaseIdleGame<?> game) {
+    public GameEntityManager(IGameImageDrawerHolder holder) {
         super();
-        this.game = game;
+        this.holder = holder;
     }
 
     public void allEntityMoveForFrame() {
@@ -99,7 +101,7 @@ public class GameEntityManager {
     }
 
     private void checkResourceEntityByOwnAmount(String resourceId, BaseGameEntityFactory gameEntityFactory) {
-        long resourceNum = game.getIdleGameplayExport().getGameplayContext().getStorageManager().getResourceNumOrZero(resourceId);
+        long resourceNum = holder.getResourceNumOrZero(resourceId);
         int drawNum = gameEntityFactory.calculateResourceDrawNum(resourceId, resourceNum);
 
         gameEntitiesOfResourceIds.computeIfAbsent(resourceId, k -> new LinkedList<>());
@@ -137,10 +139,9 @@ public class GameEntityManager {
     }
 
     private void checkConstructionEntityByOwnAmount(String prototypeId, BaseGameEntityFactory gameEntityFactory) {
-        List<BaseConstruction> constructions = game.getIdleGameplayExport().getGameplayContext().getConstructionManager().getConstructionsOfPrototype(prototypeId);
-        int resourceNum = constructions.stream().mapToInt(it -> it.getSaveData().getWorkingLevel()).sum();
+        int constructionWorkingLevelNum = holder.getConstructionWorkingLevelNumOrZero(prototypeId);
         int MAX_DRAW_NUM = 5;
-        int drawNum = gameEntityFactory.calculateConstructionDrawNum(prototypeId, resourceNum, MAX_DRAW_NUM);
+        int drawNum = gameEntityFactory.calculateConstructionDrawNum(prototypeId, constructionWorkingLevelNum, MAX_DRAW_NUM);
         gameEntitiesOfConstructionPrototypeIds.computeIfAbsent(prototypeId, k -> new LinkedList<>());
         List<GameEntity> gameEntities = gameEntitiesOfConstructionPrototypeIds.get(prototypeId);
         while (gameEntities.size() > drawNum) {

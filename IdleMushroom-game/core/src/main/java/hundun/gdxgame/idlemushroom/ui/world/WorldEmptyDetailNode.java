@@ -46,7 +46,7 @@ public class WorldEmptyDetailNode extends BaseCellDetailNodeVM {
 
         this.buyCandidateKeyLabel = new Label("", parent.getGame().getMainSkin());
         // ------ this ------
-        this.setBackground(parent.getGame().getIdleMushroomTextureManager().getTableType3Drawable());
+        this.setBackground(parent.getGame().getTextureManager().getTableType3Drawable());
         this.pad(screen.getLayoutConst().WorldConstructionCellTablePad);
     }
 
@@ -102,8 +102,8 @@ public class WorldEmptyDetailNode extends BaseCellDetailNodeVM {
                 .size(CHILD_WIDTH, NAME_CHILD_HEIGHT)
                 .right();
 
-        Container<?> questionMarkArea = new Container<>(new Image(screen.getGame().getIdleMushroomTextureManager().getQuestionMarkTexture()));
-        questionMarkArea.setBackground(screen.getGame().getIdleMushroomTextureManager().getQuestionMarkTableDrawable());
+        Container<?> questionMarkArea = new Container<>(new Image(screen.getGame().getTextureManager().getQuestionMarkTexture()));
+        questionMarkArea.setBackground(screen.getGame().getTextureManager().getQuestionMarkTableDrawable());
         questionMarkArea.setTouchable(Touchable.enabled);
         questionMarkArea.addListener(new StarterSecondaryInfoBoardCallerClickListener(() -> construction, screen));
         this.add(questionMarkArea)
@@ -170,7 +170,7 @@ public class WorldEmptyDetailNode extends BaseCellDetailNodeVM {
             this.add(constructionNameLabel).size(CHILD_WIDTH, CHILD_HEIGHT).row();
             this.add(costPart).row();
             this.add(buyButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
-            this.setBackground(parent.getGame().getIdleMushroomTextureManager().getTableType5Drawable());
+            this.setBackground(parent.getGame().getTextureManager().getTableType5Drawable());
         }
 
         public void update() {
