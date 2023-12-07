@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.logic.DemoScreenId;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.menu.BaseIdleMenuScreen;
+import hundun.gdxgame.idledemo.starter.ui.screen.menu.BaseIdleMenuScreen;
 
 /**
  * @author hundun

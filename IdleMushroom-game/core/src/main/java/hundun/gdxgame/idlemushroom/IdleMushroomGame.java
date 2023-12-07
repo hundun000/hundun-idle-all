@@ -11,8 +11,7 @@ import hundun.gdxgame.gamelib.base.save.ISaveTool;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext;
 import hundun.gdxgame.idlemushroom.logic.*;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushroomPlayScreenLayoutConst;
-import hundun.gdxgame.idleshare.core.framework.model.manager.AudioPlayManager;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
+import hundun.gdxgame.idlemushroom.ui.shared.BaseIdleMushroomScreen;
 import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.TextFormatTool;
@@ -88,7 +87,7 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
                 idleMushroomGameDictionary,
                 new DemoBuiltinConstructionsLoader(),
                 new DemoAchievementLoader(idleMushroomGameDictionary),
-                BaseIdleScreen.LOGIC_FRAME_PER_SECOND,
+                BaseIdleMushroomScreen.LOGIC_FRAME_PER_SECOND,
                 childGameConfig
                 );
         this.getSaveHandler().registerSubHandler(idleGameplayExport);

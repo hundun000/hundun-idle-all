@@ -3,9 +3,9 @@ package hundun.gdxgame.idledemo.ui.main;
 import hundun.gdxgame.idledemo.logic.DemoConstructionPrototypeId;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.ui.screen.MainPlayScreen;
-import hundun.gdxgame.idleshare.core.framework.model.entity.BaseGameEntityFactory;
-import hundun.gdxgame.idleshare.core.framework.model.entity.GameEntity;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
+import hundun.gdxgame.idleshare.core.framework.entity.BaseGameEntityFactory;
+import hundun.gdxgame.idleshare.core.framework.entity.GameEntity;
+import hundun.gdxgame.idledemo.starter.ui.screen.play.PlayScreenLayoutConst;
 
 /**
  * @author hundun

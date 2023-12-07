@@ -17,7 +17,7 @@ import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushr
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomMainPlayScreen;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseCellDetailNodeVM;
 import hundun.gdxgame.idlemushroom.ui.shared.ConstructionDetailPartVM;
-import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.StarterConstructionControlNode.StarterSecondaryInfoBoardCallerClickListener;
+import hundun.gdxgame.idleshare.core.framework.StarterSecondaryInfoBoardCallerClickListener;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollectionListener;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;

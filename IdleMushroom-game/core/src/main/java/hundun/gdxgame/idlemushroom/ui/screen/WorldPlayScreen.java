@@ -16,7 +16,7 @@ import hundun.gdxgame.idlemushroom.ui.world.HexCellVM;
 import hundun.gdxgame.idlemushroom.ui.world.HexAreaVM;
 import hundun.gdxgame.idlemushroom.ui.world.WorldDetailBoardVM;
 import hundun.gdxgame.idlemushroom.ui.world.WorldScreenPopupInfoBoard;
-import hundun.gdxgame.idleshare.core.framework.model.CameraDataPackage;
+import hundun.gdxgame.idleshare.core.framework.CameraDataPackage;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollectionListener;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;

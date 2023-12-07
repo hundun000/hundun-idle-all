@@ -2,9 +2,8 @@ package hundun.gdxgame.idledemo.ui.achievement;
 
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
+import hundun.gdxgame.idledemo.BaseIdleGame;
+import hundun.gdxgame.idledemo.starter.ui.screen.play.BaseIdleScreen;
 
 import java.util.ArrayList;
 import java.util.List;

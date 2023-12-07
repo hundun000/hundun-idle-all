@@ -12,7 +12,7 @@ import hundun.gdxgame.idledemo.ui.shared.BaseDemoPlayScreen;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
 import hundun.gdxgame.idledemo.ui.world.HexAreaVM;
 import hundun.gdxgame.idledemo.ui.world.WorldCellDetailBoardVM;
-import hundun.gdxgame.idleshare.core.framework.model.CameraDataPackage;
+import hundun.gdxgame.idleshare.core.framework.CameraDataPackage;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollectionListener;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 

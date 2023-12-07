@@ -3,11 +3,11 @@ package hundun.gdxgame.idlemushroom.ui.world;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
+import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushroomPlayScreenLayoutConst;
 import hundun.gdxgame.idlemushroom.ui.screen.WorldPlayScreen;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseCellDetailNodeVM;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseIdleMushroomPlayScreen;
-import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.StarterConstructionControlNode.StarterSecondaryInfoBoardCallerClickListener;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
+import hundun.gdxgame.idleshare.core.framework.StarterSecondaryInfoBoardCallerClickListener;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
 
@@ -29,7 +29,7 @@ public class WorldTreeDetailNode extends BaseCellDetailNodeVM {
             WorldPlayScreen parent
             ) {
         super();
-        final PlayScreenLayoutConst playScreenLayoutConst = parent.getLayoutConst();
+        final IdleMushroomPlayScreenLayoutConst playScreenLayoutConst = parent.getLayoutConst();
         this.parent = parent;
 
 

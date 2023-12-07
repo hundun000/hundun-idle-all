@@ -13,10 +13,7 @@ import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
 import hundun.gdxgame.idlemushroom.logic.RootSaveData;
-import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.core.starter.ui.component.BackgroundImageBox;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
+import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushroomPlayScreenLayoutConst;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -26,7 +23,7 @@ public abstract class BaseIdleMushroomScreen extends BaseHundunScreen<IdleMushro
     public static final int LOGIC_FRAME_PER_SECOND = 30;
 
     @Getter
-    protected final PlayScreenLayoutConst layoutConst;
+    protected final IdleMushroomPlayScreenLayoutConst layoutConst;
 
     protected boolean hidden;
     protected List<ILogicFrameListener> logicFrameListeners;
@@ -63,7 +60,7 @@ public abstract class BaseIdleMushroomScreen extends BaseHundunScreen<IdleMushro
 
     }
 
-    public BaseIdleMushroomScreen(IdleMushroomGame game, String screenId, PlayScreenLayoutConst layoutConst) {
+    public BaseIdleMushroomScreen(IdleMushroomGame game, String screenId, IdleMushroomPlayScreenLayoutConst layoutConst) {
         super(game, game.getSharedViewport());
         this.screenId = screenId;
         this.layoutConst = layoutConst;

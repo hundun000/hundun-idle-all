@@ -12,7 +12,6 @@ import hundun.gdxgame.idlemushroom.IdleMushroomGame;
 import hundun.gdxgame.idlemushroom.logic.DemoScreenId;
 import hundun.gdxgame.idlemushroom.logic.RootSaveData;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushroomPlayScreenLayoutConst;
-import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 import lombok.Getter;
 

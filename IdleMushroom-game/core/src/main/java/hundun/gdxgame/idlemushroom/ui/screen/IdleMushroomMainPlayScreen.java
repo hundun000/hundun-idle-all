@@ -19,10 +19,10 @@ import hundun.gdxgame.idlemushroom.ui.shared.BaseIdleMushroomPlayScreen;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseIdleMushroomScreen;
 import hundun.gdxgame.idlemushroom.ui.world.HexCellVM;
 import hundun.gdxgame.idlemushroom.ui.main.GameEntityFactory;
-import hundun.gdxgame.idleshare.core.framework.model.manager.GameEntityManager;
-import hundun.gdxgame.idleshare.core.starter.ui.component.GameImageDrawer;
-import hundun.gdxgame.idleshare.core.starter.ui.component.GameImageDrawer.IGameImageDrawerHolder;
-import hundun.gdxgame.idleshare.core.starter.ui.component.animation.AbstractAnimationVM;
+import hundun.gdxgame.idleshare.core.framework.AbstractAnimationVM;
+import hundun.gdxgame.idleshare.core.framework.GameImageDrawer;
+import hundun.gdxgame.idleshare.core.framework.GameImageDrawer.IGameImageDrawerHolder;
+import hundun.gdxgame.idleshare.core.framework.manager.GameEntityManager;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
@@ -140,7 +140,7 @@ public class IdleMushroomMainPlayScreen extends BaseIdleMushroomPlayScreen
         gameEntityManager.lazyInit(
                 game.getChildGameConfig().getAreaEntityEffectConfigMap()
         );
-        GameEntityFactory gameEntityFactory = new GameEntityFactory(this.layoutConst, this);
+        GameEntityFactory gameEntityFactory = new GameEntityFactory(this, this.layoutConst.gameEntityFactoryLayoutConst);
         gameImageDrawer.lazyInit(gameEntityFactory, gameEntityManager);
 
         logicFrameListeners.add(constructionControlBoard);

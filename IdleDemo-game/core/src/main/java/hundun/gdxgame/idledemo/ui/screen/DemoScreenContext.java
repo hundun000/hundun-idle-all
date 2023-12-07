@@ -6,8 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.logic.DemoScreenId;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
-import hundun.gdxgame.idleshare.core.framework.model.manager.AbstractIdleScreenContext;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
+import hundun.gdxgame.idledemo.AbstractIdleScreenContext;
+import hundun.gdxgame.idledemo.starter.ui.screen.play.PlayScreenLayoutConst;
 
 /**
  * @author hundun

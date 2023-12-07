@@ -1,7 +1,5 @@
 package hundun.gdxgame.idledemo;
 
-import java.util.List;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ray3k.stripe.FreeTypeSkin;
@@ -9,12 +7,8 @@ import com.ray3k.stripe.FreeTypeSkin;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idledemo.logic.*;
 import hundun.gdxgame.gamelib.base.save.ISaveTool;
-import hundun.gdxgame.idledemo.ui.screen.DemoMenuScreen;
 import hundun.gdxgame.idledemo.ui.screen.DemoScreenContext;
-import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.core.framework.model.manager.AbstractIdleScreenContext;
-import hundun.gdxgame.idleshare.core.framework.model.manager.AudioPlayManager;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
+import hundun.gdxgame.idledemo.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.TextFormatTool;
 import lombok.Getter;

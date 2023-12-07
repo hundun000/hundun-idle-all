@@ -12,11 +12,11 @@ import hundun.gdxgame.idledemo.ui.main.MainScreenConstructionControlBoard;
 import hundun.gdxgame.idledemo.ui.shared.BaseDemoPlayScreen;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
 import hundun.gdxgame.idledemo.ui.main.GameEntityFactory;
-import hundun.gdxgame.idleshare.core.framework.model.manager.GameEntityManager;
-import hundun.gdxgame.idleshare.core.starter.ui.component.GameImageDrawer;
-import hundun.gdxgame.idleshare.core.starter.ui.component.GameImageDrawer.IGameImageDrawerHolder;
-import hundun.gdxgame.idleshare.core.starter.ui.component.PopupInfoBoard;
-import hundun.gdxgame.idleshare.core.starter.ui.component.animation.MainClickerAnimationVM;
+import hundun.gdxgame.idleshare.core.framework.manager.GameEntityManager;
+import hundun.gdxgame.idleshare.core.framework.GameImageDrawer;
+import hundun.gdxgame.idleshare.core.framework.GameImageDrawer.IGameImageDrawerHolder;
+import hundun.gdxgame.idledemo.starter.ui.component.PopupInfoBoard;
+import hundun.gdxgame.idledemo.starter.ui.component.animation.MainClickerAnimationVM;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 

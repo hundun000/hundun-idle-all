@@ -4,9 +4,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
-import hundun.gdxgame.idleshare.core.framework.BaseIdleGame;
-import hundun.gdxgame.idleshare.core.starter.ui.component.StorageResourceAmountPairNode;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.util.Utils;
 import lombok.Getter;
@@ -139,7 +136,7 @@ public class StorageInfoBoard extends Table implements IOneFrameResourceChangeLi
             if (deltaHistoryMap.containsKey(node.getResourceType()))
             {
                 historySum = deltaHistoryMap.get(node.getResourceType()).stream()
-                        .collect(Utils.lastN(BaseIdleScreen.LOGIC_FRAME_PER_SECOND))
+                        .collect(Utils.lastN(BaseIdleMushroomScreen.LOGIC_FRAME_PER_SECOND))
                         .stream()
                         .mapToLong(it -> it)
                         .sum()

@@ -3,9 +3,12 @@ package hundun.gdxgame.idlemushroom.ui.main;
 import hundun.gdxgame.idlemushroom.logic.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.logic.ResourceType;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomMainPlayScreen;
-import hundun.gdxgame.idleshare.core.framework.model.entity.BaseGameEntityFactory;
-import hundun.gdxgame.idleshare.core.framework.model.entity.GameEntity;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
+import hundun.gdxgame.idleshare.core.framework.entity.BaseGameEntityFactory;
+import hundun.gdxgame.idleshare.core.framework.entity.GameEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author hundun
@@ -18,9 +21,21 @@ public class GameEntityFactory extends BaseGameEntityFactory {
     public float FLY_UNION_SPEED = 2;
 
     public float RESOURCE_MAX_DRAW_NUM = 15;
-    
-    public GameEntityFactory(PlayScreenLayoutConst layoutConst, IdleMushroomMainPlayScreen parent) {
-        super(layoutConst, parent);
+    IdleMushroomGameEntityFactoryLayoutConst layoutConst;
+    public GameEntityFactory(IdleMushroomMainPlayScreen parent, IdleMushroomGameEntityFactoryLayoutConst layoutConst) {
+        super(parent);
+        this.layoutConst = layoutConst;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @Builder
+    @NoArgsConstructor
+    public static class IdleMushroomGameEntityFactoryLayoutConst {
+        public int EXPECTED_DRAW_MIN_X;
+        public int EXPECTED_DRAW_MAX_X;
+        public int EXPECTED_DRAW_MIN_Y;
+        public int EXPECTED_DRAW_MAX_Y;
     }
     
     public GameEntity newConstructionEntity(String id, int index) {

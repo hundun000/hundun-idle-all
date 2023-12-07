@@ -2,13 +2,12 @@ package hundun.gdxgame.idledemo.ui.shared;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import hundun.gdxgame.idledemo.DemoIdleGame;
-import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
-import hundun.gdxgame.idleshare.core.starter.ui.component.BackgroundImageBox;
-import hundun.gdxgame.idleshare.core.starter.ui.component.GameAreaControlBoard;
-import hundun.gdxgame.idleshare.core.starter.ui.component.StarterStorageInfoBoard;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
+import hundun.gdxgame.idledemo.starter.ui.component.BackgroundImageBox;
+import hundun.gdxgame.idledemo.starter.ui.component.GameAreaControlBoard;
+import hundun.gdxgame.idledemo.starter.ui.component.StarterStorageInfoBoard;
+import hundun.gdxgame.idledemo.starter.ui.screen.play.BaseIdleScreen;
+import hundun.gdxgame.idledemo.starter.ui.screen.play.PlayScreenLayoutConst;
 
 public abstract class BaseIdleDemoScreen extends BaseIdleScreen<DemoIdleGame, RootSaveData> {
 
