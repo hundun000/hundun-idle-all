@@ -37,12 +37,12 @@ public class TwoEpochInfoAreaVM extends Table {
     public void rebuildCells(BaseConstruction epochCounterConstruction) {
         RootEpochConfig epochConfig = parent.getGame().getIdleMushroomExtraGameplayExport().getCurrentRootEpochConfig();
         RootEpochConfig nextEpochConfig = parent.getGame().getIdleMushroomExtraGameplayExport().getNextRootEpochConfig();
-        titleLabel.setText(epochCounterConstruction.getDetailDescriptionConstPart());
-        currentLevelInfoAreaVM.updateAsConstruction(epochConfig, epochCounterConstruction, false);
+        titleLabel.setText(epochCounterConstruction.getDescriptionPackage().getWikiText());
+        currentLevelInfoAreaVM.updateAsConstruction(epochConfig, false);
         midPart.clearChildren();
         if (nextEpochConfig != null) {
             midPart.addActor(new Label("-->", parent.getGame().getMainSkin()));
-            nextLevelInfoAreaVM.updateAsConstruction(nextEpochConfig, epochCounterConstruction, true);
+            nextLevelInfoAreaVM.updateAsConstruction(nextEpochConfig, true);
         }else {
             midPart.addActor(new Label("max", parent.getGame().getMainSkin()));
             nextLevelInfoAreaVM.setVisible(false);

@@ -63,20 +63,13 @@ public class WorldConstructionPrototypeCellDetailNode extends BaseCellDetailNode
         } else {
             setVisible(true);
             //textButton.setVisible(true);
-            //Gdx.app.log("ConstructionView", model.getName() + " set to its view");
+            //Gdx.app.log("ConstructionView", model.getDescriptionPackage().getName() + " set to its view");
         }
         // ------ update text ------
 
         constructionNameLabel.setText(JavaFeatureForGwt.stringFormat(
                 "%s (%s, %s)",
-                parent.getGame()
-                        .getIdleGameplayExport()
-                        .getGameplayContext()
-                        .getGameDictionary()
-                        .constructionPrototypeIdToDetailDescriptionConstPart(
-                                parent.getGame().getIdleGameplayExport().getLanguage(),
-                                construction.getPrototypeId()
-                        ),
+                construction.getDescriptionPackage().getWikiText(),
                 position.getX(),
                 position.getY()
         ));

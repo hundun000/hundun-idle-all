@@ -34,7 +34,7 @@ public class WorldBuyConstructionInfoNodeVM extends Table  {
         int CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_BUTTON_HEIGHT;
         int NAME_CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_NAME_HEIGHT;
 
-        this.constructionNameLabel = new Label(constructionBuyCandidateConfig.getPrototypeId(), parent.getGame().getMainSkin());
+        this.constructionNameLabel = new Label("", parent.getGame().getMainSkin());
         constructionNameLabel.setWrap(true);
 
         this.buyButton = new TextButton("buy", parent.getGame().getMainSkin());
@@ -64,18 +64,14 @@ public class WorldBuyConstructionInfoNodeVM extends Table  {
         } else {
             setVisible(true);
             //textButton.setVisible(true);
-            //Gdx.app.log("ConstructionView", model.getName() + " set to its view");
+            //Gdx.app.log("ConstructionView", model.getDescriptionPackage().getName() + " set to its view");
         }
         // ------ update text ------
         constructionNameLabel.setText(
-                parent.getGame()
-                        .getIdleGameplayExport()
-                        .getGameplayContext()
-                        .getGameDictionary()
-                        .constructionPrototypeIdToShowName(
-                                parent.getGame().getIdleGameplayExport().getLanguage(),
-                                constructionBuyCandidateConfig.getPrototypeId()
-                        )
+                parent.getGame().getIdleGameplayExport().getGameplayContext().getConstructionFactory()
+                        .getPrototype(constructionBuyCandidateConfig.getPrototypeId())
+                        .getDescriptionPackage()
+                        .getName()
         );
 
         // ------ update clickable-state ------

@@ -1,6 +1,7 @@
 package hundun.gdxgame.idleshare.gamelib.framework.model.achievement;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
+import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
 
@@ -10,10 +11,14 @@ import java.util.Map.Entry;
 
 public class OwnConstructionAchievement extends AbstractAchievement {
     public Map<String, Entry<Integer, Integer>> requirementMap;
-
+    String descriptionReplaceConstructionPrototypeId;
 
     public OwnConstructionAchievement(
-            String id, String name, String description, String congratulationText,
+            String id,
+            String name,
+            String description,
+            String congratulationText,
+            String descriptionReplaceConstructionPrototypeId,
             Map<String, Entry<Integer, Integer>> requirementMap,
             List<ResourcePair> awardResourceMap,
             List<String> nextAchievementId
@@ -22,6 +27,7 @@ public class OwnConstructionAchievement extends AbstractAchievement {
     {
         super(id, name, description, congratulationText, awardResourceMap, nextAchievementId);
         this.requirementMap = requirementMap;
+        this.descriptionReplaceConstructionPrototypeId = descriptionReplaceConstructionPrototypeId;
     }
 
     @Override
@@ -46,6 +52,18 @@ public class OwnConstructionAchievement extends AbstractAchievement {
         return true;
     }
 
+    @Override
+    public void lazyInitDescription(IdleGameplayContext gameplayContext) {
+        super.lazyInitDescription(gameplayContext);
+
+        this.description = description.replace(
+                "{PrototypeName}",
+                gameplayContext.getConstructionFactory().getPrototype(descriptionReplaceConstructionPrototypeId)
+                        .getDescriptionPackage()
+                        .getName()
+                );
+    }
+
     public static class Companion {
         /**
          * textMap.value : String name, String description, String congratulationText <br>
@@ -60,13 +78,16 @@ public class OwnConstructionAchievement extends AbstractAchievement {
                 ResourcePair... awardResourceMap
         )
         {
+            List<String> args = textMap.get(id);
             AbstractAchievement achievement =  new OwnConstructionAchievement(
                     id,
-                    textMap.get(id).get(0), textMap.get(id).get(1), textMap.get(id).get(2),
+                    args.get(0), args.get(1), args.get(2), args.get(3),
                     requireds,
                     JavaFeatureForGwt.listOf(awardResourceMap),
                     nextAchievementId
             );
+
+
             map.put(id, achievement);
         }
     }

@@ -18,6 +18,7 @@ import hundun.gdxgame.idledemo.starter.ui.screen.play.PlayScreenLayoutConst;
 import hundun.gdxgame.idleshare.core.framework.StarterSecondaryInfoBoardCallerClickListener;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackage;
 
 
 /**
@@ -27,7 +28,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseCo
 public class StarterConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table {
     BaseIdleScreen<T_GAME, T_SAVE> parent;
     ISecondaryInfoBoardCallback<BaseConstruction> callback;
-    BaseConstruction model;
+    BaseConstruction construction;
     Label constructionNameLabel;
     TextButton upWorkingLevelButton;
     TextButton downWorkingLevelButton;
@@ -63,7 +64,7 @@ public class StarterConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>,
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Gdx.app.log(StarterConstructionControlNode.class.getSimpleName(), "clickEffectButton changed");
-                model.getOutputComponent().doOutput();
+                construction.getOutputComponent().doOutput();
             }
         });
 
@@ -72,11 +73,11 @@ public class StarterConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>,
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Gdx.app.log(StarterConstructionControlNode.class.getSimpleName(), "upgradeButton changed");
-                model.getUpgradeComponent().doUpgrade();
+                construction.getUpgradeComponent().doUpgrade();
             }
         });
 
-        this.addListener(new StarterSecondaryInfoBoardCallerClickListener(() -> model, callback));
+        this.addListener(new StarterSecondaryInfoBoardCallerClickListener(() -> construction, callback));
 
         // ------ changeWorkingLevelGroup ------
         this.changeWorkingLevelGroup = new Table();
@@ -86,7 +87,7 @@ public class StarterConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>,
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("ConstructionView", "down clicked");
-                model.getLevelComponent().changeWorkingLevel(-1);
+                construction.getLevelComponent().changeWorkingLevel(-1);
             }
         });
         changeWorkingLevelGroup.add(downWorkingLevelButton).size(CHILD_WIDTH / 4.0f, CHILD_HEIGHT);
@@ -100,7 +101,7 @@ public class StarterConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>,
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log(StarterConstructionControlNode.class.getSimpleName(), "up clicked");
-                model.getLevelComponent().changeWorkingLevel(1);
+                construction.getLevelComponent().changeWorkingLevel(1);
             }
         });
         changeWorkingLevelGroup.add(upWorkingLevelButton).size(CHILD_WIDTH / 4.0f, CHILD_HEIGHT);
@@ -112,7 +113,7 @@ public class StarterConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>,
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Gdx.app.log(StarterConstructionControlNode.class.getSimpleName(), "upgradeButton changed");
-                model.getExistenceComponent().doDestroy();
+                construction.getExistenceComponent().doDestroy();
             }
         });
         this.transformButton = new TextButton("-", parent.getGame().getMainSkin());
@@ -120,7 +121,7 @@ public class StarterConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>,
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Gdx.app.log(StarterConstructionControlNode.class.getSimpleName(), "upgradeButton changed");
-                model.getUpgradeComponent().doTransform();
+                construction.getUpgradeComponent().doTransform();
             }
         });
         // ------ this ------
@@ -139,7 +140,7 @@ public class StarterConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>,
 
 
     public void setModel(BaseConstruction constructionExportProxy) {
-        this.model = constructionExportProxy;
+        this.construction = constructionExportProxy;
         if (constructionExportProxy != null) {
             if (constructionExportProxy.getLevelComponent().isTypeWorkingLevelChangeable()) {
                 this.upWorkingLevelButton.setVisible(true);
@@ -161,7 +162,7 @@ public class StarterConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>,
 
     public void update() {
         // ------ update show-state ------
-        if (model == null) {
+        if (construction == null) {
             setVisible(false);
             //textButton.setVisible(false);
             //Gdx.app.log("ConstructionView", this.hashCode() + " no model");
@@ -169,33 +170,33 @@ public class StarterConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>,
         } else {
             setVisible(true);
             //textButton.setVisible(true);
-            //Gdx.app.log("ConstructionView", model.getName() + " set to its view");
+            //Gdx.app.log("ConstructionView", model.getDescriptionPackage().getName() + " set to its view");
         }
         // ------ update text ------
-        constructionNameLabel.setText(model.getName());
-        clickOutputButton.setText(model.getDescriptionPackage().getClickOutputButtonText());
-        upgradeButton.setText(model.getDescriptionPackage().getUpgradeButtonText());
-        workingLevelLabel.setText(model.getLevelComponent().getWorkingLevelDescription());
-        proficiencyLabel.setText(model.getProficiencyComponent().getProficiencyDescroption());
-        positionLabel.setText(model.getSaveData().getPosition().toShowText());
-        destroyButton.setText(model.descriptionPackage.getDestroyButtonText());
+        constructionNameLabel.setText(construction.getDescriptionPackage().getName());
+        clickOutputButton.setText(construction.getDescriptionPackage().getClickOutputButtonText());
+        upgradeButton.setText(construction.getDescriptionPackage().getUpgradeButtonText());
+        workingLevelLabel.setText(DescriptionPackage.Helper.getWorkingLevelDescription(construction));
+        proficiencyLabel.setText(DescriptionPackage.Helper.getProficiencyDescription(construction));
+        positionLabel.setText(construction.getSaveData().getPosition().toShowText());
+        destroyButton.setText(construction.getDescriptionPackage().getDestroyButtonText());
 
         // ------ update clickable-state ------
-        if (model.getOutputComponent().canOutput()) {
+        if (construction.getOutputComponent().canOutput()) {
             clickOutputButton.setDisabled(false);
             clickOutputButton.getLabel().setColor(Color.WHITE);
         } else {
             clickOutputButton.setDisabled(true);
             clickOutputButton.getLabel().setColor(Color.RED);
         }
-        if (model.getUpgradeComponent().canUpgrade()) {
+        if (construction.getUpgradeComponent().canUpgrade()) {
             upgradeButton.setDisabled(false);
             upgradeButton.getLabel().setColor(Color.WHITE);
         } else {
             upgradeButton.setDisabled(true);
             upgradeButton.getLabel().setColor(Color.RED);
         }
-        if (model.getExistenceComponent().canDestroy())
+        if (construction.getExistenceComponent().canDestroy())
         {
             destroyButton.setDisabled(false);
             destroyButton.getLabel().setColor(Color.WHITE);
@@ -205,7 +206,7 @@ public class StarterConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>,
             destroyButton.setDisabled(true);
             destroyButton.getLabel().setColor(Color.RED);
         }
-        if (model.getUpgradeComponent().canTransfer())
+        if (construction.getUpgradeComponent().canTransfer())
         {
             transformButton.setDisabled(false);
             transformButton.getLabel().setColor(Color.WHITE);
@@ -216,7 +217,7 @@ public class StarterConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>,
             transformButton.getLabel().setColor(Color.RED);
         }
 
-        boolean canUpWorkingLevel = model.getLevelComponent().canChangeWorkingLevel(1);
+        boolean canUpWorkingLevel = construction.getLevelComponent().canChangeWorkingLevel(1);
         if (canUpWorkingLevel) {
             upWorkingLevelButton.setDisabled(false);
             upWorkingLevelButton.getLabel().setColor(Color.WHITE);
@@ -225,7 +226,7 @@ public class StarterConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>,
             upWorkingLevelButton.getLabel().setColor(Color.RED);
         }
 
-        boolean canDownWorkingLevel = model.getLevelComponent().canChangeWorkingLevel(-1);
+        boolean canDownWorkingLevel = construction.getLevelComponent().canChangeWorkingLevel(-1);
         if (canDownWorkingLevel) {
             downWorkingLevelButton.setDisabled(false);
             downWorkingLevelButton.getLabel().setColor(Color.WHITE);

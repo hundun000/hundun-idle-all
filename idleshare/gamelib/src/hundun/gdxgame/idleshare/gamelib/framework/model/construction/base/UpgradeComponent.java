@@ -60,22 +60,11 @@ public class UpgradeComponent {
     public UpgradeComponent(BaseConstruction construction) {
         super();
         this.construction = construction;
-        // default value
-        upgradeState = UpgradeState.NO_UPGRADE;
     }
 
-    public void lazyInitDescription() {
-        if (upgradeCostPack != null) {
-            upgradeState = UpgradeState.HAS_NEXT_UPGRADE;
-            upgradeCostPack.setDescriptionStart(construction.descriptionPackage.getUpgradeCostDescriptionStart());
-        }
-        if (transformCostPack != null) {
-            transformCostPack.setDescriptionStart(construction.descriptionPackage.getTransformCostDescriptionStart());
-        }
-    }
 
     public void updateModifiedValues() {
-        Boolean reachMaxLevel = construction.levelComponent.isReachMaxLevel();
+        boolean reachMaxLevel = construction.levelComponent.isReachMaxLevel();
         if (upgradeCostPack != null) {
             if (reachMaxLevel) {
                 this.upgradeCostPack.setModifiedValues(null);
@@ -86,6 +75,7 @@ public class UpgradeComponent {
                     upgradeState = UpgradeState.REACHED_MAX_UPGRADE_NO_TRANSFER;
                 }
             } else {
+                upgradeState = UpgradeState.HAS_NEXT_UPGRADE;
                 this.upgradeCostPack.setModifiedValues(
                         upgradeCostPack.getBaseValues().stream()
                                 .map(pair -> {
@@ -95,6 +85,8 @@ public class UpgradeComponent {
                                 .collect(Collectors.toList())
                 );
             }
+        } else {
+            upgradeState = UpgradeState.NO_UPGRADE;
         }
     }
 

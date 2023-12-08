@@ -20,24 +20,32 @@ import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 public class AutoSellerPrototype extends AbstractConstructionPrototype {
 
     public static DescriptionPackage descriptionPackageEN = DescriptionPackage.builder()
+            .name("Research Center")
+            .wikiText("Research Center" + "：\n" +
+                    "•Timely consumption of mushroom resources, production of genetic points.\n" +
+                    "•The active level can be adjusted。")
             .upgradeButtonText("Upgrade")
             .outputCostDescriptionStart("Cost")
             .outputGainDescriptionStart("Produce")
             .upgradeCostDescriptionStart("Upgrade cost")
             .upgradeMaxLevelDescription("(max)")
-            .levelDescriptionProvider(DescriptionPackageFactory.WORKING_LEVEL_IMP)
-            .proficiencyDescriptionProvider(DescriptionPackageFactory.EN_PROFICIENCY_IMP)
+            .levelDescriptionProvider(DescriptionPackageFactory.EN_LEVEL_IMP.build())
+            .proficiencyDescriptionProvider(DescriptionPackageFactory.EN_PROFICIENCY_IMP.build())
             .build();
 
 
     public static DescriptionPackage descriptionPackageCN = DescriptionPackage.builder()
+            .name("科研中心")
+            .wikiText("科研中心" + "：\n" +
+                    "•定时消耗蘑菇资源，生产基因点数。\n" +
+                    "•可以调整启用的等级。")
             .upgradeButtonText("升级")
             .outputCostDescriptionStart("消耗")
             .outputGainDescriptionStart("产出")
             .upgradeCostDescriptionStart("升级费用")
             .upgradeMaxLevelDescription("(已达到最大等级)")
-            .levelDescriptionProvider(DescriptionPackageFactory.WORKING_LEVEL_IMP)
-            .proficiencyDescriptionProvider(DescriptionPackageFactory.CN_PROFICIENCY_IMP)
+            .levelDescriptionProvider(DescriptionPackageFactory.EN_LEVEL_IMP.build())
+            .proficiencyDescriptionProvider(DescriptionPackageFactory.CN_PROFICIENCY_IMP.build())
             .build();
 
     public AutoSellerPrototype(Language language) {

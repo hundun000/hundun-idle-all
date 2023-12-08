@@ -13,6 +13,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IBuffChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.BaseConstructionFactory;
 import lombok.*;
 
 public class AchievementManager implements IBuffChangeListener, IOneFrameResourceChangeListener, IGameStartListener {
@@ -155,6 +156,7 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
     }
 
     public void subApplyGameplaySaveData(
+            BaseConstructionFactory constructionFactory,
             Map<String, AbstractAchievement> achievementProviderMap,
             Map<String, AchievementSaveData> statusDataMap
     ) {

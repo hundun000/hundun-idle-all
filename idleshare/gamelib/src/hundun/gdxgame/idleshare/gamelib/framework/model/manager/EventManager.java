@@ -130,7 +130,7 @@ public class EventManager {
 
     public void notifyConstructionCollectionChange()
     {
-        //Gdx.app.log(this.getClass().getSimpleName(), "notifyOneFrameResourceChange");
+        gameContext.getFrontEnd().log(this.getClass().getSimpleName(), "notifyConstructionCollectionChange");
         for (IConstructionCollectionListener listener : constructionCollectionListeners)
         {
             listener.onConstructionCollectionChange();

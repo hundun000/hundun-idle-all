@@ -63,7 +63,7 @@ public abstract class AbstractConstructionControlBoard<T_GAME extends BaseIdleGa
             constructionControlNodes.get(i).setModel(null);
         }
         parent.getGame().getFrontend().log("ConstructionInfoBorad",
-                "Constructions change to: " + newConstructions.stream().map(BaseConstruction::getName).collect(Collectors.joining(","))
+                "Constructions change to: " + newConstructions.stream().map(it -> it.getDescriptionPackage().getName()).collect(Collectors.joining(","))
             );
     }
 

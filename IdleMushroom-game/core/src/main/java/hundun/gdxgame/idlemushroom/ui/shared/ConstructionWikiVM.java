@@ -26,7 +26,7 @@ public class ConstructionWikiVM extends Table {
             this.model = newModel;
         }
 
-        this.label.setText(model.getDetailDescriptionConstPart());
+        this.label.setText(model.getDescriptionPackage().getWikiText());
     }
 
 

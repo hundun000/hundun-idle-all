@@ -18,7 +18,7 @@ import java.util.List;
 public class ConstructionDetailPartVM extends Table {
 
     BaseIdleMushroomPlayScreen parent;
-    BaseConstruction model;
+    BaseConstruction construction;
 
     public ConstructionDetailPartVM(BaseIdleMushroomPlayScreen parent) {
         //super("GUIDE_TEXT", parent.game.getButtonSkin());
@@ -38,21 +38,30 @@ public class ConstructionDetailPartVM extends Table {
 
     public void rebuildCells(@Null BaseConstruction newModel) {
         if (newModel != null) {
-            this.model = newModel;
+            this.construction = newModel;
         }
 
         this.clearChildren();
 
-        resourcePackAsActor(model.getOutputComponent().getOutputCostPack(), this, parent);
+        resourcePackAsActor(
+                construction.getDescriptionPackage().getOutputCostDescriptionStart(),
+                construction.getOutputComponent().getOutputCostPack(),
+                this, parent);
 
-        resourcePackAsActor(model.getOutputComponent().getOutputGainPack(), this, parent);
+        resourcePackAsActor(
+                construction.getDescriptionPackage().getOutputGainDescriptionStart(),
+                construction.getOutputComponent().getOutputGainPack(),
+                this, parent);
 
-        if (model.getUpgradeComponent().getUpgradeState() == UpgradeState.HAS_NEXT_UPGRADE) {
-            resourcePackAsActor(model.getUpgradeComponent().getUpgradeCostPack(), this, parent);
-        } else if (model.getUpgradeComponent().getUpgradeState() == UpgradeState.REACHED_MAX_UPGRADE_HAS_TRANSFER
-            || model.getUpgradeComponent().getUpgradeState() == UpgradeState.REACHED_MAX_UPGRADE_NO_TRANSFER
+        if (construction.getUpgradeComponent().getUpgradeState() == UpgradeState.HAS_NEXT_UPGRADE) {
+            resourcePackAsActor(
+                    construction.getDescriptionPackage().getUpgradeCostDescriptionStart(),
+                    construction.getUpgradeComponent().getUpgradeCostPack(),
+                    this, parent);
+        } else if (construction.getUpgradeComponent().getUpgradeState() == UpgradeState.REACHED_MAX_UPGRADE_HAS_TRANSFER
+            || construction.getUpgradeComponent().getUpgradeState() == UpgradeState.REACHED_MAX_UPGRADE_NO_TRANSFER
         ) {
-            this.add(wapperContainer(new Label(model.getDescriptionPackage().getUpgradeMaxLevelDescription(), parent.getGame().getMainSkin())));
+            this.add(wapperContainer(new Label(construction.getDescriptionPackage().getUpgradeMaxLevelDescription(), parent.getGame().getMainSkin())));
             this.row();
         }
 
@@ -62,16 +71,22 @@ public class ConstructionDetailPartVM extends Table {
         }
     }
 
-    public static void resourcePackAsActor(ResourcePack pack, Table target, BaseIdleMushroomPlayScreen parent) {
-        resourcePackAsActor(pack, target, parent, false);
+    public static void resourcePackAsActor(String descriptionStart, ResourcePack pack, Table target, BaseIdleMushroomPlayScreen parent) {
+        resourcePackAsActor(descriptionStart, pack, target, parent, false);
     }
 
-    public static void resourcePackAsActor(ResourcePack pack, Table target, BaseIdleMushroomPlayScreen parent, boolean isPreviewNextLevel) {
+    public static void resourcePackAsActor(
+            String descriptionStart,
+            ResourcePack pack,
+            Table target,
+            BaseIdleMushroomPlayScreen parent,
+            boolean isPreviewNextLevel
+    ) {
         if (pack != null) {
             List<ResourcePair> targetValue = isPreviewNextLevel ? pack.getPreviewNextLevelModifiedValues() : pack.getModifiedValues();
             if (targetValue != null && !targetValue.isEmpty()) {
                 List<Actor> pairsToActors = pairsToActors(targetValue, parent.getGame());
-                target.add(wapperContainer(new Label(pack.getDescriptionStart(), parent.getGame().getMainSkin())));
+                target.add(wapperContainer(new Label(descriptionStart, parent.getGame().getMainSkin())));
                 for (Actor actor : pairsToActors) {
                     target.add(wapperContainer(actor))
                             .height(parent.getLayoutConst().RESOURCE_AMOUNT_PAIR_NODE_HEIGHT)

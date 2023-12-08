@@ -1,7 +1,8 @@
 package hundun.gdxgame.idleshare.gamelib.framework.model.construction.base;
 
-import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackage.ILevelDescriptionProvider;
-import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackage.IProficiencyDescroptionProvider;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackage.LevelDescriptionPackage;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackage.ProficiencyDescriptionPackage;
+
 
 /**
  * @author hundun
@@ -9,33 +10,24 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.Descri
  */
 public class DescriptionPackageFactory {
 
-    public static ILevelDescriptionProvider NO_LEVEL_IMP = (level, workingLevel, reachMaxLevel) -> "";
-    public static ILevelDescriptionProvider ONLY_LEVEL_IMP = (level, workingLevel, reachMaxLevel) -> {
-        return "lv." + level + (reachMaxLevel ? "(max)" : "");
-    };
-    public static ILevelDescriptionProvider WORKING_LEVEL_IMP = (level, workingLevel, reachMaxLevel) -> {
-        return "lv." + level + (reachMaxLevel ? "(max)" : "") + "  active: " + workingLevel;
-    };
-    public static ILevelDescriptionProvider LOCK_IMP = (level, workingLevel, reachMaxLevel) -> {
-        return (reachMaxLevel ? "Unlocked" : "");
-    };
-    public static IProficiencyDescroptionProvider EN_PROFICIENCY_IMP = (proficiency, reachMaxProficiency) -> {
-        return "efficiency: " + proficiency;
-    };
+    public static LevelDescriptionPackage.LevelDescriptionPackageBuilder EN_LEVEL_IMP = LevelDescriptionPackage.builder()
+            .levelPart("lv: {0}")
+            .reachedMaxLevelPart("(max)")
+            .activeLevelPart("active: {0}")
+            ;
 
-    public static ILevelDescriptionProvider CN_NO_LEVEL_IMP = (level, workingLevel, reachMaxLevel) -> "";
-    public static ILevelDescriptionProvider CN_ONLY_LEVEL_IMP = (level, workingLevel, reachMaxLevel) -> {
-        return "等级" + level;
-    };
-    public static ILevelDescriptionProvider CN_WORKING_LEVEL_IMP = (level, workingLevel, reachMaxLevel) -> {
-        return "等级" +workingLevel + "/" + level + (reachMaxLevel ? "(最大)" : "");
-    };
-    public static ILevelDescriptionProvider CN_LOCK_IMP = (level, workingLevel, reachMaxLevel) -> {
-        return (reachMaxLevel ? "已解锁" : "");
-    };
+    public static ProficiencyDescriptionPackage.ProficiencyDescriptionPackageBuilder EN_PROFICIENCY_IMP = ProficiencyDescriptionPackage.builder()
+            .proficiencyPart("efficiency: {0)")
+            ;
 
-    public static IProficiencyDescroptionProvider CN_PROFICIENCY_IMP = (proficiency, reachMaxProficiency) -> {
-        return "效率" + proficiency;
-    };
+    public static LevelDescriptionPackage.LevelDescriptionPackageBuilder CN_LEVEL_IMP = LevelDescriptionPackage.builder()
+            .levelPart("等级{0}")
+            .reachedMaxLevelPart("(最大)")
+            .activeLevelPart("启用: {0}")
+            ;
+
+    public static ProficiencyDescriptionPackage.ProficiencyDescriptionPackageBuilder CN_PROFICIENCY_IMP = ProficiencyDescriptionPackage.builder()
+            .proficiencyPart("效率: {0)")
+            ;
 
 }

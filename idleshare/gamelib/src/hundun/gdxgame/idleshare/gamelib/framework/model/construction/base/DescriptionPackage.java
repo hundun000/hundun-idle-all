@@ -1,5 +1,6 @@
 package hundun.gdxgame.idleshare.gamelib.framework.model.construction.base;
 
+import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import lombok.NoArgsConstructor;
 
 import lombok.AllArgsConstructor;
@@ -17,6 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class DescriptionPackage {
+    String name;
+    String wikiText;
     String clickOutputButtonText;
     String upgradeButtonText;
 
@@ -34,16 +37,69 @@ public class DescriptionPackage {
     private String destroyGainDescriptionStart;
     private String destroyCostDescriptionStart;
 
-    ILevelDescriptionProvider levelDescriptionProvider;
+    LevelDescriptionPackage levelDescriptionProvider;
 
-    private IProficiencyDescroptionProvider proficiencyDescriptionProvider;
+    private ProficiencyDescriptionPackage proficiencyDescriptionProvider;
 
     List<String> extraTexts;
 
-    public static interface ILevelDescriptionProvider {
-        String provide(int level, int workingLevel, boolean reachMaxLevel);
+    public static class Helper {
+        public static String getWorkingLevelDescription(BaseConstruction construction) {
+            boolean reachedMaxLevel = construction.getSaveData().getLevel() == construction.getLevelComponent().maxLevel;
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(JavaFeatureForGwt.stringFormat(
+                    construction.getDescriptionPackage().getLevelDescriptionProvider().getLevelPart(),
+                    construction.saveData.getLevel()
+            ));
+            if (reachedMaxLevel) {
+                stringBuilder.append(" ");
+                stringBuilder.append(
+                        construction.getDescriptionPackage().getLevelDescriptionProvider().getReachedMaxLevelPart()
+                );
+            }
+            if (construction.getLevelComponent().isTypeWorkingLevelChangeable()) {
+                stringBuilder.append(" ");
+                stringBuilder.append(JavaFeatureForGwt.stringFormat(
+                        construction.getDescriptionPackage().getLevelDescriptionProvider().getActiveLevelPart(),
+                        construction.saveData.getWorkingLevel()
+                ));
+            }
+            return stringBuilder.toString();
+        }
+
+
+        public static String getProficiencyDescription(BaseConstruction construction) {
+            boolean reachedMaxProficiency = construction.getSaveData().getLevel() == construction.proficiencyComponent.maxProficiency;
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(JavaFeatureForGwt.stringFormat(
+                    construction.getDescriptionPackage().getProficiencyDescriptionProvider().getProficiencyPart(),
+                    construction.saveData.getProficiency()
+            ));
+            if (reachedMaxProficiency) {
+                stringBuilder.append(" ");
+                stringBuilder.append(
+                        construction.getDescriptionPackage().getProficiencyDescriptionProvider().getReachedMaxProficiencyPart()
+                );
+            }
+            return stringBuilder.toString();
+        }
     }
-    public static interface IProficiencyDescroptionProvider {
-        String provide(int proficiency, Boolean reachMaxProficiency);
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class LevelDescriptionPackage {
+        String levelPart;
+        String reachedMaxLevelPart;
+        String activeLevelPart;
+    }
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class ProficiencyDescriptionPackage {
+        String proficiencyPart;
+        String reachedMaxProficiencyPart;
     }
 }

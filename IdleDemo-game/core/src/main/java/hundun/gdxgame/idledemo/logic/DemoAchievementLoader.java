@@ -21,25 +21,29 @@ public class DemoAchievementLoader implements IBuiltinAchievementsLoader {
             case CN:
                 textMap.put(DemoAchievementId.STEP_1, JavaFeatureForGwt.listOf(
                 "NO.1",
-                        "拥有2级AUTO_PROVIDER。",
-                        "你完成了任务NO.1。"
+                        "拥有2级{PrototypeName}。",
+                        "你完成了任务NO.1。",
+                        DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER
                 ));
                 textMap.put(DemoAchievementId.STEP_2, JavaFeatureForGwt.listOf(
                     "NO.2",
-                            "拥有2级AUTO_SELLER。",
-                            "你完成了任务NO.2。"
+                            "拥有2级{PrototypeName}。",
+                            "你完成了任务NO.2。",
+                        DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER
                 ));
                 break;
             default:
                 textMap.put(DemoAchievementId.STEP_1, JavaFeatureForGwt.listOf(
                 "NO.1",
-                        "Own lv.2 AUTO_PROVIDER.",
-                        "You completed Quest NO.1."
+                        "Own lv.2 {PrototypeName}.",
+                        "You completed Quest NO.1.",
+                        DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER
                 ));
                 textMap.put(DemoAchievementId.STEP_2, JavaFeatureForGwt.listOf(
                     "NO.2",
-                            "Own lv.2 AUTO_SELLER.",
-                            "You completed Quest NO.2."
+                        "Own lv.2 {PrototypeName}.",
+                        "You completed Quest NO.2.",
+                        DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER
                 ));
                 break;
         }

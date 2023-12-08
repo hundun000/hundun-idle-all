@@ -86,7 +86,7 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
                 frontend,
                 idleMushroomGameDictionary,
                 new DemoBuiltinConstructionsLoader(),
-                new DemoAchievementLoader(idleMushroomGameDictionary),
+                new IdleMushroomAchievementLoader(idleMushroomGameDictionary),
                 BaseIdleMushroomScreen.LOGIC_FRAME_PER_SECOND,
                 childGameConfig
                 );

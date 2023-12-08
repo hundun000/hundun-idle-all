@@ -67,14 +67,11 @@ public class WorldEmptyDetailNode extends BaseCellDetailNodeVM {
         } else {
             setVisible(true);
             //textButton.setVisible(true);
-            //Gdx.app.log("ConstructionView", model.getName() + " set to its view");
+            //Gdx.app.log("ConstructionView", model.getDescriptionPackage().getName() + " set to its view");
         }
         // ------ update text ------
 
-        constructionNameLabel.setText(JavaFeatureForGwt.stringFormat(
-                "%s",
-                construction.getName()
-        ));
+        constructionNameLabel.setText(construction.getDescriptionPackage().getName());
         buyCandidateKeyLabel.setText(construction.getDescriptionPackage().getExtraTexts().get(0));
     }
 
@@ -151,7 +148,7 @@ public class WorldEmptyDetailNode extends BaseCellDetailNodeVM {
             int CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_BUTTON_HEIGHT;
             int NAME_CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_NAME_HEIGHT;
 
-            this.constructionNameLabel = new Label(constructionBuyCandidateConfig.getPrototypeId(), parent.getGame().getMainSkin());
+            this.constructionNameLabel = new Label("", parent.getGame().getMainSkin());
             constructionNameLabel.setWrap(true);
 
             this.buyButton = new TextButton(model.getDescriptionPackage().getTransformButtonText(), parent.getGame().getMainSkin());
@@ -183,21 +180,23 @@ public class WorldEmptyDetailNode extends BaseCellDetailNodeVM {
             } else {
                 setVisible(true);
                 //textButton.setVisible(true);
-                //Gdx.app.log("ConstructionView", model.getName() + " set to its view");
+                //Gdx.app.log("ConstructionView", model.getDescriptionPackage().getName() + " set to its view");
             }
             // ------ update text ------
             constructionNameLabel.setText(
                     parent.getGame()
                             .getIdleGameplayExport()
                             .getGameplayContext()
-                            .getGameDictionary()
-                            .constructionPrototypeIdToShowName(
-                                    parent.getGame().getIdleGameplayExport().getLanguage(),
-                                    constructionBuyCandidateConfig.getPrototypeId()
-                            )
+                            .getConstructionFactory()
+                            .getPrototype(constructionBuyCandidateConfig.getPrototypeId())
+                            .getDescriptionPackage()
+                            .getName()
             );
             costPart.clearChildren();
-            ConstructionDetailPartVM.resourcePackAsActor(constructionBuyCandidateConfig.getBuyCostPack(), costPart, parent);
+            ConstructionDetailPartVM.resourcePackAsActor(
+                    constructionBuyCandidateConfig.getBuyDescriptionStart(),
+                    constructionBuyCandidateConfig.getBuyCostPack(),
+                    costPart, parent);
             // ------ update clickable-state ------
             boolean canBuyInstanceOfPrototype = parent.getGame().getIdleGameplayExport().getGameplayContext().getConstructionManager()
                     .canBuyInstanceOfPrototype(constructionBuyCandidateConfig, model.getPosition());

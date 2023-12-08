@@ -15,14 +15,20 @@ import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
 public class TreePrototype extends AbstractConstructionPrototype {
     public static DescriptionPackage descriptionPackageEN = DescriptionPackage.builder()
-            .levelDescriptionProvider(DescriptionPackageFactory.NO_LEVEL_IMP)
-            .proficiencyDescriptionProvider(DescriptionPackageFactory.EN_PROFICIENCY_IMP)
+            .name("Tree Tile")
+            .wikiText("Tree Tile" + "：\n" +
+                    "•Beneficial for the growth of surrounding mushroom tiles。")
+            .levelDescriptionProvider(DescriptionPackageFactory.EN_LEVEL_IMP.build())
+            .proficiencyDescriptionProvider(DescriptionPackageFactory.EN_PROFICIENCY_IMP.build())
             .build();
 
 
     public static DescriptionPackage descriptionPackageCN = DescriptionPackage.builder()
-            .levelDescriptionProvider(DescriptionPackageFactory.CN_NO_LEVEL_IMP)
-            .proficiencyDescriptionProvider(DescriptionPackageFactory.CN_PROFICIENCY_IMP)
+            .name("树木地块")
+            .wikiText("树木地块" + "：\n" +
+                    "•利于周围蘑菇地块的成长。")
+            .levelDescriptionProvider(DescriptionPackageFactory.CN_LEVEL_IMP.build())
+            .proficiencyDescriptionProvider(DescriptionPackageFactory.CN_PROFICIENCY_IMP.build())
             .build();
 
     public TreePrototype(String prototypeId, Language language) {

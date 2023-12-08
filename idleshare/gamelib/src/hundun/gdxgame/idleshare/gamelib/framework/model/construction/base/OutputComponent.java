@@ -43,15 +43,6 @@ public abstract class OutputComponent {
         this.construction = construction;
     }
 
-    public void lazyInitDescription() {
-        if (outputCostPack != null) {
-            outputCostPack.setDescriptionStart(construction.descriptionPackage.getOutputCostDescriptionStart());
-        }
-        if (outputGainPack != null) {
-            outputGainPack.setDescriptionStart(construction.descriptionPackage.getOutputGainDescriptionStart());
-        }
-    }
-
     public void updateModifiedValues() {
      // --------------
         if (outputGainPack != null) {

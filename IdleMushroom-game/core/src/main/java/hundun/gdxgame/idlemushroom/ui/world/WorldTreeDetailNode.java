@@ -73,12 +73,12 @@ public class WorldTreeDetailNode extends BaseCellDetailNodeVM {
         } else {
             setVisible(true);
             //textButton.setVisible(true);
-            //Gdx.app.log("ConstructionView", model.getName() + " set to its view");
+            //Gdx.app.log("ConstructionView", model.getDescriptionPackage().getName() + " set to its view");
         }
         // ------ update text ------
         constructionNameLabel.setText(JavaFeatureForGwt.stringFormat(
                 "%s",
-                model.getName()
+                model.getDescriptionPackage().getName()
         ));
         positionLabel.setText(model.getSaveData().getPosition().toShowText());
 

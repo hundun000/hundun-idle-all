@@ -12,8 +12,6 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseCo
 public class OneEpochInfoAreaVM extends Table {
 
     IdleMushroomMainPlayScreen parent;
-    BaseConstruction epochCounterConstruction;
-    BaseConstruction mainClickerConstruction;
     @Null
     RootEpochConfig epochConfig;
     Label epochInfoLabel;
@@ -50,26 +48,21 @@ public class OneEpochInfoAreaVM extends Table {
     }
 
     private void update() {
-        // ------ update show-state ------
-        if (epochCounterConstruction == null) {
-            setVisible(false);
-            //textButton.setVisible(false);
-            //Gdx.app.log("ConstructionView", this.hashCode() + " no model");
-            return;
-        } else {
-            setVisible(true);
-            //textButton.setVisible(true);
-            //Gdx.app.log("ConstructionView", model.getName() + " set to its view");
-        }
+
 
 
 
         // ------ update text ------
         mainClickerPart.clearChildren();
         if (epochConfig != null) {
-            epochInfoLabel.setText(epochCounterConstruction.getDescriptionPackage().getExtraTexts().get(0) + epochConfig.getEnlargementLevel());
-            maxLevelLabel.setText(epochCounterConstruction.getDescriptionPackage().getExtraTexts().get(1) + epochConfig.getMaxLevel());
-            ConstructionDetailPartVM.resourcePackAsActor(mainClickerConstruction.getOutputComponent().getOutputGainPack(), mainClickerPart, parent, isPreviewNextLevel);
+            epochInfoLabel.setText(parent.getGame().getIdleMushroomExtraGameplayExport().getEpochCounterConstruction()
+                    .getDescriptionPackage().getExtraTexts().get(0) + epochConfig.getEnlargementLevel());
+            maxLevelLabel.setText(parent.getGame().getIdleMushroomExtraGameplayExport().getEpochCounterConstruction()
+                    .getDescriptionPackage().getExtraTexts().get(1) + epochConfig.getMaxLevel());
+            ConstructionDetailPartVM.resourcePackAsActor(
+                    parent.getGame().getIdleMushroomExtraGameplayExport().getMainClickerConstruction().getDescriptionPackage().getOutputGainDescriptionStart(),
+                    parent.getGame().getIdleMushroomExtraGameplayExport().getMainClickerConstruction().getOutputComponent().getOutputGainPack(),
+                    mainClickerPart, parent, isPreviewNextLevel);
         } else {
             epochInfoLabel.setText("");
             maxLevelLabel.setText("");
@@ -81,10 +74,8 @@ public class OneEpochInfoAreaVM extends Table {
 
     public void updateAsConstruction(
             @Null RootEpochConfig epochConfig,
-            BaseConstruction epochCounterConstruction,
             boolean isPreviewNextLevel
     ) {
-        this.epochCounterConstruction = epochCounterConstruction;
         this.isPreviewNextLevel = isPreviewNextLevel;
         this.epochConfig = epochConfig;
         update();

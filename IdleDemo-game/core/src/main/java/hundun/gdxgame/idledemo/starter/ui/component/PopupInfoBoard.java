@@ -39,23 +39,32 @@ public class PopupInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends
         return container;
     }
 
-    private void rebuildCells(BaseConstruction model) {
+    private void rebuildCells(BaseConstruction construction) {
         this.clearChildren();
 
-        add(wapperContainer(new Label(model.getDetailDescriptionConstPart(), parent.getGame().getMainSkin())))
+        add(wapperContainer(new Label(construction.getDescriptionPackage().getWikiText(), parent.getGame().getMainSkin())))
             .colspan(3)
             .left()
             .row();
 
-        buildOnePack(model.getOutputComponent().getOutputCostPack());
+        buildOnePack(
+                construction.getDescriptionPackage().getOutputCostDescriptionStart(),
+                construction.getOutputComponent().getOutputCostPack()
+        );
 
-        buildOnePack(model.getOutputComponent().getOutputGainPack());
+        buildOnePack(
+                construction.getDescriptionPackage().getOutputGainDescriptionStart(),
+                construction.getOutputComponent().getOutputGainPack()
+        );
 
-        if (model.getUpgradeComponent().getUpgradeState() == UpgradeState.HAS_NEXT_UPGRADE) {
-            buildOnePack(model.getUpgradeComponent().getUpgradeCostPack());
-        } else if (model.getUpgradeComponent().getUpgradeState() == UpgradeState.REACHED_MAX_UPGRADE_HAS_TRANSFER) {
-            this.add(wapperContainer(new Label(model.getUpgradeComponent().getUpgradeCostPack().getDescriptionStart(), parent.getGame().getMainSkin())));
-            this.add(wapperContainer(new Label(model.getDescriptionPackage().getUpgradeMaxLevelDescription(), parent.getGame().getMainSkin())));
+        if (construction.getUpgradeComponent().getUpgradeState() == UpgradeState.HAS_NEXT_UPGRADE) {
+            buildOnePack(
+                    construction.getDescriptionPackage().getUpgradeCostDescriptionStart(),
+                    construction.getUpgradeComponent().getUpgradeCostPack()
+            );
+        } else if (construction.getUpgradeComponent().getUpgradeState() == UpgradeState.REACHED_MAX_UPGRADE_HAS_TRANSFER) {
+            this.add(wapperContainer(new Label(construction.getDescriptionPackage().getUpgradeCostDescriptionStart(), parent.getGame().getMainSkin())));
+            this.add(wapperContainer(new Label(construction.getDescriptionPackage().getUpgradeMaxLevelDescription(), parent.getGame().getMainSkin())));
             this.row();
         }
         
@@ -66,9 +75,9 @@ public class PopupInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends
         }
     }
 
-    private void buildOnePack(ResourcePack pack) {
+    private void buildOnePack(String descriptionStart, ResourcePack pack) {
         if (pack != null && pack.getModifiedValues() != null) {
-            this.add(wapperContainer(new Label(pack.getDescriptionStart(), parent.getGame().getMainSkin())));
+            this.add(wapperContainer(new Label(descriptionStart, parent.getGame().getMainSkin())));
             for (ResourcePair entry : pack.getModifiedValues()) {
                 ResourceAmountPairNode<T_GAME> node = new ResourceAmountPairNode<>(parent.getGame(), entry.getType());
                 node.update(entry.getAmount());

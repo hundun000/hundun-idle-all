@@ -89,9 +89,6 @@ public class MainScreenConstructionControlBoard extends Table
         {
             constructionControlNodes.get(i).updateAsConstruction(null);
         }
-        parent.getGame().getFrontend().log("ConstructionInfoBorad",
-                "Constructions change to: " + newConstructions.stream().map(BaseConstruction::getName).collect(Collectors.joining(","))
-        );
     }
 
 

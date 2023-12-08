@@ -12,12 +12,6 @@ public abstract class ProficiencyComponent {
         this.construction = construction;
     }
 
-    public String getProficiencyDescroption()
-    {
-        Boolean reachMaxLevel = construction.saveData.getProficiency() >= this.maxProficiency;
-        return construction.descriptionPackage.getProficiencyDescriptionProvider().provide(construction.saveData.getProficiency(), reachMaxLevel);
-    }
-
     public Boolean canPromote()
     {
         return isMaxProficiency() && promoteConstructionPrototypeId != null;
@@ -52,7 +46,7 @@ public abstract class ProficiencyComponent {
 
         construction.saveData.setProficiency(0);
         construction.updateModifiedValues();
-        construction.gameplayContext.getFrontEnd().log(construction.name, "cleanProficiency");
+        construction.gameplayContext.getFrontEnd().log(construction.getClass().getSimpleName(), "cleanProficiency");
 
     }
 

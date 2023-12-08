@@ -18,6 +18,7 @@ import hundun.gdxgame.idledemo.starter.ui.component.board.construction.impl.Star
 import hundun.gdxgame.idledemo.starter.ui.screen.play.PlayScreenLayoutConst;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackage;
 
 
 /**
@@ -137,17 +138,17 @@ public class MainScreenConstructionControlNode extends BaseCellDetailNodeVM {
         } else {
             setVisible(true);
             //textButton.setVisible(true);
-            //Gdx.app.log("ConstructionView", model.getName() + " set to its view");
+            //Gdx.app.log("ConstructionView", model.getDescriptionPackage().getName() + " set to its view");
         }
         // ------ update text ------
         constructionNameLabel.setText(JavaFeatureForGwt.stringFormat(
                 "%s (%s, %s)",
-                model.getName(),
+                model.getDescriptionPackage().getName(),
                 model.getSaveData().getPosition().getX(),
                 model.getSaveData().getPosition().getY()
         ));
         upgradeButton.setText(model.getDescriptionPackage().getUpgradeButtonText());
-        workingLevelLabel.setText(model.getLevelComponent().getWorkingLevelDescription());
+        workingLevelLabel.setText(DescriptionPackage.Helper.getWorkingLevelDescription(model));
 
 
         // ------ update clickable-state ------
