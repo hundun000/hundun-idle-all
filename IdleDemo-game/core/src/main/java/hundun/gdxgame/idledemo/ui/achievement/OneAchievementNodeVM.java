@@ -27,7 +27,7 @@ public class OneAchievementNodeVM<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> e
         this.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
         this.achievementAndStatus = achievementAndStatus;
 
-        this.texts = parent.getGame().getIdleGameplayExport().getGameDictionary()
+        this.texts = parent.getGame().getDemoGameDictionary()
                 .getAchievementTexts(parent.getGame().getIdleGameplayExport().getLanguage());
         this.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
 

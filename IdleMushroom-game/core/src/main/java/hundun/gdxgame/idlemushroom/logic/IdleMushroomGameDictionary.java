@@ -5,17 +5,16 @@ import java.util.Map;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementState;
-import hundun.gdxgame.idleshare.gamelib.framework.util.text.IGameDictionary;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
 /**
  * @author hundun
  * Created on 2021/11/22
  */
-public class IdleMushroomGameDictionary implements IGameDictionary {
+public class IdleMushroomGameDictionary {
 
 
-    @Override
+
     public List<String> getMenuScreenTexts(Language language) {
         switch (language) {
             case CN:
@@ -25,7 +24,7 @@ public class IdleMushroomGameDictionary implements IGameDictionary {
         }
     }
 
-    @Override
+
     public Map<Language, String> getLanguageShowNameMap() {
         return JavaFeatureForGwt.mapOf(
                 Language.CN, "中文",
@@ -33,7 +32,7 @@ public class IdleMushroomGameDictionary implements IGameDictionary {
                 );
     }
 
-    @Override
+
     public List<String> getAchievementTexts(Language language)
     {
         switch (language)
@@ -51,7 +50,7 @@ public class IdleMushroomGameDictionary implements IGameDictionary {
         }
     }
 
-    @Override
+
     public List<String> getStageSelectMaskBoardTexts(Language language)
     {
         return null;

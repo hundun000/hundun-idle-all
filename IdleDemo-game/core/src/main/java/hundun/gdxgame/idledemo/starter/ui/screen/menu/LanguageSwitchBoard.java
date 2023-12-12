@@ -37,7 +37,7 @@ public class LanguageSwitchBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> ex
             ) {
         this.parent = parent;
         this.setBackground(DrawableFactory.getSimpleBoardBackground());
-        this.languageShowNameMap = parent.getGame().getIdleGameplayExport().getGameDictionary().getLanguageShowNameMap();
+        this.languageShowNameMap = parent.getGame().getDemoGameDictionary().getLanguageShowNameMap();
         
         this.add(new Label(startText, parent.getGame().getMainSkin()));
 

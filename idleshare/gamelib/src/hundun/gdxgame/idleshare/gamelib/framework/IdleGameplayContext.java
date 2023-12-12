@@ -12,7 +12,6 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.manager.BuffManager;
 import hundun.gdxgame.idleshare.gamelib.framework.model.manager.ConstructionManager;
 import hundun.gdxgame.idleshare.gamelib.framework.model.manager.EventManager;
 import hundun.gdxgame.idleshare.gamelib.framework.model.manager.StorageManager;
-import hundun.gdxgame.idleshare.gamelib.framework.util.text.IGameDictionary;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 import lombok.Getter;
 
@@ -34,11 +33,9 @@ public class IdleGameplayContext {
     final AchievementManager achievementManager;
     final BaseConstructionFactory constructionFactory;
     final ConstructionManager constructionManager;
-    final IGameDictionary gameDictionary;
 
     public IdleGameplayContext(
-            IFrontend frontEnd, 
-            IGameDictionary gameDictionary,
+            IFrontend frontEnd,
             int LOGIC_FRAME_PER_SECOND) {
         this.LOGIC_FRAME_PER_SECOND = LOGIC_FRAME_PER_SECOND;
         
@@ -50,7 +47,6 @@ public class IdleGameplayContext {
         this.achievementManager = new AchievementManager(this);
         this.constructionFactory = new BaseConstructionFactory();
         this.constructionManager = new ConstructionManager(this);
-        this.gameDictionary = gameDictionary; 
 
     }
     

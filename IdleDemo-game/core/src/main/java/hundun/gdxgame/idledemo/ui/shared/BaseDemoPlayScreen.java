@@ -99,9 +99,7 @@ public abstract class BaseDemoPlayScreen extends BaseIdleDemoScreen
 
         achievementPopupBoard = new AchievementPopupBoard(
                 this,
-                game.getIdleGameplayExport()
-                        .getGameplayContext()
-                        .getGameDictionary()
+                game.getDemoGameDictionary()
                         .getAchievementTexts(game.getIdleGameplayExport().getLanguage())
         );
         popupUiStage.addActor(achievementPopupBoard);

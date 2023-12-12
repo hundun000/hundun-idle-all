@@ -5,6 +5,7 @@ import java.util.List;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hundun.gdxgame.corelib.base.BaseHundunGame;
+import hundun.gdxgame.idledemo.logic.DemoGameDictionary;
 import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.TextFormatTool;
@@ -17,7 +18,8 @@ public abstract class BaseIdleGame<T_SAVE> extends BaseHundunGame<T_SAVE> {
 
     @Getter
     protected AudioPlayManager audioPlayManager;
-    
+    @Getter
+    protected DemoGameDictionary demoGameDictionary;
     @Getter
     protected AbstractTextureManager textureManager;
     @Getter

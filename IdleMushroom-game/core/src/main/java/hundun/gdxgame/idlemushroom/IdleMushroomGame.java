@@ -84,7 +84,6 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
         this.idleMushroomPlayScreenLayoutConst = new IdleMushroomPlayScreenLayoutConst(this.getWidth(), this.getHeight());
         this.idleGameplayExport = new IdleGameplayExport(
                 frontend,
-                idleMushroomGameDictionary,
                 new DemoBuiltinConstructionsLoader(),
                 new IdleMushroomAchievementLoader(idleMushroomGameDictionary),
                 BaseIdleMushroomScreen.LOGIC_FRAME_PER_SECOND,

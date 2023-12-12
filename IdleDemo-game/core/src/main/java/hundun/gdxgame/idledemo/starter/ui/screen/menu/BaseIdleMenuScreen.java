@@ -50,7 +50,7 @@ public abstract class BaseIdleMenuScreen<T_GAME extends BaseIdleGame<T_SAVE>, T_
     }
 
     private void initScene2d() {
-        List<String> memuScreenTexts = game.getIdleGameplayExport().getGameDictionary().getMenuScreenTexts(game.getIdleGameplayExport().getLanguage());
+        List<String> memuScreenTexts = game.getDemoGameDictionary().getMenuScreenTexts(game.getIdleGameplayExport().getLanguage());
         this.titleLabel = new Label(
                 JavaFeatureForGwt.stringFormat("     %s     ", memuScreenTexts.get(0)), 
                 game.getMainSkin());

@@ -100,9 +100,7 @@ public abstract class BaseIdleMushroomPlayScreen extends BaseIdleMushroomScreen
 
         achievementPopupBoard = new AchievementPopupBoard(
                 this,
-                game.getIdleGameplayExport()
-                        .getGameplayContext()
-                        .getGameDictionary()
+                game.getIdleMushroomGameDictionary()
                         .getAchievementTexts(game.getIdleGameplayExport().getLanguage())
         );
         popupUiStage.addActor(achievementPopupBoard);

@@ -14,7 +14,6 @@ import hundun.gdxgame.idleshare.gamelib.framework.data.SystemSettingSaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.IBuiltinAchievementsLoader;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.IBuiltinConstructionsLoader;
-import hundun.gdxgame.idleshare.gamelib.framework.util.text.IGameDictionary;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,8 +31,6 @@ public class IdleGameplayExport implements ILogicFrameListener,
     private final IBuiltinConstructionsLoader builtinConstructionsLoader;
     private final IBuiltinAchievementsLoader builtinAchievementsLoader;
     private final ChildGameConfig childGameConfig;
-    @Getter
-    private final IGameDictionary gameDictionary;
     @Setter
     @Getter
     private Language language;
@@ -41,16 +38,14 @@ public class IdleGameplayExport implements ILogicFrameListener,
     public String stageId;
 
     public IdleGameplayExport(
-            IFrontend frontEnd, 
-            IGameDictionary gameDictionary,
+            IFrontend frontEnd,
             IBuiltinConstructionsLoader builtinConstructionsLoader,
             IBuiltinAchievementsLoader builtinAchievementsLoader,
             int LOGIC_FRAME_PER_SECOND, ChildGameConfig childGameConfig) {
-        this.gameDictionary = gameDictionary;
         this.builtinConstructionsLoader = builtinConstructionsLoader;
         this.builtinAchievementsLoader = builtinAchievementsLoader;
         this.childGameConfig = childGameConfig;
-        this.gameplayContext = new IdleGameplayContext(frontEnd, gameDictionary, LOGIC_FRAME_PER_SECOND);
+        this.gameplayContext = new IdleGameplayContext(frontEnd, LOGIC_FRAME_PER_SECOND);
     }
 
     @Override

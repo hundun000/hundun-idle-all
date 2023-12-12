@@ -1,4 +1,4 @@
-package hundun.gdxgame.idledemo.starter.ui.component.board.construction.impl;
+package hundun.gdxgame.idledemo.starter.ui.component.board.construction;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

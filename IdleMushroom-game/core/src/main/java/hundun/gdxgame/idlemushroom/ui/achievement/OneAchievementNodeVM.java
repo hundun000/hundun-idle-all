@@ -32,7 +32,7 @@ public class OneAchievementNodeVM extends Table {
         this.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
         this.achievementAndStatus = achievementAndStatus;
 
-        this.texts = parent.getGame().getIdleGameplayExport().getGameDictionary()
+        this.texts = parent.getGame().getIdleMushroomGameDictionary()
                 .getAchievementTexts(parent.getGame().getIdleGameplayExport().getLanguage());
         this.setBackground(parent.getGame().getTextureManager().getTableType3Drawable());
 

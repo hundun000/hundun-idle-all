@@ -4,16 +4,15 @@ import java.util.List;
 import java.util.Map;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.idleshare.gamelib.framework.util.text.IGameDictionary;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
 /**
  * @author hundun
  * Created on 2021/11/22
  */
-public class DemoGameDictionary implements IGameDictionary {
+public class DemoGameDictionary {
 
-    @Override
+
     public List<String> getMenuScreenTexts(Language language) {
         switch (language) {
             case CN:
@@ -23,7 +22,6 @@ public class DemoGameDictionary implements IGameDictionary {
         }
     }
 
-    @Override
     public Map<Language, String> getLanguageShowNameMap() {
         return JavaFeatureForGwt.mapOf(
                 Language.CN, "中文",
@@ -31,7 +29,6 @@ public class DemoGameDictionary implements IGameDictionary {
                 );
     }
 
-    @Override
     public List<String> getAchievementTexts(Language language)
     {
         switch (language)
@@ -50,7 +47,6 @@ public class DemoGameDictionary implements IGameDictionary {
     }
 
 
-    @Override
     public List<String> getStageSelectMaskBoardTexts(Language language)
     {
         switch (language)

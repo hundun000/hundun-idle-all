@@ -27,7 +27,7 @@ public class FirstRunningAchievementBoardVM extends Table {
     public FirstRunningAchievementBoardVM(BaseIdleMushroomScreen parent)
     {
         this.parent = parent;
-        this.texts = parent.getGame().getIdleGameplayExport().getGameDictionary()
+        this.texts = parent.getGame().getIdleMushroomGameDictionary()
                 .getAchievementTexts(parent.getGame().getIdleGameplayExport().getLanguage());
         this.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
 

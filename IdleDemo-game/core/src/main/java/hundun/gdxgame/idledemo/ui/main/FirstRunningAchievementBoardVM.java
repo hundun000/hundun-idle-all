@@ -24,7 +24,7 @@ public class FirstRunningAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>,
     public FirstRunningAchievementBoardVM(BaseIdleScreen<T_GAME, T_SAVE> parent)
     {
         this.parent = parent;
-        this.texts = parent.getGame().getIdleGameplayExport().getGameDictionary()
+        this.texts = parent.getGame().getDemoGameDictionary()
                 .getAchievementTexts(parent.getGame().getIdleGameplayExport().getLanguage());
         this.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
 

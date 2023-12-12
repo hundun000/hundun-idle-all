@@ -18,9 +18,7 @@ public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
 
     @Getter
     protected AbstractIdleScreenContext<DemoIdleGame, RootSaveData> screenContext;
-    
-    
-    
+
     public DemoIdleGame(ISaveTool<RootSaveData> saveTool) {
         super(960, 640);
         this.debugMode = true;
@@ -39,6 +37,7 @@ public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
                 DemoScreenId.SCREEN_WORLD,
                 DemoScreenId.SCREEN_ACHIEVEMENT
         );
+        this.demoGameDictionary = new DemoGameDictionary();
     }
 
 
@@ -49,7 +48,6 @@ public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
         this.mainSkin = new FreeTypeSkin(Gdx.files.internal("skins/DefaultSkinWithFreeType/DefaultSkinWithFreeType.json"));
         this.idleGameplayExport = new IdleGameplayExport(
                 frontend,
-                new DemoGameDictionary(),
                 new DemoBuiltinConstructionsLoader(),
                 new DemoAchievementLoader(),
                 BaseIdleScreen.LOGIC_FRAME_PER_SECOND,

@@ -74,7 +74,7 @@ public class IdleMushroomMenuScreen extends BaseHundunScreen<IdleMushroomGame, R
     }
 
     private void initScene2d() {
-        List<String> memuScreenTexts = game.getIdleGameplayExport().getGameDictionary().getMenuScreenTexts(game.getIdleGameplayExport().getLanguage());
+        List<String> memuScreenTexts = idleMushroomGame.getIdleMushroomGameDictionary().getMenuScreenTexts(game.getIdleGameplayExport().getLanguage());
         this.backImage = new Image(game.getTextureManager().getMenuTexture());
         backImage.setFillParent(true);
 
@@ -162,7 +162,7 @@ public class IdleMushroomMenuScreen extends BaseHundunScreen<IdleMushroomGame, R
         ) {
             this.parent = parent;
             this.setBackground(parent.getIdleMushroomGame().getTextureManager().getTableType1Drawable());
-            this.languageShowNameMap = parent.getGame().getIdleGameplayExport().getGameDictionary().getLanguageShowNameMap();
+            this.languageShowNameMap = parent.getGame().getIdleMushroomGameDictionary().getLanguageShowNameMap();
             this.add(new Label(startText, parent.getGame().getMainSkin()));
 
 
