@@ -1,8 +1,12 @@
 package hundun.gdxgame.idleshare.gamelib.framework.model.construction.base;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public abstract class ProficiencyComponent {
 
-    public int maxProficiency = 100;
+    @Getter
+    protected int maxProficiency;
     protected final BaseConstruction construction;
     public String promoteConstructionPrototypeId;
     public String demoteConstructionPrototypeId;

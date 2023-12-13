@@ -70,7 +70,7 @@ public class CookieComplexAutoProviderPrototype extends AbstractConstructionProt
         public CookieComplexAutoProviderProficiencyComponent(
                 BaseConstruction construction
         ) {
-            super(construction, 1, 0);
+            super(construction, 1, 0, 100);
         }
 
         @Override

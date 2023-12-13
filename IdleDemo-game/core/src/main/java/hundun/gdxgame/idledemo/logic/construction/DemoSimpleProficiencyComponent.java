@@ -12,7 +12,7 @@ public class DemoSimpleProficiencyComponent extends BaseAutoProficiencyComponent
 
 
     public DemoSimpleProficiencyComponent(BaseConstruction construction, Integer second) {
-        super(construction, second, 50);
+        super(construction, second, 50, 100);
     }
 
     @Override

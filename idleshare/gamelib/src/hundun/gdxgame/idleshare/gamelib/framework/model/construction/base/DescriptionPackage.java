@@ -1,6 +1,7 @@
 package hundun.gdxgame.idleshare.gamelib.framework.model.construction.base;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
+import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt.NumberFormat;
 import lombok.NoArgsConstructor;
 
 import lombok.AllArgsConstructor;
@@ -44,6 +45,8 @@ public class DescriptionPackage {
     List<String> extraTexts;
 
     public static class Helper {
+
+        static NumberFormat numberFormat = NumberFormat.getFormat(1, 1);
         public static String getWorkingLevelDescription(BaseConstruction construction) {
             boolean reachedMaxLevel = construction.getSaveData().getLevel() == construction.getLevelComponent().maxLevel;
             StringBuilder stringBuilder = new StringBuilder();
@@ -71,9 +74,12 @@ public class DescriptionPackage {
         public static String getProficiencyDescription(BaseConstruction construction) {
             boolean reachedMaxProficiency = construction.getSaveData().getLevel() == construction.proficiencyComponent.maxProficiency;
             StringBuilder stringBuilder = new StringBuilder();
+            String proficiencyText = construction.getDescriptionPackage().getProficiencyDescriptionProvider().formatPercentage ?
+                    numberFormat.format(100f * construction.saveData.getProficiency() / construction.getProficiencyComponent().maxProficiency) :
+                    construction.saveData.getProficiency() + "";
             stringBuilder.append(JavaFeatureForGwt.stringFormat(
                     construction.getDescriptionPackage().getProficiencyDescriptionProvider().getProficiencyPart(),
-                    construction.saveData.getProficiency()
+                    proficiencyText
             ));
             if (reachedMaxProficiency) {
                 stringBuilder.append(" ");
@@ -99,6 +105,7 @@ public class DescriptionPackage {
     @NoArgsConstructor
     @Builder
     public static class ProficiencyDescriptionPackage {
+        boolean formatPercentage;
         String proficiencyPart;
         String reachedMaxProficiencyPart;
     }

@@ -22,11 +22,13 @@ import java.util.HashMap;
 public class AutoProviderPrototype extends AbstractConstructionPrototype {
 
     public static ProficiencyDescriptionPackage CN_PROFICIENCY_IMP = DescriptionPackageFactory.EN_PROFICIENCY_IMP
-            .proficiencyPart("成长度: {0}")
+            .formatPercentage(true)
+            .proficiencyPart("成长度: {0}%")
             .build();
 
     public static ProficiencyDescriptionPackage EN_PROFICIENCY_IMP = DescriptionPackageFactory.EN_PROFICIENCY_IMP
-            .proficiencyPart("Growth: {0}")
+            .formatPercentage(true)
+            .proficiencyPart("Growth: {0}%")
             .build();
 
     public static DescriptionPackage descriptionPackageEN = DescriptionPackage.builder()
@@ -108,7 +110,7 @@ public class AutoProviderPrototype extends AbstractConstructionPrototype {
         public AutoProviderProficiencyComponent(
                 BaseConstruction construction
         ) {
-            super(construction, 1, 100);
+            super(construction, 1, 200, 200);
         }
 
         @Override
@@ -133,7 +135,7 @@ public class AutoProviderPrototype extends AbstractConstructionPrototype {
                             )
                     )
                     .count();
-            int add = (int) Math.max(0, 1 + neighborTreeCount * 2 - neighborProviderCount);
+            int add = (int) Math.max(1, 1 + neighborTreeCount * 2 - neighborProviderCount);
             this.changeProficiency(add);
         }
     }

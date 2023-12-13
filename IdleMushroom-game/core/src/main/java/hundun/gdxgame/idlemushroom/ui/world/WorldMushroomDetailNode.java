@@ -125,7 +125,7 @@ public class WorldMushroomDetailNode extends BaseCellDetailNodeVM {
         upgradeButton.setText(construction.getDescriptionPackage().getUpgradeButtonText());
         workingLevelLabel.setText(DescriptionPackage.Helper.getWorkingLevelDescription(construction));
         proficiencyLabel.setText(DescriptionPackage.Helper.getProficiencyDescription(construction));
-        progressBar.setRange(0, construction.getProficiencyComponent().maxProficiency);
+        progressBar.setRange(0, construction.getProficiencyComponent().getMaxProficiency());
         progressBar.setValue(construction.getSaveData().getProficiency());
         positionLabel.setText(construction.getSaveData().getPosition().toShowText());
 
