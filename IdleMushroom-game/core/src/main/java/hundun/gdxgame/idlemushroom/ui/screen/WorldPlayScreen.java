@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
-import hundun.gdxgame.idlemushroom.logic.DemoScreenId;
-import hundun.gdxgame.idlemushroom.logic.ResourceType;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomScreenId;
+import hundun.gdxgame.idlemushroom.logic.id.ResourceType;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseIdleMushroomPlayScreen;
 import hundun.gdxgame.idlemushroom.ui.world.HexCellVM;
 import hundun.gdxgame.idlemushroom.ui.world.HexAreaVM;
@@ -39,7 +39,7 @@ public class WorldPlayScreen extends BaseIdleMushroomPlayScreen implements ICons
     private boolean disableHexAreaInput;
 
     public WorldPlayScreen(IdleMushroomGame game) {
-        super(game, DemoScreenId.SCREEN_WORLD);
+        super(game, IdleMushroomScreenId.SCREEN_WORLD);
 
         this.deskCamera = new OrthographicCamera();
         this.deskStage = new Stage(new ScreenViewport(deskCamera), game.getBatch());

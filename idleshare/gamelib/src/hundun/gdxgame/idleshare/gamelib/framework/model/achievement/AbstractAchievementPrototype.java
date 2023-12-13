@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor
-public abstract class AbstractAchievement {
+public abstract class AbstractAchievementPrototype {
     protected IdleGameplayContext gameplayContext;
     protected String id;
     protected String name;
@@ -24,7 +24,7 @@ public abstract class AbstractAchievement {
 
     public abstract boolean checkComplete();
 
-    public AbstractAchievement(
+    public AbstractAchievementPrototype(
             String id,
             String name,
             String description,

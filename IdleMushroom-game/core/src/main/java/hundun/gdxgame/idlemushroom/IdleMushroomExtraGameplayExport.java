@@ -5,7 +5,7 @@ import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.gamelib.starter.listerner.IGameStartListener;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame.ConstructionEpochConfig;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame.RootEpochConfig;
-import hundun.gdxgame.idlemushroom.logic.IdleMushroomConstructionPrototypeId;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import lombok.Getter;
 

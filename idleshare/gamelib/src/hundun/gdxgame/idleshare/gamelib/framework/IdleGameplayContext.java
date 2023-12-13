@@ -4,11 +4,11 @@ import java.util.Map;
 
 import hundun.gdxgame.gamelib.base.IFrontend;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
-import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievementPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.BaseConstructionFactory;
-import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager;
-import hundun.gdxgame.idleshare.gamelib.framework.model.manager.BuffManager;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementManager;
+import hundun.gdxgame.idleshare.gamelib.framework.model.buff.BuffManager;
 import hundun.gdxgame.idleshare.gamelib.framework.model.manager.ConstructionManager;
 import hundun.gdxgame.idleshare.gamelib.framework.model.manager.EventManager;
 import hundun.gdxgame.idleshare.gamelib.framework.model.manager.StorageManager;
@@ -54,7 +54,7 @@ public class IdleGameplayContext {
             Language language,
             ChildGameConfig childGameConfig,
             Map<String, AbstractConstructionPrototype> providerMap,
-            Map<String, AbstractAchievement> achievementProviderMap
+            Map<String, AbstractAchievementPrototype> achievementProviderMap
     ) {
         this.getConstructionFactory().lazyInit(this, language, providerMap);
         this.getConstructionManager().lazyInit(childGameConfig.getConstructionConfig());

@@ -1,12 +1,11 @@
-package hundun.gdxgame.idlemushroom.logic;
+package hundun.gdxgame.idlemushroom.logic.loader;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import hundun.gdxgame.idlemushroom.IdleMushroomGame;
-import hundun.gdxgame.idlemushroom.IdleMushroomGame.RootEpochConfig;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.logic.prototype.*;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.*;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.IBuiltinConstructionsLoader;
@@ -15,7 +14,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
 
-public class DemoBuiltinConstructionsLoader implements IBuiltinConstructionsLoader {
+public class IdleMushroomConstructionsLoader implements IBuiltinConstructionsLoader {
 
     @Override
     public Map<String, AbstractConstructionPrototype> getProviderMap(Language language) {

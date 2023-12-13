@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.idlemushroom.logic.DemoScreenId;
-import hundun.gdxgame.idlemushroom.logic.IdleMushroomConstructionPrototypeId;
-import hundun.gdxgame.idlemushroom.logic.ResourceType;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomScreenId;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomConstructionPrototypeId;
+import hundun.gdxgame.idlemushroom.logic.id.ResourceType;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
 
 /**
@@ -40,7 +40,7 @@ public class IdleMushroomChildGameConfig extends ChildGameConfig {
         );
         
         this.setAreaEntityEffectConfigMap(JavaFeatureForGwt.mapOf(
-                DemoScreenId.SCREEN_MAIN,
+                IdleMushroomScreenId.SCREEN_MAIN,
                 AreaEntityEffectConfig.builder()
                         .changeAmountResourceIds(JavaFeatureForGwt.listOf(ResourceType.MUSHROOM))
                         .ownAmountConstructionPrototypeIds(new ArrayList<>(0))
@@ -49,8 +49,8 @@ public class IdleMushroomChildGameConfig extends ChildGameConfig {
         ));
 
         Map<String, String> screenIdToFilePathMap = JavaFeatureForGwt.mapOf(
-                DemoScreenId.SCREEN_MAIN, "audio/Loop-Menu.wav",
-                DemoScreenId.SCREEN_WORLD, "audio/forest.mp3"
+                IdleMushroomScreenId.SCREEN_MAIN, "audio/Loop-Menu.wav",
+                IdleMushroomScreenId.SCREEN_WORLD, "audio/forest.mp3"
                 );
         this.setScreenIdToFilePathMap(screenIdToFilePathMap);
 

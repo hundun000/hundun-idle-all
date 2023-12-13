@@ -1,9 +1,9 @@
 package hundun.gdxgame.idledemo.logic;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
-import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.IBuiltinAchievementsLoader;
-import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.OwnConstructionAchievement;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievementPrototype;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.IAchievementPrototypeLoader;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.OwnConstructionAchievementPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
@@ -12,9 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DemoAchievementLoader implements IBuiltinAchievementsLoader {
+public class DemoAchievementLoader implements IAchievementPrototypeLoader {
     @Override
-    public Map<String, AbstractAchievement> getProviderMap(Language language) {
+    public Map<String, AbstractAchievementPrototype> getProviderMap(Language language) {
         Map<String, List<String>> textMap = new HashMap<>();
         switch (language)
         {
@@ -50,8 +50,8 @@ public class DemoAchievementLoader implements IBuiltinAchievementsLoader {
 
 
 
-        Map<String, AbstractAchievement> map = new HashMap<>();
-        OwnConstructionAchievement.Companion.quickAddOwnConstructionAchievement(
+        Map<String, AbstractAchievementPrototype> map = new HashMap<>();
+        OwnConstructionAchievementPrototype.Companion.quickAddOwnConstructionAchievement(
                 map,
                 DemoAchievementId.STEP_1,
                 textMap,
@@ -61,7 +61,7 @@ public class DemoAchievementLoader implements IBuiltinAchievementsLoader {
                 JavaFeatureForGwt.listOf(DemoAchievementId.STEP_2),
                 new ResourcePair(ResourceType.COIN, 1000L)
         );
-        OwnConstructionAchievement.Companion.quickAddOwnConstructionAchievement(
+        OwnConstructionAchievementPrototype.Companion.quickAddOwnConstructionAchievement(
                 map,
                 DemoAchievementId.STEP_2,
                 textMap,

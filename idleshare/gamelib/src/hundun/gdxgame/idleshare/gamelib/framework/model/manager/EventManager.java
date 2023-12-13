@@ -12,8 +12,8 @@ import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollecti
 import hundun.gdxgame.idleshare.gamelib.framework.callback.INotificationBoardCallerAndCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IBuffChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
-import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
-import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementState;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievementPrototype;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementManager.AchievementState;
 
 
 /**
@@ -112,7 +112,7 @@ public class EventManager {
         }
     }
 
-    public void notifyAchievementComplete(AbstractAchievement achievement, AchievementState state) {
+    public void notifyAchievementComplete(AbstractAchievementPrototype achievement, AchievementState state) {
         gameContext.getFrontEnd().log(this.getClass().getSimpleName(), "notifyAchievementUnlock");
         for (IAchievementStateChangeListener listener : achievementStateChangeListeners) {
             listener.onAchievementStateChange(achievement, state);

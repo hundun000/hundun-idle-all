@@ -1,4 +1,4 @@
-package hundun.gdxgame.idlemushroom.logic;
+package hundun.gdxgame.idlemushroom.logic.id;
 /**
  * @author hundun
  * Created on 2021/11/05

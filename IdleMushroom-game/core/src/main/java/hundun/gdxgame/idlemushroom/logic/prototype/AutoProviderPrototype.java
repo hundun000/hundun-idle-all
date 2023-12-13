@@ -3,9 +3,9 @@ package hundun.gdxgame.idlemushroom.logic.prototype;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idlemushroom.logic.construction.BaseIdleDemoConstruction;
 import hundun.gdxgame.idlemushroom.logic.construction.DemoSimpleAutoOutputComponent;
-import hundun.gdxgame.idlemushroom.logic.IdleMushroomConstructionPrototypeId;
-import hundun.gdxgame.idlemushroom.logic.DemoBuiltinConstructionsLoader;
-import hundun.gdxgame.idlemushroom.logic.ResourceType;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomConstructionPrototypeId;
+import hundun.gdxgame.idlemushroom.logic.loader.IdleMushroomConstructionsLoader;
+import hundun.gdxgame.idlemushroom.logic.id.ResourceType;
 import hundun.gdxgame.idlemushroom.util.IdleMushroomJavaFeatureForGwt;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
@@ -93,12 +93,12 @@ public class AutoProviderPrototype extends AbstractConstructionPrototype {
         DemoSimpleAutoOutputComponent outputComponent = new DemoSimpleAutoOutputComponent(construction);
         construction.setOutputComponent(outputComponent);
 
-        construction.getOutputComponent().setOutputCostPack(DemoBuiltinConstructionsLoader.toPack(new HashMap<>()));
-        construction.getOutputComponent().setOutputGainPack(DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
+        construction.getOutputComponent().setOutputCostPack(IdleMushroomConstructionsLoader.toPack(new HashMap<>()));
+        construction.getOutputComponent().setOutputGainPack(IdleMushroomConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
                 ResourceType.MUSHROOM, 1
         )));
 
-        construction.getUpgradeComponent().setUpgradeCostPack(DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
+        construction.getUpgradeComponent().setUpgradeCostPack(IdleMushroomConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
                 ResourceType.MUSHROOM, 50
         )));
 

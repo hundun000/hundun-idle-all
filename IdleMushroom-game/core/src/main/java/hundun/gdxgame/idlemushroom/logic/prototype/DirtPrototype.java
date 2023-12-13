@@ -1,10 +1,10 @@
 package hundun.gdxgame.idlemushroom.logic.prototype;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.idlemushroom.logic.DemoBuiltinConstructionsLoader;
-import hundun.gdxgame.idlemushroom.logic.ResourceType;
+import hundun.gdxgame.idlemushroom.logic.loader.IdleMushroomConstructionsLoader;
+import hundun.gdxgame.idlemushroom.logic.id.ResourceType;
 import hundun.gdxgame.idlemushroom.logic.construction.BaseIdleDemoConstruction;
-import hundun.gdxgame.idlemushroom.logic.IdleMushroomConstructionPrototypeId;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.util.IdleMushroomJavaFeatureForGwt;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig.ConstructionBuyCandidateConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
@@ -79,7 +79,7 @@ public class DirtPrototype extends AbstractConstructionPrototype {
                 thiz.getExistenceComponent().setBuyCandidateConfigs(JavaFeatureForGwt.listOf(
                         ConstructionBuyCandidateConfig.builder()
                                 .prototypeId(IdleMushroomConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER)
-                                .buyCostPack(DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
+                                .buyCostPack(IdleMushroomConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
                                         ResourceType.MUSHROOM, 50
                                 )))
                                 .build()
@@ -89,7 +89,7 @@ public class DirtPrototype extends AbstractConstructionPrototype {
                 thiz.getExistenceComponent().setBuyCandidateConfigs(JavaFeatureForGwt.listOf(
                         ConstructionBuyCandidateConfig.builder()
                                 .prototypeId(IdleMushroomConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER)
-                                .buyCostPack(DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
+                                .buyCostPack(IdleMushroomConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
                                         ResourceType.MUSHROOM, 100
                                 )))
                                 .build()
@@ -99,7 +99,7 @@ public class DirtPrototype extends AbstractConstructionPrototype {
                 thiz.getExistenceComponent().setBuyCandidateConfigs(JavaFeatureForGwt.listOf(
                         ConstructionBuyCandidateConfig.builder()
                                 .prototypeId(IdleMushroomConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER)
-                                .buyCostPack(DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
+                                .buyCostPack(IdleMushroomConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
                                         ResourceType.MUSHROOM, 200
                                 )))
                                 .build()

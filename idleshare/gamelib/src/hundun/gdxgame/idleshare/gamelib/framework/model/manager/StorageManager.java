@@ -3,7 +3,6 @@ package hundun.gdxgame.idleshare.gamelib.framework.model.manager;
 import java.util.*;
 import java.util.Map.Entry;
 
-import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
 import lombok.Getter;
@@ -19,7 +18,7 @@ public class StorageManager {
 
     @Getter
     @Setter
-    Map<String, Long> ownResoueces = new HashMap<>();
+    Map<String, Long> ownResources = new HashMap<>();
 
     @Getter
     @Setter
@@ -28,7 +27,7 @@ public class StorageManager {
 
     Map<String, Long> oneFrameDeltaResoueces = new HashMap<>();
 
-    private Map<String, List<Long>> deltaHistoryMap = new HashMap<>();
+    private final Map<String, List<Long>> deltaHistoryMap = new HashMap<>();
     private final int HISTORY_SIZE = 100;
     public StorageManager(IdleGameplayContext gameContext) {
         this.gameContext = gameContext;
@@ -40,7 +39,7 @@ public class StorageManager {
     }
 
     public long getResourceNumOrZero(String key) {
-        return ownResoueces.getOrDefault(key, 0L);
+        return ownResources.getOrDefault(key, 0L);
     }
 
 
@@ -52,7 +51,7 @@ public class StorageManager {
         //Gdx.app.log(this.getClass().getSimpleName(), (plus ? "plus" : "minus") + ": " + map);
         for (Entry<String, Long> entry : map.entrySet()) {
             unlockedResourceTypes.add(entry.getKey());
-            ownResoueces.merge(entry.getKey(), (plus ? 1 : -1 ) * entry.getValue(), (oldValue, newValue) -> oldValue + newValue);
+            ownResources.merge(entry.getKey(), (plus ? 1 : -1 ) * entry.getValue(), (oldValue, newValue) -> oldValue + newValue);
             oneFrameDeltaResoueces.merge(entry.getKey(), (plus ? 1 : -1 ) * entry.getValue(), (oldValue, newValue) -> oldValue + newValue);
         }
         //game.getEventManager().notifyResourceAmountChange(false);
@@ -62,7 +61,7 @@ public class StorageManager {
         //Gdx.app.log(this.getClass().getSimpleName(), (plus ? "plus" : "minus") + ": " + packs);
         for (ResourcePair pack : packs) {
             unlockedResourceTypes.add(pack.getType());
-            ownResoueces.merge(pack.getType(), (plus ? 1 : -1 ) * pack.getAmount(), (oldValue, newValue) -> oldValue + newValue);
+            ownResources.merge(pack.getType(), (plus ? 1 : -1 ) * pack.getAmount(), (oldValue, newValue) -> oldValue + newValue);
             oneFrameDeltaResoueces.merge(pack.getType(), (plus ? 1 : -1 ) * pack.getAmount(), (oldValue, newValue) -> oldValue + newValue);
         }
         //game.getEventManager().notifyResourceAmountChange(false);
@@ -92,11 +91,5 @@ public class StorageManager {
         });
         gameContext.getEventManager().notifyOneFrameResourceChange(changeMap, deltaHistoryMap);
     }
-
-//    public void addResourceNum(String key, int add) {
-//        Gdx.app.log(this.getClass().getSimpleName(), "addResourceNum:" + key + " " + add);
-//        ownResoueces.merge(key, add, (oldValue, newValue) -> oldValue + newValue);
-//        game.getEventManager().notifyResourceAmountChange(false);
-//    }
 
 }

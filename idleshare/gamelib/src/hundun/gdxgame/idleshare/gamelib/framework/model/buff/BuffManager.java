@@ -1,0 +1,83 @@
+package hundun.gdxgame.idleshare.gamelib.framework.model.buff;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementManager.AchievementSaveData;
+import lombok.*;
+
+/**
+ * @author hundun
+ * Created on 2021/11/10
+ */
+public class BuffManager {
+
+    private final IdleGameplayContext gameContext;
+
+    Map<String, BuffAndStatus> models = new HashMap<>();
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class BuffAndStatus {
+        AbstractBuffPrototype buffPrototype;
+        BuffSaveData saveData;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class BuffSaveData {
+        int buffLevel;
+
+    }
+    public BuffManager(IdleGameplayContext gameContext) {
+        this.gameContext = gameContext;
+    }
+
+    public long modifyOutputGain(String constructionPrototypeId, String resourceType, long lastPhaseAmount) {
+        for (BuffAndStatus model : models.values()) {
+            if (model.getSaveData().getBuffLevel() == 0) {
+                continue;
+            }
+            lastPhaseAmount = model.getBuffPrototype().modifyOutputGain(model.getSaveData(), constructionPrototypeId, resourceType, lastPhaseAmount);
+        }
+        return lastPhaseAmount;
+    }
+
+    public long modifyOutputCost(String constructionPrototypeId, String resourceType, long lastPhaseAmount) {
+        for (BuffAndStatus model : models.values()) {
+            if (model.getSaveData().getBuffLevel() == 0) {
+                continue;
+            }
+            lastPhaseAmount = model.getBuffPrototype().modifyOutputCost(model.getSaveData(), constructionPrototypeId, resourceType, lastPhaseAmount);
+        }
+        return lastPhaseAmount;
+    }
+
+    public void subApplyGameplaySaveData(
+            Map<String, AbstractBuffPrototype> achievementProviderMap,
+            Map<String, BuffSaveData> statusDataMap
+    ) {
+        achievementProviderMap.values().forEach(it -> {
+            BuffSaveData statusData;
+            if (statusDataMap.containsKey(it.getId())) {
+                statusData = statusDataMap.get(it.getId());
+            } else {
+                statusData = new BuffSaveData(0);
+            }
+            it.lazyInitDescription(gameContext);
+            models.put(it.getId(), new BuffAndStatus(it, statusData));
+        });
+    }
+
+    public Map<String, BuffSaveData> getAchievementSaveDataMap() {
+        return models.values().stream()
+                .collect(Collectors.toMap(
+                        it -> it.getBuffPrototype().getId(),
+                        it -> it.getSaveData()
+                ));
+    }
+}

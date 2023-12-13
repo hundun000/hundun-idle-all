@@ -3,7 +3,6 @@ package hundun.gdxgame.idledemo.ui.shared;
 import com.badlogic.gdx.Gdx;
 import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.idledemo.DemoIdleGame;
-import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.main.FirstRunningAchievementBoardVM;
 import hundun.gdxgame.idledemo.ui.screen.DemoScreenContext;
@@ -11,8 +10,8 @@ import hundun.gdxgame.idledemo.ui.world.HexCellVM;
 import hundun.gdxgame.idledemo.ui.achievement.AchievementPopupBoard;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementStateChangeListener;
-import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
-import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementState;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievementPrototype;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementManager.AchievementState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +23,7 @@ public abstract class BaseDemoPlayScreen extends BaseIdleDemoScreen
     protected FirstRunningAchievementBoardVM<DemoIdleGame, RootSaveData> firstRunningAchievementBoardVM;
     protected AchievementPopupBoard achievementPopupBoard;
     DemoIdleGame demoIdleGame;
-    protected List<AbstractAchievement> showAchievementMaskBoardQueue = new ArrayList<>();
+    protected List<AbstractAchievementPrototype> showAchievementMaskBoardQueue = new ArrayList<>();
 
     public BaseDemoPlayScreen(DemoIdleGame game, String screenId) {
         super(game, screenId, DemoScreenContext.customLayoutConst(game));
@@ -66,7 +65,7 @@ public abstract class BaseDemoPlayScreen extends BaseIdleDemoScreen
         super.onLogicFrame();
 
         if (showAchievementMaskBoardQueue.size() > 0) {
-            AbstractAchievement achievement = showAchievementMaskBoardQueue.remove(0);
+            AbstractAchievementPrototype achievement = showAchievementMaskBoardQueue.remove(0);
 
             game.getFrontend().log(this.getClass().getSimpleName(), "onAchievementUnlock called");
             achievementPopupBoard.setAchievementPrototype(achievement);
@@ -85,7 +84,7 @@ public abstract class BaseDemoPlayScreen extends BaseIdleDemoScreen
     }
 
     @Override
-    public void showAchievementMaskBoard(AbstractAchievement achievement) {
+    public void showAchievementMaskBoard(AbstractAchievementPrototype achievement) {
         if (this.hidden) {
             return;
         }
@@ -108,7 +107,7 @@ public abstract class BaseDemoPlayScreen extends BaseIdleDemoScreen
     }
 
     @Override
-    public void onAchievementStateChange(AbstractAchievement achievement, AchievementState state) {
+    public void onAchievementStateChange(AbstractAchievementPrototype achievement, AchievementState state) {
         if (state == AchievementState.COMPLETED) {
             showAchievementMaskBoard(achievement);
             firstRunningAchievementBoardVM.updateData();

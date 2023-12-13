@@ -1,10 +1,7 @@
 package hundun.gdxgame.idlemushroom.ui.screen;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
-import hundun.gdxgame.idlemushroom.logic.DemoScreenId;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomScreenId;
 import hundun.gdxgame.idlemushroom.ui.main.GameEntityFactory.IdleMushroomGameEntityFactoryLayoutConst;
 import lombok.Getter;
 
@@ -83,10 +80,10 @@ public class IdleMushroomScreenContext {
         this.worldPlayScreen = new WorldPlayScreen(game);
         this.achievementScreen = new DemoAchievementScreen(game);
 
-        game.getScreenManager().addScreen(DemoScreenId.SCREEN_MENU, menuScreen);
-        game.getScreenManager().addScreen(DemoScreenId.SCREEN_MAIN, mainPlayScreen);
-        game.getScreenManager().addScreen(DemoScreenId.SCREEN_WORLD, worldPlayScreen);
-        game.getScreenManager().addScreen(DemoScreenId.SCREEN_ACHIEVEMENT, achievementScreen);
+        game.getScreenManager().addScreen(IdleMushroomScreenId.SCREEN_MENU, menuScreen);
+        game.getScreenManager().addScreen(IdleMushroomScreenId.SCREEN_MAIN, mainPlayScreen);
+        game.getScreenManager().addScreen(IdleMushroomScreenId.SCREEN_WORLD, worldPlayScreen);
+        game.getScreenManager().addScreen(IdleMushroomScreenId.SCREEN_ACHIEVEMENT, achievementScreen);
     }
 
 }

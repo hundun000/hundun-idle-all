@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import hundun.gdxgame.corelib.base.BaseHundunScreen;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
-import hundun.gdxgame.idlemushroom.logic.DemoScreenId;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomScreenId;
 import hundun.gdxgame.idlemushroom.logic.RootSaveData;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushroomPlayScreenLayoutConst;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
@@ -47,8 +47,8 @@ public class IdleMushroomMenuScreen extends BaseHundunScreen<IdleMushroomGame, R
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 game.getSaveHandler().gameplayLoadOrStarter(true);
-                game.getScreenManager().pushScreen(DemoScreenId.SCREEN_MAIN, null);
-                game.getAudioPlayManager().intoScreen(DemoScreenId.SCREEN_MAIN);
+                game.getScreenManager().pushScreen(IdleMushroomScreenId.SCREEN_MAIN, null);
+                game.getAudioPlayManager().intoScreen(IdleMushroomScreenId.SCREEN_MAIN);
                 game.getIdleGameplayExport().getGameplayContext().getEventManager().notifyGameStart();
             }
             @Override
@@ -60,8 +60,8 @@ public class IdleMushroomMenuScreen extends BaseHundunScreen<IdleMushroomGame, R
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 game.getSaveHandler().gameplayLoadOrStarter(false);
-                game.getScreenManager().pushScreen(DemoScreenId.SCREEN_MAIN, null);
-                game.getAudioPlayManager().intoScreen(DemoScreenId.SCREEN_MAIN);
+                game.getScreenManager().pushScreen(IdleMushroomScreenId.SCREEN_MAIN, null);
+                game.getAudioPlayManager().intoScreen(IdleMushroomScreenId.SCREEN_MAIN);
                 game.getIdleGameplayExport().getGameplayContext().getEventManager().notifyGameStart();
             }
             @Override

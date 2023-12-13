@@ -10,6 +10,7 @@ import hundun.gdxgame.gamelib.base.save.ISaveTool;
 import hundun.gdxgame.idledemo.ui.screen.DemoScreenContext;
 import hundun.gdxgame.idledemo.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport;
+import hundun.gdxgame.idleshare.gamelib.framework.model.buff.IBuffPrototypeLoader;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.TextFormatTool;
 import lombok.Getter;
 
@@ -50,6 +51,7 @@ public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
                 frontend,
                 new DemoBuiltinConstructionsLoader(),
                 new DemoAchievementLoader(),
+                IBuffPrototypeLoader.emptyImpl(),
                 BaseIdleScreen.LOGIC_FRAME_PER_SECOND,
                 childGameConfig
                 );

@@ -2,7 +2,7 @@ package hundun.gdxgame.idlemushroom.ui.achievement;
 
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import hundun.gdxgame.idlemushroom.logic.IdleMushroomAchievementLoader;
+import hundun.gdxgame.idlemushroom.logic.loader.IdleMushroomAchievementLoader;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseIdleMushroomScreen;
 
 import java.util.ArrayList;

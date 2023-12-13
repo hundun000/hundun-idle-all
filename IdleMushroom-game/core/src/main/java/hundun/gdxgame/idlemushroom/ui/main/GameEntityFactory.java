@@ -1,7 +1,7 @@
 package hundun.gdxgame.idlemushroom.ui.main;
 
-import hundun.gdxgame.idlemushroom.logic.IdleMushroomConstructionPrototypeId;
-import hundun.gdxgame.idlemushroom.logic.ResourceType;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomConstructionPrototypeId;
+import hundun.gdxgame.idlemushroom.logic.id.ResourceType;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomMainPlayScreen;
 import hundun.gdxgame.idleshare.core.framework.entity.BaseGameEntityFactory;
 import hundun.gdxgame.idleshare.core.framework.entity.GameEntity;

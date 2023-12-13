@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idledemo.BaseIdleGame;
 import hundun.gdxgame.idledemo.starter.ui.screen.play.BaseIdleScreen;
-import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementInfoPackage;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementManager.AchievementInfoPackage;
 
 import java.util.List;
 

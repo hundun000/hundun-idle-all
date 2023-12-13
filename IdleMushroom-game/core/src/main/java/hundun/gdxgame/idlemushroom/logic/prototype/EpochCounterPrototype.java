@@ -2,9 +2,9 @@ package hundun.gdxgame.idlemushroom.logic.prototype;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idlemushroom.logic.construction.BaseIdleDemoConstruction;
-import hundun.gdxgame.idlemushroom.logic.DemoBuiltinConstructionsLoader;
-import hundun.gdxgame.idlemushroom.logic.IdleMushroomConstructionPrototypeId;
-import hundun.gdxgame.idlemushroom.logic.ResourceType;
+import hundun.gdxgame.idlemushroom.logic.loader.IdleMushroomConstructionsLoader;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomConstructionPrototypeId;
+import hundun.gdxgame.idlemushroom.logic.id.ResourceType;
 import hundun.gdxgame.idlemushroom.util.IdleMushroomJavaFeatureForGwt;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
@@ -80,7 +80,7 @@ public class EpochCounterPrototype extends AbstractConstructionPrototype {
         SimpleAutoOutputComponent outputComponent = new SimpleAutoOutputComponent(thiz);
         thiz.setOutputComponent(outputComponent);
 
-        thiz.getUpgradeComponent().setUpgradeCostPack(DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
+        thiz.getUpgradeComponent().setUpgradeCostPack(IdleMushroomConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
                 ResourceType.DNA_POINT, 0
         )));
         thiz.getUpgradeComponent().setCalculateCostFunction((baseValue, level) -> {

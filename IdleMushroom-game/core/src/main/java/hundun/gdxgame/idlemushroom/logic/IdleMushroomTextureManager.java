@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomScreenId;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomConstructionPrototypeId;
+import hundun.gdxgame.idlemushroom.logic.id.ResourceType;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -171,19 +174,19 @@ public class IdleMushroomTextureManager {
         {
             Texture texture = new Texture(Gdx.files.internal("gameAreaIcons.png"));
             TextureRegion[][] regions = TextureRegion.split(texture, 100, 50);
-            gameAreaLeftPartRegionMap.put(DemoScreenId.SCREEN_MAIN, regions[0][0]);
-            gameAreaLeftPartRegionMap.put(DemoScreenId.SCREEN_WORLD, regions[1][0]);
-            gameAreaLeftPartRegionMap.put(DemoScreenId.SCREEN_ACHIEVEMENT, regions[2][0]);
-            gameAreaRightPartRegionMap.put(DemoScreenId.SCREEN_MAIN, regions[0][1]);
-            gameAreaRightPartRegionMap.put(DemoScreenId.SCREEN_WORLD, regions[1][1]);
-            gameAreaRightPartRegionMap.put(DemoScreenId.SCREEN_ACHIEVEMENT, regions[2][1]);
+            gameAreaLeftPartRegionMap.put(IdleMushroomScreenId.SCREEN_MAIN, regions[0][0]);
+            gameAreaLeftPartRegionMap.put(IdleMushroomScreenId.SCREEN_WORLD, regions[1][0]);
+            gameAreaLeftPartRegionMap.put(IdleMushroomScreenId.SCREEN_ACHIEVEMENT, regions[2][0]);
+            gameAreaRightPartRegionMap.put(IdleMushroomScreenId.SCREEN_MAIN, regions[0][1]);
+            gameAreaRightPartRegionMap.put(IdleMushroomScreenId.SCREEN_WORLD, regions[1][1]);
+            gameAreaRightPartRegionMap.put(IdleMushroomScreenId.SCREEN_ACHIEVEMENT, regions[2][1]);
         }
         {
             Texture texture = new Texture(Gdx.files.internal("bg_shroom.png"));
             //TextureRegion[][] regions = TextureRegion.split(texture, 640, 480);
             defaultAreaBack = new TextureRegion(texture);
-            gameAreaBackMap.put(DemoScreenId.SCREEN_MAIN, defaultAreaBack);
-            gameAreaBackMap.put(DemoScreenId.SCREEN_WORLD, defaultAreaBack);
+            gameAreaBackMap.put(IdleMushroomScreenId.SCREEN_MAIN, defaultAreaBack);
+            gameAreaBackMap.put(IdleMushroomScreenId.SCREEN_WORLD, defaultAreaBack);
             //gameAreaBackMap.put(GameArea.AREA_WIN, regions[0][3]);
         }
         {

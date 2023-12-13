@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementState;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementManager.AchievementState;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
 /**

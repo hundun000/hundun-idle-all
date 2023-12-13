@@ -30,10 +30,10 @@ public abstract class OutputComponent {
     @Setter
     protected ResourcePack outputCostPack;
 
-    protected static final int DEFAULT_AUTO_OUPUT_SECOND_MAX = 1;
+    protected static final int DEFAULT_AUTO_OUTPUT_SECOND_MAX = 1;
     @Getter
     @Setter
-    protected int autoOutputSecondCountMax = DEFAULT_AUTO_OUPUT_SECOND_MAX;
+    protected int autoOutputSecondCountMax = DEFAULT_AUTO_OUTPUT_SECOND_MAX;
 
     @Getter
     @Setter
@@ -49,24 +49,28 @@ public abstract class OutputComponent {
             outputGainPack.setModifiedValues(
                     outputGainPack.getBaseValues().stream()
                         .map(pair -> {
-                            long newAmout = this.calculateModifiedOutputGain(
+                            long newAmount = this.calculateModifiedOutputGain(
                                     pair.getAmount(),
                                     construction.saveData.getWorkingLevel(),
                                     construction.saveData.getProficiency()
                             );
-                            return new ResourcePair(pair.getType(), newAmout);
+                            newAmount = construction.getGameplayContext().getBuffManager()
+                                    .modifyOutputGain(construction.prototypeId, pair.getType(), newAmount);
+                            return new ResourcePair(pair.getType(), newAmount);
                         })
                         .collect(Collectors.toList())
             );
             outputGainPack.setPreviewNextLevelModifiedValues(
                     outputGainPack.getBaseValues().stream()
                             .map(pair -> {
-                                long newAmout = this.calculateModifiedOutputGain(
+                                long newAmount = this.calculateModifiedOutputGain(
                                         pair.getAmount(),
                                         construction.saveData.getWorkingLevel() + 1,
                                         construction.saveData.getProficiency()
                                 );
-                                return new ResourcePair(pair.getType(), newAmout);
+                                newAmount = construction.getGameplayContext().getBuffManager()
+                                        .modifyOutputCost(construction.prototypeId, pair.getType(), newAmount);
+                                return new ResourcePair(pair.getType(), newAmount);
                             })
                             .collect(Collectors.toList())
             );
@@ -76,24 +80,28 @@ public abstract class OutputComponent {
             outputCostPack.setModifiedValues(
                     outputCostPack.getBaseValues().stream()
                         .map(pair -> {
-                                long newAmout = this.calculateModifiedOutputCost(
-                                        pair.getAmount(),
-                                        construction.saveData.getWorkingLevel(),
-                                        construction.saveData.getProficiency()
-                                );
-                                return new ResourcePair(pair.getType(), newAmout);
-                            })
+                            long newAmount = this.calculateModifiedOutputCost(
+                                    pair.getAmount(),
+                                    construction.saveData.getWorkingLevel(),
+                                    construction.saveData.getProficiency()
+                            );
+                            newAmount = construction.getGameplayContext().getBuffManager()
+                                    .modifyOutputCost(construction.prototypeId, pair.getType(), newAmount);
+                            return new ResourcePair(pair.getType(), newAmount);
+                        })
                         .collect(Collectors.toList())
             );
             outputCostPack.setPreviewNextLevelModifiedValues(
                     outputCostPack.getBaseValues().stream()
                             .map(pair -> {
-                                long newAmout = this.calculateModifiedOutputGain(
+                                long newAmount = this.calculateModifiedOutputCost(
                                         pair.getAmount(),
                                         construction.saveData.getWorkingLevel() + 1,
                                         construction.saveData.getProficiency()
                                 );
-                                return new ResourcePair(pair.getType(), newAmout);
+                                newAmount = construction.getGameplayContext().getBuffManager()
+                                        .modifyOutputCost(construction.prototypeId, pair.getType(), newAmount);
+                                return new ResourcePair(pair.getType(), newAmount);
                             })
                             .collect(Collectors.toList())
             );

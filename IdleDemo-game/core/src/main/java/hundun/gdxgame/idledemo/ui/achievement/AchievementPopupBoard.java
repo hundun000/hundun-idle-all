@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.Null;
 import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.ui.shared.BaseDemoPlayScreen;
 import hundun.gdxgame.idledemo.starter.ui.component.ResourceAmountPairNode;
-import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievementPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
 
 import java.util.List;
@@ -40,7 +40,7 @@ public class AchievementPopupBoard extends Table {
 
     }
 
-    private void rebuildUi(@Null AbstractAchievement prototype) {
+    private void rebuildUi(@Null AbstractAchievementPrototype prototype) {
         this.clearChildren();
 
         Label label = new Label(prototype != null ? prototype.getDescription() : "", parent.getGame().getMainSkin());
@@ -74,7 +74,7 @@ public class AchievementPopupBoard extends Table {
     }
 
 
-    public void setAchievementPrototype(AbstractAchievement prototype) {
+    public void setAchievementPrototype(AbstractAchievementPrototype prototype) {
 
         rebuildUi(prototype);
 

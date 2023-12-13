@@ -4,6 +4,6 @@ import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
 import java.util.Map;
 
-public interface IBuiltinAchievementsLoader {
-    Map<String, AbstractAchievement> getProviderMap(Language language);
+public interface IAchievementPrototypeLoader {
+    Map<String, AbstractAchievementPrototype> getProviderMap(Language language);
 }

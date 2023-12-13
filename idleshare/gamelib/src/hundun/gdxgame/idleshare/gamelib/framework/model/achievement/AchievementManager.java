@@ -1,4 +1,4 @@
-package hundun.gdxgame.idleshare.gamelib.framework.model.manager;
+package hundun.gdxgame.idleshare.gamelib.framework.model.achievement;
 /**
  * @author hundun
  * Created on 2021/11/12
@@ -12,7 +12,6 @@ import hundun.gdxgame.gamelib.starter.listerner.IGameStartListener;
 import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IBuffChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
-import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.BaseConstructionFactory;
 import lombok.*;
 
@@ -39,7 +38,7 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
     @AllArgsConstructor
     @NoArgsConstructor
     public static class AchievementAndStatus {
-        AbstractAchievement achievement;
+        AbstractAchievementPrototype achievement;
         AchievementSaveData saveData;
     }
 
@@ -107,19 +106,6 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
         return true;
     }
 
-    private boolean checkRequiredBuffs(Map<String, Integer> map) {
-        if (map == null) {
-            return true;
-        }
-        for (Entry<String, Integer> entry : map.entrySet()) {
-            int own = gameContext.getBuffManager().getBuffAmoutOrDefault(entry.getKey());
-            if (own < entry.getValue()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     private void checkAllAchievementStateChange() {
         //Gdx.app.log(this.getClass().getSimpleName(), "checkAllAchievementUnlock");
         for (AchievementAndStatus achievementAndStatus : models.values()) {
@@ -156,8 +142,7 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
     }
 
     public void subApplyGameplaySaveData(
-            BaseConstructionFactory constructionFactory,
-            Map<String, AbstractAchievement> achievementProviderMap,
+            Map<String, AbstractAchievementPrototype> achievementProviderMap,
             Map<String, AchievementSaveData> statusDataMap
     ) {
         achievementProviderMap.values().forEach(it -> {

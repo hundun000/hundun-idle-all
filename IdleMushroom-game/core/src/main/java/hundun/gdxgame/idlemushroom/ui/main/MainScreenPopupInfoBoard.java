@@ -2,7 +2,7 @@ package hundun.gdxgame.idlemushroom.ui.main;
 
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import hundun.gdxgame.idlemushroom.logic.IdleMushroomConstructionPrototypeId;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomMainPlayScreen;
 import hundun.gdxgame.idlemushroom.ui.shared.ConstructionWikiVM;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;

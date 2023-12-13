@@ -8,6 +8,10 @@ import com.ray3k.stripe.FreeTypeSkin;
 import hundun.gdxgame.corelib.base.BaseHundunGame;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.gamelib.base.save.ISaveTool;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomScreenId;
+import hundun.gdxgame.idlemushroom.logic.loader.IdleMushroomBuffPrototypeLoader;
+import hundun.gdxgame.idlemushroom.logic.loader.IdleMushroomConstructionsLoader;
+import hundun.gdxgame.idlemushroom.logic.loader.IdleMushroomAchievementLoader;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext;
 import hundun.gdxgame.idlemushroom.logic.*;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushroomPlayScreenLayoutConst;
@@ -61,7 +65,7 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
         
         this.sharedViewport = new ScreenViewport();
         this.textFormatTool = new TextFormatTool();
-        this.saveHandler = new DemoSaveHandler(frontend, saveTool);
+        this.saveHandler = new IdleMushroomSaveHandler(frontend, saveTool);
         this.mainSkinFilePath = null;
         this.textureManager = new IdleMushroomTextureManager();
         this.screenContext = new IdleMushroomScreenContext(this);
@@ -69,9 +73,9 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
         this.childGameConfig = new IdleMushroomChildGameConfig();
         this.idleMushroomGameDictionary = new IdleMushroomGameDictionary();
         this.controlBoardScreenIds = JavaFeatureForGwt.listOf(
-                DemoScreenId.SCREEN_MAIN,
-                DemoScreenId.SCREEN_WORLD,
-                DemoScreenId.SCREEN_ACHIEVEMENT
+                IdleMushroomScreenId.SCREEN_MAIN,
+                IdleMushroomScreenId.SCREEN_WORLD,
+                IdleMushroomScreenId.SCREEN_ACHIEVEMENT
         );
         this.idleMushroomExtraGameplayExport = new IdleMushroomExtraGameplayExport(this);
     }
@@ -84,8 +88,9 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
         this.idleMushroomPlayScreenLayoutConst = new IdleMushroomPlayScreenLayoutConst(this.getWidth(), this.getHeight());
         this.idleGameplayExport = new IdleGameplayExport(
                 frontend,
-                new DemoBuiltinConstructionsLoader(),
+                new IdleMushroomConstructionsLoader(),
                 new IdleMushroomAchievementLoader(idleMushroomGameDictionary),
+                new IdleMushroomBuffPrototypeLoader(),
                 BaseIdleMushroomScreen.LOGIC_FRAME_PER_SECOND,
                 childGameConfig
                 );
@@ -105,8 +110,8 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
     protected void createStage3() {
         audioPlayManager.lazyInitOnGameCreate(childGameConfig.getScreenIdToFilePathMap());
         
-        screenManager.pushScreen(DemoScreenId.SCREEN_MENU, null);
-        getAudioPlayManager().intoScreen(DemoScreenId.SCREEN_MENU);
+        screenManager.pushScreen(IdleMushroomScreenId.SCREEN_MENU, null);
+        getAudioPlayManager().intoScreen(IdleMushroomScreenId.SCREEN_MENU);
     }
 
     @Data

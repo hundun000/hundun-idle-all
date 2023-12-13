@@ -6,21 +6,27 @@ import hundun.gdxgame.gamelib.base.IFrontend;
 import hundun.gdxgame.gamelib.base.save.ISaveTool;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.gamelib.starter.save.PairChildrenSaveHandler;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomAchievementId;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomBuffId;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomConstructionPrototypeId;
+import hundun.gdxgame.idlemushroom.logic.id.ResourceType;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ConstructionSaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.data.GameplaySaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.data.SystemSettingSaveData;
+import hundun.gdxgame.idleshare.gamelib.framework.model.buff.BuffManager;
+import hundun.gdxgame.idleshare.gamelib.framework.model.buff.BuffManager.BuffSaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
-import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementSaveData;
-import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementState;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementManager.AchievementSaveData;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementManager.AchievementState;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
 /**
  * @author hundun
  * Created on 2023/02/17
  */
-public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, SystemSettingSaveData, GameplaySaveData> {
+public class IdleMushroomSaveHandler extends PairChildrenSaveHandler<RootSaveData, SystemSettingSaveData, GameplaySaveData> {
     String SINGLETON = "SINGLETON";
-    public DemoSaveHandler(IFrontend frontEnd, ISaveTool<RootSaveData> saveTool) {
+    public IdleMushroomSaveHandler(IFrontend frontEnd, ISaveTool<RootSaveData> saveTool) {
         super(frontEnd, RootSaveData.RootSaveExtension.INSTANCE, saveTool);
 
     }
@@ -105,8 +111,12 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
                                 ResourceType.DNA_POINT
                         )))
                         .achievementSaveDataMap(JavaFeatureForGwt.mapOf(
-                                MushroomAchievementId.STEP_1,
+                                IdleMushroomAchievementId.STEP_1,
                                 new AchievementSaveData(AchievementState.RUNNING)
+                        ))
+                        .buffSaveDataMap(JavaFeatureForGwt.mapOf(
+                                IdleMushroomBuffId.BUFF_MUSHROOM_OUTPUT_SCALE,
+                                new BuffSaveData(1)
                         ))
                         .build())
                 .systemSettingSaveData(SystemSettingSaveData.builder()

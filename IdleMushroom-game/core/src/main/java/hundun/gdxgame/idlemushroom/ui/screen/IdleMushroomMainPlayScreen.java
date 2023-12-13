@@ -10,8 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
-import hundun.gdxgame.idlemushroom.logic.DemoScreenId;
-import hundun.gdxgame.idlemushroom.logic.ResourceType;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomScreenId;
+import hundun.gdxgame.idlemushroom.logic.id.ResourceType;
 import hundun.gdxgame.idlemushroom.logic.RootSaveData;
 import hundun.gdxgame.idlemushroom.ui.main.MainScreenConstructionControlBoard;
 import hundun.gdxgame.idlemushroom.ui.main.MainScreenPopupInfoBoard;
@@ -40,7 +40,7 @@ public class IdleMushroomMainPlayScreen extends BaseIdleMushroomPlayScreen
     protected MainClickerAnimationVM mainClickerAnimationVM;
     protected MainScreenConstructionControlBoard constructionControlBoard;
     public IdleMushroomMainPlayScreen(IdleMushroomGame game) {
-        super(game, DemoScreenId.SCREEN_MAIN);
+        super(game, IdleMushroomScreenId.SCREEN_MAIN);
     }
 
     public static class MainClickerAnimationVM

@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.Align;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
-import hundun.gdxgame.idlemushroom.logic.IdleMushroomConstructionPrototypeId;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushroomPlayScreenLayoutConst;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomMainPlayScreen;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseCellDetailNodeVM;
@@ -26,7 +26,6 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.Upgrad
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 /**

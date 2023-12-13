@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class OwnConstructionAchievement extends AbstractAchievement {
+public class OwnConstructionAchievementPrototype extends AbstractAchievementPrototype {
     public Map<String, Entry<Integer, Integer>> requirementMap;
     String descriptionReplaceConstructionPrototypeId;
 
-    public OwnConstructionAchievement(
+    public OwnConstructionAchievementPrototype(
             String id,
             String name,
             String description,
@@ -70,7 +70,7 @@ public class OwnConstructionAchievement extends AbstractAchievement {
          * requireds.value: key requiredAmount ; value requiredLevel;
          */
         public static void quickAddOwnConstructionAchievement(
-                Map<String, AbstractAchievement> map,
+                Map<String, AbstractAchievementPrototype> map,
                 String id,
                 Map<String, List<String>> textMap,
                 Map<String, Entry<Integer, Integer>> requireds,
@@ -79,7 +79,7 @@ public class OwnConstructionAchievement extends AbstractAchievement {
         )
         {
             List<String> args = textMap.get(id);
-            AbstractAchievement achievement =  new OwnConstructionAchievement(
+            AbstractAchievementPrototype achievement =  new OwnConstructionAchievementPrototype(
                     id,
                     args.get(0), args.get(1), args.get(2), args.get(3),
                     requireds,

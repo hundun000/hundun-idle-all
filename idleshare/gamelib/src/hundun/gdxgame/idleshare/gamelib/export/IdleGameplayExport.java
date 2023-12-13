@@ -11,7 +11,8 @@ import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.data.GameplaySaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.data.SystemSettingSaveData;
-import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.IBuiltinAchievementsLoader;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.IAchievementPrototypeLoader;
+import hundun.gdxgame.idleshare.gamelib.framework.model.buff.IBuffPrototypeLoader;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.IBuiltinConstructionsLoader;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
@@ -29,8 +30,9 @@ public class IdleGameplayExport implements ILogicFrameListener,
     @Getter
     private final IdleGameplayContext gameplayContext;
     private final IBuiltinConstructionsLoader builtinConstructionsLoader;
-    private final IBuiltinAchievementsLoader builtinAchievementsLoader;
+    private final IAchievementPrototypeLoader builtinAchievementsLoader;
     private final ChildGameConfig childGameConfig;
+    private final IBuffPrototypeLoader buffPrototypeLoader;
     @Setter
     @Getter
     private Language language;
@@ -40,10 +42,13 @@ public class IdleGameplayExport implements ILogicFrameListener,
     public IdleGameplayExport(
             IFrontend frontEnd,
             IBuiltinConstructionsLoader builtinConstructionsLoader,
-            IBuiltinAchievementsLoader builtinAchievementsLoader,
-            int LOGIC_FRAME_PER_SECOND, ChildGameConfig childGameConfig) {
+            IAchievementPrototypeLoader builtinAchievementsLoader,
+            IBuffPrototypeLoader buffPrototypeLoader,
+            int LOGIC_FRAME_PER_SECOND, ChildGameConfig childGameConfig
+    ) {
         this.builtinConstructionsLoader = builtinConstructionsLoader;
         this.builtinAchievementsLoader = builtinAchievementsLoader;
+        this.buffPrototypeLoader = buffPrototypeLoader;
         this.childGameConfig = childGameConfig;
         this.gameplayContext = new IdleGameplayContext(frontEnd, LOGIC_FRAME_PER_SECOND);
     }
@@ -55,8 +60,6 @@ public class IdleGameplayExport implements ILogicFrameListener,
     }
     
     @Override
-
-    
     public void applyGameplaySaveData(GameplaySaveData gameplaySaveData) {
         this.stageId = gameplaySaveData.getStageId();
 
@@ -65,11 +68,14 @@ public class IdleGameplayExport implements ILogicFrameListener,
         });
 
         gameplayContext.getStorageManager().setUnlockedResourceTypes(gameplaySaveData.getUnlockedResourceTypes());
-        gameplayContext.getStorageManager().setOwnResoueces(gameplaySaveData.getOwnResources());
+        gameplayContext.getStorageManager().setOwnResources(gameplaySaveData.getOwnResources());
         gameplayContext.getAchievementManager().subApplyGameplaySaveData(
-                gameplayContext.getConstructionFactory(),
                 builtinAchievementsLoader.getProviderMap(language),
                 gameplaySaveData.getAchievementSaveDataMap()
+        );
+        gameplayContext.getBuffManager().subApplyGameplaySaveData(
+                buffPrototypeLoader.getProviderMap(language),
+                gameplaySaveData.getBuffSaveDataMap()
         );
     }
 
@@ -84,7 +90,7 @@ public class IdleGameplayExport implements ILogicFrameListener,
                         ))
                 );
         gameplaySaveData.setUnlockedResourceTypes(gameplayContext.getStorageManager().getUnlockedResourceTypes());
-        gameplaySaveData.setOwnResources(gameplayContext.getStorageManager().getOwnResoueces());
+        gameplaySaveData.setOwnResources(gameplayContext.getStorageManager().getOwnResources());
         gameplaySaveData.setAchievementSaveDataMap(gameplayContext.getAchievementManager().getAchievementSaveDataMap());
     }
 

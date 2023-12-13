@@ -9,8 +9,8 @@ import hundun.gdxgame.idlemushroom.ui.world.HexCellVM;
 import hundun.gdxgame.idlemushroom.ui.main.FirstRunningAchievementBoardVM;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementStateChangeListener;
-import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
-import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementState;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievementPrototype;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementManager.AchievementState;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public abstract class BaseIdleMushroomPlayScreen extends BaseIdleMushroomScreen
     protected FirstRunningAchievementBoardVM firstRunningAchievementBoardVM;
     protected AchievementPopupBoard achievementPopupBoard;
     IdleMushroomGame idleMushroomGame;
-    protected List<AbstractAchievement> showAchievementMaskBoardQueue = new ArrayList<>();
+    protected List<AbstractAchievementPrototype> showAchievementMaskBoardQueue = new ArrayList<>();
     @Getter
     protected IdleMushroomPlayScreenLayoutConst idleMushroomPlayScreenLayoutConst;
     public BaseIdleMushroomPlayScreen(IdleMushroomGame game, String screenId) {
@@ -67,7 +67,7 @@ public abstract class BaseIdleMushroomPlayScreen extends BaseIdleMushroomScreen
         super.onLogicFrame();
 
         if (showAchievementMaskBoardQueue.size() > 0) {
-            AbstractAchievement achievement = showAchievementMaskBoardQueue.remove(0);
+            AbstractAchievementPrototype achievement = showAchievementMaskBoardQueue.remove(0);
 
             game.getFrontend().log(this.getClass().getSimpleName(), "onAchievementUnlock called");
             achievementPopupBoard.setAchievementPrototype(achievement);
@@ -86,7 +86,7 @@ public abstract class BaseIdleMushroomPlayScreen extends BaseIdleMushroomScreen
     }
 
     @Override
-    public void showAchievementMaskBoard(AbstractAchievement achievement) {
+    public void showAchievementMaskBoard(AbstractAchievementPrototype achievement) {
         if (this.hidden) {
             return;
         }
@@ -109,7 +109,7 @@ public abstract class BaseIdleMushroomPlayScreen extends BaseIdleMushroomScreen
     }
 
     @Override
-    public void onAchievementStateChange(AbstractAchievement achievement, AchievementState state) {
+    public void onAchievementStateChange(AbstractAchievementPrototype achievement, AchievementState state) {
         if (state == AchievementState.COMPLETED) {
             showAchievementMaskBoard(achievement);
             firstRunningAchievementBoardVM.updateData();
