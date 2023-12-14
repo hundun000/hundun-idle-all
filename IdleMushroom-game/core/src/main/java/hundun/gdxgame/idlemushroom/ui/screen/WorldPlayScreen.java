@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomBuffId;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomScreenId;
 import hundun.gdxgame.idlemushroom.logic.id.ResourceType;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseIdleMushroomPlayScreen;
@@ -74,6 +75,7 @@ public class WorldPlayScreen extends BaseIdleMushroomPlayScreen implements ICons
         super.lazyInitLogicContext();
         
         storageInfoTable.lazyInit(ResourceType.VALUES_FOR_SHOW_ORDER);
+        buffInfoBoard.lazyInit(IdleMushroomBuffId.VALUES_FOR_SHOW_ORDER);
 
         this.secondaryInfoBoard = new WorldScreenPopupInfoBoard(this);
         popupRootTable.add(secondaryInfoBoard).center().expand();
@@ -94,6 +96,7 @@ public class WorldPlayScreen extends BaseIdleMushroomPlayScreen implements ICons
 
     @Override
     protected void updateUIForShow() {
+        super.updateUIForShow();
         List<BaseConstruction> constructions = game.getIdleGameplayExport().getGameplayContext().getConstructionManager()
                 .getWorldConstructionInstances();
         hexAreaVM.updateUIForShow(constructions);

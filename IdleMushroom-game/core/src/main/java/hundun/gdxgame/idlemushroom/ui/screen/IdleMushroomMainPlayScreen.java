@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomBuffId;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomScreenId;
 import hundun.gdxgame.idlemushroom.logic.id.ResourceType;
 import hundun.gdxgame.idlemushroom.logic.RootSaveData;
@@ -145,6 +146,7 @@ public class IdleMushroomMainPlayScreen extends BaseIdleMushroomPlayScreen
 
         logicFrameListeners.add(constructionControlBoard);
         storageInfoTable.lazyInit(ResourceType.VALUES_FOR_SHOW_ORDER);
+        buffInfoBoard.lazyInit(IdleMushroomBuffId.VALUES_FOR_SHOW_ORDER);
 
         gameAreaChangeListeners.add(constructionControlBoard);
 
@@ -191,6 +193,7 @@ public class IdleMushroomMainPlayScreen extends BaseIdleMushroomPlayScreen
 
     @Override
     protected void updateUIForShow() {
+        super.updateUIForShow();
         setMainClickerWithScale();
     }
 

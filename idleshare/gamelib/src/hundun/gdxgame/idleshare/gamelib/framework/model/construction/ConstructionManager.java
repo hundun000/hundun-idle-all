@@ -1,4 +1,4 @@
-package hundun.gdxgame.idleshare.gamelib.framework.model.manager;
+package hundun.gdxgame.idleshare.gamelib.framework.model.construction;
 
 import java.util.ArrayList;
 import java.util.HashMap;

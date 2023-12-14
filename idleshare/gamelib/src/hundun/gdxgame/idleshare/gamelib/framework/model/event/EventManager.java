@@ -1,4 +1,4 @@
-package hundun.gdxgame.idleshare.gamelib.framework.model.manager;
+package hundun.gdxgame.idleshare.gamelib.framework.model.event;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,13 +91,6 @@ public class EventManager {
         }
     }
 
-    public void notifyBuffChange() {
-        gameContext.getFrontEnd().log(this.getClass().getSimpleName(), "notifyBuffChange");
-        for (IBuffChangeListener listener : buffChangeListeners) {
-            listener.onBuffChange();
-        }
-    }
-
 //    public void notifyResourceAmountChange(boolean fromLoad) {
 //        Gdx.app.log(this.getClass().getSimpleName(), "notifyResourceAmountChange");
 //        for (IAmountChangeEventListener listener : amountChangeEventListeners) {
@@ -134,6 +127,13 @@ public class EventManager {
         for (IConstructionCollectionListener listener : constructionCollectionListeners)
         {
             listener.onConstructionCollectionChange();
+        }
+    }
+
+    public void notifyBuffChange(Map<String, Integer> map) {
+        gameContext.getFrontEnd().log(this.getClass().getSimpleName(), "notifyBuffChange");
+        for (IBuffChangeListener listener : buffChangeListeners) {
+            listener.onBuffChange(map);
         }
     }
 }

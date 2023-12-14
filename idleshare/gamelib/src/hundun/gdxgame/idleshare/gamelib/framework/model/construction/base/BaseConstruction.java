@@ -131,10 +131,9 @@ public abstract class BaseConstruction implements IBuffChangeListener, ITileNode
     }
 
     @Override
-    public void onBuffChange() {
+    public void onBuffChange(Map<String, Integer> changeMap) {
         updateModifiedValues();
     }
-
 
     protected void printDebugInfoAfterConstructed() {
         // default do nothing

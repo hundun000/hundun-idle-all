@@ -1,4 +1,4 @@
-package hundun.gdxgame.idleshare.gamelib.framework.model.manager;
+package hundun.gdxgame.idleshare.gamelib.framework.model.resource;
 
 import java.util.*;
 import java.util.Map.Entry;

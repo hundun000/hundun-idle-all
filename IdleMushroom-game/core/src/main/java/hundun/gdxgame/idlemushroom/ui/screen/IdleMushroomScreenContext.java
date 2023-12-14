@@ -28,7 +28,7 @@ public class IdleMushroomScreenContext {
         public int CONSTRUCION_CHILD_BUTTON_HEIGHT = 30;
         public int CONSTRUCION_CHILD_NAME_HEIGHT = 50;
 
-        public int STORAGE_BOARD_BORDER_HEIGHT = 60;
+        public int STORAGE_BOARD_BORDER_HEIGHT = 100;
         public int AREA_BOARD_BORDER_WIDTH = 100;
         public int AREA_BOARD_CELL_HEIGHT = 50;
         //    public static final int STORAGE_BOARD_CONTAIN_WIDTH = 100;
@@ -56,7 +56,8 @@ public class IdleMushroomScreenContext {
         public int EpochInfoArea_CHILD_WIDTH = 200;
         public float menuButtonWidth = 200;
         public float menuButtonHeight = 75;
-
+        public int STORAGE_BOARD_NODE_HEIGHT = 25;
+        public int STORAGE_BOARD_NODE_WIDTH = 120;
         public IdleMushroomPlayScreenLayoutConst(int gameLogicWidth, int gameLogicHeight) {
             this.gameEntityFactoryLayoutConst = IdleMushroomGameEntityFactoryLayoutConst.builder()
                     .EXPECTED_DRAW_MIN_X(0)

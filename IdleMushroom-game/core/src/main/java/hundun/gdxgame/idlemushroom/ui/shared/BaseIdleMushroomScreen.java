@@ -17,6 +17,7 @@ import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushr
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public abstract class BaseIdleMushroomScreen extends BaseHundunScreen<IdleMushroomGame, RootSaveData> {
@@ -33,7 +34,7 @@ public abstract class BaseIdleMushroomScreen extends BaseHundunScreen<IdleMushro
     protected final String screenId;
 
     protected StorageInfoBoard storageInfoTable;
-
+    protected BuffInfoBoard buffInfoBoard;
     protected BackgroundImageBox backgroundImageBox;
     protected IdleMushroomGameAreaControlBoard gameAreaControlBoard;
 
@@ -108,16 +109,23 @@ public abstract class BaseIdleMushroomScreen extends BaseHundunScreen<IdleMushro
 
         this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(this);
         this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(storageInfoTable);
+        this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(buffInfoBoard);
     }
 
     protected void lazyInitUiRootContext() {
-
         storageInfoTable = new StorageInfoBoard(this);
         uiRootTable.add(storageInfoTable)
-                .height(layoutConst.STORAGE_BOARD_BORDER_HEIGHT)
+                .height(layoutConst.STORAGE_BOARD_BORDER_HEIGHT / 2.0f)
                 .fill()
                 .colspan(UI_ROOT_TABLE_COLSPAN_SIZE)
                 .row();
+        buffInfoBoard = new BuffInfoBoard(this);
+        uiRootTable.add(buffInfoBoard)
+                .height(layoutConst.STORAGE_BOARD_BORDER_HEIGHT / 2.0f)
+                .fill()
+                .colspan(UI_ROOT_TABLE_COLSPAN_SIZE)
+                .row();
+
 
         leftSideGroup = new Table();
         uiRootTable.add(leftSideGroup)
@@ -168,7 +176,9 @@ public abstract class BaseIdleMushroomScreen extends BaseHundunScreen<IdleMushro
         this.hidden = true;
     }
 
-    protected abstract void updateUIForShow();
+    protected void updateUIForShow() {
+        buffInfoBoard.updateViewData(new HashMap<>(0));
+    };
 
     protected abstract InputProcessor provideDefaultInputProcessor();
 }

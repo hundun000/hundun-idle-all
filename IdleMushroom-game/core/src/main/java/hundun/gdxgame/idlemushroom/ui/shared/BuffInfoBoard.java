@@ -2,48 +2,53 @@ package hundun.gdxgame.idlemushroom.ui.shared;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomBuffId;
+import hundun.gdxgame.idleshare.gamelib.framework.listener.IBuffChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.util.Utils;
 import lombok.Getter;
 
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 /**
  * @author hundun
  * Created on 2021/11/05
  */
-public class StorageInfoBoard extends Table implements IOneFrameResourceChangeListener {
+public class BuffInfoBoard extends Table implements IBuffChangeListener {
 
 
 
     public static int NUM_NODE_PER_ROW = 5;
 
-    List<String> shownOrders;
+    List<String> buffIds;
     Set<String> shownTypes = new HashSet<>();
     BaseIdleMushroomScreen parent;
 
     List<Node> nodes = new ArrayList<>();
 
+    @Override
+    public void onBuffChange(Map<String, Integer> changeMap) {
+        updateViewData(changeMap);
+    }
+
+
     public static class Node extends HorizontalGroup {
-        LabelStyle PLUS_STYLE;
-        LabelStyle MINUS_STYLE;
         IdleMushroomGame game;
 
         @Getter
-        String resourceType;
+        String buffId;
 
         Image image;
         Label amountLabel;
         Label deltaLabel;
 
-        public Node(IdleMushroomGame game, String resourceType) {
+        public Node(IdleMushroomGame game, String buffId) {
             super();
             this.game = game;
-            this.resourceType = resourceType;
-            TextureRegion textureRegion = game.getTextureManager().getResourceIcon(resourceType);
+            this.buffId = buffId;
+            TextureRegion textureRegion = game.getTextureManager().getResourceIcon(buffId);
             this.image = new Image(textureRegion);
             this.addActor(image);
             this.amountLabel = new Label("", game.getMainSkin());
@@ -51,8 +56,6 @@ public class StorageInfoBoard extends Table implements IOneFrameResourceChangeLi
             this.deltaLabel = new Label("", game.getMainSkin());
             this.addActor(deltaLabel);
 
-            this.PLUS_STYLE = game.getMainSkin().get("green_style", LabelStyle.class);
-            this.MINUS_STYLE = game.getMainSkin().get("red_style", LabelStyle.class);
         }
 
         public void update(long delta, long amount) {
@@ -62,7 +65,6 @@ public class StorageInfoBoard extends Table implements IOneFrameResourceChangeLi
             if (delta > 0)
             {
                 deltaLabel.setText("(+" + delta + ")");
-                deltaLabel.setStyle(PLUS_STYLE);
             }
             else if(delta == 0)
             {
@@ -71,7 +73,6 @@ public class StorageInfoBoard extends Table implements IOneFrameResourceChangeLi
             else
             {
                 deltaLabel.setText("(-" + Math.abs(delta) + ")");
-                deltaLabel.setStyle(MINUS_STYLE);
             }
         }
 
@@ -79,16 +80,16 @@ public class StorageInfoBoard extends Table implements IOneFrameResourceChangeLi
 
 
     }
-    
+
     public void lazyInit(List<String> shownOrders) {
-        this.shownOrders = shownOrders;
+        this.buffIds = shownOrders;
         rebuildCells();
     }
 
     //Label mainLabel;
 
 
-    public StorageInfoBoard(BaseIdleMushroomScreen parent) {
+    public BuffInfoBoard(BaseIdleMushroomScreen parent) {
         this.parent = parent;
         this.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
 
@@ -104,12 +105,11 @@ public class StorageInfoBoard extends Table implements IOneFrameResourceChangeLi
         this.clearChildren();
         nodes.clear();
 
-        for (int i = 0; i < shownOrders.size(); i++) {
-            String resourceType = shownOrders.get(i);
+        for (int i = 0; i < buffIds.size(); i++) {
+            String resourceType = buffIds.get(i);
             if (shownTypes.contains(resourceType)) {
                 Node node = new Node(parent.getGame(), resourceType);
                 nodes.add(node);
-                shownTypes.add(resourceType);
                 Cell<Node> cell = this.add(node)
                         .width(parent.getLayoutConst().STORAGE_BOARD_NODE_WIDTH)
                         .height(parent.getLayoutConst().STORAGE_BOARD_NODE_HEIGHT);
@@ -123,8 +123,8 @@ public class StorageInfoBoard extends Table implements IOneFrameResourceChangeLi
 
 
 
-    public void updateViewData(Map<String, Long> changeMap, Map<String, List<Long>> deltaHistoryMap) {
-        Set<String> unlockedResourceTypes = parent.getGame().getIdleGameplayExport().getGameplayContext().getStorageManager().getUnlockedResourceTypes();
+    public void updateViewData(Map<String, Integer> changeMap) {
+        Set<String> unlockedResourceTypes = new HashSet<>(IdleMushroomBuffId.VALUES_FOR_SHOW_ORDER);
         boolean needRebuildCells = !shownTypes.equals(unlockedResourceTypes);
         if (needRebuildCells) {
             shownTypes.clear();
@@ -133,29 +133,10 @@ public class StorageInfoBoard extends Table implements IOneFrameResourceChangeLi
         }
 
         nodes.stream().forEach(node -> {
-            long historySum;
-            if (deltaHistoryMap.containsKey(node.getResourceType()))
-            {
-                historySum = deltaHistoryMap.get(node.getResourceType()).stream()
-                        .collect(Utils.lastN(BaseIdleMushroomScreen.LOGIC_FRAME_PER_SECOND))
-                        .stream()
-                        .mapToLong(it -> it)
-                        .sum()
-                        ;
-            }
-            else
-            {
-                historySum = 0;
-            }
-
-            long amount = parent.getGame().getIdleGameplayExport().getGameplayContext().getStorageManager().getResourceNumOrZero(node.getResourceType());
+            long historySum = 0;
+            long amount = parent.getGame().getIdleGameplayExport().getGameplayContext().getBuffManager().getBuffLevelMap().getOrDefault(node.getBuffId(), 0);
             node.update(historySum, amount);
         });
     }
 
-
-    @Override
-    public void onResourceChange(Map<String, Long> changeMap, Map<String, List<Long>> deltaHistoryMap) {
-        updateViewData(changeMap, deltaHistoryMap);
-    }
 }

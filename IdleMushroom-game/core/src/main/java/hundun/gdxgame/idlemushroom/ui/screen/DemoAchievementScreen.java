@@ -2,6 +2,7 @@ package hundun.gdxgame.idlemushroom.ui.screen;
 
 import com.badlogic.gdx.InputProcessor;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomBuffId;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomScreenId;
 import hundun.gdxgame.idlemushroom.logic.id.ResourceType;
 import hundun.gdxgame.idlemushroom.ui.achievement.AllAchievementBoardVM;
@@ -18,11 +19,6 @@ public class DemoAchievementScreen extends BaseIdleMushroomScreen implements IAc
 
     public DemoAchievementScreen(IdleMushroomGame game) {
         super(game, IdleMushroomScreenId.SCREEN_ACHIEVEMENT, game.getIdleMushroomPlayScreenLayoutConst());
-    }
-
-    @Override
-    protected void updateUIForShow() {
-
     }
 
     @Override
@@ -46,6 +42,7 @@ public class DemoAchievementScreen extends BaseIdleMushroomScreen implements IAc
         super.lazyInitLogicContext();
 
         storageInfoTable.lazyInit(ResourceType.VALUES_FOR_SHOW_ORDER);
+        buffInfoBoard.lazyInit(IdleMushroomBuffId.VALUES_FOR_SHOW_ORDER);
     }
 
     @Override

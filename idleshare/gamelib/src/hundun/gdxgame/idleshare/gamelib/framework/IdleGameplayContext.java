@@ -9,9 +9,9 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractCon
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.BaseConstructionFactory;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementManager;
 import hundun.gdxgame.idleshare.gamelib.framework.model.buff.BuffManager;
-import hundun.gdxgame.idleshare.gamelib.framework.model.manager.ConstructionManager;
-import hundun.gdxgame.idleshare.gamelib.framework.model.manager.EventManager;
-import hundun.gdxgame.idleshare.gamelib.framework.model.manager.StorageManager;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.ConstructionManager;
+import hundun.gdxgame.idleshare.gamelib.framework.model.event.EventManager;
+import hundun.gdxgame.idleshare.gamelib.framework.model.resource.StorageManager;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 import lombok.Getter;
 

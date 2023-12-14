@@ -2,6 +2,7 @@ package hundun.gdxgame.idleshare.gamelib.framework.model.buff;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
@@ -79,5 +80,22 @@ public class BuffManager {
                         it -> it.getBuffPrototype().getId(),
                         it -> it.getSaveData()
                 ));
+    }
+
+    public Map<String, Integer> getBuffLevelMap() {
+        return models.values().stream()
+                .collect(Collectors.toMap(
+                        it -> it.getBuffPrototype().getId(),
+                        it -> it.getSaveData().getBuffLevel()
+                ));
+    }
+
+    public void modifyBuffLevel(Map<String, Integer> map) {
+        //Gdx.app.log(this.getClass().getSimpleName(), (plus ? "plus" : "minus") + ": " + map);
+        for (Entry<String, Integer> entry : map.entrySet()) {
+            BuffSaveData buffSaveData = models.get(entry.getKey()).getSaveData();
+            buffSaveData.setBuffLevel(buffSaveData.getBuffLevel() + entry.getValue());
+        }
+        gameContext.getEventManager().notifyBuffChange(map);
     }
 }

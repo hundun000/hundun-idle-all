@@ -20,7 +20,10 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
 
     Map<String, AchievementAndStatus> models = new HashMap<>();
 
-
+    @Override
+    public void onBuffChange(Map<String, Integer> changeMap) {
+        checkAllAchievementStateChange();
+    }
 
 
     @AllArgsConstructor
@@ -136,10 +139,6 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
     }
 
 
-    @Override
-    public void onBuffChange() {
-        checkAllAchievementStateChange();
-    }
 
     public void subApplyGameplaySaveData(
             Map<String, AbstractAchievementPrototype> achievementProviderMap,
