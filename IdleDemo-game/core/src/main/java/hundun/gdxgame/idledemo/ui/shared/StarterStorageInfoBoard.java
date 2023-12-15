@@ -1,4 +1,4 @@
-package hundun.gdxgame.idledemo.starter.ui.component;
+package hundun.gdxgame.idledemo.ui.shared;
 
 import java.util.*;
 
@@ -6,8 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import hundun.gdxgame.corelib.base.util.DrawableFactory;
-import hundun.gdxgame.idledemo.BaseIdleGame;
-import hundun.gdxgame.idledemo.starter.ui.screen.play.BaseIdleScreen;
+import hundun.gdxgame.idledemo.IdleDemoGame;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.util.Utils;
 
@@ -15,7 +14,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.util.Utils;
  * @author hundun
  * Created on 2021/11/05
  */
-public class StarterStorageInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table implements IOneFrameResourceChangeListener {
+public class StarterStorageInfoBoard extends Table implements IOneFrameResourceChangeListener {
 
     private static int NODE_HEIGHT = 25;
     private static int NODE_WIDTH = 120;
@@ -24,9 +23,9 @@ public class StarterStorageInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
 
     List<String> shownOrders;
     Set<String> shownTypes = new HashSet<>();
-    BaseIdleScreen<T_GAME, T_SAVE> parent;
+    BaseIdleDemoScreen parent;
 
-    List<StorageResourceAmountPairNode<T_GAME>> nodes = new ArrayList<>();
+    List<StorageResourceAmountPairNode> nodes = new ArrayList<>();
 
     public void lazyInit(List<String> shownOrders) {
         this.shownOrders = shownOrders;
@@ -36,7 +35,7 @@ public class StarterStorageInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
     //Label mainLabel;
 
 
-    public StarterStorageInfoBoard(BaseIdleScreen<T_GAME, T_SAVE> parent) {
+    public StarterStorageInfoBoard(BaseIdleDemoScreen parent) {
         this.parent = parent;
         this.setBackground(DrawableFactory.createBorderBoard(
                 25,
@@ -58,10 +57,10 @@ public class StarterStorageInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
         for (int i = 0; i < shownOrders.size(); i++) {
             String resourceType = shownOrders.get(i);
             if (shownTypes.contains(resourceType)) {
-                StorageResourceAmountPairNode<T_GAME> node = new StorageResourceAmountPairNode<>(parent.getGame(), resourceType);
+                StorageResourceAmountPairNode node = new StorageResourceAmountPairNode(parent.getGame(), resourceType);
                 nodes.add(node);
                 shownTypes.add(resourceType);
-                Cell<StorageResourceAmountPairNode<T_GAME>> cell = this.add(node).width(NODE_WIDTH).height(NODE_HEIGHT);
+                Cell<StorageResourceAmountPairNode> cell = this.add(node).width(NODE_WIDTH).height(NODE_HEIGHT);
                 if ((i + 1) % NUM_NODE_PER_ROW == 0) {
                     cell.row();
                 }
@@ -86,7 +85,7 @@ public class StarterStorageInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE
             if (deltaHistoryMap.containsKey(node.getResourceType()))
             {
                 historySum = deltaHistoryMap.get(node.getResourceType()).stream()
-                        .collect(Utils.lastN(BaseIdleScreen.LOGIC_FRAME_PER_SECOND))
+                        .collect(Utils.lastN(BaseIdleDemoScreen.LOGIC_FRAME_PER_SECOND))
                         .stream()
                         .mapToLong(it -> it)
                         .sum()

@@ -1,4 +1,4 @@
-package hundun.gdxgame.idledemo.starter.ui.component;
+package hundun.gdxgame.idledemo.ui.shared;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -8,20 +8,18 @@ import java.util.Objects;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
-import hundun.gdxgame.idledemo.starter.ui.screen.play.BaseIdleScreen;
-import hundun.gdxgame.idledemo.BaseIdleGame;
 
 /**
  * @author hundun
  * Created on 2021/11/20
  */
-public class GameAreaControlBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table implements IGameAreaChangeListener {
+public class GameAreaControlBoard extends Table implements IGameAreaChangeListener {
 
-    BaseIdleScreen<T_GAME, T_SAVE> parent;
-    Map<String, GameAreaControlNode<T_GAME, T_SAVE>> nodes = new LinkedHashMap<>();
+    BaseIdleDemoScreen parent;
+    Map<String, GameAreaControlNode> nodes = new LinkedHashMap<>();
 
 
-    public GameAreaControlBoard(BaseIdleScreen<T_GAME, T_SAVE> parent) {
+    public GameAreaControlBoard(BaseIdleDemoScreen parent) {
         super();
         this.parent = parent;
         this.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
@@ -56,7 +54,7 @@ public class GameAreaControlBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> e
 
         for (String controlBoardScreenId : controlBoardScreenIds) {
 
-            GameAreaControlNode<T_GAME, T_SAVE> node = new GameAreaControlNode<>(parent, controlBoardScreenId, false);
+            GameAreaControlNode node = new GameAreaControlNode(parent, controlBoardScreenId, false);
             nodes.put(controlBoardScreenId, node);
             this.add(node)
                     .width(parent.getLayoutConst().AREA_BOARD_BORDER_WIDTH)

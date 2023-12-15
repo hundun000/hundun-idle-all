@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-import hundun.gdxgame.idledemo.DemoIdleGame;
+import hundun.gdxgame.idledemo.IdleDemoGame;
 import hundun.gdxgame.idledemo.logic.DemoScreenId;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.main.MainScreenConstructionControlBoard;
@@ -15,8 +15,8 @@ import hundun.gdxgame.idledemo.ui.main.GameEntityFactory;
 import hundun.gdxgame.idleshare.core.framework.manager.GameEntityManager;
 import hundun.gdxgame.idleshare.core.framework.GameImageDrawer;
 import hundun.gdxgame.idleshare.core.framework.GameImageDrawer.IGameImageDrawerHolder;
-import hundun.gdxgame.idledemo.starter.ui.component.PopupInfoBoard;
-import hundun.gdxgame.idledemo.starter.ui.component.animation.MainClickerAnimationVM;
+import hundun.gdxgame.idledemo.ui.shared.PopupInfoBoard;
+import hundun.gdxgame.idledemo.ui.main.MainClickerAnimationVM;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
@@ -28,12 +28,12 @@ import java.util.List;
  */
 public class MainPlayScreen extends BaseDemoPlayScreen
         implements ISecondaryInfoBoardCallback<BaseConstruction>, IGameImageDrawerHolder {
-    protected PopupInfoBoard<DemoIdleGame, RootSaveData> secondaryInfoBoard;
+    protected PopupInfoBoard secondaryInfoBoard;
     protected GameEntityManager gameEntityManager;
-    protected GameImageDrawer<DemoIdleGame, RootSaveData> gameImageDrawer;
-    protected MainClickerAnimationVM<DemoIdleGame, RootSaveData> mainClickerAnimationVM;
+    protected GameImageDrawer<IdleDemoGame, RootSaveData> gameImageDrawer;
+    protected MainClickerAnimationVM mainClickerAnimationVM;
     protected MainScreenConstructionControlBoard constructionControlBoard;
-    public MainPlayScreen(DemoIdleGame game) {
+    public MainPlayScreen(IdleDemoGame game) {
         super(game, DemoScreenId.SCREEN_COOKIE);
     }
 
@@ -42,7 +42,7 @@ public class MainPlayScreen extends BaseDemoPlayScreen
     protected void lazyInitUiRootContext() {
         super.lazyInitUiRootContext();
 
-        mainClickerAnimationVM = new MainClickerAnimationVM<>(
+        mainClickerAnimationVM = new MainClickerAnimationVM(
                 this,
                 game.getTextureManager().getMainClickAnimationTextureAtlas()
         );
@@ -106,7 +106,7 @@ public class MainPlayScreen extends BaseDemoPlayScreen
     protected void lazyInitBackUiAndPopupUiContent() {
         super.lazyInitBackUiAndPopupUiContent();
 
-        this.secondaryInfoBoard = new PopupInfoBoard<>(this);
+        this.secondaryInfoBoard = new PopupInfoBoard(this);
         popupRootTable.add(secondaryInfoBoard).bottom().expand().row();
         popupRootTable.add(new Image())
                 .height(layoutConst.CONSTRUCION_BOARD_ROOT_BOX_HEIGHT);

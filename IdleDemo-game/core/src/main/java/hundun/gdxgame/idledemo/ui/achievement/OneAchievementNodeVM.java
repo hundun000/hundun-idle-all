@@ -3,15 +3,14 @@ package hundun.gdxgame.idledemo.ui.achievement;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.idledemo.BaseIdleGame;
-import hundun.gdxgame.idledemo.starter.ui.screen.play.BaseIdleScreen;
+import hundun.gdxgame.idledemo.ui.shared.BaseIdleDemoScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementManager.AchievementAndStatus;
 
 import java.util.List;
 
-public class OneAchievementNodeVM<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table {
+public class OneAchievementNodeVM extends Table {
 
-    BaseIdleScreen<T_GAME, T_SAVE> parent;
+    BaseIdleDemoScreen parent;
 
     AchievementAndStatus achievementAndStatus;
 
@@ -22,7 +21,7 @@ public class OneAchievementNodeVM<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> e
     Label countValueLabel;
     List<String> texts;
 
-    public OneAchievementNodeVM(BaseIdleScreen<T_GAME, T_SAVE> parent, AchievementAndStatus achievementAndStatus) {
+    public OneAchievementNodeVM(BaseIdleDemoScreen parent, AchievementAndStatus achievementAndStatus) {
         this.parent = parent;
         this.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
         this.achievementAndStatus = achievementAndStatus;

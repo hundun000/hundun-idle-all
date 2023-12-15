@@ -1,4 +1,4 @@
-package hundun.gdxgame.idledemo;
+package hundun.gdxgame.idledemo.logic;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,6 +6,7 @@ import java.util.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Disposable;
+import hundun.gdxgame.idledemo.IdleDemoGame;
 
 /**
  * @author hundun
@@ -16,11 +17,11 @@ public class AudioPlayManager implements Disposable {
     long currentBgmId;
     Sound currentBgmSound;
 
-    BaseIdleGame game;
+    IdleDemoGame game;
 
     Map<String, Sound> screenIdToSoundMap = new HashMap<>();
 
-    public AudioPlayManager(BaseIdleGame game) {
+    public AudioPlayManager(IdleDemoGame game) {
         this.game = game;
     }
 

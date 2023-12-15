@@ -2,21 +2,20 @@ package hundun.gdxgame.idledemo.ui.achievement;
 
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import hundun.gdxgame.idledemo.BaseIdleGame;
-import hundun.gdxgame.idledemo.starter.ui.screen.play.BaseIdleScreen;
+import hundun.gdxgame.idledemo.ui.shared.BaseIdleDemoScreen;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table {
+public class AllAchievementBoardVM extends Table {
 
-    BaseIdleScreen<T_GAME, T_SAVE> parent;
+    BaseIdleDemoScreen parent;
 
     Table childTable;
 
-    protected List<OneAchievementNodeVM<T_GAME, T_SAVE>> nodes = new ArrayList<>();
+    protected List<OneAchievementNodeVM> nodes = new ArrayList<>();
 
-    public AllAchievementBoardVM(BaseIdleScreen<T_GAME, T_SAVE> parent)
+    public AllAchievementBoardVM(BaseIdleDemoScreen parent)
     {
         this.parent = parent;
         this.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());
@@ -44,7 +43,7 @@ public class AllAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> 
 
         parent.getGame().getIdleGameplayExport().getGameplayContext().getAchievementManager().getAchievementInfoPackage().getSortedAchievementList()
                 .forEach(it -> {
-                    OneAchievementNodeVM<T_GAME, T_SAVE> constructionView = new OneAchievementNodeVM<>(parent, it);
+                    OneAchievementNodeVM constructionView = new OneAchievementNodeVM(parent, it);
                     nodes.add(constructionView);
                     childTable.add(constructionView)
                             .width(parent.getLayoutConst().ALL_ACHIEVEMENT_BOARD_NODE_WIDTH)

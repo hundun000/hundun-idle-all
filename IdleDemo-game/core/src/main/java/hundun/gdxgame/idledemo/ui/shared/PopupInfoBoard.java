@@ -1,4 +1,4 @@
-package hundun.gdxgame.idledemo.starter.ui.component;
+package hundun.gdxgame.idledemo.ui.shared;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -6,8 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
-import hundun.gdxgame.idledemo.BaseIdleGame;
-import hundun.gdxgame.idledemo.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.UpgradeComponent.UpgradeState;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePack;
@@ -18,11 +16,11 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
  * @author hundun
  * Created on 2021/11/08
  */
-public class PopupInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table {
+public class PopupInfoBoard extends Table {
 
-    BaseIdleScreen<T_GAME, T_SAVE> parent;
+    BaseIdleDemoScreen parent;
 
-    public PopupInfoBoard(BaseIdleScreen<T_GAME, T_SAVE> parent) {
+    public PopupInfoBoard(BaseIdleDemoScreen parent) {
         //super("GUIDE_TEXT", parent.game.getButtonSkin());
         this.parent = parent;
         //this.setBounds(5, GameAreaControlBoard.Y, GameAreaControlBoard.X - 10, 120);
@@ -79,7 +77,7 @@ public class PopupInfoBoard<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends
         if (pack != null && pack.getModifiedValues() != null) {
             this.add(wapperContainer(new Label(descriptionStart, parent.getGame().getMainSkin())));
             for (ResourcePair entry : pack.getModifiedValues()) {
-                ResourceAmountPairNode<T_GAME> node = new ResourceAmountPairNode<>(parent.getGame(), entry.getType());
+                ResourceAmountPairNode node = new ResourceAmountPairNode(parent.getGame(), entry.getType());
                 node.update(entry.getAmount());
                 this.add(wapperContainer(node))
                         .height(parent.getLayoutConst().RESOURCE_AMOUNT_PAIR_NODE_HEIGHT)

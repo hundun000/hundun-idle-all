@@ -1,21 +1,21 @@
-package hundun.gdxgame.idledemo.starter.ui.component;
+package hundun.gdxgame.idledemo.ui.shared;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import hundun.gdxgame.idledemo.BaseIdleGame;
+import hundun.gdxgame.idledemo.IdleDemoGame;
 import lombok.Getter;
 
 /**
  * @author hundun
  * Created on 2021/11/25
  */
-public class StorageResourceAmountPairNode<T_GAME extends BaseIdleGame<?>> extends HorizontalGroup {
+public class StorageResourceAmountPairNode extends HorizontalGroup {
     LabelStyle PLUS_STYLE;
     LabelStyle MINUS_STYLE;
-    T_GAME game;
+    IdleDemoGame game;
 
     @Getter
     String resourceType;
@@ -24,7 +24,7 @@ public class StorageResourceAmountPairNode<T_GAME extends BaseIdleGame<?>> exten
     Label amountLabel;
     Label deltaLabel;
 
-    public StorageResourceAmountPairNode(T_GAME game, String resourceType) {
+    public StorageResourceAmountPairNode(IdleDemoGame game, String resourceType) {
         super();
         this.game = game;
         this.resourceType = resourceType;

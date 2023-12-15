@@ -1,9 +1,8 @@
 package hundun.gdxgame.idledemo.ui.screen;
 
 import com.badlogic.gdx.InputProcessor;
-import hundun.gdxgame.idledemo.DemoIdleGame;
+import hundun.gdxgame.idledemo.IdleDemoGame;
 import hundun.gdxgame.idledemo.logic.DemoScreenId;
-import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.achievement.AllAchievementBoardVM;
 import hundun.gdxgame.idledemo.ui.shared.BaseIdleDemoScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementStateChangeListener;
@@ -12,11 +11,11 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementM
 
 public class DemoAchievementScreen extends BaseIdleDemoScreen implements IAchievementStateChangeListener {
 
-    AllAchievementBoardVM<DemoIdleGame, RootSaveData> allAchievementBoardVM;
+    AllAchievementBoardVM allAchievementBoardVM;
 
 
 
-    public DemoAchievementScreen(DemoIdleGame game) {
+    public DemoAchievementScreen(IdleDemoGame game) {
         super(game, DemoScreenId.SCREEN_ACHIEVEMENT, DemoScreenContext.customLayoutConst(game));
     }
 
@@ -34,7 +33,7 @@ public class DemoAchievementScreen extends BaseIdleDemoScreen implements IAchiev
     protected void lazyInitUiRootContext() {
         super.lazyInitUiRootContext();
 
-        allAchievementBoardVM = new AllAchievementBoardVM<>(this);
+        allAchievementBoardVM = new AllAchievementBoardVM(this);
 
 
         middleGroup.add(allAchievementBoardVM).expand().row();

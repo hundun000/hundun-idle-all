@@ -1,32 +1,58 @@
 package hundun.gdxgame.idledemo.ui.shared;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import hundun.gdxgame.idledemo.DemoIdleGame;
+import hundun.gdxgame.corelib.base.BaseHundunScreen;
+import hundun.gdxgame.gamelib.base.LogicFrameHelper;
+import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
+import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
+import hundun.gdxgame.idledemo.IdleDemoGame;
 import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
-import hundun.gdxgame.idledemo.starter.ui.component.BackgroundImageBox;
-import hundun.gdxgame.idledemo.starter.ui.component.GameAreaControlBoard;
-import hundun.gdxgame.idledemo.starter.ui.component.StarterStorageInfoBoard;
-import hundun.gdxgame.idledemo.starter.ui.screen.play.BaseIdleScreen;
-import hundun.gdxgame.idledemo.starter.ui.screen.play.PlayScreenLayoutConst;
+import lombok.Getter;
 
-public abstract class BaseIdleDemoScreen extends BaseIdleScreen<DemoIdleGame, RootSaveData> {
+import java.util.ArrayList;
+import java.util.List;
 
-    protected StarterStorageInfoBoard<DemoIdleGame, RootSaveData> storageInfoTable;
+public abstract class BaseIdleDemoScreen extends BaseHundunScreen<IdleDemoGame, RootSaveData> {
 
-    protected BackgroundImageBox<DemoIdleGame, RootSaveData> backgroundImageBox;
-    protected GameAreaControlBoard<DemoIdleGame, RootSaveData> gameAreaControlBoard;
+    public static final int LOGIC_FRAME_PER_SECOND = 30;
+
+    @Getter
+    protected final PlayScreenLayoutConst layoutConst;
+
+    protected boolean hidden;
+    // ====== need child lazy-init start ======
+
+
+    // ----- not ui ------
+
+
+    protected List<ILogicFrameListener> logicFrameListeners;
+    protected List<IGameAreaChangeListener> gameAreaChangeListeners;
+
+    @Getter
+    protected final String screenId;
+    protected StarterStorageInfoBoard storageInfoTable;
+
+    protected BackgroundImageBox backgroundImageBox;
+    protected GameAreaControlBoard gameAreaControlBoard;
 
     protected Table leftSideGroup;
     protected Table middleGroup;
 
     protected static int UI_ROOT_TABLE_COLSPAN_SIZE = 3;
     
-    public BaseIdleDemoScreen(DemoIdleGame game, String screenId, PlayScreenLayoutConst layoutConst) {
-        super(game, screenId, layoutConst);
+    public BaseIdleDemoScreen(IdleDemoGame game, String screenId, PlayScreenLayoutConst layoutConst) {
+        super(game, game.getSharedViewport());
+        this.screenId = screenId;
+        this.layoutConst = layoutConst;
+        this.logicFrameHelper = new LogicFrameHelper(LOGIC_FRAME_PER_SECOND);
+        this.logicFrameListeners = new ArrayList<>();
+        this.gameAreaChangeListeners = new ArrayList<>();
     }
 
-    @Override
     protected void lazyInitLogicContext() {
         logicFrameListeners.add(game.getIdleGameplayExport());
 
@@ -40,10 +66,10 @@ public abstract class BaseIdleDemoScreen extends BaseIdleScreen<DemoIdleGame, Ro
         this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(storageInfoTable);
     }
 
-    @Override
+
     protected void lazyInitUiRootContext() {
 
-        storageInfoTable = new StarterStorageInfoBoard<>(this);
+        storageInfoTable = new StarterStorageInfoBoard(this);
         uiRootTable.add(storageInfoTable)
                 .height(layoutConst.STORAGE_BOARD_BORDER_HEIGHT)
                 .fill()
@@ -57,7 +83,7 @@ public abstract class BaseIdleDemoScreen extends BaseIdleScreen<DemoIdleGame, Ro
         middleGroup = new Table();
         uiRootTable.add(middleGroup).grow();
 
-        gameAreaControlBoard = new GameAreaControlBoard<>(this);
+        gameAreaControlBoard = new GameAreaControlBoard(this);
         gameAreaControlBoard.top();
         uiRootTable.add(gameAreaControlBoard)
                 .growY()
@@ -65,11 +91,68 @@ public abstract class BaseIdleDemoScreen extends BaseIdleScreen<DemoIdleGame, Ro
 
     }
 
-    @Override
     protected void lazyInitBackUiAndPopupUiContent() {
 
-        this.backgroundImageBox = new BackgroundImageBox<>(this);
+        this.backgroundImageBox = new BackgroundImageBox(this);
         backUiStage.addActor(backgroundImageBox);
 
     }
+
+    @Override
+    protected void create() {
+
+        lazyInitBackUiAndPopupUiContent();
+
+        lazyInitUiRootContext();
+
+        lazyInitLogicContext();
+
+        if (game.debugMode) {
+            uiRootTable.debugAll();
+            popupRootTable.debugCell();
+        }
+    }
+
+    @Override
+    public void dispose() {
+    }
+
+
+
+
+    @Override
+    protected void onLogicFrame() {
+        super.onLogicFrame();
+
+        for (ILogicFrameListener logicFrameListener : logicFrameListeners) {
+            logicFrameListener.onLogicFrame();
+        }
+    }
+
+    @Override
+    public void show() {
+        super.show();
+
+        Gdx.input.setInputProcessor(provideDefaultInputProcessor());
+
+        updateUIForShow();
+
+        for (IGameAreaChangeListener gameAreaChangeListener : gameAreaChangeListeners) {
+            gameAreaChangeListener.onGameAreaChange(game.getLastScreenId(), this.getScreenId());
+        }
+
+        this.hidden = false;
+        Gdx.app.log(this.getClass().getSimpleName(), "show done");
+    }
+
+    @Override
+    public void hide() {
+        super.hide();
+
+        this.hidden = true;
+    }
+
+    protected abstract void updateUIForShow();
+
+    protected abstract InputProcessor provideDefaultInputProcessor();
 }

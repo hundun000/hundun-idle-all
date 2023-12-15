@@ -1,4 +1,4 @@
-package hundun.gdxgame.idledemo.starter.ui.component;
+package hundun.gdxgame.idledemo.ui.shared;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -7,23 +7,22 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import hundun.gdxgame.idledemo.BaseIdleGame;
-import hundun.gdxgame.idledemo.starter.ui.screen.play.BaseIdleScreen;
+import hundun.gdxgame.idledemo.ui.shared.BaseIdleDemoScreen;
 
 
 /**
  * @author hundun
  * Created on 2021/12/06
  */
-public class GameAreaControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Image {
+public class GameAreaControlNode extends Image {
 
-    BaseIdleScreen<T_GAME, T_SAVE> parent;
+    BaseIdleDemoScreen parent;
     //Image image;
     Label label;
 
     String gotoScreenId;
 
-    public GameAreaControlNode(BaseIdleScreen<T_GAME, T_SAVE> parent, String gotoScreenId, boolean longVersion) {
+    public GameAreaControlNode(BaseIdleDemoScreen parent, String gotoScreenId, boolean longVersion) {
         this.parent = parent;
         this.gotoScreenId = gotoScreenId;
 

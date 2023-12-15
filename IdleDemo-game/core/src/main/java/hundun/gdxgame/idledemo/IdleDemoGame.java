@@ -2,25 +2,81 @@ package hundun.gdxgame.idledemo;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ray3k.stripe.FreeTypeSkin;
 
+import hundun.gdxgame.corelib.base.BaseHundunGame;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idledemo.logic.*;
 import hundun.gdxgame.gamelib.base.save.ISaveTool;
 import hundun.gdxgame.idledemo.ui.screen.DemoScreenContext;
-import hundun.gdxgame.idledemo.starter.ui.screen.play.BaseIdleScreen;
+import hundun.gdxgame.idledemo.ui.shared.BaseIdleDemoScreen;
 import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport;
+import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.model.buff.IBuffPrototypeLoader;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.TextFormatTool;
 import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
 
 
-public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
+public class IdleDemoGame extends BaseHundunGame<RootSaveData> {
+    @Getter
+    protected AudioPlayManager audioPlayManager;
+    @Getter
+    protected DemoGameDictionary demoGameDictionary;
+    @Getter
+    protected DemoTextureManager textureManager;
+    @Getter
+    protected TextFormatTool textFormatTool;
 
     @Getter
-    protected AbstractIdleScreenContext<DemoIdleGame, RootSaveData> screenContext;
+    protected Viewport sharedViewport;
 
-    public DemoIdleGame(ISaveTool<RootSaveData> saveTool) {
+    @Getter
+    protected IdleGameplayExport idleGameplayExport;
+    @Getter
+    protected ChildGameConfig childGameConfig;
+    @Setter
+    @Getter
+    protected String lastScreenId;
+    @Getter
+    protected
+    List<String> controlBoardScreenIds;
+    @Getter
+    protected DemoScreenContext screenContext;
+
+    public IdleDemoGame(int viewportWidth, int viewportHeight) {
+        super(viewportWidth, viewportHeight);
+    }
+
+
+
+//    /**
+//     * 作为新存档，也需要修改ModelContext
+//     */
+//    public void newSaveStarter(ManagerContext modelContext) {
+//        Collection<BaseConstruction> constructions = modelContext.getConstructionFactory().getConstructions();
+//        for (BaseConstruction construction : constructions) {
+//            construction.getSaveData().setLevel(starterData.getConstructionStarterLevelMap().getOrDefault(construction.getId(), 0));
+//            if (starterData.getConstructionStarterWorkingLevelMap().getOrDefault(construction.getId(), false)) {
+//                construction.getSaveData().setWorkingLevel(starterData.getConstructionStarterLevelMap().getOrDefault(construction.getId(), 0));
+//            }
+//            construction.updateModifiedValues();
+//        }
+//    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+
+        saveHandler.gameSaveCurrent();
+    }
+
+
+
+    public IdleDemoGame(ISaveTool<RootSaveData> saveTool) {
         super(960, 640);
         this.debugMode = true;
         
@@ -52,7 +108,7 @@ public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
                 new DemoBuiltinConstructionsLoader(),
                 new DemoAchievementLoader(),
                 IBuffPrototypeLoader.emptyImpl(),
-                BaseIdleScreen.LOGIC_FRAME_PER_SECOND,
+                BaseIdleDemoScreen.LOGIC_FRAME_PER_SECOND,
                 childGameConfig
                 );
         this.getSaveHandler().registerSubHandler(idleGameplayExport);
@@ -61,15 +117,13 @@ public class DemoIdleGame extends BaseIdleGame<RootSaveData> {
 
     @Override
     protected void createStage2() {
-        super.createStage2();
+        textureManager.lazyInitOnGameCreateStage2();
         screenContext.lazyInit();
     }
 
     @Override
     protected void createStage3() {
-        super.createStage3();
-        
-        
+        audioPlayManager.lazyInitOnGameCreate(childGameConfig.getScreenIdToFilePathMap());
         
         screenManager.pushScreen(DemoScreenId.SCREEN_MENU, null);
         getAudioPlayManager().intoScreen(DemoScreenId.SCREEN_MENU);

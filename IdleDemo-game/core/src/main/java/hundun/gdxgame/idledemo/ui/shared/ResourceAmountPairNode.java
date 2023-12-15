@@ -1,20 +1,20 @@
-package hundun.gdxgame.idledemo.starter.ui.component;
+package hundun.gdxgame.idledemo.ui.shared;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
-import hundun.gdxgame.idledemo.BaseIdleGame;
+import hundun.gdxgame.idledemo.IdleDemoGame;
 import lombok.Getter;
 
 /**
  * @author hundun
  * Created on 2021/11/25
  */
-public class ResourceAmountPairNode<T_GAME extends BaseIdleGame<?>> extends HorizontalGroup {
+public class ResourceAmountPairNode extends HorizontalGroup {
 
-    T_GAME game;
+    IdleDemoGame game;
 
     @Getter
     String resourceType;
@@ -22,7 +22,7 @@ public class ResourceAmountPairNode<T_GAME extends BaseIdleGame<?>> extends Hori
     Image image;
     Label label;
 
-    public ResourceAmountPairNode(T_GAME game, String resourceType) {
+    public ResourceAmountPairNode(IdleDemoGame game, String resourceType) {
         super();
         this.game = game;
         this.resourceType = resourceType;

@@ -2,7 +2,7 @@ package hundun.gdxgame.idledemo.ui.shared;
 
 import com.badlogic.gdx.Gdx;
 import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
-import hundun.gdxgame.idledemo.DemoIdleGame;
+import hundun.gdxgame.idledemo.IdleDemoGame;
 import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.main.FirstRunningAchievementBoardVM;
 import hundun.gdxgame.idledemo.ui.screen.DemoScreenContext;
@@ -20,14 +20,14 @@ public abstract class BaseDemoPlayScreen extends BaseIdleDemoScreen
         implements IGameAreaChangeListener, IAchievementBoardCallback, IAchievementStateChangeListener
 {
 
-    protected FirstRunningAchievementBoardVM<DemoIdleGame, RootSaveData> firstRunningAchievementBoardVM;
+    protected FirstRunningAchievementBoardVM firstRunningAchievementBoardVM;
     protected AchievementPopupBoard achievementPopupBoard;
-    DemoIdleGame demoIdleGame;
+    IdleDemoGame idleDemoGame;
     protected List<AbstractAchievementPrototype> showAchievementMaskBoardQueue = new ArrayList<>();
 
-    public BaseDemoPlayScreen(DemoIdleGame game, String screenId) {
+    public BaseDemoPlayScreen(IdleDemoGame game, String screenId) {
         super(game, screenId, DemoScreenContext.customLayoutConst(game));
-        this.demoIdleGame = game;
+        this.idleDemoGame = game;
     }
 
 
@@ -46,7 +46,7 @@ public abstract class BaseDemoPlayScreen extends BaseIdleDemoScreen
         super.lazyInitUiRootContext();
 
 
-        firstRunningAchievementBoardVM = new FirstRunningAchievementBoardVM<>(this);
+        firstRunningAchievementBoardVM = new FirstRunningAchievementBoardVM(this);
         leftSideGroup.add(firstRunningAchievementBoardVM)
                 .width(getLayoutConst().FIRST_LOCKED_ACHIEVEMENT_BOARD_WIDTH)
                 .growY()

@@ -5,9 +5,8 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import hundun.gdxgame.idledemo.DemoIdleGame;
+import hundun.gdxgame.idledemo.IdleDemoGame;
 import hundun.gdxgame.idledemo.logic.DemoScreenId;
-import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.ui.shared.BaseDemoPlayScreen;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
 import hundun.gdxgame.idledemo.ui.world.HexAreaVM;
@@ -30,7 +29,7 @@ public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstruction
 
     protected WorldCellDetailBoardVM worldCellDetailBoardVM;
 
-    public WorldPlayScreen(DemoIdleGame game) {
+    public WorldPlayScreen(IdleDemoGame game) {
         super(game, DemoScreenId.SCREEN_WORLD);
 
         this.deskCamera = new OrthographicCamera();

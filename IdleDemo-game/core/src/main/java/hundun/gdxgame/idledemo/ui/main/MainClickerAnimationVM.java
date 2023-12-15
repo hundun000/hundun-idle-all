@@ -1,27 +1,27 @@
-package hundun.gdxgame.idledemo.starter.ui.component.animation;
+package hundun.gdxgame.idledemo.ui.main;
 
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import hundun.gdxgame.idledemo.IdleDemoGame;
+import hundun.gdxgame.idledemo.logic.RootSaveData;
+import hundun.gdxgame.idledemo.ui.shared.BaseIdleDemoScreen;
 import hundun.gdxgame.idleshare.core.framework.AbstractAnimationVM;
-import hundun.gdxgame.idledemo.BaseIdleGame;
-import hundun.gdxgame.idledemo.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
 /**
  * @author hundun
  * Created on 2021/11/12
  */
-public class MainClickerAnimationVM<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE>
-        extends AbstractAnimationVM<T_GAME, T_SAVE, Void>
+public class MainClickerAnimationVM extends AbstractAnimationVM<IdleDemoGame, RootSaveData, Void>
 {
 
 
     BaseConstruction construction;
     TextureRegion[][] regions;
-    BaseIdleScreen<T_GAME, T_SAVE> parent;
+    BaseIdleDemoScreen parent;
     
     // Constant rows and columns of the sprite sheet
     private static final int FRAME_COLS = 6, FRAME_ROWS = 5;
@@ -30,7 +30,7 @@ public class MainClickerAnimationVM<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE>
     
     
     public MainClickerAnimationVM(
-            BaseIdleScreen<T_GAME, T_SAVE> parent,
+            BaseIdleDemoScreen parent,
             TextureRegion[][] regions
             ) {
         super(parent.getGame(), null);

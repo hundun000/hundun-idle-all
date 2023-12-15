@@ -3,15 +3,14 @@ package hundun.gdxgame.idledemo.ui.main;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.idledemo.BaseIdleGame;
-import hundun.gdxgame.idledemo.starter.ui.screen.play.BaseIdleScreen;
+import hundun.gdxgame.idledemo.ui.shared.BaseIdleDemoScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementManager.AchievementInfoPackage;
 
 import java.util.List;
 
-public class FirstRunningAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table {
+public class FirstRunningAchievementBoardVM extends Table {
 
-    BaseIdleScreen<T_GAME, T_SAVE> parent;
+    BaseIdleDemoScreen parent;
 
     Label nameStartLabel;
     Label nameValueLabel;
@@ -21,7 +20,7 @@ public class FirstRunningAchievementBoardVM<T_GAME extends BaseIdleGame<T_SAVE>,
 
     List<String> texts;
 
-    public FirstRunningAchievementBoardVM(BaseIdleScreen<T_GAME, T_SAVE> parent)
+    public FirstRunningAchievementBoardVM(BaseIdleDemoScreen parent)
     {
         this.parent = parent;
         this.texts = parent.getGame().getDemoGameDictionary()

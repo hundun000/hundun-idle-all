@@ -1,4 +1,4 @@
-package hundun.gdxgame.idledemo.starter.ui.component.board.construction;
+package hundun.gdxgame.idledemo.ui.shared;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -12,9 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 
 import hundun.gdxgame.corelib.base.util.DrawableFactory;
-import hundun.gdxgame.idledemo.BaseIdleGame;
-import hundun.gdxgame.idledemo.starter.ui.screen.play.BaseIdleScreen;
-import hundun.gdxgame.idledemo.starter.ui.screen.play.PlayScreenLayoutConst;
 import hundun.gdxgame.idleshare.core.framework.StarterSecondaryInfoBoardCallerClickListener;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
@@ -25,8 +22,8 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.Descri
  * @author hundun
  * Created on 2021/11/05
  */
-public class StarterConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>, T_SAVE> extends Table {
-    BaseIdleScreen<T_GAME, T_SAVE> parent;
+public class StarterConstructionControlNode extends Table {
+    BaseIdleDemoScreen parent;
     ISecondaryInfoBoardCallback<BaseConstruction> callback;
     BaseConstruction construction;
     Label constructionNameLabel;
@@ -45,7 +42,7 @@ public class StarterConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>,
 
 
     public StarterConstructionControlNode(
-            BaseIdleScreen<T_GAME, T_SAVE> parent,
+            BaseIdleDemoScreen parent,
             ISecondaryInfoBoardCallback<BaseConstruction> callback,
             int index, PlayScreenLayoutConst playScreenLayoutConst) {
         super();

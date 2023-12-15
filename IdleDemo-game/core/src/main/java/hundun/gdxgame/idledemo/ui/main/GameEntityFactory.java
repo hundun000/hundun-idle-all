@@ -5,7 +5,6 @@ import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.ui.screen.MainPlayScreen;
 import hundun.gdxgame.idleshare.core.framework.entity.BaseGameEntityFactory;
 import hundun.gdxgame.idleshare.core.framework.entity.GameEntity;
-import hundun.gdxgame.idledemo.starter.ui.screen.play.PlayScreenLayoutConst;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

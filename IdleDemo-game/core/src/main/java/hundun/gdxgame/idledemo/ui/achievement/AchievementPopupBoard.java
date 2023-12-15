@@ -11,9 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import com.badlogic.gdx.utils.Null;
-import hundun.gdxgame.idledemo.DemoIdleGame;
 import hundun.gdxgame.idledemo.ui.shared.BaseDemoPlayScreen;
-import hundun.gdxgame.idledemo.starter.ui.component.ResourceAmountPairNode;
+import hundun.gdxgame.idledemo.ui.shared.ResourceAmountPairNode;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievementPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
 
@@ -50,7 +49,7 @@ public class AchievementPopupBoard extends Table {
             Label rewardLabel = new Label(texts.get(3), parent.getGame().getMainSkin());
             this.add(rewardLabel).center().row();
             for (ResourcePair entry : prototype.getAwardResourceMap()) {
-                ResourceAmountPairNode<DemoIdleGame> node = new ResourceAmountPairNode<>(parent.getGame(), entry.getType());
+                ResourceAmountPairNode node = new ResourceAmountPairNode(parent.getGame(), entry.getType());
                 node.update(entry.getAmount());
                 this.add(node)
                         .height(parent.getLayoutConst().RESOURCE_AMOUNT_PAIR_NODE_HEIGHT)
