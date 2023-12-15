@@ -120,6 +120,7 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
     public static class RootEpochConfig {
         int enlargementLevel;
         int maxLevel;
+        Map<String, BuffEpochConfig> buffEpochConfigMap;
         Map<String, ConstructionEpochConfig> constructionEpochConfigMap;
     }
 
@@ -129,6 +130,13 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
     public static class ConstructionEpochConfig {
 
         String transformToPrototypeId;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @Builder
+    public static class BuffEpochConfig {
+        int buffLevel;
     }
 
     @Override

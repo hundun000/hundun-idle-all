@@ -6,7 +6,6 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
-import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementManager.AchievementSaveData;
 import lombok.*;
 
 /**
@@ -82,7 +81,7 @@ public class BuffManager {
                 ));
     }
 
-    public BuffAndStatus getAchievementAndStatus(String id) {
+    public BuffAndStatus getBuffAndStatus(String id) {
         return models.get(id);
     }
 

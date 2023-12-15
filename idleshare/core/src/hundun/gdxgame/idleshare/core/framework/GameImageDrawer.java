@@ -49,7 +49,7 @@ public class GameImageDrawer<T_GAME extends BaseHundunGame<T_SAVE>, T_SAVE> impl
 
         String gameArea = holder.getScreenId();
         List<String> needDrawConstructionIds = manager.getAreaEntityEffectConfigMap().get(gameArea).getOwnAmountConstructionPrototypeIds();
-                manager.destoryNoNeedDrawConstructionIds(needDrawConstructionIds);
+                manager.destroyNoNeedDrawConstructionIds(needDrawConstructionIds);
         manager.allEntityMoveForFrame();
         
         if (needDrawConstructionIds != null) {

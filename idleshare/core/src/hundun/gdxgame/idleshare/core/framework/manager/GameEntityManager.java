@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.badlogic.gdx.Gdx;
-
 import hundun.gdxgame.idleshare.core.framework.GameImageDrawer.IGameImageDrawerHolder;
 import hundun.gdxgame.idleshare.core.framework.entity.BaseGameEntityFactory;
 import hundun.gdxgame.idleshare.core.framework.entity.GameEntity;
@@ -48,9 +46,6 @@ public class GameEntityManager {
             List<GameEntity> queue = entry.getValue();
             queue.removeIf(entity -> {
                 boolean remove = entity.checkRemove();
-                if (remove) {
-                    Gdx.app.log(this.getClass().getSimpleName(), "entity removed by self check");
-                }
                 return remove;
                 });
             queue.forEach(entity -> {
@@ -103,14 +98,14 @@ public class GameEntityManager {
         gameEntitiesOfResourceIds.computeIfAbsent(resourceId, k -> new LinkedList<>());
         List<GameEntity> gameEntities = gameEntitiesOfResourceIds.get(resourceId);
         while (gameEntities.size() > drawNum) {
-            Gdx.app.log(this.getClass().getSimpleName(), "checkResourceEntityByOwnAmount " + resourceId + " remove, current = " + gameEntities.size() + " , target = " + drawNum);
+            //Gdx.app.log(this.getClass().getSimpleName(), "checkResourceEntityByOwnAmount " + resourceId + " remove, current = " + gameEntities.size() + " , target = " + drawNum);
             gameEntities.remove(gameEntities.size() - 1);
         }
         while (gameEntities.size() < drawNum) {
             int newIndex = gameEntities.size();
             GameEntity gameEntity = gameEntityFactory.newResourceEntity(resourceId, newIndex);
             if (gameEntity != null) {
-                Gdx.app.log(this.getClass().getSimpleName(), "checkResourceEntityByOwnAmount " + resourceId + " new, current = " + gameEntities.size() + " , target = " + drawNum);
+                //Gdx.app.log(this.getClass().getSimpleName(), "checkResourceEntityByOwnAmount " + resourceId + " new, current = " + gameEntities.size() + " , target = " + drawNum);
                 gameEntities.add(gameEntity);
             } else {
                 break;
@@ -127,7 +122,7 @@ public class GameEntityManager {
             GameEntity gameEntity = gameEntityFactory.newResourceEntity(resourceId, i);
             if (gameEntity != null) {
                 gameEntities.add(gameEntity);
-                Gdx.app.log(this.getClass().getSimpleName(), "addResourceEntityByChangeAmount " + resourceId + " new, target = " + drawNum);
+                //Gdx.app.log(this.getClass().getSimpleName(), "addResourceEntityByChangeAmount " + resourceId + " new, target = " + drawNum);
             } else {
                 break;
             }
@@ -141,14 +136,14 @@ public class GameEntityManager {
         gameEntitiesOfConstructionPrototypeIds.computeIfAbsent(prototypeId, k -> new LinkedList<>());
         List<GameEntity> gameEntities = gameEntitiesOfConstructionPrototypeIds.get(prototypeId);
         while (gameEntities.size() > drawNum) {
-            Gdx.app.log(this.getClass().getSimpleName(), "checkConstructionEntityByOwnAmount " + prototypeId + " remove, current = " + gameEntities.size() + " , target = " + drawNum);
+            //Gdx.app.log(this.getClass().getSimpleName(), "checkConstructionEntityByOwnAmount " + prototypeId + " remove, current = " + gameEntities.size() + " , target = " + drawNum);
             gameEntities.remove(gameEntities.size() - 1);
         }
         while (gameEntities.size() < drawNum) {
             int newIndex = gameEntities.size();
             GameEntity gameEntity = gameEntityFactory.newConstructionEntity(prototypeId, newIndex);
             if (gameEntity != null) {
-                Gdx.app.log(this.getClass().getSimpleName(), "checkConstructionEntityByOwnAmount " + prototypeId + " new, current = " + gameEntities.size() + " , target = " + drawNum);
+                //Gdx.app.log(this.getClass().getSimpleName(), "checkConstructionEntityByOwnAmount " + prototypeId + " new, current = " + gameEntities.size() + " , target = " + drawNum);
                 gameEntities.add(gameEntity);
             } else {
                 //Gdx.app.log(this.getClass().getSimpleName(), "checkConstructionEntityByOwnAmount " + id + " , cannot create new entity.");
@@ -164,7 +159,7 @@ public class GameEntityManager {
     /**
      * 某些引擎（如Unity）不光要在此处queue.clear()，还要queue.ForEach(entity => UnityEngine.Object.Destroy(entity.gameObject));
      */
-    public void destoryNoNeedDrawConstructionIds(List<String> needDrawConstructionIds) {
+    public void destroyNoNeedDrawConstructionIds(List<String> needDrawConstructionIds) {
         for (Entry<String, List<GameEntity>> entry : gameEntitiesOfConstructionPrototypeIds.entrySet()) {
             List<GameEntity> queue = entry.getValue();
             if (!needDrawConstructionIds.contains(entry.getKey())) {

@@ -3,7 +3,6 @@ package hundun.gdxgame.idlemushroom.ui.shared;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import hundun.gdxgame.idlemushroom.IdleMushroomGame;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomBuffId;
 import hundun.gdxgame.idleshare.core.framework.StarterSecondaryInfoBoardCallerClickListener;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IBuffChangeListener;
@@ -114,7 +113,7 @@ public class BuffInfoBoard extends Table implements IBuffChangeListener {
         for (int i = 0; i < buffIds.size(); i++) {
             String buffId = buffIds.get(i);
             if (shownTypes.contains(buffId)) {
-                BuffAndStatus buffAndStatus = parent.getGame().getIdleGameplayExport().getGameplayContext().getBuffManager().getAchievementAndStatus(buffId);
+                BuffAndStatus buffAndStatus = parent.getGame().getIdleGameplayExport().getGameplayContext().getBuffManager().getBuffAndStatus(buffId);
                 Node node = new Node(parent, buffAndStatus);
                 nodes.add(node);
                 Cell<Node> cell = this.add(node)

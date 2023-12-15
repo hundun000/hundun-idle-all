@@ -30,7 +30,8 @@ public class EpochCounterPrototype extends AbstractConstructionPrototype {
             .proficiencyDescriptionProvider(DescriptionPackageFactory.EN_PROFICIENCY_IMP.build())
             .extraTexts(JavaFeatureForGwt.listOf(
                     "Enlargement: ",
-                    "Tile max level: "
+                    "Tile max level: ",
+                    "Buff: "
             ))
             .build();
 
@@ -47,7 +48,8 @@ public class EpochCounterPrototype extends AbstractConstructionPrototype {
             .proficiencyDescriptionProvider(DescriptionPackageFactory.CN_PROFICIENCY_IMP.build())
             .extraTexts(JavaFeatureForGwt.listOf(
                     "巨大化: ",
-                    "地块等级上限: "
+                    "地块等级上限: ",
+                    "增益: "
             ))
             .build();
 

@@ -114,10 +114,7 @@ public class IdleMushroomSaveHandler extends PairChildrenSaveHandler<RootSaveDat
                                 IdleMushroomAchievementId.STEP_1,
                                 new AchievementSaveData(AchievementState.RUNNING)
                         ))
-                        .buffSaveDataMap(JavaFeatureForGwt.mapOf(
-                                IdleMushroomBuffId.BUFF_MUSHROOM_OUTPUT_SCALE,
-                                new BuffSaveData(1)
-                        ))
+                        .buffSaveDataMap(new HashMap<>())
                         .build())
                 .systemSettingSaveData(SystemSettingSaveData.builder()
                         .language(Language.EN)

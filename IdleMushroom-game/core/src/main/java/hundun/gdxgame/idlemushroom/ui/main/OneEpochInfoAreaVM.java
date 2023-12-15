@@ -6,9 +6,10 @@ import com.badlogic.gdx.utils.Null;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame.RootEpochConfig;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushroomPlayScreenLayoutConst;
-import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomMainPlayScreen;
 import hundun.gdxgame.idlemushroom.ui.shared.ConstructionDetailPartVM;
-import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
+import hundun.gdxgame.idleshare.gamelib.framework.model.buff.BuffManager.BuffAndStatus;
+
+import java.util.stream.Collectors;
 
 public class OneEpochInfoAreaVM extends Table {
 
@@ -17,6 +18,7 @@ public class OneEpochInfoAreaVM extends Table {
     RootEpochConfig epochConfig;
     Label epochInfoLabel;
     Label maxLevelLabel;
+    Label buffLabel;
     Table mainClickerPart;
     boolean isPreviewNextLevel;
 
@@ -38,11 +40,14 @@ public class OneEpochInfoAreaVM extends Table {
         epochInfoLabel.setAlignment(Align.center);
         this.maxLevelLabel = new Label("", game.getMainSkin());
         maxLevelLabel.setAlignment(Align.center);
+        this.buffLabel = new Label("", game.getMainSkin());
+        buffLabel.setAlignment(Align.center);
         this.mainClickerPart = new Table(game.getMainSkin());
 
         // ------ this ------
         this.add(epochInfoLabel).row();
         this.add(maxLevelLabel).row();
+        this.add(buffLabel).row();
         this.add(mainClickerPart).row();
 
         this.setBackground(game.getTextureManager().getTableType3Drawable());
@@ -60,6 +65,14 @@ public class OneEpochInfoAreaVM extends Table {
                     .getDescriptionPackage().getExtraTexts().get(0) + epochConfig.getEnlargementLevel());
             maxLevelLabel.setText(game.getIdleMushroomExtraGameplayExport().getEpochCounterConstruction()
                     .getDescriptionPackage().getExtraTexts().get(1) + epochConfig.getMaxLevel());
+            String buffLabelText = epochConfig.getBuffEpochConfigMap().entrySet().stream()
+                            .map(it -> {
+                                BuffAndStatus buffAndStatus = game.getIdleGameplayExport().getGameplayContext().getBuffManager().getBuffAndStatus(it.getKey());
+                                return buffAndStatus.getBuffPrototype().getName() + " " + it.getValue().getBuffLevel() + ";";
+                            })
+                            .collect(Collectors.joining("\n"));
+            buffLabel.setText(game.getIdleMushroomExtraGameplayExport().getEpochCounterConstruction()
+                    .getDescriptionPackage().getExtraTexts().get(2) + buffLabelText);
             ConstructionDetailPartVM.resourcePackAsActor(
                     game.getIdleMushroomExtraGameplayExport().getMainClickerConstruction().getDescriptionPackage().getOutputGainDescriptionStart(),
                     game.getIdleMushroomExtraGameplayExport().getMainClickerConstruction().getOutputComponent().getOutputGainPack(),
@@ -67,6 +80,7 @@ public class OneEpochInfoAreaVM extends Table {
         } else {
             epochInfoLabel.setText("");
             maxLevelLabel.setText("");
+            buffLabel.setText("");
         }
 
 
