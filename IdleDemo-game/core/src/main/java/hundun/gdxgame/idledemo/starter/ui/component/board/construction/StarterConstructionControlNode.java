@@ -77,7 +77,7 @@ public class StarterConstructionControlNode<T_GAME extends BaseIdleGame<T_SAVE>,
             }
         });
 
-        this.addListener(new StarterSecondaryInfoBoardCallerClickListener(() -> construction, callback));
+        this.addListener(new StarterSecondaryInfoBoardCallerClickListener<>(() -> construction, callback));
 
         // ------ changeWorkingLevelGroup ------
         this.changeWorkingLevelGroup = new Table();

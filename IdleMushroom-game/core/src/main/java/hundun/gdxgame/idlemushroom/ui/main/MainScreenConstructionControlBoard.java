@@ -37,12 +37,12 @@ public class MainScreenConstructionControlBoard extends Table
 {
 
     IdleMushroomMainPlayScreen parent;
-    protected ISecondaryInfoBoardCallback<BaseConstruction> callback;
+    protected ISecondaryInfoBoardCallback<Object> callback;
 
     protected SellerPart sellerPart;
     protected EpochPart epochPart;
 
-    public MainScreenConstructionControlBoard(IdleMushroomMainPlayScreen parent, ISecondaryInfoBoardCallback<BaseConstruction> callback) {
+    public MainScreenConstructionControlBoard(IdleMushroomMainPlayScreen parent, ISecondaryInfoBoardCallback<Object> callback) {
         this.parent = parent;
         this.callback = callback;
 
@@ -114,7 +114,7 @@ public class MainScreenConstructionControlBoard extends Table
 
         public EpochPart(
                 IdleMushroomMainPlayScreen parent,
-                ISecondaryInfoBoardCallback<BaseConstruction> callback) {
+                ISecondaryInfoBoardCallback<Object> callback) {
             super();
             final IdleMushroomPlayScreenLayoutConst playScreenLayoutConst = parent.getIdleMushroomPlayScreenLayoutConst();
             this.parent = parent;
@@ -146,7 +146,7 @@ public class MainScreenConstructionControlBoard extends Table
             Container<?> questionMarkArea = new Container<>(new Image(parent.getGame().getTextureManager().getQuestionMarkTexture()));
             questionMarkArea.setBackground(parent.getGame().getTextureManager().getQuestionMarkTableDrawable());
             questionMarkArea.setTouchable(Touchable.enabled);
-            questionMarkArea.addListener(new StarterSecondaryInfoBoardCallerClickListener(() -> model, parent));
+            questionMarkArea.addListener(new StarterSecondaryInfoBoardCallerClickListener<>(() -> model, parent));
 
             // ------ this ------
             leftPart.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT);
@@ -166,13 +166,9 @@ public class MainScreenConstructionControlBoard extends Table
             // ------ update show-state ------
             if (model == null) {
                 setVisible(false);
-                //textButton.setVisible(false);
-                //Gdx.app.log("ConstructionView", this.hashCode() + " no model");
                 return;
             } else {
                 setVisible(true);
-                //textButton.setVisible(true);
-                //Gdx.app.log("ConstructionView", model.getDescriptionPackage().getName() + " set to its view");
             }
             // ------ update text ------
             constructionNameLabel.setText(JavaFeatureForGwt.stringFormat(
@@ -230,7 +226,7 @@ public class MainScreenConstructionControlBoard extends Table
 
         public SellerPart(
                 IdleMushroomMainPlayScreen parent,
-                ISecondaryInfoBoardCallback<BaseConstruction> callback) {
+                ISecondaryInfoBoardCallback<Object> callback) {
             super();
             final IdleMushroomPlayScreenLayoutConst playScreenLayoutConst = parent.getIdleMushroomPlayScreenLayoutConst();
             this.parent = parent;
@@ -265,7 +261,7 @@ public class MainScreenConstructionControlBoard extends Table
                     construction.getLevelComponent().changeWorkingLevel(-1);
                 }
             });
-            changeWorkingLevelGroup.add(downWorkingLevelButton).size(CHILD_WIDTH / 4, CHILD_HEIGHT);
+            changeWorkingLevelGroup.add(downWorkingLevelButton).size(CHILD_WIDTH / 4.0f, CHILD_HEIGHT);
 
             this.workingLevelLabel = new Label("", parent.getGame().getMainSkin());
             workingLevelLabel.setAlignment(Align.center);
@@ -278,14 +274,14 @@ public class MainScreenConstructionControlBoard extends Table
                     construction.getLevelComponent().changeWorkingLevel(1);
                 }
             });
-            changeWorkingLevelGroup.add(upWorkingLevelButton).size(CHILD_WIDTH / 4, CHILD_HEIGHT);
+            changeWorkingLevelGroup.add(upWorkingLevelButton).size(CHILD_WIDTH / 4.0f, CHILD_HEIGHT);
 
             detailGroup = new Table();
 
             Container<?> questionMarkArea = new Container<>(new Image(parent.getGame().getTextureManager().getQuestionMarkTexture()));
             questionMarkArea.setBackground(parent.getGame().getTextureManager().getQuestionMarkTableDrawable());
             questionMarkArea.setTouchable(Touchable.enabled);
-            questionMarkArea.addListener(new StarterSecondaryInfoBoardCallerClickListener(() -> construction, parent));
+            questionMarkArea.addListener(new StarterSecondaryInfoBoardCallerClickListener<>(() -> construction, parent));
 
             // ------ this ------
             leftPart.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT);

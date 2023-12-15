@@ -207,4 +207,7 @@ public class IdleMushroomTextureManager {
         }
     }
 
+    public TextureRegion getBuffIcon(String id) {
+        return defaultIcon;
+    }
 }

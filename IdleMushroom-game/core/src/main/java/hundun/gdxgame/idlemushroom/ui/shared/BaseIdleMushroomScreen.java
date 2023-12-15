@@ -14,13 +14,17 @@ import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
 import hundun.gdxgame.idlemushroom.logic.RootSaveData;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushroomPlayScreenLayoutConst;
+import hundun.gdxgame.idlemushroom.ui.shared.wiki.SharedWikiPopupInfoBoard;
+import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public abstract class BaseIdleMushroomScreen extends BaseHundunScreen<IdleMushroomGame, RootSaveData> {
+public abstract class BaseIdleMushroomScreen extends BaseHundunScreen<IdleMushroomGame, RootSaveData>
+        implements ISecondaryInfoBoardCallback<Object>
+{
     public static final int LOGIC_FRAME_PER_SECOND = 30;
 
     @Getter
@@ -34,6 +38,7 @@ public abstract class BaseIdleMushroomScreen extends BaseHundunScreen<IdleMushro
     protected final String screenId;
 
     protected StorageInfoBoard storageInfoTable;
+    protected SharedWikiPopupInfoBoard secondaryInfoBoard;
     protected BuffInfoBoard buffInfoBoard;
     protected BackgroundImageBox backgroundImageBox;
     protected IdleMushroomGameAreaControlBoard gameAreaControlBoard;
@@ -143,6 +148,9 @@ public abstract class BaseIdleMushroomScreen extends BaseHundunScreen<IdleMushro
 
     protected void lazyInitBackUiAndPopupUiContent() {
 
+        this.secondaryInfoBoard = new SharedWikiPopupInfoBoard(this.getGame());
+        popupRootTable.add(secondaryInfoBoard).center().expand();
+
         this.backgroundImageBox = new BackgroundImageBox(this);
         backUiStage.addActor(backgroundImageBox);
 
@@ -181,4 +189,16 @@ public abstract class BaseIdleMushroomScreen extends BaseHundunScreen<IdleMushro
     };
 
     protected abstract InputProcessor provideDefaultInputProcessor();
+
+    @Override
+    public void showAndUpdateGuideInfo(Object model) {
+        secondaryInfoBoard.setVisible(true);
+        secondaryInfoBoard.update(model);
+    }
+
+    @Override
+    public void hideAndCleanGuideInfo() {
+        secondaryInfoBoard.setVisible(false);
+        //popUpInfoBoard.setText("GUIDE_TEXT");
+    }
 }

@@ -82,6 +82,10 @@ public class BuffManager {
                 ));
     }
 
+    public BuffAndStatus getAchievementAndStatus(String id) {
+        return models.get(id);
+    }
+
     public Map<String, Integer> getBuffLevelMap() {
         return models.values().stream()
                 .collect(Collectors.toMap(

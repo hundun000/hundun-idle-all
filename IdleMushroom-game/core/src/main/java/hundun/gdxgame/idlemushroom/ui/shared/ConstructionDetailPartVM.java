@@ -72,25 +72,25 @@ public class ConstructionDetailPartVM extends Table {
     }
 
     public static void resourcePackAsActor(String descriptionStart, ResourcePack pack, Table target, BaseIdleMushroomPlayScreen parent) {
-        resourcePackAsActor(descriptionStart, pack, target, parent, false);
+        resourcePackAsActor(descriptionStart, pack, target, parent.getGame(), false);
     }
 
     public static void resourcePackAsActor(
             String descriptionStart,
             ResourcePack pack,
             Table target,
-            BaseIdleMushroomPlayScreen parent,
+            IdleMushroomGame game,
             boolean isPreviewNextLevel
     ) {
         if (pack != null) {
             List<ResourcePair> targetValue = isPreviewNextLevel ? pack.getPreviewNextLevelModifiedValues() : pack.getModifiedValues();
             if (targetValue != null && !targetValue.isEmpty()) {
-                List<Actor> pairsToActors = pairsToActors(targetValue, parent.getGame());
-                target.add(wapperContainer(new Label(descriptionStart, parent.getGame().getMainSkin())));
+                List<Actor> pairsToActors = pairsToActors(targetValue, game);
+                target.add(wapperContainer(new Label(descriptionStart, game.getMainSkin())));
                 for (Actor actor : pairsToActors) {
                     target.add(wapperContainer(actor))
-                            .height(parent.getLayoutConst().RESOURCE_AMOUNT_PAIR_NODE_HEIGHT)
-                            .width(parent.getLayoutConst().RESOURCE_AMOUNT_PAIR_NODE_WIDTH);
+                            .height(game.getIdleMushroomPlayScreenLayoutConst().RESOURCE_AMOUNT_PAIR_NODE_HEIGHT)
+                            .width(game.getIdleMushroomPlayScreenLayoutConst().RESOURCE_AMOUNT_PAIR_NODE_WIDTH);
                 }
                 target.row();
             }

@@ -16,7 +16,7 @@ public class IdleMushroomScreenContext {
     @Getter
     IdleMushroomMainPlayScreen mainPlayScreen;
     WorldPlayScreen worldPlayScreen;
-    DemoAchievementScreen achievementScreen;
+    IdleMushroomAchievementScreen achievementScreen;
 
 
 
@@ -79,7 +79,7 @@ public class IdleMushroomScreenContext {
         this.menuScreen = new IdleMushroomMenuScreen(game);
         this.mainPlayScreen = new IdleMushroomMainPlayScreen(game);
         this.worldPlayScreen = new WorldPlayScreen(game);
-        this.achievementScreen = new DemoAchievementScreen(game);
+        this.achievementScreen = new IdleMushroomAchievementScreen(game);
 
         game.getScreenManager().addScreen(IdleMushroomScreenId.SCREEN_MENU, menuScreen);
         game.getScreenManager().addScreen(IdleMushroomScreenId.SCREEN_MAIN, mainPlayScreen);

@@ -12,11 +12,11 @@ import hundun.gdxgame.idlemushroom.IdleMushroomGame;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomBuffId;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomScreenId;
 import hundun.gdxgame.idlemushroom.logic.id.ResourceType;
+import hundun.gdxgame.idlemushroom.ui.shared.wiki.SharedWikiPopupInfoBoard;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseIdleMushroomPlayScreen;
 import hundun.gdxgame.idlemushroom.ui.world.HexCellVM;
 import hundun.gdxgame.idlemushroom.ui.world.HexAreaVM;
 import hundun.gdxgame.idlemushroom.ui.world.WorldDetailBoardVM;
-import hundun.gdxgame.idlemushroom.ui.world.WorldScreenPopupInfoBoard;
 import hundun.gdxgame.idleshare.core.framework.CameraDataPackage;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollectionListener;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
@@ -29,12 +29,11 @@ import java.util.List;
  * @author hundun
  * Created on 2021/11/02
  */
-public class WorldPlayScreen extends BaseIdleMushroomPlayScreen implements IConstructionCollectionListener, ISecondaryInfoBoardCallback<BaseConstruction> {
+public class WorldPlayScreen extends BaseIdleMushroomPlayScreen implements IConstructionCollectionListener {
 
     HexAreaVM hexAreaVM;
     protected OrthographicCamera deskCamera;
     protected Stage deskStage;
-    protected WorldScreenPopupInfoBoard secondaryInfoBoard;
     protected WorldDetailBoardVM worldDetailBoardVM;
     @Getter
     private boolean disableHexAreaInput;
@@ -77,8 +76,6 @@ public class WorldPlayScreen extends BaseIdleMushroomPlayScreen implements ICons
         storageInfoTable.lazyInit(ResourceType.VALUES_FOR_SHOW_ORDER);
         buffInfoBoard.lazyInit(IdleMushroomBuffId.VALUES_FOR_SHOW_ORDER);
 
-        this.secondaryInfoBoard = new WorldScreenPopupInfoBoard(this);
-        popupRootTable.add(secondaryInfoBoard).center().expand();
 
         logicFrameListeners.add(worldDetailBoardVM);
         this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(worldDetailBoardVM);
@@ -142,15 +139,4 @@ public class WorldPlayScreen extends BaseIdleMushroomPlayScreen implements ICons
         hexAreaVM.updateUIForConstructionCollectionChange(constructions);
     }
 
-    @Override
-    public void showAndUpdateGuideInfo(BaseConstruction model) {
-        secondaryInfoBoard.setVisible(true);
-        secondaryInfoBoard.update(model);
-    }
-
-    @Override
-    public void hideAndCleanGuideInfo() {
-        secondaryInfoBoard.setVisible(false);
-        //popUpInfoBoard.setText("GUIDE_TEXT");
-    }
 }

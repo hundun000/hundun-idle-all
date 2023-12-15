@@ -79,7 +79,7 @@ public class WorldMushroomDetailNode extends BaseCellDetailNodeVM {
         Container<?> questionMarkArea = new Container<>(new Image(parent.getGame().getTextureManager().getQuestionMarkTexture()));
         questionMarkArea.setBackground(parent.getGame().getTextureManager().getQuestionMarkTableDrawable());
         questionMarkArea.setTouchable(Touchable.enabled);
-        questionMarkArea.addListener(new StarterSecondaryInfoBoardCallerClickListener(() -> construction, parent));
+        questionMarkArea.addListener(new StarterSecondaryInfoBoardCallerClickListener<>(() -> construction, parent));
 
         // ------ leftPart ------
         leftPart.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT);

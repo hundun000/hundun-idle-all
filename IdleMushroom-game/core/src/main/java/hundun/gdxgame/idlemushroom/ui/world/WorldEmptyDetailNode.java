@@ -102,7 +102,7 @@ public class WorldEmptyDetailNode extends BaseCellDetailNodeVM {
         Container<?> questionMarkArea = new Container<>(new Image(screen.getGame().getTextureManager().getQuestionMarkTexture()));
         questionMarkArea.setBackground(screen.getGame().getTextureManager().getQuestionMarkTableDrawable());
         questionMarkArea.setTouchable(Touchable.enabled);
-        questionMarkArea.addListener(new StarterSecondaryInfoBoardCallerClickListener(() -> construction, screen));
+        questionMarkArea.addListener(new StarterSecondaryInfoBoardCallerClickListener<>(() -> construction, screen));
         this.add(questionMarkArea)
                 .width(screen.getIdleMushroomPlayScreenLayoutConst().questionMarkAreaSize)
                 .height(screen.getIdleMushroomPlayScreenLayoutConst().questionMarkAreaSize)

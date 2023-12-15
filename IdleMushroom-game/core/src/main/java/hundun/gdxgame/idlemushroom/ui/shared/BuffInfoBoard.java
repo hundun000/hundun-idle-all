@@ -1,12 +1,13 @@
 package hundun.gdxgame.idlemushroom.ui.shared;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomBuffId;
+import hundun.gdxgame.idleshare.core.framework.StarterSecondaryInfoBoardCallerClickListener;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IBuffChangeListener;
-import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
-import hundun.gdxgame.idleshare.gamelib.framework.util.Utils;
+import hundun.gdxgame.idleshare.gamelib.framework.model.buff.BuffManager.BuffAndStatus;
 import lombok.Getter;
 
 import java.util.List;
@@ -35,32 +36,37 @@ public class BuffInfoBoard extends Table implements IBuffChangeListener {
 
 
     public static class Node extends HorizontalGroup {
-        IdleMushroomGame game;
+        BaseIdleMushroomScreen parent;
 
         @Getter
-        String buffId;
+        BuffAndStatus model;
 
         Image image;
         Label amountLabel;
         Label deltaLabel;
 
-        public Node(IdleMushroomGame game, String buffId) {
+        public Node(BaseIdleMushroomScreen parent, BuffAndStatus model) {
             super();
-            this.game = game;
-            this.buffId = buffId;
-            TextureRegion textureRegion = game.getTextureManager().getResourceIcon(buffId);
+            this.parent = parent;
+            this.model = model;
+            TextureRegion textureRegion = parent.getGame().getTextureManager().getBuffIcon(model.getBuffPrototype().getId());
             this.image = new Image(textureRegion);
             this.addActor(image);
-            this.amountLabel = new Label("", game.getMainSkin());
+            this.amountLabel = new Label("", parent.getGame().getMainSkin());
             this.addActor(amountLabel);
-            this.deltaLabel = new Label("", game.getMainSkin());
+            this.deltaLabel = new Label("", parent.getGame().getMainSkin());
             this.addActor(deltaLabel);
 
+            Container<?> questionMarkArea = new Container<>(new Image(parent.getGame().getTextureManager().getQuestionMarkTexture()));
+            questionMarkArea.setBackground(parent.getGame().getTextureManager().getQuestionMarkTableDrawable());
+            questionMarkArea.setTouchable(Touchable.enabled);
+            questionMarkArea.addListener(new StarterSecondaryInfoBoardCallerClickListener<>(() -> model, this.parent));
+            this.addActor(questionMarkArea);
         }
 
         public void update(long delta, long amount) {
             amountLabel.setText(
-                    game.getTextFormatTool().format(amount)
+                    parent.getGame().getTextFormatTool().format(amount)
             );
             if (delta > 0)
             {
@@ -106,9 +112,10 @@ public class BuffInfoBoard extends Table implements IBuffChangeListener {
         nodes.clear();
 
         for (int i = 0; i < buffIds.size(); i++) {
-            String resourceType = buffIds.get(i);
-            if (shownTypes.contains(resourceType)) {
-                Node node = new Node(parent.getGame(), resourceType);
+            String buffId = buffIds.get(i);
+            if (shownTypes.contains(buffId)) {
+                BuffAndStatus buffAndStatus = parent.getGame().getIdleGameplayExport().getGameplayContext().getBuffManager().getAchievementAndStatus(buffId);
+                Node node = new Node(parent, buffAndStatus);
                 nodes.add(node);
                 Cell<Node> cell = this.add(node)
                         .width(parent.getLayoutConst().STORAGE_BOARD_NODE_WIDTH)
@@ -134,7 +141,7 @@ public class BuffInfoBoard extends Table implements IBuffChangeListener {
 
         nodes.stream().forEach(node -> {
             long historySum = 0;
-            long amount = parent.getGame().getIdleGameplayExport().getGameplayContext().getBuffManager().getBuffLevelMap().getOrDefault(node.getBuffId(), 0);
+            long amount = node.getModel().getSaveData().getBuffLevel();
             node.update(historySum, amount);
         });
     }

@@ -15,7 +15,7 @@ import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomScreenId;
 import hundun.gdxgame.idlemushroom.logic.id.ResourceType;
 import hundun.gdxgame.idlemushroom.logic.RootSaveData;
 import hundun.gdxgame.idlemushroom.ui.main.MainScreenConstructionControlBoard;
-import hundun.gdxgame.idlemushroom.ui.main.MainScreenPopupInfoBoard;
+import hundun.gdxgame.idlemushroom.ui.shared.wiki.SharedWikiPopupInfoBoard;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseIdleMushroomPlayScreen;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseIdleMushroomScreen;
 import hundun.gdxgame.idlemushroom.ui.world.HexCellVM;
@@ -34,8 +34,7 @@ import java.util.List;
  * Created on 2021/11/02
  */
 public class IdleMushroomMainPlayScreen extends BaseIdleMushroomPlayScreen
-        implements ISecondaryInfoBoardCallback<BaseConstruction>, IGameImageDrawerHolder {
-    protected MainScreenPopupInfoBoard secondaryInfoBoard;
+        implements IGameImageDrawerHolder {
     protected GameEntityManager gameEntityManager;
     protected GameImageDrawer<IdleMushroomGame, RootSaveData> gameImageDrawer;
     protected MainClickerAnimationVM mainClickerAnimationVM;
@@ -170,24 +169,13 @@ public class IdleMushroomMainPlayScreen extends BaseIdleMushroomPlayScreen
     }
 
 
-    @Override
-    public void showAndUpdateGuideInfo(BaseConstruction model) {
-        secondaryInfoBoard.setVisible(true);
-        secondaryInfoBoard.update(model);
-    }
 
-    @Override
-    public void hideAndCleanGuideInfo() {
-        secondaryInfoBoard.setVisible(false);
-        //popUpInfoBoard.setText("GUIDE_TEXT");
-    }
 
     @Override
     protected void lazyInitBackUiAndPopupUiContent() {
         super.lazyInitBackUiAndPopupUiContent();
 
-        this.secondaryInfoBoard = new MainScreenPopupInfoBoard(this);
-        popupRootTable.add(secondaryInfoBoard).center().expand();
+
 
     }
 

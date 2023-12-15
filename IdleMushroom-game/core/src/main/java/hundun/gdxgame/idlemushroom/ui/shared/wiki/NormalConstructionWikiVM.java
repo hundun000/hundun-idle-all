@@ -1,21 +1,22 @@
-package hundun.gdxgame.idlemushroom.ui.shared;
+package hundun.gdxgame.idlemushroom.ui.shared.wiki;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Null;
+import hundun.gdxgame.idlemushroom.IdleMushroomGame;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
-public class ConstructionWikiVM extends Table {
+public class NormalConstructionWikiVM extends Table {
 
-    BaseIdleMushroomPlayScreen parent;
+    IdleMushroomGame game;
     BaseConstruction model;
 
     Label label;
 
-    public ConstructionWikiVM(BaseIdleMushroomPlayScreen parent) {
+    public NormalConstructionWikiVM(IdleMushroomGame game) {
         //super("GUIDE_TEXT", parent.game.getButtonSkin());
-        this.parent = parent;
-        this.label = new Label("", parent.getGame().getMainSkin());
+        this.game = game;
+        this.label = new Label("", game.getMainSkin());
         label.setWrap(true);
         this.add(label).grow();
     }

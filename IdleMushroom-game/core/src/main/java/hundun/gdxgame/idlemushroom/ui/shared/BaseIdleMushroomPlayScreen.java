@@ -5,10 +5,12 @@ import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
 import hundun.gdxgame.idlemushroom.ui.achievement.AchievementPopupBoard;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushroomPlayScreenLayoutConst;
+import hundun.gdxgame.idlemushroom.ui.shared.wiki.SharedWikiPopupInfoBoard;
 import hundun.gdxgame.idlemushroom.ui.world.HexCellVM;
 import hundun.gdxgame.idlemushroom.ui.main.FirstRunningAchievementBoardVM;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementStateChangeListener;
+import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievementPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementManager.AchievementState;
 import lombok.Getter;
@@ -17,7 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseIdleMushroomPlayScreen extends BaseIdleMushroomScreen
-        implements IGameAreaChangeListener, IAchievementBoardCallback, IAchievementStateChangeListener
+        implements IGameAreaChangeListener,
+        IAchievementBoardCallback,
+        IAchievementStateChangeListener
 {
 
     protected FirstRunningAchievementBoardVM firstRunningAchievementBoardVM;

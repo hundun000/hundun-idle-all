@@ -47,7 +47,7 @@ public class WorldTreeDetailNode extends BaseCellDetailNodeVM {
         Container<?> questionMarkArea = new Container<>(new Image(parent.getGame().getTextureManager().getQuestionMarkTexture()));
         questionMarkArea.setBackground(parent.getGame().getTextureManager().getQuestionMarkTableDrawable());
         questionMarkArea.setTouchable(Touchable.enabled);
-        questionMarkArea.addListener(new StarterSecondaryInfoBoardCallerClickListener(() -> model, parent));
+        questionMarkArea.addListener(new StarterSecondaryInfoBoardCallerClickListener<>(() -> model, parent));
 
         // ------ leftPart ------
         this.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT);

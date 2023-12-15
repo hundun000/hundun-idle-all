@@ -11,13 +11,13 @@ import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementStateChan
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievementPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementManager.AchievementState;
 
-public class DemoAchievementScreen extends BaseIdleMushroomScreen implements IAchievementStateChangeListener {
+public class IdleMushroomAchievementScreen extends BaseIdleMushroomScreen implements IAchievementStateChangeListener {
 
     AllAchievementBoardVM allAchievementBoardVM;
 
 
 
-    public DemoAchievementScreen(IdleMushroomGame game) {
+    public IdleMushroomAchievementScreen(IdleMushroomGame game) {
         super(game, IdleMushroomScreenId.SCREEN_ACHIEVEMENT, game.getIdleMushroomPlayScreenLayoutConst());
     }
 

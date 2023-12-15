@@ -9,11 +9,11 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseCo
 
 import java.util.function.Supplier;
 
-public class StarterSecondaryInfoBoardCallerClickListener extends ClickListener {
-    Supplier<BaseConstruction> modelGetter;
-    ISecondaryInfoBoardCallback<BaseConstruction> callback;
+public class StarterSecondaryInfoBoardCallerClickListener<T> extends ClickListener {
+    Supplier<T> modelGetter;
+    ISecondaryInfoBoardCallback<T> callback;
 
-    public StarterSecondaryInfoBoardCallerClickListener(Supplier<BaseConstruction> modelGetter, ISecondaryInfoBoardCallback<BaseConstruction> callback) {
+    public StarterSecondaryInfoBoardCallerClickListener(Supplier<T> modelGetter, ISecondaryInfoBoardCallback<T> callback) {
         this.modelGetter = modelGetter;
         this.callback = callback;
     }
