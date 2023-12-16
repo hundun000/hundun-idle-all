@@ -30,9 +30,8 @@ public class WorldBuyConstructionInfoNodeVM extends Table  {
         this.constructionBuyCandidateConfig = constructionBuyCandidateConfig;
         this.model = model;
 
-        int CHILD_WIDTH = playScreenLayoutConst.CONSTRUCION_CHILD_WIDTH;
-        int CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_BUTTON_HEIGHT;
-        int NAME_CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_NAME_HEIGHT;
+        int CHILD_WIDTH = playScreenLayoutConst.CONSTRUCTION_BUTTON_AREA_WIDTH;
+
 
         this.constructionNameLabel = new Label("", parent.getGame().getMainSkin());
         constructionNameLabel.setWrap(true);
@@ -49,8 +48,8 @@ public class WorldBuyConstructionInfoNodeVM extends Table  {
 
 
         // ------ this ------
-        this.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
-        this.add(buyButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
+        this.add(constructionNameLabel).width(CHILD_WIDTH).row();
+        this.add(buyButton).width(CHILD_WIDTH).row();
         this.setBackground(DrawableFactory.createBorderBoard(30, 10, 0.8f, 1));
     }
 

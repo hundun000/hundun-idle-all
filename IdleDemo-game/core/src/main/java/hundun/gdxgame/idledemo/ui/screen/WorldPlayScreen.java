@@ -43,7 +43,7 @@ public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstruction
 
         worldCellDetailBoardVM = new WorldCellDetailBoardVM(this);
         uiRootTable.add(worldCellDetailBoardVM)
-                .height(layoutConst.CONSTRUCION_BOARD_ROOT_BOX_HEIGHT)
+                .height(layoutConst.CONSTRUCTION_BOARD_ROOT_BOX_HEIGHT)
                 .fill()
                 .colspan(UI_ROOT_TABLE_COLSPAN_SIZE)
         ;

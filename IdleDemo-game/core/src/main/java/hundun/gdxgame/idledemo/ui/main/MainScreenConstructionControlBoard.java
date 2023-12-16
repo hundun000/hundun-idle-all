@@ -10,7 +10,6 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseCo
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 /**
@@ -22,7 +21,7 @@ public class MainScreenConstructionControlBoard extends Table
 {
 
 
-    public static int FIXED_NODE_NUM = 5;
+
 
     Table childTable;
     BaseDemoPlayScreen parent;
@@ -47,22 +46,6 @@ public class MainScreenConstructionControlBoard extends Table
         }
     }
 
-    protected int initChild(int areaShownConstructionsSize) {
-        int childrenSize = FIXED_NODE_NUM;
-
-        constructionControlNodes.clear();
-        childTable.clearChildren();
-
-        for (int i = 0; i < childrenSize; i++) {
-            MainScreenConstructionControlNode constructionView = new MainScreenConstructionControlNode(parent, callback);
-            constructionControlNodes.add(constructionView);
-            childTable.add(constructionView).spaceRight(10).expand();
-        }
-
-        return childrenSize;
-
-    }
-
 
     @Override
     public void onLogicFrame() {
@@ -79,15 +62,14 @@ public class MainScreenConstructionControlBoard extends Table
         List<BaseConstruction> newConstructions = parent.getGame().getIdleGameplayExport().getGameplayContext()
                 .getConstructionManager().getSingletonConstructionInstancesOrEmpty();
 
-        int childrenSize = initChild(newConstructions.size());
+        constructionControlNodes.clear();
+        childTable.clearChildren();
 
-        for (int i = 0; i < childrenSize && i < newConstructions.size(); i++)
-        {
-            constructionControlNodes.get(i).updateAsConstruction(newConstructions.get(i));
-        }
-        for (int i = newConstructions.size(); i < childrenSize; i++)
-        {
-            constructionControlNodes.get(i).updateAsConstruction(null);
+        for (int i = 0; i < newConstructions.size(); i++) {
+            MainScreenConstructionControlNode constructionView = new MainScreenConstructionControlNode(parent, callback);
+            constructionView.updateAsConstruction(newConstructions.get(i));
+            constructionControlNodes.add(constructionView);
+            childTable.add(constructionView).size(parent.getLayoutConst().CONSTRUCTION_BUTTON_AREA_WIDTH, parent.getLayoutConst().CONSTRUCTION_BOARD_ROOT_BOX_HEIGHT).spaceRight(10);
         }
     }
 

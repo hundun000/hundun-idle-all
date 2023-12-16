@@ -1,9 +1,5 @@
 package hundun.gdxgame.idledemo.ui.shared;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-
-import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.idledemo.ui.main.GameEntityFactory.IdleDemoGameEntityFactoryLayoutConst;
 
 /**
@@ -11,12 +7,9 @@ import hundun.gdxgame.idledemo.ui.main.GameEntityFactory.IdleDemoGameEntityFacto
  * Created on 2022/01/22
  */
 public class PlayScreenLayoutConst {
-    public final float DESK_WIDTH = 100;
-    public final float DESK_HEIGHT = 100;
-    public int CONSTRUCION_BOARD_ROOT_BOX_HEIGHT = 200;
-    public int CONSTRUCION_CHILD_WIDTH = 100;
-    public int CONSTRUCION_CHILD_BUTTON_HEIGHT = 30;
-    public int CONSTRUCION_CHILD_NAME_HEIGHT = 50;
+
+    public int CONSTRUCTION_BOARD_ROOT_BOX_HEIGHT = 200;
+    public int CONSTRUCTION_BUTTON_AREA_WIDTH = 400;
 
     public int STORAGE_BOARD_BORDER_HEIGHT = 60;
     public int AREA_BOARD_BORDER_WIDTH = 100;
@@ -28,23 +21,16 @@ public class PlayScreenLayoutConst {
 
     public int RESOURCE_AMOUNT_PAIR_NODE_HEIGHT = 25;
     public int RESOURCE_AMOUNT_PAIR_NODE_WIDTH = 70;
-    public int FIRST_LOCKED_ACHIEVEMENT_BOARD_WIDTH = 200;
-    //public int FIRST_LOCKED_ACHIEVEMENT_BOARD_HEIGHT = 150;
 
     public int ALL_ACHIEVEMENT_BOARD_SCROLL_BORDER_OFFSET = 40;
     public int ALL_ACHIEVEMENT_BOARD_NODE_WIDTH = 400;
     public int ALL_ACHIEVEMENT_BOARD_NODE_HEIGHT = 150;
-    public int WorldConstructionCellDetailNodeWidth = 800;
-    public int WorldConstructionCellDetailNodeHeight = CONSTRUCION_BOARD_ROOT_BOX_HEIGHT - 20;
-    public float popupInfoBoardWidth = 400;
-    public float popupInfoBoardHeight = 200;
-    public float WorldConstructionCellTablePad = 20;
 
     public PlayScreenLayoutConst(int gameLogicWidth, int gameLogicHeight) {
         this.gameEntityFactoryLayoutConst = IdleDemoGameEntityFactoryLayoutConst.builder()
                 .EXPECTED_DRAW_MIN_X(0)
                 .EXPECTED_DRAW_MAX_X(gameLogicWidth)
-                .EXPECTED_DRAW_MIN_Y(CONSTRUCION_BOARD_ROOT_BOX_HEIGHT)
+                .EXPECTED_DRAW_MIN_Y(CONSTRUCTION_BOARD_ROOT_BOX_HEIGHT)
                 .EXPECTED_DRAW_MAX_Y(gameLogicHeight - STORAGE_BOARD_BORDER_HEIGHT)
                 .build();
     }

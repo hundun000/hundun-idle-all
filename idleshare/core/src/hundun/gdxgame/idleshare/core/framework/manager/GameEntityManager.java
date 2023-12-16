@@ -114,7 +114,7 @@ public class GameEntityManager {
     }
 
     private void addResourceEntityByChangeAmount(String resourceId, BaseGameEntityFactory gameEntityFactory, int addAmount) {
-        int drawNum = addAmount;
+        int drawNum = gameEntityFactory.calculateResourceDrawNum(resourceId, addAmount);
 
         gameEntitiesOfResourceIds.computeIfAbsent(resourceId, k -> new LinkedList<>());
         List<GameEntity> gameEntities = gameEntitiesOfResourceIds.get(resourceId);

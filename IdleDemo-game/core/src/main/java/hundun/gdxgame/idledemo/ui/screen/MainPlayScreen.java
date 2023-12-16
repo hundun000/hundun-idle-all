@@ -50,7 +50,7 @@ public class MainPlayScreen extends BaseDemoPlayScreen
 
         constructionControlBoard = new MainScreenConstructionControlBoard(this, this);
         uiRootTable.add(constructionControlBoard)
-                .height(layoutConst.CONSTRUCION_BOARD_ROOT_BOX_HEIGHT)
+                .height(layoutConst.CONSTRUCTION_BOARD_ROOT_BOX_HEIGHT)
                 .fill()
                 .colspan(UI_ROOT_TABLE_COLSPAN_SIZE)
         ;
@@ -109,7 +109,7 @@ public class MainPlayScreen extends BaseDemoPlayScreen
         this.secondaryInfoBoard = new PopupInfoBoard(this);
         popupRootTable.add(secondaryInfoBoard).bottom().expand().row();
         popupRootTable.add(new Image())
-                .height(layoutConst.CONSTRUCION_BOARD_ROOT_BOX_HEIGHT);
+                .height(layoutConst.CONSTRUCTION_BOARD_ROOT_BOX_HEIGHT);
 
     }
 

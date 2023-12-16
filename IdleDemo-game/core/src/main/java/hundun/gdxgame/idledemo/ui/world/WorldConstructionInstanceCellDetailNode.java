@@ -45,9 +45,7 @@ public class WorldConstructionInstanceCellDetailNode extends BaseCellDetailNodeV
         final PlayScreenLayoutConst playScreenLayoutConst = parent.getLayoutConst();
         this.parent = parent;
 
-        int CHILD_WIDTH = playScreenLayoutConst.CONSTRUCION_CHILD_WIDTH;
-        int CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_BUTTON_HEIGHT;
-        int NAME_CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_NAME_HEIGHT;
+        int CHILD_WIDTH = playScreenLayoutConst.CONSTRUCTION_BUTTON_AREA_WIDTH;
 
         this.constructionNameLabel = new Label("", parent.getGame().getMainSkin());
         constructionNameLabel.setWrap(true);
@@ -73,10 +71,10 @@ public class WorldConstructionInstanceCellDetailNode extends BaseCellDetailNodeV
         this.destoryButton = new TextButton("-", parent.getGame().getMainSkin());
         this.transformButton = new TextButton("-", parent.getGame().getMainSkin());
         // ------ this ------
-        this.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
-        this.add(upgradeButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
-        this.add(workingLevelLabel).size(CHILD_WIDTH, CHILD_HEIGHT).row();
-        this.add(proficiencyLabel).size(CHILD_WIDTH, CHILD_HEIGHT).row();
+        this.add(constructionNameLabel).width(CHILD_WIDTH).row();
+        this.add(upgradeButton).width(CHILD_WIDTH).row();
+        this.add(workingLevelLabel).width(CHILD_WIDTH).row();
+        this.add(proficiencyLabel).width(CHILD_WIDTH).row();
         this.setBackground(DrawableFactory.createBorderBoard(30, 10, 0.8f, 1));
     }
 

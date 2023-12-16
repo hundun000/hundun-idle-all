@@ -30,7 +30,7 @@ public class LevelComponent {
             return false;
         }
         int next = construction.saveData.getWorkingLevel() + delta;
-        return next > construction.saveData.getLevel() || next < minWorkingLevel;
+        return next <= construction.saveData.getLevel() && next >= minWorkingLevel;
     }
 
     public void changeWorkingLevel(int delta) {

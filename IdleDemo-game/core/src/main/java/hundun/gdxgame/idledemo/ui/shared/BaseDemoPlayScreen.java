@@ -3,8 +3,6 @@ package hundun.gdxgame.idledemo.ui.shared;
 import com.badlogic.gdx.Gdx;
 import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.idledemo.IdleDemoGame;
-import hundun.gdxgame.idledemo.logic.RootSaveData;
-import hundun.gdxgame.idledemo.ui.main.FirstRunningAchievementBoardVM;
 import hundun.gdxgame.idledemo.ui.screen.DemoScreenContext;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
 import hundun.gdxgame.idledemo.ui.achievement.AchievementPopupBoard;
@@ -20,7 +18,7 @@ public abstract class BaseDemoPlayScreen extends BaseIdleDemoScreen
         implements IGameAreaChangeListener, IAchievementBoardCallback, IAchievementStateChangeListener
 {
 
-    protected FirstRunningAchievementBoardVM firstRunningAchievementBoardVM;
+
     protected AchievementPopupBoard achievementPopupBoard;
     IdleDemoGame idleDemoGame;
     protected List<AbstractAchievementPrototype> showAchievementMaskBoardQueue = new ArrayList<>();
@@ -46,16 +44,11 @@ public abstract class BaseDemoPlayScreen extends BaseIdleDemoScreen
         super.lazyInitUiRootContext();
 
 
-        firstRunningAchievementBoardVM = new FirstRunningAchievementBoardVM(this);
-        leftSideGroup.add(firstRunningAchievementBoardVM)
-                .width(getLayoutConst().FIRST_LOCKED_ACHIEVEMENT_BOARD_WIDTH)
-                .growY()
-        ;
     }
 
     @Override
     public void onGameAreaChange(String last, String current) {
-        firstRunningAchievementBoardVM.updateData();
+
     }
 
     public abstract void onCellClicked(HexCellVM vm);
@@ -108,11 +101,6 @@ public abstract class BaseDemoPlayScreen extends BaseIdleDemoScreen
 
     @Override
     public void onAchievementStateChange(AbstractAchievementPrototype achievement, AchievementState state) {
-        if (state == AchievementState.COMPLETED) {
-            showAchievementMaskBoard(achievement);
-            firstRunningAchievementBoardVM.updateData();
-        } else if (state == AchievementState.RUNNING) {
-            firstRunningAchievementBoardVM.updateData();
-        }
+
     }
 }
