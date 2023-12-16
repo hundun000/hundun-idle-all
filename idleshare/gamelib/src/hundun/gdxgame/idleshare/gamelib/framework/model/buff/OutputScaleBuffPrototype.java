@@ -26,9 +26,10 @@ public class OutputScaleBuffPrototype extends AbstractBuffPrototype {
             String id,
             String name,
             String description,
+            String levelPart,
             OutputScaleOneConstructionConfig defaultConstructionConfig
     ) {
-        super(id, name, description);
+        super(id, name, description, levelPart);
         this.defaultConstructionConfig = defaultConstructionConfig;
     }
 

@@ -19,37 +19,35 @@ import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
 public class EpochCounterPrototype extends AbstractConstructionPrototype {
     public static DescriptionPackage descriptionPackageEN = DescriptionPackage.builder()
-            .name("Enlargement")
-            .wikiText("Enlargement" + "：\n" +
-                    "•Can consume genetic points for an enlargement.\n" +
-                    "•After the enlargement, you will lose all the original mushroom tiles (because they are relatively too small).")
+            .name("Genetic Modification")
+            .wikiText("Genetic Modification" + "：\n" +
+                    "•Can consume genetic points for upgrade genetic modification.\n" +
+                    "•If the enlargement level changes, you will lose all the original mushroom tiles (because they are relatively too small).")
             .upgradeButtonText("Upgrade")
             .upgradeCostDescriptionStart("Upgrade cost")
             .upgradeMaxLevelDescription("(max)")
             .levelDescriptionProvider(DescriptionPackageFactory.EN_LEVEL_IMP.build())
             .proficiencyDescriptionProvider(DescriptionPackageFactory.EN_PROFICIENCY_IMP.build())
             .extraTexts(JavaFeatureForGwt.listOf(
-                    "Enlargement: ",
-                    "Tile max level: ",
-                    "Buff: "
+                    "Enlargement level: ",
+                    "Tile max level: "
             ))
             .build();
 
 
     public static DescriptionPackage descriptionPackageCN = DescriptionPackage.builder()
-            .name("巨大化")
-            .wikiText("巨大化" + "：\n" +
-                    "•可消耗基因点数，进行一次巨大化。\n" +
-                    "•巨大化时你将失去所有原有蘑菇地块（因为他们相对而言已经太小了）。")
+            .name("基因改造")
+            .wikiText("基因改造" + "：\n" +
+                    "•可消耗基因点数，进行一次基因改造。\n" +
+                    "•若巨大化等级变化，你将失去所有原有蘑菇地块（因为他们相对而言已经太小了）。")
             .upgradeButtonText("升级")
             .upgradeCostDescriptionStart("升级费用")
             .upgradeMaxLevelDescription("(已达到最大等级)")
             .levelDescriptionProvider(DescriptionPackageFactory.EN_LEVEL_IMP.build())
             .proficiencyDescriptionProvider(DescriptionPackageFactory.CN_PROFICIENCY_IMP.build())
             .extraTexts(JavaFeatureForGwt.listOf(
-                    "巨大化: ",
-                    "地块等级上限: ",
-                    "增益: "
+                    "巨大化等级: ",
+                    "地块等级上限: "
             ))
             .build();
 

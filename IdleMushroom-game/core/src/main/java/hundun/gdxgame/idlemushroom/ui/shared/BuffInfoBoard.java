@@ -3,6 +3,7 @@ package hundun.gdxgame.idlemushroom.ui.shared;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomBuffId;
 import hundun.gdxgame.idleshare.core.framework.StarterSecondaryInfoBoardCallerClickListener;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IBuffChangeListener;
@@ -34,13 +35,14 @@ public class BuffInfoBoard extends Table implements IBuffChangeListener {
     }
 
 
-    public static class Node extends HorizontalGroup {
+    public static class Node extends Table {
         BaseIdleMushroomScreen parent;
 
         @Getter
         BuffAndStatus model;
 
         Image image;
+        Label nameLabel;
         Label amountLabel;
         Label deltaLabel;
 
@@ -50,23 +52,26 @@ public class BuffInfoBoard extends Table implements IBuffChangeListener {
             this.model = model;
             TextureRegion textureRegion = parent.getGame().getTextureManager().getBuffIcon(model.getBuffPrototype().getId());
             this.image = new Image(textureRegion);
-            this.addActor(image);
+            this.add(image);
+            this.nameLabel = new Label(model.getBuffPrototype().getName(), parent.getGame().getMainSkin());
+            this.add(nameLabel).padRight(10);
             this.amountLabel = new Label("", parent.getGame().getMainSkin());
-            this.addActor(amountLabel);
+            this.add(amountLabel);
             this.deltaLabel = new Label("", parent.getGame().getMainSkin());
-            this.addActor(deltaLabel);
+            this.add(deltaLabel).padRight(10);
 
             Container<?> questionMarkArea = new Container<>(new Image(parent.getGame().getTextureManager().getQuestionMarkTexture()));
             questionMarkArea.setBackground(parent.getGame().getTextureManager().getQuestionMarkTableDrawable());
             questionMarkArea.setTouchable(Touchable.enabled);
             questionMarkArea.addListener(new StarterSecondaryInfoBoardCallerClickListener<>(() -> model, this.parent));
-            this.addActor(questionMarkArea);
+            this.add(questionMarkArea).size(parent.getGame().getIdleMushroomPlayScreenLayoutConst().questionMarkAreaSize, parent.getGame().getIdleMushroomPlayScreenLayoutConst().questionMarkAreaSize);
         }
 
         public void update(long delta, long amount) {
-            amountLabel.setText(
+            amountLabel.setText(JavaFeatureForGwt.stringFormat(
+                    model.getBuffPrototype().getLevelPart(),
                     parent.getGame().getTextFormatTool().format(amount)
-            );
+            ));
             if (delta > 0)
             {
                 deltaLabel.setText("(+" + delta + ")");

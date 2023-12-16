@@ -16,15 +16,18 @@ public abstract class AbstractBuffPrototype {
     protected String id;
     protected String name;
     protected String wikiText;
+    protected String levelPart;
 
     public AbstractBuffPrototype(
             String id,
             String name,
-            String wikiText
+            String wikiText,
+            String levelPart
     ) {
         this.id = id;
         this.name = name;
         this.wikiText = wikiText;
+        this.levelPart = levelPart;
     }
 
     public void lazyInitDescription(IdleGameplayContext gameplayContext)

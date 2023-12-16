@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomBuffId;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomScreenId;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.logic.id.ResourceType;
@@ -35,6 +36,7 @@ public class IdleMushroomTextureManager {
 
 
     protected Map<String, TextureRegion> resourceIconMap = new HashMap<>();
+    protected Map<String, TextureRegion> buffIconMap = new HashMap<>();
     protected Map<String, TextureRegion> resourceEntityMap = new HashMap<>();
     protected Map<String, TextureRegion> constructionEntityMap = new HashMap<>();
     protected Map<String, TextureRegion> gameAreaLeftPartRegionMap = new HashMap<>();
@@ -158,6 +160,11 @@ public class IdleMushroomTextureManager {
             resourceIconMap.put(ResourceType.MUSHROOM, regions[0][3]);
         }
         {
+            Texture texture = new Texture(Gdx.files.internal("buffIcons.png"));
+            TextureRegion[][] regions = TextureRegion.split(texture, 32, 32);
+            buffIconMap.put(IdleMushroomBuffId.BUFF_MUSHROOM_OUTPUT_SCALE, regions[0][1]);
+        }
+        {
             Texture texture = new Texture(Gdx.files.internal("resourceEntities.png"));
             TextureRegion[][] regions = TextureRegion.split(texture, 32, 32);
             resourceEntityMap.put(ResourceType.MUSHROOM, regions[0][1]);
@@ -208,6 +215,6 @@ public class IdleMushroomTextureManager {
     }
 
     public TextureRegion getBuffIcon(String id) {
-        return defaultIcon;
+        return buffIconMap.getOrDefault(id, defaultIcon);
     }
 }

@@ -68,11 +68,10 @@ public class OneEpochInfoAreaVM extends Table {
             String buffLabelText = epochConfig.getBuffEpochConfigMap().entrySet().stream()
                             .map(it -> {
                                 BuffAndStatus buffAndStatus = game.getIdleGameplayExport().getGameplayContext().getBuffManager().getBuffAndStatus(it.getKey());
-                                return buffAndStatus.getBuffPrototype().getName() + " " + it.getValue().getBuffLevel() + ";";
+                                return buffAndStatus.getBuffPrototype().getName() + ": " + it.getValue().getBuffLevel();
                             })
                             .collect(Collectors.joining("\n"));
-            buffLabel.setText(game.getIdleMushroomExtraGameplayExport().getEpochCounterConstruction()
-                    .getDescriptionPackage().getExtraTexts().get(2) + buffLabelText);
+            buffLabel.setText(buffLabelText);
             ConstructionDetailPartVM.resourcePackAsActor(
                     game.getIdleMushroomExtraGameplayExport().getMainClickerConstruction().getDescriptionPackage().getOutputGainDescriptionStart(),
                     game.getIdleMushroomExtraGameplayExport().getMainClickerConstruction().getOutputComponent().getOutputGainPack(),
