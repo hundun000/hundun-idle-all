@@ -132,6 +132,13 @@ public class IdleMushroomMainPlayScreen extends BaseIdleMushroomPlayScreen
         }
     }
 
+    @Override
+    public void onLogicFrame() {
+        super.onLogicFrame();
+
+        constructionControlBoard.onLogicFrame();
+    }
+
     protected void lazyInitLogicContext() {
         super.lazyInitLogicContext();
 
@@ -143,7 +150,6 @@ public class IdleMushroomMainPlayScreen extends BaseIdleMushroomPlayScreen
         GameEntityFactory gameEntityFactory = new GameEntityFactory(this, this.layoutConst.gameEntityFactoryLayoutConst);
         gameImageDrawer.lazyInit(gameEntityFactory, gameEntityManager);
 
-        logicFrameListeners.add(constructionControlBoard);
         storageInfoTable.lazyInit(ResourceType.VALUES_FOR_SHOW_ORDER);
         buffInfoBoard.lazyInit(IdleMushroomBuffId.VALUES_FOR_SHOW_ORDER);
 

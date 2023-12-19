@@ -26,7 +26,7 @@ public abstract class BaseAutoProficiencyComponent extends ProficiencyComponent 
         if (AUTO_PROFICIENCY_SECOND_MAX != null)
         {
             autoProficiencyProgress++;
-            int proficiencyFrameCountMax = AUTO_PROFICIENCY_SECOND_MAX * construction.getGameplayContext().LOGIC_FRAME_PER_SECOND;
+            int proficiencyFrameCountMax = AUTO_PROFICIENCY_SECOND_MAX * construction.getGameplayContext().getIdleFrontend().getLogicFramePerSecond();
             if (autoProficiencyProgress >= proficiencyFrameCountMax)
             {
                 autoProficiencyProgress = 0;

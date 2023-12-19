@@ -3,6 +3,7 @@ package hundun.gdxgame.idleshare.gamelib.framework;
 import java.util.Map;
 
 import hundun.gdxgame.gamelib.base.IFrontend;
+import hundun.gdxgame.idleshare.gamelib.export.IIdleFrontend;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievementPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
@@ -21,12 +22,12 @@ import lombok.Getter;
  */
 @Getter
 public class IdleGameplayContext {
-    public final int LOGIC_FRAME_PER_SECOND;
 
     
     
-    final IFrontend frontEnd;
-    
+    final IIdleFrontend idleFrontend;
+    final IFrontend frontend;
+
     final EventManager eventManager;
     final StorageManager storageManager;
     final BuffManager buffManager;
@@ -35,11 +36,11 @@ public class IdleGameplayContext {
     final ConstructionManager constructionManager;
 
     public IdleGameplayContext(
-            IFrontend frontEnd,
-            int LOGIC_FRAME_PER_SECOND) {
-        this.LOGIC_FRAME_PER_SECOND = LOGIC_FRAME_PER_SECOND;
-        
-        this.frontEnd = frontEnd;
+            IFrontend frontend,
+            IIdleFrontend idleFrontend
+    ) {
+        this.frontend = frontend;
+        this.idleFrontend = idleFrontend;
         
         this.eventManager = new EventManager(this);
         this.storageManager = new StorageManager(this);

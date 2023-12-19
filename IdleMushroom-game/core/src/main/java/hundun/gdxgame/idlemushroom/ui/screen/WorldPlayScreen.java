@@ -76,9 +76,14 @@ public class WorldPlayScreen extends BaseIdleMushroomPlayScreen implements ICons
         storageInfoTable.lazyInit(ResourceType.VALUES_FOR_SHOW_ORDER);
         buffInfoBoard.lazyInit(IdleMushroomBuffId.VALUES_FOR_SHOW_ORDER);
 
-
-        logicFrameListeners.add(worldDetailBoardVM);
         this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(worldDetailBoardVM);
+    }
+
+    @Override
+    public void onLogicFrame() {
+        super.onLogicFrame();
+
+        worldDetailBoardVM.onLogicFrame();
     }
 
     @Override

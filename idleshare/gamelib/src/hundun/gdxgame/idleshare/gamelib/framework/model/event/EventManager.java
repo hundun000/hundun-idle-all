@@ -85,7 +85,7 @@ public class EventManager {
     }
 
     public void notifyGameStart() {
-        gameContext.getFrontEnd().log(this.getClass().getSimpleName(), "notifyGameStart");
+        gameContext.getFrontend().log(this.getClass().getSimpleName(), "notifyGameStart");
         for (IGameStartListener listener : gameStartListeners) {
             listener.onGameStart();
         }
@@ -106,7 +106,7 @@ public class EventManager {
     }
 
     public void notifyAchievementComplete(AbstractAchievementPrototype achievement, AchievementState state) {
-        gameContext.getFrontEnd().log(this.getClass().getSimpleName(), "notifyAchievementUnlock");
+        gameContext.getFrontend().log(this.getClass().getSimpleName(), "notifyAchievementUnlock");
         for (IAchievementStateChangeListener listener : achievementStateChangeListeners) {
             listener.onAchievementStateChange(achievement, state);
         }
@@ -114,7 +114,7 @@ public class EventManager {
 
     public void notifyNotification(String data)
     {
-        gameContext.getFrontEnd().log(this.getClass().getSimpleName(), "notifyNotification");
+        gameContext.getFrontend().log(this.getClass().getSimpleName(), "notifyNotification");
         for (INotificationBoardCallerAndCallback listener : notificationBoardCallerAndCallbacks)
         {
             listener.showNotificationMaskBoard(data);
@@ -123,7 +123,7 @@ public class EventManager {
 
     public void notifyConstructionCollectionChange()
     {
-        gameContext.getFrontEnd().log(this.getClass().getSimpleName(), "notifyConstructionCollectionChange");
+        gameContext.getFrontend().log(this.getClass().getSimpleName(), "notifyConstructionCollectionChange");
         for (IConstructionCollectionListener listener : constructionCollectionListeners)
         {
             listener.onConstructionCollectionChange();
@@ -131,7 +131,7 @@ public class EventManager {
     }
 
     public void notifyBuffChange(Map<String, Integer> map) {
-        gameContext.getFrontEnd().log(this.getClass().getSimpleName(), "notifyBuffChange");
+        gameContext.getFrontend().log(this.getClass().getSimpleName(), "notifyBuffChange");
         for (IBuffChangeListener listener : buffChangeListeners) {
             listener.onBuffChange(map);
         }

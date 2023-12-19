@@ -32,7 +32,7 @@ allprojects {
         gdxFreeTypeGwtVersion = '1.9.10.1'
         gwtFrameworkVersion = '2.8.2'
         
-        hundunLibVersion = '77884f68d3'
+        hundunLibVersion = '8ed6491e1d'
         raeleusStripeVersion = '1.4.1'
     }
 

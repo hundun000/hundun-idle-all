@@ -49,4 +49,9 @@ public class IdleMushroomAchievementScreen extends BaseIdleMushroomScreen implem
     public void onAchievementStateChange(AbstractAchievementPrototype achievement, AchievementState state) {
         allAchievementBoardVM.updateData();
     }
+
+    @Override
+    public void onLogicFrame() {
+
+    }
 }

@@ -67,8 +67,7 @@ public abstract class BaseIdleMushroomPlayScreen extends BaseIdleMushroomScreen
     public abstract void onCellClicked(HexCellVM vm);
 
     @Override
-    protected void onLogicFrame() {
-        super.onLogicFrame();
+    public void onLogicFrame() {
 
         if (showAchievementMaskBoardQueue.size() > 0) {
             AbstractAchievementPrototype achievement = showAchievementMaskBoardQueue.remove(0);
@@ -77,7 +76,7 @@ public abstract class BaseIdleMushroomPlayScreen extends BaseIdleMushroomScreen
             achievementPopupBoard.setAchievementPrototype(achievement);
             achievementPopupBoard.setVisible(true);
             Gdx.input.setInputProcessor(popupUiStage);
-            logicFrameHelper.setLogicFramePause(true);
+            game.getLogicFrameHelper().setLogicFramePause(true);
         }
     }
 
@@ -86,7 +85,7 @@ public abstract class BaseIdleMushroomPlayScreen extends BaseIdleMushroomScreen
         game.getFrontend().log(this.getClass().getSimpleName(), "hideAchievementMaskBoard called");
         achievementPopupBoard.setVisible(false);
         Gdx.input.setInputProcessor(provideDefaultInputProcessor());
-        logicFrameHelper.setLogicFramePause(false);
+        game.getLogicFrameHelper().setLogicFramePause(false);
     }
 
     @Override

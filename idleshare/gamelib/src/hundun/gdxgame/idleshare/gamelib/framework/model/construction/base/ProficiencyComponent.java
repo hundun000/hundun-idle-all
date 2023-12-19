@@ -1,7 +1,6 @@
 package hundun.gdxgame.idleshare.gamelib.framework.model.construction.base;
 
 import lombok.Getter;
-import lombok.Setter;
 
 public abstract class ProficiencyComponent {
 
@@ -50,7 +49,7 @@ public abstract class ProficiencyComponent {
 
         construction.saveData.setProficiency(0);
         construction.updateModifiedValues();
-        construction.gameplayContext.getFrontEnd().log(construction.getClass().getSimpleName(), "cleanProficiency");
+        construction.gameplayContext.getFrontend().log(construction.getClass().getSimpleName(), "cleanProficiency");
 
     }
 

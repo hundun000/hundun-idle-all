@@ -14,7 +14,7 @@ public abstract class BaseAutoOutputComponent extends OutputComponent {
     @Override
     public void onSubLogicFrame() {
         autoOutputProgress++;
-        int outputFrameCountMax = this.autoOutputSecondCountMax * construction.getGameplayContext().LOGIC_FRAME_PER_SECOND;
+        int outputFrameCountMax = this.autoOutputSecondCountMax * construction.getGameplayContext().getIdleFrontend().getLogicFramePerSecond();
         if (autoOutputProgress >= outputFrameCountMax)
         {
             autoOutputProgress = 0;

@@ -137,7 +137,7 @@ public class StorageInfoBoard extends Table implements IOneFrameResourceChangeLi
             if (deltaHistoryMap.containsKey(node.getResourceType()))
             {
                 historySum = deltaHistoryMap.get(node.getResourceType()).stream()
-                        .collect(Utils.lastN(BaseIdleMushroomScreen.LOGIC_FRAME_PER_SECOND))
+                        .collect(Utils.lastN(IdleMushroomGame.LOGIC_FRAME_PER_SECOND))
                         .stream()
                         .mapToLong(it -> it)
                         .sum()

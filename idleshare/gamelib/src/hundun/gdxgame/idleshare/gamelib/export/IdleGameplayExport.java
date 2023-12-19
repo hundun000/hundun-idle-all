@@ -40,17 +40,18 @@ public class IdleGameplayExport implements ILogicFrameListener,
     public String stageId;
 
     public IdleGameplayExport(
-            IFrontend frontEnd,
+            IFrontend frontend,
+            IIdleFrontend idleFrontend,
             IBuiltinConstructionsLoader builtinConstructionsLoader,
             IAchievementPrototypeLoader builtinAchievementsLoader,
             IBuffPrototypeLoader buffPrototypeLoader,
-            int LOGIC_FRAME_PER_SECOND, ChildGameConfig childGameConfig
+            ChildGameConfig childGameConfig
     ) {
         this.builtinConstructionsLoader = builtinConstructionsLoader;
         this.builtinAchievementsLoader = builtinAchievementsLoader;
         this.buffPrototypeLoader = buffPrototypeLoader;
         this.childGameConfig = childGameConfig;
-        this.gameplayContext = new IdleGameplayContext(frontEnd, LOGIC_FRAME_PER_SECOND);
+        this.gameplayContext = new IdleGameplayContext(frontend, idleFrontend);
     }
 
     @Override
@@ -103,7 +104,7 @@ public class IdleGameplayExport implements ILogicFrameListener,
                 builtinConstructionsLoader.getProviderMap(language),
                 builtinAchievementsLoader.getProviderMap(language)
                 );
-        gameplayContext.getFrontEnd().log(this.getClass().getSimpleName(), "applySystemSetting done");
+        gameplayContext.getFrontend().log(this.getClass().getSimpleName(), "applySystemSetting done");
     }
 
     @Override

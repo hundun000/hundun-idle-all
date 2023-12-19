@@ -145,6 +145,11 @@ public class IdleMushroomMenuScreen extends BaseHundunScreen<IdleMushroomGame, R
 
     }
 
+    @Override
+    public void onLogicFrame() {
+
+    }
+
     public static class LanguageSwitchBoard extends Table {
 
         IdleMushroomMenuScreen parent;

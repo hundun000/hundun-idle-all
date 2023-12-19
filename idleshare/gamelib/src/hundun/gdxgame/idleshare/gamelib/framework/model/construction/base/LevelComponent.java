@@ -37,9 +37,9 @@ public class LevelComponent {
         if (canChangeWorkingLevel(delta)) {
             construction.saveData.setWorkingLevel(construction.saveData.getWorkingLevel() + delta);
             construction.updateModifiedValues();
-            construction.getGameplayContext().getFrontEnd().log(construction.getClass().getSimpleName(), "changeWorkingLevel delta = " + delta + ", success to " + construction.saveData.getWorkingLevel());
+            construction.getGameplayContext().getFrontend().log(construction.getClass().getSimpleName(), "changeWorkingLevel delta = " + delta + ", success to " + construction.saveData.getWorkingLevel());
         } else {
-            construction.getGameplayContext().getFrontEnd().log(construction.getClass().getSimpleName(), "changeWorkingLevel delta = " + delta + ", but cannot!");
+            construction.getGameplayContext().getFrontend().log(construction.getClass().getSimpleName(), "changeWorkingLevel delta = " + delta + ", but cannot!");
         }
     }
 

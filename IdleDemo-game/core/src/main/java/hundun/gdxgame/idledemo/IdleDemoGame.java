@@ -6,11 +6,14 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ray3k.stripe.FreeTypeSkin;
 
 import hundun.gdxgame.corelib.base.BaseHundunGame;
+import hundun.gdxgame.gamelib.base.LogicFrameHelper;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
+import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idledemo.logic.*;
 import hundun.gdxgame.gamelib.base.save.ISaveTool;
 import hundun.gdxgame.idledemo.ui.screen.DemoScreenContext;
 import hundun.gdxgame.idledemo.ui.shared.BaseIdleDemoScreen;
+import hundun.gdxgame.idleshare.core.framework.StarterIdleFrontend;
 import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.model.buff.IBuffPrototypeLoader;
@@ -22,6 +25,7 @@ import java.util.List;
 
 
 public class IdleDemoGame extends BaseHundunGame<RootSaveData> {
+    public static final int LOGIC_FRAME_PER_SECOND = 30;
     @Getter
     protected AudioPlayManager audioPlayManager;
     @Getter
@@ -46,11 +50,6 @@ public class IdleDemoGame extends BaseHundunGame<RootSaveData> {
     List<String> controlBoardScreenIds;
     @Getter
     protected DemoScreenContext screenContext;
-
-    public IdleDemoGame(int viewportWidth, int viewportHeight) {
-        super(viewportWidth, viewportHeight);
-    }
-
 
 
 //    /**
@@ -77,7 +76,7 @@ public class IdleDemoGame extends BaseHundunGame<RootSaveData> {
 
 
     public IdleDemoGame(ISaveTool<RootSaveData> saveTool) {
-        super(960, 640);
+        super(960, 640, LOGIC_FRAME_PER_SECOND);
         this.debugMode = true;
         
         this.sharedViewport = new ScreenViewport();
@@ -105,10 +104,10 @@ public class IdleDemoGame extends BaseHundunGame<RootSaveData> {
         this.mainSkin = new FreeTypeSkin(Gdx.files.internal("skins/DefaultSkinWithFreeType/DefaultSkinWithFreeType.json"));
         this.idleGameplayExport = new IdleGameplayExport(
                 frontend,
+                new StarterIdleFrontend(this),
                 new DemoBuiltinConstructionsLoader(),
                 new DemoAchievementLoader(),
                 IBuffPrototypeLoader.emptyImpl(),
-                BaseIdleDemoScreen.LOGIC_FRAME_PER_SECOND,
                 childGameConfig
                 );
         this.getSaveHandler().registerSubHandler(idleGameplayExport);
@@ -129,5 +128,13 @@ public class IdleDemoGame extends BaseHundunGame<RootSaveData> {
         getAudioPlayManager().intoScreen(DemoScreenId.SCREEN_MENU);
     }
 
-    
+    @Override
+    protected void onLogicFrame(ILogicFrameListener source) {
+        source.onLogicFrame();
+        idleGameplayExport.onLogicFrame();
+        if (this.getLogicFrameHelper().getClockCount() % this.getLogicFrameHelper().secondToFrameNum(10) == 0)
+        {
+            this.getSaveHandler().gameSaveCurrent();
+        }
+    }
 }

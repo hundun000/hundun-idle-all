@@ -27,9 +27,6 @@ public abstract class BaseIdleDemoScreen extends BaseHundunScreen<IdleDemoGame, 
 
 
     // ----- not ui ------
-
-
-    protected List<ILogicFrameListener> logicFrameListeners;
     protected List<IGameAreaChangeListener> gameAreaChangeListeners;
 
     @Getter
@@ -48,13 +45,10 @@ public abstract class BaseIdleDemoScreen extends BaseHundunScreen<IdleDemoGame, 
         super(game, game.getSharedViewport());
         this.screenId = screenId;
         this.layoutConst = layoutConst;
-        this.logicFrameHelper = new LogicFrameHelper(LOGIC_FRAME_PER_SECOND);
-        this.logicFrameListeners = new ArrayList<>();
         this.gameAreaChangeListeners = new ArrayList<>();
     }
 
     protected void lazyInitLogicContext() {
-        logicFrameListeners.add(game.getIdleGameplayExport());
 
         gameAreaChangeListeners.add(backgroundImageBox);
         gameAreaChangeListeners.add(gameAreaControlBoard);
@@ -115,18 +109,6 @@ public abstract class BaseIdleDemoScreen extends BaseHundunScreen<IdleDemoGame, 
 
     @Override
     public void dispose() {
-    }
-
-
-
-
-    @Override
-    protected void onLogicFrame() {
-        super.onLogicFrame();
-
-        for (ILogicFrameListener logicFrameListener : logicFrameListeners) {
-            logicFrameListener.onLogicFrame();
-        }
     }
 
     @Override

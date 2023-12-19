@@ -31,7 +31,6 @@ public abstract class BaseIdleMushroomScreen extends BaseHundunScreen<IdleMushro
     protected final IdleMushroomPlayScreenLayoutConst layoutConst;
 
     protected boolean hidden;
-    protected List<ILogicFrameListener> logicFrameListeners;
     protected List<IGameAreaChangeListener> gameAreaChangeListeners;
 
     @Getter
@@ -70,8 +69,6 @@ public abstract class BaseIdleMushroomScreen extends BaseHundunScreen<IdleMushro
         super(game, game.getSharedViewport());
         this.screenId = screenId;
         this.layoutConst = layoutConst;
-        this.logicFrameHelper = new LogicFrameHelper(LOGIC_FRAME_PER_SECOND);
-        this.logicFrameListeners = new ArrayList<>();
         this.gameAreaChangeListeners = new ArrayList<>();
     }
 
@@ -90,22 +87,8 @@ public abstract class BaseIdleMushroomScreen extends BaseHundunScreen<IdleMushro
         }
     }
 
-    @Override
-    protected void onLogicFrame() {
-        super.onLogicFrame();
-
-        for (ILogicFrameListener logicFrameListener : logicFrameListeners) {
-            logicFrameListener.onLogicFrame();
-        }
-
-        if (logicFrameHelper.getClockCount() % logicFrameHelper.secondToFrameNum(10) == 0)
-        {
-            game.getSaveHandler().gameSaveCurrent();
-        }
-    }
 
     protected void lazyInitLogicContext() {
-        logicFrameListeners.add(game.getIdleGameplayExport());
 
         gameAreaChangeListeners.add(backgroundImageBox);
         gameAreaChangeListeners.add(gameAreaControlBoard);

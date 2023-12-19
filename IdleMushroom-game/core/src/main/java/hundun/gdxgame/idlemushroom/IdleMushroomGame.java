@@ -6,8 +6,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ray3k.stripe.FreeTypeSkin;
 
 import hundun.gdxgame.corelib.base.BaseHundunGame;
+import hundun.gdxgame.gamelib.base.LogicFrameHelper;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.gamelib.base.save.ISaveTool;
+import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomScreenId;
 import hundun.gdxgame.idlemushroom.logic.loader.IdleMushroomBuffPrototypeLoader;
 import hundun.gdxgame.idlemushroom.logic.loader.IdleMushroomConstructionsLoader;
@@ -16,6 +18,7 @@ import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext;
 import hundun.gdxgame.idlemushroom.logic.*;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushroomPlayScreenLayoutConst;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseIdleMushroomScreen;
+import hundun.gdxgame.idleshare.core.framework.StarterIdleFrontend;
 import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.TextFormatTool;
@@ -26,7 +29,7 @@ import java.util.Map;
 
 
 public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
-
+    public static final int LOGIC_FRAME_PER_SECOND = 30;
     @Getter
     protected IdleMushroomAudioPlayManager audioPlayManager;
 
@@ -57,10 +60,11 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
     private final IdleMushroomGameDictionary idleMushroomGameDictionary;
     @Getter
     private final IdleMushroomExtraGameplayExport idleMushroomExtraGameplayExport;
-
+    @Getter
+    private final ProxyManager proxyManager;
 
     public IdleMushroomGame(ISaveTool<RootSaveData> saveTool) {
-        super(960, 640);
+        super(960, 640, LOGIC_FRAME_PER_SECOND);
         this.debugMode = false;
         
         this.sharedViewport = new ScreenViewport();
@@ -78,6 +82,7 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
                 IdleMushroomScreenId.SCREEN_ACHIEVEMENT
         );
         this.idleMushroomExtraGameplayExport = new IdleMushroomExtraGameplayExport(this);
+        this.proxyManager = new ProxyManager();
     }
 
 
@@ -88,10 +93,10 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
         this.idleMushroomPlayScreenLayoutConst = new IdleMushroomPlayScreenLayoutConst(this.getWidth(), this.getHeight());
         this.idleGameplayExport = new IdleGameplayExport(
                 frontend,
+                new StarterIdleFrontend(this),
                 new IdleMushroomConstructionsLoader(),
                 new IdleMushroomAchievementLoader(idleMushroomGameDictionary),
                 new IdleMushroomBuffPrototypeLoader(),
-                BaseIdleMushroomScreen.LOGIC_FRAME_PER_SECOND,
                 childGameConfig
                 );
         this.getSaveHandler().registerSubHandler(idleGameplayExport);
@@ -144,5 +149,15 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
         super.dispose();
 
         saveHandler.gameSaveCurrent();
+    }
+
+    @Override
+    protected void onLogicFrame(ILogicFrameListener source) {
+        source.onLogicFrame();
+        idleGameplayExport.onLogicFrame();
+        if (this.getLogicFrameHelper().getClockCount() % this.getLogicFrameHelper().secondToFrameNum(10) == 0)
+        {
+            this.getSaveHandler().gameSaveCurrent();
+        }
     }
 }
