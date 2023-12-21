@@ -32,7 +32,7 @@ public class IdleMushroomSaveHandler extends PairChildrenSaveHandler<RootSaveDat
     }
 
     @Override
-    protected RootSaveData genereateStarterRootSaveData() {
+    protected RootSaveData generateStarterRootSaveData() {
         Map<String, ConstructionSaveData> map = new HashMap<>();
 
         GridPosition uselessPosition = new GridPosition(0, 0);
@@ -99,8 +99,8 @@ public class IdleMushroomSaveHandler extends PairChildrenSaveHandler<RootSaveDat
         });
 
         Map<String, Long> ownResources = new HashMap<>();
-        ownResources.put(ResourceType.MUSHROOM, 40000000L);
-        ownResources.put(ResourceType.DNA_POINT, 10000000L);
+        ownResources.put(ResourceType.MUSHROOM, 400L);
+        ownResources.put(ResourceType.DNA_POINT, 100L);
 
         return RootSaveData.builder()
                 .gameplaySave(GameplaySaveData.builder()

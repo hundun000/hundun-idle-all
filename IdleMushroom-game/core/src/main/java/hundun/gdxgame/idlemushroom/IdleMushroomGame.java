@@ -10,6 +10,7 @@ import hundun.gdxgame.gamelib.base.LogicFrameHelper;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.gamelib.base.save.ISaveTool;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
+import hundun.gdxgame.idlemushroom.logic.ProxyManager.ProxyConfig;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomScreenId;
 import hundun.gdxgame.idlemushroom.logic.loader.IdleMushroomBuffPrototypeLoader;
 import hundun.gdxgame.idlemushroom.logic.loader.IdleMushroomConstructionsLoader;
@@ -29,7 +30,7 @@ import java.util.Map;
 
 
 public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
-    public static final int LOGIC_FRAME_PER_SECOND = 30;
+    public static final int LOGIC_FRAME_PER_SECOND = 1;
     @Getter
     protected IdleMushroomAudioPlayManager audioPlayManager;
 
@@ -62,6 +63,8 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
     private final IdleMushroomExtraGameplayExport idleMushroomExtraGameplayExport;
     @Getter
     private final ProxyManager proxyManager;
+    @Getter
+    private RootSaveData lastSaveCurrentResult;
 
     public IdleMushroomGame(ISaveTool<RootSaveData> saveTool) {
         super(960, 640, LOGIC_FRAME_PER_SECOND);
@@ -82,7 +85,11 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
                 IdleMushroomScreenId.SCREEN_ACHIEVEMENT
         );
         this.idleMushroomExtraGameplayExport = new IdleMushroomExtraGameplayExport(this);
-        this.proxyManager = new ProxyManager();
+        this.proxyManager = new ProxyManager(this,
+                ProxyConfig.builder()
+                        .maxLogicFrameCount(getLogicFrameHelper().secondToFrameNum(60))
+                        .build()
+                );
     }
 
 
@@ -155,9 +162,10 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
     protected void onLogicFrame(ILogicFrameListener source) {
         source.onLogicFrame();
         idleGameplayExport.onLogicFrame();
+        proxyManager.onLogicFrame();
         if (this.getLogicFrameHelper().getClockCount() % this.getLogicFrameHelper().secondToFrameNum(10) == 0)
         {
-            this.getSaveHandler().gameSaveCurrent();
+            lastSaveCurrentResult = this.getSaveHandler().gameSaveCurrent();
         }
     }
 }

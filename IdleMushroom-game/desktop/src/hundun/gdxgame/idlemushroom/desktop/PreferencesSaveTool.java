@@ -16,7 +16,7 @@ import hundun.gdxgame.idlemushroom.logic.RootSaveData;
  */
 public class PreferencesSaveTool extends AbstractSaveDataSaveTool<RootSaveData> {
     
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
     
     public PreferencesSaveTool(String preferencesName) {
         super(preferencesName);
@@ -25,14 +25,6 @@ public class PreferencesSaveTool extends AbstractSaveDataSaveTool<RootSaveData> 
                 ;
         
     }
-
-
-
-    @Override
-    public void lazyInitOnGameCreate() {
-        this.preferences = Gdx.app.getPreferences(preferencesName);
-    }
-
 
 
     @Override

@@ -90,7 +90,7 @@ public abstract class BaseIdleMushroomPlayScreen extends BaseIdleMushroomScreen
 
     @Override
     public void showAchievementMaskBoard(AbstractAchievementPrototype achievement) {
-        if (this.hidden) {
+        if (this.hidden || !game.getProxyManager().isStop()) {
             return;
         }
         showAchievementMaskBoardQueue.add(achievement);
