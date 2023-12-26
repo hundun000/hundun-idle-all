@@ -112,6 +112,7 @@ public class ProxyManager {
                 .map(it -> ConstructionSituation.builder()
                         .prototypeId(it.prototypeId)
                         .level(it.getLevel())
+                        .count(1)
                         .build()
                 )
                 .collect(Collectors.toList());
@@ -120,8 +121,12 @@ public class ProxyManager {
             ConstructionSituation counted = countedConstructionSituations.stream()
                     .filter(itt -> itt.getPrototypeId().equals(it.getPrototypeId()) && itt.getLevel() == it.getLevel())
                     .findAny()
-                    .orElse(it);
-            counted.setCount(counted.getCount() + 1);
+                    .orElse(null);
+            if (counted == null) {
+                countedConstructionSituations.add(it);
+            } else {
+                counted.setCount(counted.getCount() + it.getCount());
+            }
         });
 
         return ProxyGameSituationDTO.builder()

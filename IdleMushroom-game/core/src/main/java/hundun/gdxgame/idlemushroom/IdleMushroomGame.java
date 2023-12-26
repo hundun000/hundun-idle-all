@@ -30,7 +30,7 @@ import java.util.Map;
 
 
 public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
-    public static final int LOGIC_FRAME_PER_SECOND = 1;
+    public static final int LOGIC_FRAME_PER_SECOND = 10;
     @Getter
     protected IdleMushroomAudioPlayManager audioPlayManager;
 
@@ -69,7 +69,8 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
     public IdleMushroomGame(ISaveTool<RootSaveData> saveTool) {
         super(960, 640, LOGIC_FRAME_PER_SECOND);
         this.debugMode = false;
-        
+        this.getLogicFrameHelper().setScale(0.1f);
+
         this.sharedViewport = new ScreenViewport();
         this.textFormatTool = new TextFormatTool();
         this.saveHandler = new IdleMushroomSaveHandler(frontend, saveTool);
