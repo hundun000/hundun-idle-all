@@ -73,7 +73,7 @@ public class BuffManager {
         });
     }
 
-    public Map<String, BuffSaveData> getAchievementSaveDataMap() {
+    public Map<String, BuffSaveData> getBuffSaveDataMap() {
         return models.values().stream()
                 .collect(Collectors.toMap(
                         it -> it.getBuffPrototype().getId(),

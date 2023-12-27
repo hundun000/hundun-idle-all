@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
@@ -14,6 +15,7 @@ import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomScreenId;
 import hundun.gdxgame.idlemushroom.logic.id.ResourceType;
 import hundun.gdxgame.idlemushroom.ui.shared.wiki.SharedWikiPopupInfoBoard;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseIdleMushroomPlayScreen;
+import hundun.gdxgame.idlemushroom.ui.world.CameraControlBoard;
 import hundun.gdxgame.idlemushroom.ui.world.HexCellVM;
 import hundun.gdxgame.idlemushroom.ui.world.HexAreaVM;
 import hundun.gdxgame.idlemushroom.ui.world.WorldDetailBoardVM;
@@ -31,6 +33,7 @@ import java.util.List;
  */
 public class WorldPlayScreen extends BaseIdleMushroomPlayScreen implements IConstructionCollectionListener {
 
+    @Getter
     HexAreaVM hexAreaVM;
     protected OrthographicCamera deskCamera;
     protected Stage deskStage;
@@ -68,6 +71,10 @@ public class WorldPlayScreen extends BaseIdleMushroomPlayScreen implements ICons
                 .fill()
                 .colspan(UI_ROOT_TABLE_COLSPAN_SIZE)
         ;
+
+        CameraControlBoard cameraControlBoard = new CameraControlBoard(this);
+        middleGroup.add(cameraControlBoard);
+        middleGroup.right().bottom();
     }
 
     protected void lazyInitLogicContext() {

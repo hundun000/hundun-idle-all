@@ -21,6 +21,7 @@ public class IdleMushroomScreenContext {
 
 
     public static class IdleMushroomPlayScreenLayoutConst {
+        public final int CAMERA_CONTROL_BOARD_BUTTON_SIZE = 30;
         public final float DESK_WIDTH = 100;
         public final float DESK_HEIGHT = 100;
         public int CONSTRUCION_BOARD_ROOT_BOX_HEIGHT = 200;

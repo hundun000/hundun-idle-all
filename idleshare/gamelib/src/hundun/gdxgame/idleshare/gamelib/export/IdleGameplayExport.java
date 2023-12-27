@@ -93,6 +93,7 @@ public class IdleGameplayExport implements ILogicFrameListener,
         gameplaySaveData.setUnlockedResourceTypes(gameplayContext.getStorageManager().getUnlockedResourceTypes());
         gameplaySaveData.setOwnResources(gameplayContext.getStorageManager().getOwnResources());
         gameplaySaveData.setAchievementSaveDataMap(gameplayContext.getAchievementManager().getAchievementSaveDataMap());
+        gameplaySaveData.setBuffSaveDataMap(gameplayContext.getBuffManager().getBuffSaveDataMap());
     }
 
     @Override
