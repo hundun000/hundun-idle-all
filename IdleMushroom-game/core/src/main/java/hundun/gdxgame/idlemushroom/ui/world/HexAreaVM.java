@@ -21,9 +21,12 @@ import java.util.Map;
 
 
 public class HexAreaVM extends Table {
-    public static final int roomWidth = 2000;
-    public static final int roomHeight = 2000;
-    static final float DEFAULT_CAMERA_ZOOM_WEIGHT = 2.0f;
+    public static final float roomWidth = 4000.0f;
+    public static final float roomWidthBorder = 1200.0f;
+    public static final float roomHeight = 3000.0f;
+    public static final float roomHeightBorder = 1000.0f;
+    static final float RESET_CAMERA_ZOOM_WEIGHT = 2.0f;
+    static final float MAX_CAMERA_ZOOM_WEIGHT = 3.25f;
     public WorldPlayScreen screen;
     @Getter
     Map<String, HexCellVM> nodes = new LinkedHashMap<>();
@@ -35,6 +38,12 @@ public class HexAreaVM extends Table {
         this.screen = screen;
         this.cameraDataPackage = new CameraDataPackage();
         this.cameraDataPackage.setCameraZoomWeightOnlyAllowForceSet(false);
+        this.cameraDataPackage.setBoundZoomMax(MAX_CAMERA_ZOOM_WEIGHT);
+        this.cameraDataPackage.setBoundLeft(roomWidthBorder);
+        this.cameraDataPackage.setBoundRight(roomWidth - roomWidthBorder);
+        this.cameraDataPackage.setBoundUp(roomHeight - roomHeightBorder);
+        this.cameraDataPackage.setBoundDown(roomHeightBorder);
+
         cameraReset();
 
         if (screen.getGame().debugMode) {
@@ -46,7 +55,7 @@ public class HexAreaVM extends Table {
         this.getCameraDataPackage().forceSet(
                 roomWidth / 2.0f,
                 roomHeight / 2.0f,
-                DEFAULT_CAMERA_ZOOM_WEIGHT
+                RESET_CAMERA_ZOOM_WEIGHT
         );
     }
 

@@ -14,12 +14,13 @@ public class CameraControlBoard extends Table {
     public CameraControlBoard(WorldPlayScreen parent) {
         this.screen = parent;
         int buttonSize = parent.getLayoutConst().CAMERA_CONTROL_BOARD_BUTTON_SIZE;
+        float step = 0.25f;
 
         TextButton zoomInButton = new TextButton("+", parent.getGame().getMainSkin());
         zoomInButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                parent.getHexAreaVM().getCameraDataPackage().modifyCurrentCameraZoomWeight(-0.1f);
+                parent.getHexAreaVM().getCameraDataPackage().modifyCurrentCameraZoomWeight(-step);
             }
         });
         this.add(zoomInButton).size(buttonSize, buttonSize).row();
@@ -37,7 +38,7 @@ public class CameraControlBoard extends Table {
         zoomOutButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                parent.getHexAreaVM().getCameraDataPackage().modifyCurrentCameraZoomWeight(0.1f);
+                parent.getHexAreaVM().getCameraDataPackage().modifyCurrentCameraZoomWeight(step);
             }
         });
         this.add(zoomOutButton).size(buttonSize, buttonSize).row();

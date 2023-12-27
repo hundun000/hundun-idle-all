@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class CameraDataPackage {
-    public static float DEFAULT_CAMERA_ZOOM_WEIGHT = 3.7f;
     @Getter
     private float currentCameraX;
     @Getter
@@ -17,6 +16,10 @@ public class CameraDataPackage {
     private Float boundUp;
     @Setter
     private Float boundDown;
+    @Setter
+    private Float boundZoomMax;
+    @Setter
+    private float boundZoomMin;
     @Getter
     private float currentCameraZoomWeight;
     @Getter
@@ -25,7 +28,7 @@ public class CameraDataPackage {
     private boolean cameraZoomWeightOnlyAllowForceSet;
 
     public CameraDataPackage() {
-
+        this.boundZoomMin = 0.1f;
     }
 
     public static float cameraZoomWeightToZoomValue(float weight){
@@ -64,7 +67,10 @@ public class CameraDataPackage {
             return;
         }
         currentCameraZoomWeight += delta;
-        currentCameraZoomWeight = Math.max(0.1f, currentCameraZoomWeight);
+        currentCameraZoomWeight = Math.max(boundZoomMin, currentCameraZoomWeight);
+        if (boundZoomMax != null) {
+            currentCameraZoomWeight = Math.min(boundZoomMax, currentCameraZoomWeight);
+        }
         currentCameraZoomDirty = true;
     }
 
