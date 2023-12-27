@@ -3,14 +3,13 @@ package hundun.gdxgame.idlemushroom.ui.shared;
 import com.badlogic.gdx.Gdx;
 import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
+import hundun.gdxgame.idlemushroom.logic.ProxyManager.ProxyState;
 import hundun.gdxgame.idlemushroom.ui.achievement.AchievementPopupBoard;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushroomPlayScreenLayoutConst;
-import hundun.gdxgame.idlemushroom.ui.shared.wiki.SharedWikiPopupInfoBoard;
 import hundun.gdxgame.idlemushroom.ui.world.HexCellVM;
 import hundun.gdxgame.idlemushroom.ui.main.FirstRunningAchievementBoardVM;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementStateChangeListener;
-import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievementPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementManager.AchievementState;
 import lombok.Getter;
@@ -90,7 +89,7 @@ public abstract class BaseIdleMushroomPlayScreen extends BaseIdleMushroomScreen
 
     @Override
     public void showAchievementMaskBoard(AbstractAchievementPrototype achievement) {
-        if (this.hidden || !game.getProxyManager().isStop()) {
+        if (this.hidden || game.getProxyManager().getProxyState() == ProxyState.RUNNING) {
             return;
         }
         showAchievementMaskBoardQueue.add(achievement);

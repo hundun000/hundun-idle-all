@@ -6,9 +6,6 @@ import com.badlogic.gdx.utils.JsonWriter.OutputType;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
 import hundun.gdxgame.idlemushroom.logic.ProxyManager.ProxyGameSituationDTO.ConstructionSituation;
-import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementManager.AchievementSaveData;
-import hundun.gdxgame.idleshare.gamelib.framework.model.buff.BuffManager.BuffSaveData;
-import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -24,12 +21,21 @@ public class ProxyManager {
     Json jsonTool;
     int lastLogicFrameCount = 0;
     ProxyConfig config;
+    @Setter
     @Getter
-    boolean stop = false;
+    ProxyState proxyState;
+    public enum ProxyState {
+        RUNNING,
+        PAUSE,
+        STOP,
+    }
+
     public ProxyManager(IdleMushroomGame game, ProxyConfig config) {
         this.game = game;
         this.config = config;
         this.jsonTool = new Json();
+        this.proxyState = ProxyState.PAUSE;
+
         jsonTool.setOutputType(OutputType.json);
         jsonTool.setTypeName(null);
         jsonTool.setUsePrototypes(false);
@@ -40,7 +46,7 @@ public class ProxyManager {
     @AllArgsConstructor
     @Builder
     public static class ProxyConfig {
-        int maxLogicFrameCount;
+        Integer maxLogicFrameCount;
     }
 
     @Data
@@ -136,9 +142,14 @@ public class ProxyManager {
     }
 
     public void onLogicFrame() {
-        if (lastLogicFrameCount > config.maxLogicFrameCount) {
+        if (proxyState == ProxyState.PAUSE) {
+            return;
+        } else if (proxyState == ProxyState.STOP) {
             System.out.println(jsonTool.prettyPrint(proxyRunRecords));
             Gdx.app.exit();
+        }
+        if (config.maxLogicFrameCount != null && lastLogicFrameCount > config.maxLogicFrameCount) {
+            proxyState = ProxyState.STOP;
         }
         if (game.getLogicFrameHelper().getClockCount() % game.getLogicFrameHelper().secondToFrameNum(1) != 0)
         {

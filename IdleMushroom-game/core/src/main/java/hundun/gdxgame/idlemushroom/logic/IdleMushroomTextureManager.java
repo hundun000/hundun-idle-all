@@ -33,8 +33,10 @@ public class IdleMushroomTextureManager {
     protected TextureRegion[][] mainClickAnimationTextureAtlas;
     @Getter
     protected int defaultBoardNinePatchEdgeSize;
-
-
+    @Getter
+    TextureRegion proxyEnabledIcon;
+    @Getter
+    TextureRegion proxyDisabledIcon;
     protected Map<String, TextureRegion> resourceIconMap = new HashMap<>();
     protected Map<String, TextureRegion> buffIconMap = new HashMap<>();
     protected Map<String, TextureRegion> resourceEntityMap = new HashMap<>();
@@ -124,6 +126,8 @@ public class IdleMushroomTextureManager {
             Texture texture = new Texture(Gdx.files.internal("All Icons.png"));
             TextureRegion[][] regions = TextureRegion.split(texture, 16, 16);
             questionMarkTexture = regions[0][13];
+            proxyEnabledIcon = regions[0][6];
+            proxyDisabledIcon = regions[0][0];
         }
 
         achievementMaskBoardTexture = new Texture(Gdx.files.internal("win.png"));

@@ -88,7 +88,7 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
         this.idleMushroomExtraGameplayExport = new IdleMushroomExtraGameplayExport(this);
         this.proxyManager = new ProxyManager(this,
                 ProxyConfig.builder()
-                        .maxLogicFrameCount(getLogicFrameHelper().secondToFrameNum(60))
+                        .maxLogicFrameCount(null)
                         .build()
                 );
     }

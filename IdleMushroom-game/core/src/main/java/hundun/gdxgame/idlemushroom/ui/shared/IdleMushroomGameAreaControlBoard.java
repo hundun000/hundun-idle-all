@@ -2,10 +2,13 @@ package hundun.gdxgame.idlemushroom.ui.shared;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
+import hundun.gdxgame.idlemushroom.logic.ProxyManager.ProxyState;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -20,7 +23,7 @@ public class IdleMushroomGameAreaControlBoard extends Table implements IGameArea
 
     BaseIdleMushroomScreen parent;
     Map<String, Node> nodes = new LinkedHashMap<>();
-
+    Image proxyControlButton;
 
     public IdleMushroomGameAreaControlBoard(BaseIdleMushroomScreen parent) {
         super();
@@ -47,7 +50,6 @@ public class IdleMushroomGameAreaControlBoard extends Table implements IGameArea
             }
 
         });
-
     }
 
     public void lazyInit(List<String> controlBoardScreenIds) {
@@ -64,6 +66,28 @@ public class IdleMushroomGameAreaControlBoard extends Table implements IGameArea
                     .height(parent.getLayoutConst().AREA_BOARD_CELL_HEIGHT)
                     .row();
         }
+
+        this.proxyControlButton = new Image(parent.getGame().getTextureManager().getProxyDisabledIcon());
+        proxyControlButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                if (parent.getGame().getProxyManager().getProxyState() == ProxyState.RUNNING) {
+                    parent.getGame().getProxyManager().setProxyState(ProxyState.PAUSE);
+                } else {
+                    parent.getGame().getProxyManager().setProxyState(ProxyState.RUNNING);
+                }
+                if (parent.getGame().getProxyManager().getProxyState() == ProxyState.RUNNING) {
+                    proxyControlButton.setDrawable(new TextureRegionDrawable(parent.getGame().getTextureManager().getProxyEnabledIcon()));
+                } else {
+                    proxyControlButton.setDrawable(new TextureRegionDrawable(parent.getGame().getTextureManager().getProxyDisabledIcon()));
+                }
+            }
+        });
+        this.add(proxyControlButton)
+                .width(parent.getLayoutConst().AREA_BOARD_CELL_HEIGHT)
+                .height(parent.getLayoutConst().AREA_BOARD_CELL_HEIGHT)
+                .row();
 
         rebuildChild(null);
         
