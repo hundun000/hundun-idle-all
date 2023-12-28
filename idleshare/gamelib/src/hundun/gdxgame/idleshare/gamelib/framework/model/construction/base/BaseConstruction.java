@@ -123,7 +123,7 @@ public abstract class BaseConstruction implements IBuffChangeListener, ITileNode
      * 重新计算各个数值的加成后的结果
      */
     public void updateModifiedValues() {
-        gameplayContext.getFrontend().log(this.getClass().getSimpleName(), "updateCurrentCache called");
+        //gameplayContext.getFrontend().log(this.getClass().getSimpleName(), "updateCurrentCache called");
         // --------------
         upgradeComponent.updateModifiedValues();
         outputComponent.updateModifiedValues();

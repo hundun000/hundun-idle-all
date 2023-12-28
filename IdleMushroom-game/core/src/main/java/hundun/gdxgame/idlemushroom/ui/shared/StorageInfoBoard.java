@@ -5,7 +5,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
-import hundun.gdxgame.idleshare.gamelib.framework.util.Utils;
+import hundun.gdxgame.idleshare.gamelib.framework.model.event.EventManager.OneFrameResourceChangeEvent;
+import hundun.gdxgame.idleshare.gamelib.framework.model.event.EventManager.OneFrameResourceChangeEventOneTagData;
+import hundun.gdxgame.idleshare.gamelib.framework.model.resource.StorageManager.ModifyResourceTag;
 import lombok.Getter;
 
 import java.util.*;
@@ -123,7 +125,7 @@ public class StorageInfoBoard extends Table implements IOneFrameResourceChangeLi
 
 
 
-    public void updateViewData(Map<String, Long> changeMap, Map<String, List<Long>> deltaHistoryMap) {
+    public void updateViewData(OneFrameResourceChangeEvent event) {
         Set<String> unlockedResourceTypes = parent.getGame().getIdleGameplayExport().getGameplayContext().getStorageManager().getUnlockedResourceTypes();
         boolean needRebuildCells = !shownTypes.equals(unlockedResourceTypes);
         if (needRebuildCells) {
@@ -133,21 +135,7 @@ public class StorageInfoBoard extends Table implements IOneFrameResourceChangeLi
         }
 
         nodes.stream().forEach(node -> {
-            long historySum;
-            if (deltaHistoryMap.containsKey(node.getResourceType()))
-            {
-                historySum = deltaHistoryMap.get(node.getResourceType()).stream()
-                        .collect(Utils.lastN(parent.getGame().getLogicFrameHelper().secondToFrameNum(1.0f)))
-                        .stream()
-                        .mapToLong(it -> it)
-                        .sum()
-                        ;
-            }
-            else
-            {
-                historySum = 0;
-            }
-
+            long historySum = event.getTagDataMap().get(ModifyResourceTag.OUTPUT).getLatestSecondChangeMap().getOrDefault(node.getResourceType(), 0L);
             long amount = parent.getGame().getIdleGameplayExport().getGameplayContext().getStorageManager().getResourceNumOrZero(node.getResourceType());
             node.update(historySum, amount);
         });
@@ -155,7 +143,7 @@ public class StorageInfoBoard extends Table implements IOneFrameResourceChangeLi
 
 
     @Override
-    public void onResourceChange(Map<String, Long> changeMap, Map<String, List<Long>> deltaHistoryMap) {
-        updateViewData(changeMap, deltaHistoryMap);
+    public void onResourceChange(OneFrameResourceChangeEvent event) {
+        updateViewData(event);
     }
 }

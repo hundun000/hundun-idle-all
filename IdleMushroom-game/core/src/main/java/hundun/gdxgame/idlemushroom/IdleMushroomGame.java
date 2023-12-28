@@ -10,6 +10,7 @@ import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.gamelib.base.save.ISaveTool;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idlemushroom.logic.ProxyManager.ProxyConfig;
+import hundun.gdxgame.idlemushroom.logic.ProxyManager.ProxyState;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomScreenId;
 import hundun.gdxgame.idlemushroom.logic.loader.IdleMushroomBuffPrototypeLoader;
 import hundun.gdxgame.idlemushroom.logic.loader.IdleMushroomConstructionsLoader;
@@ -67,7 +68,7 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
     public IdleMushroomGame(ISaveTool<RootSaveData> saveTool) {
         super(960, 640, LOGIC_FRAME_PER_SECOND);
         this.debugMode = false;
-        this.getLogicFrameHelper().setScale(0.1f);
+        this.getLogicFrameHelper().setScale(1.0f);
 
         this.sharedViewport = new ScreenViewport();
         this.textFormatTool = new TextFormatTool();
@@ -86,8 +87,9 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
         this.idleMushroomExtraGameplayExport = new IdleMushroomExtraGameplayExport(this);
         this.proxyManager = new ProxyManager(this,
                 ProxyConfig.builder()
-                        .maxSecondCount(100)
+                        .maxSecondCount(null)
                         .autoSaveDeltaSecond(null)
+                        .starterProxyState(ProxyState.RUNNING)
                         .build()
                 );
         this.historyManager = new HistoryManager(this);

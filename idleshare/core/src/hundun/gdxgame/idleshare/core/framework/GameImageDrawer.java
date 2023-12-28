@@ -1,7 +1,6 @@
 package hundun.gdxgame.idleshare.core.framework;
 
 import java.util.List;
-import java.util.Map;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import hundun.gdxgame.corelib.base.BaseHundunGame;
@@ -10,6 +9,7 @@ import hundun.gdxgame.idleshare.core.framework.entity.BaseGameEntityFactory;
 import hundun.gdxgame.idleshare.core.framework.entity.GameEntity;
 import hundun.gdxgame.idleshare.core.framework.manager.GameEntityManager;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
+import hundun.gdxgame.idleshare.gamelib.framework.model.event.EventManager.OneFrameResourceChangeEvent;
 
 /**
  * @author hundun
@@ -95,11 +95,11 @@ public class GameImageDrawer<T_GAME extends BaseHundunGame<T_SAVE>, T_SAVE> impl
 
 
     @Override
-    public void onResourceChange(Map<String, Long> changeMap, Map<String, List<Long>> deltaHistoryMap) {
+    public void onResourceChange(OneFrameResourceChangeEvent event) {
         String gameArea = holder.getScreenId();
 
         manager.areaEntityCheckByOwnAmount(gameArea, gameEntityFactory);
-        manager.areaEntityCheckByChangeAmount(gameArea, gameEntityFactory, changeMap);
+        manager.areaEntityCheckByChangeAmount(gameArea, gameEntityFactory, event.getAllTagData().getFrameChangeMap());
     }
 
 

@@ -28,7 +28,7 @@ public class ProxyManager {
         this.game = game;
         this.config = config;
         this.jsonTool = new Json();
-        this.proxyState = ProxyState.PAUSE;
+        this.proxyState = config.starterProxyState;
 
         jsonTool.setOutputType(OutputType.json);
         jsonTool.setTypeName(null);
@@ -42,6 +42,7 @@ public class ProxyManager {
     public static class ProxyConfig {
         Integer maxSecondCount;
         Integer autoSaveDeltaSecond;
+        ProxyState starterProxyState;
     }
 
 

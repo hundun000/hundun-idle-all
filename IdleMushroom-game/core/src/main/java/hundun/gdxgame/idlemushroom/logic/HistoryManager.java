@@ -4,6 +4,7 @@ import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
+import hundun.gdxgame.idleshare.gamelib.framework.model.event.EventManager.OneFrameResourceChangeEvent;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -63,10 +64,10 @@ public class HistoryManager implements IOneFrameResourceChangeListener, ILogicFr
     }
 
     @Override
-    public void onResourceChange(Map<String, Long> changeMap, Map<String, List<Long>> deltaHistoryMap) {
-        changeMap.keySet().forEach(resourceType -> this.deltaHistoryMap.computeIfAbsent(resourceType, it -> new ArrayList<>()));
+    public void onResourceChange(OneFrameResourceChangeEvent event) {
+        event.getAllTagData().getFrameChangeMap().keySet().forEach(resourceType -> this.deltaHistoryMap.computeIfAbsent(resourceType, it -> new ArrayList<>()));
         this.deltaHistoryMap.forEach((resourceType, value) -> {
-            value.add(changeMap.getOrDefault(resourceType, 0L));
+            value.add(event.getAllTagData().getFrameChangeMap().getOrDefault(resourceType, 0L));
         });
     }
 

@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.idledemo.IdleDemoGame;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
+import hundun.gdxgame.idleshare.gamelib.framework.model.event.EventManager.OneFrameResourceChangeEvent;
+import hundun.gdxgame.idleshare.gamelib.framework.model.resource.StorageManager.ModifyResourceTag;
 import hundun.gdxgame.idleshare.gamelib.framework.util.Utils;
 
 /**
@@ -71,7 +73,7 @@ public class StarterStorageInfoBoard extends Table implements IOneFrameResourceC
 
 
 
-    public void updateViewData(Map<String, Long> changeMap, Map<String, List<Long>> deltaHistoryMap) {
+    public void updateViewData(OneFrameResourceChangeEvent event) {
         Set<String> unlockedResourceTypes = parent.getGame().getIdleGameplayExport().getGameplayContext().getStorageManager().getUnlockedResourceTypes();
         boolean needRebuildCells = !shownTypes.equals(unlockedResourceTypes);
         if (needRebuildCells) {
@@ -81,21 +83,7 @@ public class StarterStorageInfoBoard extends Table implements IOneFrameResourceC
         }
 
         nodes.stream().forEach(node -> {
-            long historySum;
-            if (deltaHistoryMap.containsKey(node.getResourceType()))
-            {
-                historySum = deltaHistoryMap.get(node.getResourceType()).stream()
-                        .collect(Utils.lastN(BaseIdleDemoScreen.LOGIC_FRAME_PER_SECOND))
-                        .stream()
-                        .mapToLong(it -> it)
-                        .sum()
-                        ;
-            }
-            else
-            {
-                historySum = 0;
-            }
-
+            long historySum = event.getTagDataMap().get(ModifyResourceTag.OUTPUT).getLatestSecondChangeMap().getOrDefault(node.getResourceType(), 0L);
             long amount = parent.getGame().getIdleGameplayExport().getGameplayContext().getStorageManager().getResourceNumOrZero(node.getResourceType());
             node.update(historySum, amount);
         });
@@ -103,7 +91,7 @@ public class StarterStorageInfoBoard extends Table implements IOneFrameResourceC
 
 
     @Override
-    public void onResourceChange(Map<String, Long> changeMap, Map<String, List<Long>> deltaHistoryMap) {
-        updateViewData(changeMap, deltaHistoryMap);
+    public void onResourceChange(OneFrameResourceChangeEvent event) {
+        updateViewData(event);
     }
 }

@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePack;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
+import hundun.gdxgame.idleshare.gamelib.framework.model.resource.StorageManager.ModifyResourceTag;
 import lombok.Setter;
 import lombok.Getter;
 
@@ -125,11 +126,11 @@ public abstract class OutputComponent {
     {
         if (this.hasCost())
         {
-            construction.getGameplayContext().getStorageManager().modifyAllResourceNum(this.outputCostPack.getModifiedValues(), false);
+            construction.getGameplayContext().getStorageManager().modifyAllResourceNum(this.outputCostPack.getModifiedValues(), false, ModifyResourceTag.OUTPUT);
         }
         if (this.outputGainPack != null)
         {
-            construction.getGameplayContext().getStorageManager().modifyAllResourceNum(this.outputGainPack.getModifiedValues(), true);
+            construction.getGameplayContext().getStorageManager().modifyAllResourceNum(this.outputGainPack.getModifiedValues(), true, ModifyResourceTag.OUTPUT);
         }
     }
 

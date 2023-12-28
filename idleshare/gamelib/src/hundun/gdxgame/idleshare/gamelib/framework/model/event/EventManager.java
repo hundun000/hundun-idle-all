@@ -14,6 +14,11 @@ import hundun.gdxgame.idleshare.gamelib.framework.listener.IBuffChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievementPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementManager.AchievementState;
+import hundun.gdxgame.idleshare.gamelib.framework.model.resource.StorageManager.ModifyResourceTag;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 /**
@@ -98,10 +103,28 @@ public class EventManager {
 //        }
 //    }
 
-    public void notifyOneFrameResourceChange(Map<String, Long> changeMap, Map<String, List<Long>> deltaHistoryMap) {
-        //Gdx.app.log(this.getClass().getSimpleName(), "notifyOneFrameResourceChange");
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class OneFrameResourceChangeEvent {
+        OneFrameResourceChangeEventOneTagData allTagData;
+        Map<ModifyResourceTag, OneFrameResourceChangeEventOneTagData> tagDataMap;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class OneFrameResourceChangeEventOneTagData {
+        Map<String, Long> frameChangeMap;
+        Map<String, Long> latestSecondChangeMap;
+    }
+
+    public void notifyOneFrameResourceChange(OneFrameResourceChangeEvent event) {
+        gameContext.getFrontend().log(this.getClass().getSimpleName(), "notifyOneFrameResourceChange");
         for (IOneFrameResourceChangeListener listener : oneFrameResourceChangeListeners) {
-            listener.onResourceChange(changeMap, deltaHistoryMap);
+            listener.onResourceChange(event);
         }
     }
 
