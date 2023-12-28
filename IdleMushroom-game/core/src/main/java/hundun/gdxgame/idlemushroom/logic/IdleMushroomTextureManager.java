@@ -37,6 +37,10 @@ public class IdleMushroomTextureManager {
     TextureRegion proxyEnabledIcon;
     @Getter
     TextureRegion proxyDisabledIcon;
+    @Getter
+    TextureRegion hexCellMaxLevelIcon;
+    @Getter
+    TextureRegion hexCellCanUpgradeIcon;
     protected Map<String, TextureRegion> resourceIconMap = new HashMap<>();
     protected Map<String, TextureRegion> buffIconMap = new HashMap<>();
     protected Map<String, TextureRegion> resourceEntityMap = new HashMap<>();
@@ -128,6 +132,8 @@ public class IdleMushroomTextureManager {
             questionMarkTexture = regions[0][13];
             proxyEnabledIcon = regions[0][6];
             proxyDisabledIcon = regions[0][0];
+            hexCellMaxLevelIcon = regions[0][11];
+            hexCellCanUpgradeIcon = regions[1][6];
         }
 
         achievementMaskBoardTexture = new Texture(Gdx.files.internal("win.png"));

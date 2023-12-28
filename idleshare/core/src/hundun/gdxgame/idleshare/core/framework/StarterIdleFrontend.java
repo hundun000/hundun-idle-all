@@ -11,6 +11,6 @@ public class StarterIdleFrontend implements IIdleFrontend {
 
     @Override
     public int getLogicFramePerSecond() {
-        return game.getLogicFrameHelper().getLogicFramePerSecond();
+        return game.getLogicFrameHelper().secondToFrameNum(1.0f);
     }
 }

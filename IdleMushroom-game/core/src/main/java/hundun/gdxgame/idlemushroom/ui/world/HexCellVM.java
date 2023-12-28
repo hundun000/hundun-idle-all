@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Null;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
@@ -16,7 +17,7 @@ import lombok.Getter;
 
 public class HexCellVM extends Table {
 
-    static HexMode hexMode = HexMode.ODD_Q;
+    static final HexMode hexMode = HexMode.ODD_Q;
 
     public enum MaskMode {
         NONE,
@@ -28,13 +29,13 @@ public class HexCellVM extends Table {
     static int SQR_3_DIV_2_HEX_SIZE = 111;
     static int TABLE_WIDTH = HEX_SIZE;
     static int TABLE_HEIGHT = SQR_3_DIV_2_HEX_SIZE;
-    static int IMAGE_WIDTH = 128;
-    static int IMAGE_HEIGHT = 192;
+    static int MAIN_IMAGE_WIDTH = 128;
+    static int MAIN_IMAGE_HEIGHT = 192;
     static int HIT_BOX_X = 4;
     static int HIT_BOX_Y = 4;
-    static int HIT_BOX_WIDTH = IMAGE_WIDTH - HIT_BOX_X * 2;
+    static int HIT_BOX_WIDTH = MAIN_IMAGE_WIDTH - HIT_BOX_X * 2;
     static int HIT_BOX_HEIGHT = SQR_3_DIV_2_HEX_SIZE - HIT_BOX_Y * 2;
-
+    static int LEVEL_STATE_IMAGE_SIZE = 50;
     static float hexBaseSizeX = (float) (HEX_SIZE);
     static float hexBaseSizeY = (float) (SQR_3_DIV_2_HEX_SIZE);
 
@@ -49,32 +50,47 @@ public class HexCellVM extends Table {
 
     Label mainLabel;
     @Getter
-    Image image;
+    Image mainImage;
     @Getter
     Image hightLightImage;
+    @Getter
+    Image levelStateImage;
+
+    final Drawable cachedHexCellCanUpgradeIcon;
+    final Drawable cachedHexCellMaxLevelIcon;
     public HexCellVM(WorldPlayScreen parent, HexAreaVM hexAreaVM, BaseConstruction deskData, boolean isSelectedConstruction) {
         this.parent = parent;
         this.game = hexAreaVM.screen.getGame();
         this.hexAreaVM = hexAreaVM;
         this.deskData = deskData;
 
-        this.image = new Image();
-        image.setBounds(
+        this.mainImage = new Image();
+        mainImage.setBounds(
                 0,
                 0,
-                IMAGE_WIDTH,
-                IMAGE_HEIGHT
+                MAIN_IMAGE_WIDTH,
+                MAIN_IMAGE_HEIGHT
         );
-        this.addActor(image);
+        this.addActor(mainImage);
 
         this.hightLightImage = new Image();
         hightLightImage.setBounds(
                 0,
                 0,
-                IMAGE_WIDTH,
-                IMAGE_HEIGHT
+                MAIN_IMAGE_WIDTH,
+                MAIN_IMAGE_HEIGHT
         );
         this.addActor(hightLightImage);
+
+        this.levelStateImage = new Image();
+        levelStateImage.setBounds(
+                TABLE_WIDTH * 0.5f - LEVEL_STATE_IMAGE_SIZE * 0.5f,
+                TABLE_HEIGHT * 0.1f,
+                LEVEL_STATE_IMAGE_SIZE,
+                LEVEL_STATE_IMAGE_SIZE
+        );
+        this.addActor(levelStateImage);
+
         /*this.setBackground(new TextureRegionDrawable(new TextureRegion(TextureFactory.getSimpleBoardBackground(
                 this.game.getScreenContext().getLayoutConst().DESK_WIDTH,
                 this.game.getScreenContext().getLayoutConst().DESK_HEIGHT
@@ -93,7 +109,7 @@ public class HexCellVM extends Table {
 
         //this.mainLabel.setText(deskData.getId());
         //this.setBackground(new TextureRegionDrawable(game.getTextureManager().getConstructionHexImage(deskData.getPrototypeId())));
-        image.setDrawable(new TextureRegionDrawable(game.getTextureManager().getConstructionHexImage(deskData.getPrototypeId())));
+        mainImage.setDrawable(new TextureRegionDrawable(game.getTextureManager().getConstructionHexImage(deskData.getPrototypeId())));
         Vector2 uiPosition = calculatePosition(deskData.getSaveData().getPosition().getX(), deskData.getSaveData().getPosition().getY());
         this.setBounds(
                 uiPosition.x,
@@ -101,6 +117,9 @@ public class HexCellVM extends Table {
                 TABLE_WIDTH,
                 TABLE_HEIGHT
         );
+
+        cachedHexCellCanUpgradeIcon = new TextureRegionDrawable(game.getTextureManager().getHexCellCanUpgradeIcon());
+        cachedHexCellMaxLevelIcon = new TextureRegionDrawable(game.getTextureManager().getHexCellMaxLevelIcon());
         updateMaskMode(MaskMode.NONE);
     }
 
@@ -133,5 +152,17 @@ public class HexCellVM extends Table {
                     deskData.getSaveData().getPosition().getY()
             ) );
         }
+    }
+
+
+    public void onLogicFrame() {
+        if (deskData.getUpgradeComponent().canUpgrade()) {
+            levelStateImage.setDrawable(cachedHexCellCanUpgradeIcon);
+        } else if (deskData.getLevelComponent().isReachMaxLevel()) {
+            levelStateImage.setDrawable(cachedHexCellMaxLevelIcon);
+        } else {
+            levelStateImage.setDrawable(null);
+        }
+
     }
 }

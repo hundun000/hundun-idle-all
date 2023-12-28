@@ -91,6 +91,7 @@ public class WorldPlayScreen extends BaseIdleMushroomPlayScreen implements ICons
         super.onLogicFrame();
 
         worldDetailBoardVM.onLogicFrame();
+        hexAreaVM.getNodes().values().forEach(it -> it.onLogicFrame());
     }
 
     @Override
