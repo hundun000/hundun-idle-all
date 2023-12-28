@@ -3,23 +3,17 @@ package hundun.gdxgame.idlemushroom.logic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter.OutputType;
-import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
-import hundun.gdxgame.idlemushroom.logic.ProxyManager.ProxyGameSituationDTO.ConstructionSituation;
+import hundun.gdxgame.idlemushroom.logic.HistoryManager.ProxyActionType;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ProxyManager {
 
     IdleMushroomGame game;
 
-    List<ProxyRunRecord> proxyRunRecords = new ArrayList<>();
-    Json jsonTool;
-    int lastLogicFrameCount = 0;
+
+    public Json jsonTool;
+
     ProxyConfig config;
     @Setter
     @Getter
@@ -46,111 +40,13 @@ public class ProxyManager {
     @AllArgsConstructor
     @Builder
     public static class ProxyConfig {
-        Integer maxLogicFrameCount;
+        Integer maxSecondCount;
+        Integer autoSaveDeltaSecond;
     }
 
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
-    public static class ProxyGameSituationDTO {
-        Map<String, Long> ownResources;
-        List<ConstructionSituation> constructionSituations;
-        @Data
-        @Builder
-        @AllArgsConstructor
-        @NoArgsConstructor
-        public static class ConstructionSituation {
-            public String prototypeId;
-            private int level;
-            private int count;
-        }
 
-    }
-
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
-    public static class ProxyRunRecord {
-        int logicFrameCount;
-        ProxyActionType actionType;
-        List<String> extra;
-        ProxyGameSituationDTO situation;
-    }
-
-    public enum ProxyActionType {
-        LogSaveCurrentResult, doUpgrade, buyInstanceOfPrototype
-
-    }
-
-    private void addProxyRunRecord(ProxyActionType actionType, Object... extras) {
-        lastLogicFrameCount = game.getLogicFrameHelper().getClockCount();
-        proxyRunRecords.add(
-                ProxyRunRecord.builder()
-                        .logicFrameCount(lastLogicFrameCount)
-                        .actionType(actionType)
-                        .extra(JavaFeatureForGwt.listOf(extras).stream()
-                                .map(it -> it.toString())
-                                .collect(Collectors.toList())
-                        )
-                        .build()
-        );
-    }
-
-    private void addProxyRunRecordTypeLogSaveCurrentResult() {
-        lastLogicFrameCount = game.getLogicFrameHelper().getClockCount();
-        proxyRunRecords.add(
-                ProxyRunRecord.builder()
-                        .logicFrameCount(lastLogicFrameCount)
-                        .actionType(ProxyActionType.LogSaveCurrentResult)
-                        .situation(rootSaveDataToSituation(game.getLastSaveCurrentResult()))
-                        .build()
-        );
-    }
-
-    private ProxyGameSituationDTO rootSaveDataToSituation(RootSaveData rootSaveData) {
-        if (rootSaveData == null) {
-            return null;
-        }
-        List<ConstructionSituation> constructionSituations = rootSaveData.getGameplaySave().getConstructionSaveDataMap().values().stream()
-                .filter(it -> it.getLevel() > 0)
-                .map(it -> ConstructionSituation.builder()
-                        .prototypeId(it.prototypeId)
-                        .level(it.getLevel())
-                        .count(1)
-                        .build()
-                )
-                .collect(Collectors.toList());
-        List<ConstructionSituation> countedConstructionSituations = new ArrayList<>();
-        constructionSituations.forEach(it -> {
-            ConstructionSituation counted = countedConstructionSituations.stream()
-                    .filter(itt -> itt.getPrototypeId().equals(it.getPrototypeId()) && itt.getLevel() == it.getLevel())
-                    .findAny()
-                    .orElse(null);
-            if (counted == null) {
-                countedConstructionSituations.add(it);
-            } else {
-                counted.setCount(counted.getCount() + it.getCount());
-            }
-        });
-
-        return ProxyGameSituationDTO.builder()
-                .ownResources(rootSaveData.getGameplaySave().getOwnResources())
-                .constructionSituations(countedConstructionSituations)
-                .build();
-    }
-
-    public void onLogicFrame() {
-        if (proxyState == ProxyState.PAUSE) {
-            return;
-        } else if (proxyState == ProxyState.STOP) {
-            System.out.println(jsonTool.prettyPrint(proxyRunRecords));
-            Gdx.app.exit();
-        }
-        if (config.maxLogicFrameCount != null && lastLogicFrameCount > config.maxLogicFrameCount) {
-            proxyState = ProxyState.STOP;
-        }
+    public void tryAutoAction() {
+        // skip some frame
         if (game.getLogicFrameHelper().getClockCount() % game.getLogicFrameHelper().secondToFrameNum(1) != 0)
         {
             return;
@@ -168,7 +64,7 @@ public class ProxyManager {
                             })
                             .findFirst()
                             .ifPresent(constructionBuyCandidateConfig -> {
-                                addProxyRunRecord(
+                                game.getHistoryManager().addProxyRunRecord(
                                         ProxyActionType.buyInstanceOfPrototype,
                                         constructionBuyCandidateConfig.getPrototypeId(),
                                         model.getPosition()
@@ -182,18 +78,35 @@ public class ProxyManager {
         game.getIdleGameplayExport().getGameplayContext().getConstructionManager().getWorldConstructionInstances().stream()
                 .filter(model -> model.getUpgradeComponent().canUpgrade())
                 .forEach(model -> {
-                    addProxyRunRecord(
+                    game.getHistoryManager().addProxyRunRecord(
                             ProxyActionType.doUpgrade,
                             model.getPrototypeId(),
                             model.getPosition()
                     );
                     model.getUpgradeComponent().doUpgrade();
                 });
+    }
 
-        // try LogSaveCurrentResult
-        if (game.getLogicFrameHelper().getClockCount() % game.getLogicFrameHelper().secondToFrameNum(10) == 0)
-        {
-            addProxyRunRecordTypeLogSaveCurrentResult();
+
+
+
+    public void onLogicFrame() {
+
+        if (config.getAutoSaveDeltaSecond() != null) {
+            if (game.getLogicFrameHelper().getClockCount() % game.getLogicFrameHelper().secondToFrameNum(config.getAutoSaveDeltaSecond()) == 0)
+            {
+                RootSaveData lastSaveCurrentResult = game.getSaveHandler().gameSaveCurrent();
+                game.getHistoryManager().addProxyRunRecordTypeLogSaveCurrentResult(lastSaveCurrentResult);
+            }
+        }
+        if (config.maxSecondCount != null && game.getLogicFrameHelper().getClockCount() > game.getLogicFrameHelper().secondToFrameNum(config.getMaxSecondCount())) {
+            proxyState = ProxyState.STOP;
+        }
+
+        if (proxyState == ProxyState.RUNNING) {
+            tryAutoAction();
+        } else if (proxyState == ProxyState.STOP) {
+            Gdx.app.exit();
         }
 
     }
