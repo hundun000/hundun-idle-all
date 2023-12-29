@@ -3,8 +3,10 @@ package hundun.gdxgame.idlemushroom.logic;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
-import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
-import hundun.gdxgame.idleshare.gamelib.framework.model.event.EventManager.OneFrameResourceChangeEvent;
+import hundun.gdxgame.idleshare.gamelib.framework.listener.IResourceChangeListener;
+import hundun.gdxgame.idleshare.gamelib.framework.model.event.EventManager.OneSecondResourceChangeEvent;
+import hundun.gdxgame.idleshare.gamelib.framework.model.event.EventManager.OneSecondResourceChangeEventOneTagData;
+import hundun.gdxgame.idleshare.gamelib.framework.model.resource.StorageManager.ModifyResourceTag;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -13,8 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class HistoryManager implements IOneFrameResourceChangeListener, ILogicFrameListener {
-    private final Map<String, List<Long>> deltaHistoryMap = new HashMap<>();
+public class HistoryManager implements IResourceChangeListener, ILogicFrameListener {
+    private final List<OneSecondResourceChangeEventOneTagData> outputHistoryList = new ArrayList<>();
     private final IdleMushroomGame game;
     @Getter
     private List<ProxyRunRecord> proxyRunRecords = new ArrayList<>();
@@ -48,27 +50,26 @@ public class HistoryManager implements IOneFrameResourceChangeListener, ILogicFr
     }
 
     private void addProxyRunRecordTypeLogResourcesDeltaMap() {
-        Map<String, Long> resourcesDeltaMap = deltaHistoryMap.entrySet().stream()
-                        .collect(Collectors.toMap(
-                                it -> it.getKey(),
-                                it -> it.getValue().stream().mapToLong(itt -> itt).sum()
-                        ));
-        deltaHistoryMap.clear();
+        Map<String, Float> avgResourceDeltaMap = new HashMap<>();
+        outputHistoryList.stream()
+                .forEach(it -> {
+                    it.getSecondChangeMap().forEach((k, v) -> {
+                        avgResourceDeltaMap.merge(k, v * 1.0f / outputHistoryList.size(), (o, n) -> o + n);
+                    });
+                });
+        outputHistoryList.clear();
         proxyRunRecords.add(
                 ProxyRunRecord.builder()
                         .logicFrameCount(game.getLogicFrameHelper().getClockCount())
                         .actionType(ProxyActionType.LogResourcesDeltaMap)
-                        .resourcesDeltaMap(resourcesDeltaMap)
+                        .avgResourceDeltaMap(avgResourceDeltaMap)
                         .build()
         );
     }
 
     @Override
-    public void onResourceChange(OneFrameResourceChangeEvent event) {
-        event.getAllTagData().getFrameChangeMap().keySet().forEach(resourceType -> this.deltaHistoryMap.computeIfAbsent(resourceType, it -> new ArrayList<>()));
-        this.deltaHistoryMap.forEach((resourceType, value) -> {
-            value.add(event.getAllTagData().getFrameChangeMap().getOrDefault(resourceType, 0L));
-        });
+    public void onResourceChange(OneSecondResourceChangeEvent event) {
+        outputHistoryList.add(event.getTagDataMap().get(ModifyResourceTag.OUTPUT));
     }
 
     private ProxyGameSituationDTO rootSaveDataToSituation(RootSaveData rootSaveData) {
@@ -138,7 +139,7 @@ public class HistoryManager implements IOneFrameResourceChangeListener, ILogicFr
         ProxyActionType actionType;
         List<String> extra;
         ProxyGameSituationDTO situation;
-        Map<String, Long> resourcesDeltaMap;
+        Map<String, Float> avgResourceDeltaMap;
     }
 
     public enum ProxyActionType {

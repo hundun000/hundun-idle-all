@@ -11,7 +11,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementStateChan
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollectionListener;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.INotificationBoardCallerAndCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IBuffChangeListener;
-import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
+import hundun.gdxgame.idleshare.gamelib.framework.listener.IResourceChangeListener;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievementPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementManager.AchievementState;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.StorageManager.ModifyResourceTag;
@@ -30,7 +30,7 @@ public class EventManager {
     List<IBuffChangeListener> buffChangeListeners = new ArrayList<>();
     List<IAchievementStateChangeListener> achievementStateChangeListeners = new ArrayList<>();
     List<INotificationBoardCallerAndCallback> notificationBoardCallerAndCallbacks = new ArrayList<>();
-    List<IOneFrameResourceChangeListener> oneFrameResourceChangeListeners = new ArrayList<>();
+    List<IResourceChangeListener> oneFrameResourceChangeListeners = new ArrayList<>();
     List<IConstructionCollectionListener> constructionCollectionListeners = new ArrayList<>();
     IdleGameplayContext gameContext;
 
@@ -53,8 +53,8 @@ public class EventManager {
         {
             notificationBoardCallerAndCallbacks.add((INotificationBoardCallerAndCallback)listener);
         }
-        if (listener instanceof IOneFrameResourceChangeListener && !oneFrameResourceChangeListeners.contains(listener)) {
-            oneFrameResourceChangeListeners.add((IOneFrameResourceChangeListener) listener);
+        if (listener instanceof IResourceChangeListener && !oneFrameResourceChangeListeners.contains(listener)) {
+            oneFrameResourceChangeListeners.add((IResourceChangeListener) listener);
         }
         if (listener instanceof IConstructionCollectionListener && !constructionCollectionListeners.contains(listener))
         {
@@ -79,9 +79,9 @@ public class EventManager {
         {
             notificationBoardCallerAndCallbacks.remove((INotificationBoardCallerAndCallback)listener);
         }
-        if (listener instanceof IOneFrameResourceChangeListener)
+        if (listener instanceof IResourceChangeListener)
         {
-            oneFrameResourceChangeListeners.remove((IOneFrameResourceChangeListener)listener);
+            oneFrameResourceChangeListeners.remove((IResourceChangeListener)listener);
         }
         if (listener instanceof IConstructionCollectionListener)
         {
@@ -107,23 +107,22 @@ public class EventManager {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public static class OneFrameResourceChangeEvent {
-        OneFrameResourceChangeEventOneTagData allTagData;
-        Map<ModifyResourceTag, OneFrameResourceChangeEventOneTagData> tagDataMap;
+    public static class OneSecondResourceChangeEvent {
+        OneSecondResourceChangeEventOneTagData allTagData;
+        Map<ModifyResourceTag, OneSecondResourceChangeEventOneTagData> tagDataMap;
     }
 
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public static class OneFrameResourceChangeEventOneTagData {
-        Map<String, Long> frameChangeMap;
-        Map<String, Long> latestSecondChangeMap;
+    public static class OneSecondResourceChangeEventOneTagData {
+        Map<String, Long> secondChangeMap;
     }
 
-    public void notifyOneFrameResourceChange(OneFrameResourceChangeEvent event) {
+    public void notifyOneSecondResourceChange(OneSecondResourceChangeEvent event) {
         gameContext.getFrontend().log(this.getClass().getSimpleName(), "notifyOneFrameResourceChange");
-        for (IOneFrameResourceChangeListener listener : oneFrameResourceChangeListeners) {
+        for (IResourceChangeListener listener : oneFrameResourceChangeListeners) {
             listener.onResourceChange(event);
         }
     }

@@ -13,4 +13,14 @@ public class StarterIdleFrontend implements IIdleFrontend {
     public int getLogicFramePerSecond() {
         return game.getLogicFrameHelper().secondToFrameNum(1.0f);
     }
+
+    @Override
+    public boolean modLogicFrameSecondZero(int mod) {
+        return game.getLogicFrameHelper().getClockCount() % game.getLogicFrameHelper().secondToFrameNum(mod) == 0;
+    }
+
+    @Override
+    public int getSecond() {
+        return game.getLogicFrameHelper().getClockCount() / game.getLogicFrameHelper().secondToFrameNum(1);
+    }
 }

@@ -11,12 +11,11 @@ import java.util.stream.Collectors;
 import hundun.gdxgame.gamelib.starter.listerner.IGameStartListener;
 import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.listener.IBuffChangeListener;
-import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
-import hundun.gdxgame.idleshare.gamelib.framework.model.construction.BaseConstructionFactory;
-import hundun.gdxgame.idleshare.gamelib.framework.model.event.EventManager.OneFrameResourceChangeEvent;
+import hundun.gdxgame.idleshare.gamelib.framework.listener.IResourceChangeListener;
+import hundun.gdxgame.idleshare.gamelib.framework.model.event.EventManager.OneSecondResourceChangeEvent;
 import lombok.*;
 
-public class AchievementManager implements IBuffChangeListener, IOneFrameResourceChangeListener, IGameStartListener {
+public class AchievementManager implements IBuffChangeListener, IResourceChangeListener, IGameStartListener {
     IdleGameplayContext gameContext;
 
     Map<String, AchievementAndStatus> models = new HashMap<>();
@@ -166,7 +165,7 @@ public class AchievementManager implements IBuffChangeListener, IOneFrameResourc
     }
 
     @Override
-    public void onResourceChange(OneFrameResourceChangeEvent event) {
+    public void onResourceChange(OneSecondResourceChangeEvent event) {
         checkAllAchievementStateChange();
     }
 

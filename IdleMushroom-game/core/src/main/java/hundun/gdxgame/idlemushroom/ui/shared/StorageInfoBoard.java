@@ -3,10 +3,10 @@ package hundun.gdxgame.idlemushroom.ui.shared;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.utils.Null;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
-import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
-import hundun.gdxgame.idleshare.gamelib.framework.model.event.EventManager.OneFrameResourceChangeEvent;
-import hundun.gdxgame.idleshare.gamelib.framework.model.event.EventManager.OneFrameResourceChangeEventOneTagData;
+import hundun.gdxgame.idleshare.gamelib.framework.listener.IResourceChangeListener;
+import hundun.gdxgame.idleshare.gamelib.framework.model.event.EventManager.OneSecondResourceChangeEvent;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.StorageManager.ModifyResourceTag;
 import lombok.Getter;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * @author hundun
  * Created on 2021/11/05
  */
-public class StorageInfoBoard extends Table implements IOneFrameResourceChangeListener {
+public class StorageInfoBoard extends Table implements IResourceChangeListener {
 
 
 
@@ -57,24 +57,24 @@ public class StorageInfoBoard extends Table implements IOneFrameResourceChangeLi
             this.MINUS_STYLE = game.getMainSkin().get("red_style", LabelStyle.class);
         }
 
-        public void update(long delta, long amount) {
+        public void update(long amount, long... delta) {
             amountLabel.setText(
                     game.getTextFormatTool().format(amount)
             );
-            if (delta > 0)
-            {
-                deltaLabel.setText("(+" + delta + ")");
-                deltaLabel.setStyle(PLUS_STYLE);
+            StringBuilder deltaLabelText = new StringBuilder();
+            for (int i = 0; i < delta.length; i++) {
+                if (delta[i] > 0)
+                {
+                    deltaLabelText.append("(+").append(delta[i]).append(")");
+                    deltaLabel.setStyle(PLUS_STYLE);
+                }
+                else if (delta[i] < 0)
+                {
+                    deltaLabelText.append("(-").append(Math.abs(delta[i])).append(")");
+                    deltaLabel.setStyle(MINUS_STYLE);
+                }
             }
-            else if(delta == 0)
-            {
-                deltaLabel.setText("");
-            }
-            else
-            {
-                deltaLabel.setText("(-" + Math.abs(delta) + ")");
-                deltaLabel.setStyle(MINUS_STYLE);
-            }
+            deltaLabel.setText(deltaLabelText.toString());
         }
 
 
@@ -84,7 +84,7 @@ public class StorageInfoBoard extends Table implements IOneFrameResourceChangeLi
     
     public void lazyInit(List<String> shownOrders) {
         this.shownOrders = shownOrders;
-        rebuildCells();
+        updateViewData();
     }
 
     //Label mainLabel;
@@ -125,7 +125,7 @@ public class StorageInfoBoard extends Table implements IOneFrameResourceChangeLi
 
 
 
-    public void updateViewData(OneFrameResourceChangeEvent event) {
+    public void updateViewData() {
         Set<String> unlockedResourceTypes = parent.getGame().getIdleGameplayExport().getGameplayContext().getStorageManager().getUnlockedResourceTypes();
         boolean needRebuildCells = !shownTypes.equals(unlockedResourceTypes);
         if (needRebuildCells) {
@@ -135,15 +135,17 @@ public class StorageInfoBoard extends Table implements IOneFrameResourceChangeLi
         }
 
         nodes.stream().forEach(node -> {
-            long historySum = event.getTagDataMap().get(ModifyResourceTag.OUTPUT).getLatestSecondChangeMap().getOrDefault(node.getResourceType(), 0L);
+            long historySum = parent.getGame().getIdleGameplayExport().getGameplayContext().getStorageManager().getSecondChangeMap(ModifyResourceTag.OUTPUT, 0).getOrDefault(node.getResourceType(), 0L);
+            long historySum1 = parent.getGame().getIdleGameplayExport().getGameplayContext().getStorageManager().getSecondChangeMap(ModifyResourceTag.OUTPUT, 1).getOrDefault(node.getResourceType(), 0L);
+            long historySum2 = parent.getGame().getIdleGameplayExport().getGameplayContext().getStorageManager().getSecondChangeMap(ModifyResourceTag.OUTPUT, 2).getOrDefault(node.getResourceType(), 0L);
             long amount = parent.getGame().getIdleGameplayExport().getGameplayContext().getStorageManager().getResourceNumOrZero(node.getResourceType());
-            node.update(historySum, amount);
+            node.update(amount, historySum, historySum1, historySum2);
         });
     }
 
 
     @Override
-    public void onResourceChange(OneFrameResourceChangeEvent event) {
-        updateViewData(event);
+    public void onResourceChange(OneSecondResourceChangeEvent event) {
+        updateViewData();
     }
 }

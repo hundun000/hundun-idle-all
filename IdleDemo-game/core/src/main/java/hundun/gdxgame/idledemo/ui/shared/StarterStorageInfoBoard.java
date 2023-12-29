@@ -6,17 +6,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import hundun.gdxgame.corelib.base.util.DrawableFactory;
-import hundun.gdxgame.idledemo.IdleDemoGame;
-import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
-import hundun.gdxgame.idleshare.gamelib.framework.model.event.EventManager.OneFrameResourceChangeEvent;
+import hundun.gdxgame.idleshare.gamelib.framework.listener.IResourceChangeListener;
+import hundun.gdxgame.idleshare.gamelib.framework.model.event.EventManager.OneSecondResourceChangeEvent;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.StorageManager.ModifyResourceTag;
-import hundun.gdxgame.idleshare.gamelib.framework.util.Utils;
 
 /**
  * @author hundun
  * Created on 2021/11/05
  */
-public class StarterStorageInfoBoard extends Table implements IOneFrameResourceChangeListener {
+public class StarterStorageInfoBoard extends Table implements IResourceChangeListener {
 
     private static int NODE_HEIGHT = 25;
     private static int NODE_WIDTH = 120;
@@ -73,7 +71,7 @@ public class StarterStorageInfoBoard extends Table implements IOneFrameResourceC
 
 
 
-    public void updateViewData(OneFrameResourceChangeEvent event) {
+    public void updateViewData(OneSecondResourceChangeEvent event) {
         Set<String> unlockedResourceTypes = parent.getGame().getIdleGameplayExport().getGameplayContext().getStorageManager().getUnlockedResourceTypes();
         boolean needRebuildCells = !shownTypes.equals(unlockedResourceTypes);
         if (needRebuildCells) {
@@ -83,7 +81,7 @@ public class StarterStorageInfoBoard extends Table implements IOneFrameResourceC
         }
 
         nodes.stream().forEach(node -> {
-            long historySum = event.getTagDataMap().get(ModifyResourceTag.OUTPUT).getLatestSecondChangeMap().getOrDefault(node.getResourceType(), 0L);
+            long historySum = event.getTagDataMap().get(ModifyResourceTag.OUTPUT).getSecondChangeMap().getOrDefault(node.getResourceType(), 0L);
             long amount = parent.getGame().getIdleGameplayExport().getGameplayContext().getStorageManager().getResourceNumOrZero(node.getResourceType());
             node.update(historySum, amount);
         });
@@ -91,7 +89,7 @@ public class StarterStorageInfoBoard extends Table implements IOneFrameResourceC
 
 
     @Override
-    public void onResourceChange(OneFrameResourceChangeEvent event) {
+    public void onResourceChange(OneSecondResourceChangeEvent event) {
         updateViewData(event);
     }
 }

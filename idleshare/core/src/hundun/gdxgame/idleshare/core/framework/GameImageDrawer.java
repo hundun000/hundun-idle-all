@@ -8,15 +8,16 @@ import hundun.gdxgame.corelib.base.BaseHundunScreen;
 import hundun.gdxgame.idleshare.core.framework.entity.BaseGameEntityFactory;
 import hundun.gdxgame.idleshare.core.framework.entity.GameEntity;
 import hundun.gdxgame.idleshare.core.framework.manager.GameEntityManager;
-import hundun.gdxgame.idleshare.gamelib.framework.listener.IOneFrameResourceChangeListener;
-import hundun.gdxgame.idleshare.gamelib.framework.model.event.EventManager.OneFrameResourceChangeEvent;
+import hundun.gdxgame.idleshare.gamelib.framework.listener.IResourceChangeListener;
+import hundun.gdxgame.idleshare.gamelib.framework.model.event.EventManager.OneSecondResourceChangeEvent;
+import hundun.gdxgame.idleshare.gamelib.framework.model.resource.StorageManager.ModifyResourceTag;
 
 /**
  * @author hundun
  * Created on 2021/11/16
  * @param <T_GAME>
  */
-public class GameImageDrawer<T_GAME extends BaseHundunGame<T_SAVE>, T_SAVE> implements IOneFrameResourceChangeListener {
+public class GameImageDrawer<T_GAME extends BaseHundunGame<T_SAVE>, T_SAVE> implements IResourceChangeListener {
 
     BaseHundunScreen<T_GAME, T_SAVE> parent;
     IGameImageDrawerHolder holder;
@@ -95,11 +96,11 @@ public class GameImageDrawer<T_GAME extends BaseHundunGame<T_SAVE>, T_SAVE> impl
 
 
     @Override
-    public void onResourceChange(OneFrameResourceChangeEvent event) {
+    public void onResourceChange(OneSecondResourceChangeEvent event) {
         String gameArea = holder.getScreenId();
 
         manager.areaEntityCheckByOwnAmount(gameArea, gameEntityFactory);
-        manager.areaEntityCheckByChangeAmount(gameArea, gameEntityFactory, event.getAllTagData().getFrameChangeMap());
+        manager.areaEntityCheckByChangeAmount(gameArea, gameEntityFactory, event.getAllTagData().getSecondChangeMap());
     }
 
 
