@@ -4,5 +4,5 @@ public interface IIdleFrontend {
     int getLogicFramePerSecond();
 
     boolean modLogicFrameSecondZero(int mod);
-    int getSecond();
+    float getSecond();
 }

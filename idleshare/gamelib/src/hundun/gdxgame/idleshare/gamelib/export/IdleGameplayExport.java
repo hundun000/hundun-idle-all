@@ -56,6 +56,7 @@ public class IdleGameplayExport implements ILogicFrameListener,
 
     @Override
     public void onLogicFrame() {
+        gameplayContext.setCurrentIntSecond((int)gameplayContext.getIdleFrontend().getSecond());
         gameplayContext.getConstructionManager().onSubLogicFrame();
         gameplayContext.getStorageManager().onSubLogicFrame();
     }

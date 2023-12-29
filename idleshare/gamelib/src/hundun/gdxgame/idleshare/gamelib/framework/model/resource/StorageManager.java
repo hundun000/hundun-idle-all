@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.model.event.EventManager.OneSecondResourceChangeEvent;
 import hundun.gdxgame.idleshare.gamelib.framework.model.event.EventManager.OneSecondResourceChangeEventOneTagData;
-import hundun.gdxgame.idleshare.gamelib.framework.util.Utils;
 import lombok.*;
 
 /**
@@ -28,7 +27,6 @@ public class StorageManager {
 
     //Map<ModifyResourceTag, Map<String, Long>> oneFrameDeltaResourceMap = new HashMap<>();
     final int historySecondSize;
-    int currentSecond;
     Map<ModifyResourceTag, Map<String, OneSecondHistoryData>> oneSecondDeltaResourceMap = new HashMap<>();
     private final Map<ModifyResourceTag, Map<String, List<OneSecondHistoryData>>> historyChangeMap = new HashMap<>();
 
@@ -74,7 +72,7 @@ public class StorageManager {
     }
 
     public void modifyAllResourceNum(List<ResourcePair> packs, boolean plus, ModifyResourceTag tag) {
-        gameContext.getFrontend().log(this.getClass().getSimpleName(), (plus ? "plus" : "minus") + " " + tag + ": " + packs);
+        //gameContext.getFrontend().log(this.getClass().getSimpleName(), (plus ? "plus" : "minus") + " " + tag + ": " + packs);
         for (ResourcePair pack : packs) {
             unlockedResourceTypes.add(pack.getType());
             ownResources.merge(pack.getType(), (plus ? 1 : -1 ) * pack.getAmount(), (oldValue, newValue) -> oldValue + newValue);
@@ -100,7 +98,7 @@ public class StorageManager {
     }
 
     public Map<String, Long> getSecondChangeMap(ModifyResourceTag tag, int secondBeforeCurrent) {
-        final int targetSecond = this.currentSecond - secondBeforeCurrent;
+        final int targetSecond = gameContext.getCurrentIntSecond() - secondBeforeCurrent;
         Map<String, List<OneSecondHistoryData>> thisTagHistoryChangeMap = historyChangeMap.get(tag);
         Map<String, Long> secondChangeMap = thisTagHistoryChangeMap.entrySet().stream()
                 .collect(Collectors.toMap(
@@ -130,7 +128,7 @@ public class StorageManager {
         oneSecondDeltaResourceMap.forEach((modifyResourceTag, map) -> {
             Map<String, List<OneSecondHistoryData>> thisTagHistoryChangeMap = historyChangeMap.get(modifyResourceTag);
             map.forEach((resourceType, oneSecondHistoryData) -> {
-                oneSecondHistoryData.setSecond(gameContext.getIdleFrontend().getSecond());
+                oneSecondHistoryData.setSecond(gameContext.getCurrentIntSecond());
                 thisTagHistoryChangeMap.computeIfAbsent(
                         resourceType,
                         it -> new ArrayList<>()
@@ -146,7 +144,6 @@ public class StorageManager {
         oneSecondDeltaResourceMap.values().forEach(it -> it.clear());
 
         // 从this.historyChangeMap中截取latestSecondChangeMap；
-        this.currentSecond = gameContext.getIdleFrontend().getSecond();
         Map<ModifyResourceTag, OneSecondResourceChangeEventOneTagData> tagDataMap = historyChangeMap.keySet().stream()
                 .collect(Collectors.toMap(
                         modifyResourceTag -> modifyResourceTag,

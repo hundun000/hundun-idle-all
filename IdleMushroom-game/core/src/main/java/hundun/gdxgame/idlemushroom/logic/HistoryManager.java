@@ -29,7 +29,7 @@ public class HistoryManager implements IResourceChangeListener, ILogicFrameListe
     public void addProxyRunRecord(ProxyActionType actionType, Object... extras) {
         proxyRunRecords.add(
                 ProxyRunRecord.builder()
-                        .logicFrameCount(game.getLogicFrameHelper().getClockCount())
+                        .second(game.getIdleGameplayExport().getGameplayContext().getIdleFrontend().getSecond())
                         .actionType(actionType)
                         .extra(JavaFeatureForGwt.listOf(extras).stream()
                                 .map(it -> it.toString())
@@ -42,7 +42,7 @@ public class HistoryManager implements IResourceChangeListener, ILogicFrameListe
     public void addProxyRunRecordTypeLogSaveCurrentResult(RootSaveData lastSaveCurrentResult) {
         proxyRunRecords.add(
                 ProxyRunRecord.builder()
-                        .logicFrameCount(game.getLogicFrameHelper().getClockCount())
+                        .second(game.getIdleGameplayExport().getGameplayContext().getIdleFrontend().getSecond())
                         .actionType(ProxyActionType.LogSaveCurrentResult)
                         .situation(rootSaveDataToSituation(lastSaveCurrentResult))
                         .build()
@@ -60,7 +60,7 @@ public class HistoryManager implements IResourceChangeListener, ILogicFrameListe
         outputHistoryList.clear();
         proxyRunRecords.add(
                 ProxyRunRecord.builder()
-                        .logicFrameCount(game.getLogicFrameHelper().getClockCount())
+                        .second(game.getIdleGameplayExport().getGameplayContext().getIdleFrontend().getSecond())
                         .actionType(ProxyActionType.LogResourcesDeltaMap)
                         .avgResourceDeltaMap(avgResourceDeltaMap)
                         .build()
@@ -106,7 +106,7 @@ public class HistoryManager implements IResourceChangeListener, ILogicFrameListe
 
     public void onLogicFrame() {
         // try LogSaveCurrentResult
-        if (game.getLogicFrameHelper().getClockCount() % game.getLogicFrameHelper().secondToFrameNum(5) == 0)
+        if (game.getIdleGameplayExport().getGameplayContext().getIdleFrontend().modLogicFrameSecondZero(5))
         {
             game.getHistoryManager().addProxyRunRecordTypeLogResourcesDeltaMap();
         }
@@ -135,7 +135,7 @@ public class HistoryManager implements IResourceChangeListener, ILogicFrameListe
     @AllArgsConstructor
     @Builder
     public static class ProxyRunRecord {
-        int logicFrameCount;
+        float second;
         ProxyActionType actionType;
         List<String> extra;
         ProxyGameSituationDTO situation;

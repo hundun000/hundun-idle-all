@@ -20,7 +20,7 @@ public class StarterIdleFrontend implements IIdleFrontend {
     }
 
     @Override
-    public int getSecond() {
-        return game.getLogicFrameHelper().getClockCount() / game.getLogicFrameHelper().secondToFrameNum(1);
+    public float getSecond() {
+        return game.getLogicFrameHelper().getClockCount() * 1.0f / game.getLogicFrameHelper().secondToFrameNum(1);
     }
 }

@@ -48,7 +48,7 @@ public class ProxyManager {
 
     public void tryAutoAction() {
         // skip some frame
-        if (game.getLogicFrameHelper().getClockCount() % game.getLogicFrameHelper().secondToFrameNum(1) != 0)
+        if (!game.getIdleGameplayExport().getGameplayContext().getIdleFrontend().modLogicFrameSecondZero(1))
         {
             return;
         }

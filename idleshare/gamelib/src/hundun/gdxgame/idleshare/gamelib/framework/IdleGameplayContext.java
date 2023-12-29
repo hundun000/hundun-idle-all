@@ -15,6 +15,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.event.EventManager;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.StorageManager;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author hundun
@@ -34,6 +35,10 @@ public class IdleGameplayContext {
     final AchievementManager achievementManager;
     final BaseConstructionFactory constructionFactory;
     final ConstructionManager constructionManager;
+
+    @Setter
+    @Getter
+    private int currentIntSecond;
 
     public IdleGameplayContext(
             IFrontend frontend,

@@ -118,11 +118,16 @@ public class GameEntityManager {
 
         gameEntitiesOfResourceIds.computeIfAbsent(resourceId, k -> new LinkedList<>());
         List<GameEntity> gameEntities = gameEntitiesOfResourceIds.get(resourceId);
-        for (int i = 0; i < drawNum; i++) {
-            GameEntity gameEntity = gameEntityFactory.newResourceEntity(resourceId, i);
+        while (gameEntities.size() > drawNum) {
+            //Gdx.app.log(this.getClass().getSimpleName(), "checkResourceEntityByOwnAmount " + resourceId + " remove, current = " + gameEntities.size() + " , target = " + drawNum);
+            gameEntities.remove(gameEntities.size() - 1);
+        }
+        while (gameEntities.size() < drawNum) {
+            int newIndex = gameEntities.size();
+            GameEntity gameEntity = gameEntityFactory.newResourceEntity(resourceId, newIndex);
             if (gameEntity != null) {
+                //Gdx.app.log(this.getClass().getSimpleName(), "checkResourceEntityByOwnAmount " + resourceId + " new, current = " + gameEntities.size() + " , target = " + drawNum);
                 gameEntities.add(gameEntity);
-                //Gdx.app.log(this.getClass().getSimpleName(), "addResourceEntityByChangeAmount " + resourceId + " new, target = " + drawNum);
             } else {
                 break;
             }
