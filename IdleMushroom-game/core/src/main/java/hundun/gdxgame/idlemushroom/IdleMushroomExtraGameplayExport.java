@@ -29,6 +29,9 @@ public class IdleMushroomExtraGameplayExport implements IGameStartListener {
     // for quick ref
     @Getter
     BaseConstruction mainClickerConstruction;
+    // for quick ref
+    @Getter
+    BaseConstruction autoSellerConstruction;
     IdleMushroomExtraGameplayExport(IdleMushroomGame game) {
         this.game = game;
         this.epochConfigMap = JavaFeatureForGwt.mapOf(
@@ -193,6 +196,12 @@ public class IdleMushroomExtraGameplayExport implements IGameStartListener {
                 .getSingletonConstructionInstancesOrEmpty()
                 .stream()
                 .filter(it -> it.getPrototypeId().equals(IdleMushroomConstructionPrototypeId.MAIN_MUSHROOM))
+                .findAny()
+                .orElseThrow(() -> new RuntimeException("bad onGameStart"));
+        this.autoSellerConstruction = game.getIdleGameplayExport().getGameplayContext().getConstructionManager()
+                .getSingletonConstructionInstancesOrEmpty()
+                .stream()
+                .filter(it -> it.getPrototypeId().equals(IdleMushroomConstructionPrototypeId.MUSHROOM_AUTO_SELLER))
                 .findAny()
                 .orElseThrow(() -> new RuntimeException("bad onGameStart"));
         epochCounterConstruction.getLevelComponent().maxLevel = epochConfigMap.keySet().stream()

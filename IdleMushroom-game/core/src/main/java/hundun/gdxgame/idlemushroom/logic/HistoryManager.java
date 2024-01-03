@@ -143,7 +143,7 @@ public class HistoryManager implements IResourceChangeListener, ILogicFrameListe
     }
 
     public enum ProxyActionType {
-        LogSaveCurrentResult, doUpgrade, LogResourcesDeltaMap, buyInstanceOfPrototype
+        LogSaveCurrentResult, doUpgrade, LogResourcesDeltaMap, changeWorkingLevel, proxyCauseExit, buyInstanceOfPrototype
 
     }
 }

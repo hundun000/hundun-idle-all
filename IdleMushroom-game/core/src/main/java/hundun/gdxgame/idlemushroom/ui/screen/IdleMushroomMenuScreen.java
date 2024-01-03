@@ -134,7 +134,9 @@ public class IdleMushroomMenuScreen extends BaseHundunScreen<IdleMushroomGame, R
         Gdx.input.setInputProcessor(uiStage);
         game.getBatch().setProjectionMatrix(uiStage.getViewport().getCamera().combined);
 
+        game.getLogicFrameHelper().setLogicFramePause(true);
         initScene2d();
+        Gdx.app.log(this.getClass().getSimpleName(), "show done");
     }
 
     @Override

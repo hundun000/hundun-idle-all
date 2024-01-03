@@ -121,7 +121,7 @@ public class EventManager {
     }
 
     public void notifyOneSecondResourceChange(OneSecondResourceChangeEvent event) {
-        gameContext.getFrontend().log(this.getClass().getSimpleName(), "notifyOneSecondResourceChange");
+        //gameContext.getFrontend().log(this.getClass().getSimpleName(), "notifyOneSecondResourceChange");
         for (IResourceChangeListener listener : oneFrameResourceChangeListeners) {
             listener.onResourceChange(event);
         }
@@ -131,15 +131,6 @@ public class EventManager {
         gameContext.getFrontend().log(this.getClass().getSimpleName(), "notifyAchievementComplete");
         for (IAchievementStateChangeListener listener : achievementStateChangeListeners) {
             listener.onAchievementStateChange(achievement, state);
-        }
-    }
-
-    public void notifyNotification(String data)
-    {
-        gameContext.getFrontend().log(this.getClass().getSimpleName(), "notifyNotification");
-        for (INotificationBoardCallerAndCallback listener : notificationBoardCallerAndCallbacks)
-        {
-            listener.showNotificationMaskBoard(data);
         }
     }
 

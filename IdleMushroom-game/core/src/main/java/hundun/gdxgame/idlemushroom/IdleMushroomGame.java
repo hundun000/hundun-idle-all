@@ -1,6 +1,7 @@
 package hundun.gdxgame.idlemushroom;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ray3k.stripe.FreeTypeSkin;
@@ -9,8 +10,10 @@ import hundun.gdxgame.corelib.base.BaseHundunGame;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.gamelib.base.save.ISaveTool;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
+import hundun.gdxgame.idlemushroom.logic.ProxyManager.IProxyManagerCallback;
 import hundun.gdxgame.idlemushroom.logic.ProxyManager.ProxyConfig;
 import hundun.gdxgame.idlemushroom.logic.ProxyManager.ProxyState;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomScreenId;
 import hundun.gdxgame.idlemushroom.logic.loader.IdleMushroomBuffPrototypeLoader;
 import hundun.gdxgame.idlemushroom.logic.loader.IdleMushroomConstructionsLoader;
@@ -65,7 +68,7 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
     @Getter
     private final HistoryManager historyManager;
 
-    public IdleMushroomGame(ISaveTool<RootSaveData> saveTool) {
+    public IdleMushroomGame(ISaveTool<RootSaveData> saveTool, IProxyManagerCallback proxyManagerCallback) {
         super(960, 640, LOGIC_FRAME_PER_SECOND);
         this.debugMode = false;
         this.getLogicFrameHelper().setScale(0.01f);
@@ -87,10 +90,15 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
         this.idleMushroomExtraGameplayExport = new IdleMushroomExtraGameplayExport(this);
         this.proxyManager = new ProxyManager(this,
                 ProxyConfig.builder()
-                        .maxSecondCount(null)
+                        .stopConditionSecondCount(null)
+                        .stopConditionConstructionLevelMap(JavaFeatureForGwt.mapOf(
+                                IdleMushroomConstructionPrototypeId.EPOCH_COUNTER,
+                                5
+                        ))
                         .autoSaveDeltaSecond(null)
                         .starterProxyState(ProxyState.RUNNING)
-                        .build()
+                        .build(),
+                proxyManagerCallback
                 );
         this.historyManager = new HistoryManager(this);
     }
@@ -159,9 +167,6 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
     public void dispose() {
         super.dispose();
 
-        RootSaveData lastSaveCurrentResult = this.getSaveHandler().gameSaveCurrent();
-        this.getHistoryManager().addProxyRunRecordTypeLogSaveCurrentResult(lastSaveCurrentResult);
-        System.out.println(proxyManager.jsonTool.prettyPrint(this.getHistoryManager().getProxyRunRecords()));
     }
 
     @Override

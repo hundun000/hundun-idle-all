@@ -3,16 +3,22 @@ package hundun.gdxgame.idlemushroom.logic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter.OutputType;
+import com.badlogic.gdx.utils.Null;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
 import hundun.gdxgame.idlemushroom.logic.HistoryManager.ProxyActionType;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import lombok.*;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ProxyManager {
 
     IdleMushroomGame game;
+    private final IProxyManagerCallback proxyManagerCallback;
 
 
-    public Json jsonTool;
 
     ProxyConfig config;
     @Setter
@@ -24,15 +30,15 @@ public class ProxyManager {
         STOP,
     }
 
-    public ProxyManager(IdleMushroomGame game, ProxyConfig config) {
+    public interface IProxyManagerCallback {
+        default void onProxyCauseExit(IdleMushroomGame game) {};
+    }
+
+    public ProxyManager(IdleMushroomGame game, ProxyConfig config, IProxyManagerCallback proxyManagerCallback) {
         this.game = game;
         this.config = config;
-        this.jsonTool = new Json();
         this.proxyState = config.starterProxyState;
-
-        jsonTool.setOutputType(OutputType.json);
-        jsonTool.setTypeName(null);
-        jsonTool.setUsePrototypes(false);
+        this.proxyManagerCallback = proxyManagerCallback;
     }
 
     @Data
@@ -40,7 +46,8 @@ public class ProxyManager {
     @AllArgsConstructor
     @Builder
     public static class ProxyConfig {
-        Integer maxSecondCount;
+        Integer stopConditionSecondCount;
+        Map<String, Integer> stopConditionConstructionLevelMap;
         Integer autoSaveDeltaSecond;
         ProxyState starterProxyState;
     }
@@ -75,20 +82,79 @@ public class ProxyManager {
                                         .buyInstanceOfPrototype(constructionBuyCandidateConfig, model.getPosition());
                             });
                 });
-        // try doUpgrade
+        // try doUpgrade World
         game.getIdleGameplayExport().getGameplayContext().getConstructionManager().getWorldConstructionInstances().stream()
                 .filter(model -> model.getUpgradeComponent().canUpgrade())
                 .forEach(model -> {
-                    game.getHistoryManager().addProxyRunRecord(
-                            ProxyActionType.doUpgrade,
-                            model.getPrototypeId(),
-                            model.getPosition()
-                    );
-                    model.getUpgradeComponent().doUpgrade();
+                    proxyDoUpgrade(model);
                 });
+        // ------- try autoSeller ------
+        final BaseConstruction autoSellerConstruction = game.getIdleMushroomExtraGameplayExport().getAutoSellerConstruction();
+        if (autoSellerConstruction.getUpgradeComponent().canUpgrade()) {
+            proxyDoUpgrade(autoSellerConstruction);
+        }
+        proxyTryWorkingLevel(autoSellerConstruction);
+        // ------- try epoch ------
+        final BaseConstruction epochCounterConstruction = game.getIdleMushroomExtraGameplayExport().getEpochCounterConstruction();
+        if (epochCounterConstruction.getUpgradeComponent().canUpgrade()) {
+            proxyDoUpgrade(epochCounterConstruction);
+        }
     }
 
+    private void proxyTryWorkingLevel(BaseConstruction model) {
+        int beforeLevel = model.getSaveData().getWorkingLevel();
+        // firstly, set max workingLevel
+        while (model.getLevelComponent().canChangeWorkingLevel(1)) {
+            model.getLevelComponent().changeWorkingLevel(1);
+        }
+        // secondly, minus until can output
+        while (!model.getOutputComponent().canOutput() && model.getLevelComponent().canChangeWorkingLevel(-1)) {
+            model.getLevelComponent().changeWorkingLevel(-1);
+        }
+        int afterLevel = model.getSaveData().getWorkingLevel();
+        if (beforeLevel != afterLevel) {
+            game.getHistoryManager().addProxyRunRecord(
+                    ProxyActionType.changeWorkingLevel,
+                    model.getPrototypeId(),
+                    "beforeLevel=" + beforeLevel,
+                    "afterLevel=" + afterLevel
+            );
+        }
+    }
 
+    private void proxyDoUpgrade(BaseConstruction model) {
+
+        int beforeLevel = model.getSaveData().getLevel();
+        model.getUpgradeComponent().doUpgrade();
+        int afterLevel = model.getSaveData().getLevel();
+        game.getHistoryManager().addProxyRunRecord(
+                ProxyActionType.doUpgrade,
+                model.getPrototypeId(),
+                model.getPosition(),
+                "beforeLevel=" + beforeLevel,
+                "afterLevel=" + afterLevel
+        );
+    }
+
+    private boolean checkStopCondition() {
+        if (config.stopConditionSecondCount != null && game.getLogicFrameHelper().getClockCount() > game.getLogicFrameHelper().secondToFrameNum(config.getStopConditionSecondCount())) {
+            return true;
+        }
+        if (config.stopConditionConstructionLevelMap != null) {
+            for (String targetPrototypeId : config.stopConditionConstructionLevelMap.keySet()) {
+                final int targetLevel = config.stopConditionConstructionLevelMap.get(targetPrototypeId);
+                List<BaseConstruction> constructions = game.getIdleGameplayExport().getGameplayContext().getConstructionManager().getAllConstructionInstances().stream()
+                        .filter(it -> it.getPrototypeId().equals(targetPrototypeId))
+                        .collect(Collectors.toList());
+                for (BaseConstruction construction : constructions) {
+                    if (construction.getSaveData().getLevel() >= targetLevel) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
 
     public void onLogicFrame() {
@@ -100,13 +166,17 @@ public class ProxyManager {
                 game.getHistoryManager().addProxyRunRecordTypeLogSaveCurrentResult(lastSaveCurrentResult);
             }
         }
-        if (config.maxSecondCount != null && game.getLogicFrameHelper().getClockCount() > game.getLogicFrameHelper().secondToFrameNum(config.getMaxSecondCount())) {
+        if (checkStopCondition()) {
             proxyState = ProxyState.STOP;
         }
 
         if (proxyState == ProxyState.RUNNING) {
             tryAutoAction();
         } else if (proxyState == ProxyState.STOP) {
+            game.getHistoryManager().addProxyRunRecord(
+                    ProxyActionType.proxyCauseExit
+            );
+            proxyManagerCallback.onProxyCauseExit(game);
             Gdx.app.exit();
         }
 

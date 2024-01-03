@@ -35,7 +35,7 @@ public abstract class BaseIdleMushroomScreen extends BaseHundunScreen<IdleMushro
 
     @Getter
     protected final String screenId;
-
+    protected boolean enableLogicFrameOnShow = true;
     protected StorageInfoBoard storageInfoTable;
     protected SharedWikiPopupInfoBoard secondaryInfoBoard;
     protected BuffInfoBoard buffInfoBoard;
@@ -155,6 +155,7 @@ public abstract class BaseIdleMushroomScreen extends BaseHundunScreen<IdleMushro
         for (IGameAreaChangeListener gameAreaChangeListener : gameAreaChangeListeners) {
             gameAreaChangeListener.onGameAreaChange(game.getLastScreenId(), this.getScreenId());
         }
+        game.getLogicFrameHelper().setLogicFramePause(!enableLogicFrameOnShow);
 
         this.hidden = false;
         Gdx.app.log(this.getClass().getSimpleName(), "show done");
