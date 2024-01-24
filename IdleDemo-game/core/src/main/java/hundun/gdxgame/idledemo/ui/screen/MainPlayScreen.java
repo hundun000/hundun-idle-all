@@ -67,11 +67,16 @@ public class MainPlayScreen extends BaseDemoPlayScreen
         GameEntityFactory gameEntityFactory = new GameEntityFactory(this.layoutConst.gameEntityFactoryLayoutConst, this);
         gameImageDrawer.lazyInit(gameEntityFactory, gameEntityManager);
 
-        logicFrameListeners.add(constructionControlBoard);
-
         gameAreaChangeListeners.add(constructionControlBoard);
 
         this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(gameImageDrawer);
+    }
+
+    @Override
+    public void onLogicFrame() {
+        super.onLogicFrame();
+
+        constructionControlBoard.onLogicFrame();
     }
 
     @Override

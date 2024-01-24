@@ -5,9 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushroomPlayScreenLayoutConst;
-import hundun.gdxgame.idlemushroom.ui.screen.WorldPlayScreen;
+import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomWorldPlayScreen;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseCellDetailNodeVM;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseIdleMushroomPlayScreen;
 import hundun.gdxgame.idlemushroom.ui.shared.ConstructionDetailPartVM;
@@ -25,7 +24,7 @@ import java.util.List;
  * Created on 2021/11/05
  */
 public class WorldEmptyDetailNode extends BaseCellDetailNodeVM {
-    WorldPlayScreen screen;
+    IdleMushroomWorldPlayScreen screen;
     BaseConstruction construction;
     GridPosition position;
     Label constructionNameLabel;
@@ -35,7 +34,7 @@ public class WorldEmptyDetailNode extends BaseCellDetailNodeVM {
 
 
     public WorldEmptyDetailNode(
-            WorldPlayScreen parent
+            IdleMushroomWorldPlayScreen parent
             ) {
         super();
         this.screen = parent;

@@ -4,7 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomConstructionPrototypeId;
-import hundun.gdxgame.idlemushroom.ui.screen.WorldPlayScreen;
+import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomWorldPlayScreen;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseCellDetailNodeVM;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollectionListener;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
@@ -16,9 +16,9 @@ public class WorldDetailBoardVM extends Table implements IConstructionCollection
     @Setter
     public BaseConstruction detailingConstruction;
     BaseCellDetailNodeVM content;
-    protected WorldPlayScreen screen;
+    protected IdleMushroomWorldPlayScreen screen;
 
-    public WorldDetailBoardVM(WorldPlayScreen parent)
+    public WorldDetailBoardVM(IdleMushroomWorldPlayScreen parent)
     {
         this.screen = parent;
         this.setBackground(parent.getGame().getTextureManager().getDefaultBoardNinePatchDrawable());

@@ -3,15 +3,15 @@ package hundun.gdxgame.idlemushroom.ui.world;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
-import hundun.gdxgame.idlemushroom.ui.screen.WorldPlayScreen;
+import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomWorldPlayScreen;
 
 
 public class HexCellClickListener extends ClickListener {
     IdleMushroomGame game;
-    WorldPlayScreen screen;
+    IdleMushroomWorldPlayScreen screen;
     private final HexCellVM vm;
 
-    public HexCellClickListener(WorldPlayScreen screen, HexCellVM vm) {
+    public HexCellClickListener(IdleMushroomWorldPlayScreen screen, HexCellVM vm) {
         this.game = screen.getGame();
         this.screen = screen;
         this.vm = vm;

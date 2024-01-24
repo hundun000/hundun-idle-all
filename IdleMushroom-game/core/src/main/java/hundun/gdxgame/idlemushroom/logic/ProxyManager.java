@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter.OutputType;
 import com.badlogic.gdx.utils.Null;
+import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
 import hundun.gdxgame.idlemushroom.logic.HistoryManager.ProxyActionType;
+import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import lombok.*;
 
@@ -34,12 +36,16 @@ public class ProxyManager {
         default void onProxyCauseExit(IdleMushroomGame game) {};
     }
 
-    public ProxyManager(IdleMushroomGame game, ProxyConfig config, IProxyManagerCallback proxyManagerCallback) {
+    public ProxyManager(IdleMushroomGame game, IProxyManagerCallback proxyManagerCallback) {
         this.game = game;
-        this.config = config;
-        this.proxyState = config.starterProxyState;
         this.proxyManagerCallback = proxyManagerCallback;
     }
+
+    public void lazyInit(ProxyConfig config) {
+        this.config = config;
+        this.proxyState = config.starterProxyState;
+    }
+
 
     @Data
     @NoArgsConstructor
@@ -50,6 +56,24 @@ public class ProxyManager {
         Map<String, Integer> stopConditionConstructionLevelMap;
         Integer autoSaveDeltaSecond;
         ProxyState starterProxyState;
+
+        public static ProxyConfig demoInstance() {
+            return ProxyConfig.builder()
+                    .stopConditionSecondCount(null)
+                    .stopConditionConstructionLevelMap(JavaFeatureForGwt.mapOf(
+                            IdleMushroomConstructionPrototypeId.EPOCH_COUNTER,
+                            5
+                    ))
+                    .autoSaveDeltaSecond(null)
+                    .starterProxyState(ProxyState.RUNNING)
+                    .build();
+        }
+
+        public static ProxyConfig disabledInstance() {
+            return ProxyConfig.builder()
+                    .starterProxyState(ProxyState.PAUSE)
+                    .build();
+        }
     }
 
 

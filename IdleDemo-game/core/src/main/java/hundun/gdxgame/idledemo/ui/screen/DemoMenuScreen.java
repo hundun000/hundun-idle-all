@@ -146,6 +146,11 @@ public class DemoMenuScreen extends BaseHundunScreen<IdleDemoGame, RootSaveData>
 
     }
 
+    @Override
+    public void onLogicFrame() {
+
+    }
+
     public static class LanguageSwitchBoard extends Table {
 
         DemoMenuScreen parent;

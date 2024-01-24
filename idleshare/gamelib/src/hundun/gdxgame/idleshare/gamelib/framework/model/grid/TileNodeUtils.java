@@ -43,7 +43,7 @@ public class TileNodeUtils {
         target.setNeighbors(new HashMap<>());
 
         values.forEach(it -> {
-            GridPosition position = tileNeighborPosition(target, map, it);
+            GridPosition position = tileNeighborPosition(target.getPosition(), it);
             ITileNode<T> neighbor = map.getValidNodeOrNull(position);
             target.getNeighbors().put(it, neighbor);
         });
@@ -51,171 +51,171 @@ public class TileNodeUtils {
     }
 
 
-    public static <T> GridPosition tileNeighborPosition(ITileNode<T> target, ITileNodeMap<T> map, TileNeighborDirection direction)
+    public static <T> GridPosition tileNeighborPosition(GridPosition gridPosition, TileNeighborDirection direction)
     {
         switch (direction) {
             case LEFT_UP:
-                return tileLeftUpNeighbor(target, map);
+                return tileLeftUpNeighbor(gridPosition);
             case LEFT_MID:
-                return tileLeftMidNeighbor(target, map);
+                return tileLeftMidNeighbor(gridPosition);
             case LEFT_DOWN:
-                return tileLeftDownNeighbor(target, map);
+                return tileLeftDownNeighbor(gridPosition);
             case RIGHT_UP:
-                return tileRightUpNeighbor(target, map);
+                return tileRightUpNeighbor(gridPosition);
             case RIGHT_MID:
-                return tileRightMidNeighbor(target, map);
+                return tileRightMidNeighbor(gridPosition);
             case RIGHT_DOWN:
-                return tileRightDownNeighbor(target, map);
+                return tileRightDownNeighbor(gridPosition);
         }
         return null;
     }
 
 
 
-    public static <T> GridPosition tileRightMidNeighbor(ITileNode<T> target, ITileNodeMap<T> map)
+    public static <T> GridPosition tileRightMidNeighbor(GridPosition gridPosition)
     {
         int y;
         int x;
         if (hexMode == HexMode.ODD_R) {
-            y = target.getPosition().y;
-            x = target.getPosition().x + 1;
+            y = gridPosition.y;
+            x = gridPosition.x + 1;
         } else {
             // hexMode == HexMode.ODD_Q
-            boolean evenCol = target.getPosition().x % 2 == 0;
+            boolean evenCol = gridPosition.x % 2 == 0;
             if (evenCol)
             {
-                y = target.getPosition().y;
-                x = target.getPosition().x + 1;
+                y = gridPosition.y;
+                x = gridPosition.x + 1;
             }
             else
             {
-                y = target.getPosition().y + 1;
-                x = target.getPosition().x + 1;
+                y = gridPosition.y + 1;
+                x = gridPosition.x + 1;
             }
         }
         return new GridPosition(x, y);
     }
 
 
-    public static <T> GridPosition tileRightUpNeighbor(ITileNode<T> target, ITileNodeMap<T> map)
+    public static <T> GridPosition tileRightUpNeighbor(GridPosition gridPosition)
     {
         int y;
         int x;
         if (hexMode == HexMode.ODD_R) {
-            boolean evenRow = target.getPosition().y % 2 == 0;
+            boolean evenRow = gridPosition.y % 2 == 0;
             if (evenRow) {
-                y = target.getPosition().y - 1;
-                x = target.getPosition().x + 1;
+                y = gridPosition.y - 1;
+                x = gridPosition.x + 1;
             } else {
-                y = target.getPosition().y - 1;
-                x = target.getPosition().x;
+                y = gridPosition.y - 1;
+                x = gridPosition.x;
             }
         } else {
             // hexMode == HexMode.ODD_Q
-            boolean evenCol = target.getPosition().x % 2 == 0;
+            boolean evenCol = gridPosition.x % 2 == 0;
             if (evenCol) {
-                y = target.getPosition().y - 1;
-                x = target.getPosition().x + 1;
+                y = gridPosition.y - 1;
+                x = gridPosition.x + 1;
             }
             else
             {
-                y = target.getPosition().y;
-                x = target.getPosition().x + 1;
+                y = gridPosition.y;
+                x = gridPosition.x + 1;
             }
         }
         return new GridPosition(x, y);
     }
 
 
-    public static <T> GridPosition tileRightDownNeighbor(ITileNode<T> target, ITileNodeMap<T> map)
+    public static <T> GridPosition tileRightDownNeighbor(GridPosition gridPosition)
     {
         int y;
         int x;
         if (hexMode == HexMode.ODD_R) {
-            boolean evenRow = target.getPosition().y % 2 == 0;
+            boolean evenRow = gridPosition.y % 2 == 0;
             if (evenRow) {
-                y = target.getPosition().y + 1;
-                x = target.getPosition().x + 1;
+                y = gridPosition.y + 1;
+                x = gridPosition.x + 1;
             } else {
-                y = target.getPosition().y + 1;
-                x = target.getPosition().x;
+                y = gridPosition.y + 1;
+                x = gridPosition.x;
             }
         } else {
             // hexMode == HexMode.ODD_Q
-            y = target.getPosition().y + 1;
-            x = target.getPosition().x;
+            y = gridPosition.y + 1;
+            x = gridPosition.x;
         }
         return new GridPosition(x, y);
     }
 
-    public static <T> GridPosition tileLeftUpNeighbor(ITileNode<T> target, ITileNodeMap<T> map)
+    public static <T> GridPosition tileLeftUpNeighbor(GridPosition gridPosition)
     {
         int y;
         int x;
         if (hexMode == HexMode.ODD_R) {
-            boolean evenRow = target.getPosition().y % 2 == 0;
+            boolean evenRow = gridPosition.y % 2 == 0;
             if (evenRow) {
-                y = target.getPosition().y + 1;
-                x = target.getPosition().x;
+                y = gridPosition.y + 1;
+                x = gridPosition.x;
             } else {
-                y = target.getPosition().y + 1;
-                x = target.getPosition().x - 1;
+                y = gridPosition.y + 1;
+                x = gridPosition.x - 1;
             }
         } else {
             // hexMode == HexMode.ODD_Q
-            y = target.getPosition().y - 1;
-            x = target.getPosition().x;
+            y = gridPosition.y - 1;
+            x = gridPosition.x;
         }
         return new GridPosition(x, y);
     }
 
-    public static <T> GridPosition tileLeftMidNeighbor(ITileNode<T> target, ITileNodeMap<T> map)
+    public static <T> GridPosition tileLeftMidNeighbor(GridPosition gridPosition)
     {
         int y;
         int x;
         if (hexMode == HexMode.ODD_R) {
-            y = target.getPosition().y;
-            x = target.getPosition().x - 1;
+            y = gridPosition.y;
+            x = gridPosition.x - 1;
         } else {
             // hexMode == HexMode.ODD_Q
-            boolean evenCol = target.getPosition().x % 2 == 0;
+            boolean evenCol = gridPosition.x % 2 == 0;
             if (evenCol) {
-                y = target.getPosition().y - 1;
-                x = target.getPosition().x - 1;
+                y = gridPosition.y - 1;
+                x = gridPosition.x - 1;
             }
             else
             {
-                y = target.getPosition().y;
-                x = target.getPosition().x - 1;
+                y = gridPosition.y;
+                x = gridPosition.x - 1;
             }
         }
         return new GridPosition(x, y);
     }
 
-    public static <T> GridPosition tileLeftDownNeighbor(ITileNode<T> target, ITileNodeMap<T> map)
+    public static <T> GridPosition tileLeftDownNeighbor(GridPosition gridPosition)
     {
         int y;
         int x;
         if (hexMode == HexMode.ODD_R) {
-            boolean evenRow = target.getPosition().y % 2 == 0;
+            boolean evenRow = gridPosition.y % 2 == 0;
             if (evenRow) {
-                y = target.getPosition().y - 1;
-                x = target.getPosition().x;
+                y = gridPosition.y - 1;
+                x = gridPosition.x;
             } else {
-                y = target.getPosition().y - 1;
-                x = target.getPosition().x - 1;
+                y = gridPosition.y - 1;
+                x = gridPosition.x - 1;
             }
         } else {
             // hexMode == HexMode.ODD_Q
-            boolean evenCol = target.getPosition().x % 2 == 0;
+            boolean evenCol = gridPosition.x % 2 == 0;
             if (evenCol) {
-                y = target.getPosition().y;
-                x = target.getPosition().x - 1;
+                y = gridPosition.y;
+                x = gridPosition.x - 1;
             }
             else
             {
-                y = target.getPosition().y + 1;
-                x = target.getPosition().x - 1;
+                y = gridPosition.y + 1;
+                x = gridPosition.x - 1;
             }
         }
         return new GridPosition(x, y);

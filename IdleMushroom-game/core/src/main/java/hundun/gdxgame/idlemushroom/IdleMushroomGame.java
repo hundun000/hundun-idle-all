@@ -89,15 +89,6 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
         );
         this.idleMushroomExtraGameplayExport = new IdleMushroomExtraGameplayExport(this);
         this.proxyManager = new ProxyManager(this,
-                ProxyConfig.builder()
-                        .stopConditionSecondCount(null)
-                        .stopConditionConstructionLevelMap(JavaFeatureForGwt.mapOf(
-                                IdleMushroomConstructionPrototypeId.EPOCH_COUNTER,
-                                5
-                        ))
-                        .autoSaveDeltaSecond(null)
-                        .starterProxyState(ProxyState.RUNNING)
-                        .build(),
                 proxyManagerCallback
                 );
         this.historyManager = new HistoryManager(this);

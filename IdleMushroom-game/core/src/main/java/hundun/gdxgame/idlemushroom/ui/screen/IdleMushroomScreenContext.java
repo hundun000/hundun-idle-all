@@ -15,7 +15,7 @@ public class IdleMushroomScreenContext {
     IdleMushroomMenuScreen menuScreen;
     @Getter
     IdleMushroomMainPlayScreen mainPlayScreen;
-    WorldPlayScreen worldPlayScreen;
+    IdleMushroomWorldPlayScreen worldPlayScreen;
     IdleMushroomAchievementScreen achievementScreen;
 
 
@@ -79,7 +79,7 @@ public class IdleMushroomScreenContext {
     public void lazyInit() {
         this.menuScreen = new IdleMushroomMenuScreen(game);
         this.mainPlayScreen = new IdleMushroomMainPlayScreen(game);
-        this.worldPlayScreen = new WorldPlayScreen(game);
+        this.worldPlayScreen = new IdleMushroomWorldPlayScreen(game);
         this.achievementScreen = new IdleMushroomAchievementScreen(game);
 
         game.getScreenManager().addScreen(IdleMushroomScreenId.SCREEN_MENU, menuScreen);

@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Null;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
-import hundun.gdxgame.idlemushroom.ui.screen.WorldPlayScreen;
+import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomWorldPlayScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.TileNodeUtils.HexMode;
 import lombok.Getter;
@@ -46,7 +46,7 @@ public class HexCellVM extends Table {
     BaseConstruction deskData;
     @Getter
     MaskMode maskMode;
-    public WorldPlayScreen parent;
+    public IdleMushroomWorldPlayScreen parent;
 
     Label mainLabel;
     @Getter
@@ -58,7 +58,7 @@ public class HexCellVM extends Table {
 
     final Drawable cachedHexCellCanUpgradeIcon;
     final Drawable cachedHexCellMaxLevelIcon;
-    public HexCellVM(WorldPlayScreen parent, HexAreaVM hexAreaVM, BaseConstruction deskData, boolean isSelectedConstruction) {
+    public HexCellVM(IdleMushroomWorldPlayScreen parent, HexAreaVM hexAreaVM, BaseConstruction deskData, boolean isSelectedConstruction) {
         this.parent = parent;
         this.game = hexAreaVM.screen.getGame();
         this.hexAreaVM = hexAreaVM;

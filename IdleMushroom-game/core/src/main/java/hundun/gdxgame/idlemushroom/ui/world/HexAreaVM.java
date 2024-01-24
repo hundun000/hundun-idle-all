@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Null;
-import hundun.gdxgame.idlemushroom.ui.screen.WorldPlayScreen;
+import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomWorldPlayScreen;
 import hundun.gdxgame.idlemushroom.ui.world.HexCellVM.MaskMode;
 import hundun.gdxgame.idleshare.core.framework.CameraDataPackage;
 
@@ -27,14 +27,14 @@ public class HexAreaVM extends Table {
     public static final float roomHeightBorder = 1000.0f;
     static final float RESET_CAMERA_ZOOM_WEIGHT = 2.0f;
     static final float MAX_CAMERA_ZOOM_WEIGHT = 3.25f;
-    public WorldPlayScreen screen;
+    public IdleMushroomWorldPlayScreen screen;
     @Getter
     Map<String, HexCellVM> nodes = new LinkedHashMap<>();
     @Getter
     CameraDataPackage cameraDataPackage;
     @Null
     BaseConstruction selectedConstruction;
-    public HexAreaVM(WorldPlayScreen screen) {
+    public HexAreaVM(IdleMushroomWorldPlayScreen screen) {
         this.screen = screen;
         this.cameraDataPackage = new CameraDataPackage();
         this.cameraDataPackage.setCameraZoomWeightOnlyAllowForceSet(false);

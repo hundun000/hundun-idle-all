@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushroomPlayScreenLayoutConst;
-import hundun.gdxgame.idlemushroom.ui.screen.WorldPlayScreen;
+import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomWorldPlayScreen;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseCellDetailNodeVM;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseIdleMushroomPlayScreen;
 import hundun.gdxgame.idlemushroom.ui.shared.ConstructionDetailPartVM;
@@ -39,7 +39,7 @@ public class WorldMushroomDetailNode extends BaseCellDetailNodeVM {
     ConstructionDetailPartVM rightPart;
 
     public WorldMushroomDetailNode(
-            WorldPlayScreen parent
+            IdleMushroomWorldPlayScreen parent
             ) {
         super();
         final IdleMushroomPlayScreenLayoutConst playScreenLayoutConst = parent.getLayoutConst();

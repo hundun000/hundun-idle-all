@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import hundun.gdxgame.corelib.base.BaseHundunScreen;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
+import hundun.gdxgame.idlemushroom.logic.ProxyManager.ProxyConfig;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomScreenId;
 import hundun.gdxgame.idlemushroom.logic.RootSaveData;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushroomPlayScreenLayoutConst;
@@ -30,9 +31,9 @@ public class IdleMushroomMenuScreen extends BaseHundunScreen<IdleMushroomGame, R
     IdleMushroomGame idleMushroomGame;
 
 
-    final InputListener buttonContinueGameInputListener;
-    final InputListener buttonNewGameInputListener;
-
+    final ChangeListener buttonContinueGameInputListener;
+    final ChangeListener buttonNewGameInputListener;
+    final ChangeListener buttonProxyNewGameInputListener;
 
     Image backImage;
     TextButton buttonContinueGame;
@@ -43,33 +44,35 @@ public class IdleMushroomMenuScreen extends BaseHundunScreen<IdleMushroomGame, R
     public IdleMushroomMenuScreen(IdleMushroomGame game) {
         super(game, game.getSharedViewport());
         this.idleMushroomGame = game;
-        this.buttonContinueGameInputListener = new InputListener(){
+        this.buttonContinueGameInputListener = new ChangeListener(){
             @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+            public void changed(ChangeEvent event, Actor actor) {
                 game.getSaveHandler().gameplayLoadOrStarter(true);
                 game.getScreenManager().pushScreen(IdleMushroomScreenId.SCREEN_MAIN, null);
                 game.getAudioPlayManager().intoScreen(IdleMushroomScreenId.SCREEN_MAIN);
                 game.getIdleGameplayExport().getGameplayContext().getEventManager().notifyGameStart();
             }
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
         };
-        this.buttonNewGameInputListener = new InputListener(){
+        this.buttonNewGameInputListener = new ChangeListener(){
             @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+            public void changed(ChangeEvent event, Actor actor) {
+                game.getProxyManager().lazyInit(ProxyConfig.disabledInstance());
                 game.getSaveHandler().gameplayLoadOrStarter(false);
                 game.getScreenManager().pushScreen(IdleMushroomScreenId.SCREEN_MAIN, null);
                 game.getAudioPlayManager().intoScreen(IdleMushroomScreenId.SCREEN_MAIN);
                 game.getIdleGameplayExport().getGameplayContext().getEventManager().notifyGameStart();
             }
+        };
+        this.buttonProxyNewGameInputListener = new ChangeListener(){
             @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                return true;
+            public void changed(ChangeEvent event, Actor actor) {
+                game.getProxyManager().lazyInit(ProxyConfig.demoInstance());
+                game.getSaveHandler().gameplayLoadOrStarter(false);
+                game.getScreenManager().pushScreen(IdleMushroomScreenId.SCREEN_MAIN, null);
+                game.getAudioPlayManager().intoScreen(IdleMushroomScreenId.SCREEN_MAIN);
+                game.getIdleGameplayExport().getGameplayContext().getEventManager().notifyGameStart();
             }
         };
-
 
     }
 
@@ -84,6 +87,8 @@ public class IdleMushroomMenuScreen extends BaseHundunScreen<IdleMushroomGame, R
         buttonNewGame = new TextButton(memuScreenTexts.get(1), game.getMainSkin());
         buttonNewGame.addListener(buttonNewGameInputListener);
 
+        Button buttonProxyNewGame = new TextButton(memuScreenTexts.get(1) + " proxy", game.getMainSkin());
+        buttonProxyNewGame.addListener(buttonProxyNewGameInputListener);
 
         backUiStage.clear();
         uiRootTable.clear();
@@ -103,6 +108,12 @@ public class IdleMushroomMenuScreen extends BaseHundunScreen<IdleMushroomGame, R
         }
 
         uiRootTable.add(buttonNewGame)
+                .width(layoutConst.menuButtonWidth)
+                .height(layoutConst.menuButtonHeight)
+                .padTop(10)
+                .row();
+
+        uiRootTable.add(buttonProxyNewGame)
                 .width(layoutConst.menuButtonWidth)
                 .height(layoutConst.menuButtonHeight)
                 .padTop(10)

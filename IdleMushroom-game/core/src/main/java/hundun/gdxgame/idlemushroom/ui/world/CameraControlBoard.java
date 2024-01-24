@@ -4,14 +4,13 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import hundun.gdxgame.idlemushroom.ui.screen.WorldPlayScreen;
-import hundun.gdxgame.idlemushroom.ui.shared.BaseCellDetailNodeVM;
+import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomWorldPlayScreen;
 
 public class CameraControlBoard extends Table {
 
-    protected WorldPlayScreen screen;
+    protected IdleMushroomWorldPlayScreen screen;
 
-    public CameraControlBoard(WorldPlayScreen parent) {
+    public CameraControlBoard(IdleMushroomWorldPlayScreen parent) {
         this.screen = parent;
         int buttonSize = parent.getLayoutConst().CAMERA_CONTROL_BOARD_BUTTON_SIZE;
         float step = 0.25f;

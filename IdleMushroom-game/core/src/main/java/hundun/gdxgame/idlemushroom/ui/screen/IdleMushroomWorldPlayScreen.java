@@ -6,14 +6,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomBuffId;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomScreenId;
 import hundun.gdxgame.idlemushroom.logic.id.ResourceType;
-import hundun.gdxgame.idlemushroom.ui.shared.wiki.SharedWikiPopupInfoBoard;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseIdleMushroomPlayScreen;
 import hundun.gdxgame.idlemushroom.ui.world.CameraControlBoard;
 import hundun.gdxgame.idlemushroom.ui.world.HexCellVM;
@@ -21,7 +19,6 @@ import hundun.gdxgame.idlemushroom.ui.world.HexAreaVM;
 import hundun.gdxgame.idlemushroom.ui.world.WorldDetailBoardVM;
 import hundun.gdxgame.idleshare.core.framework.CameraDataPackage;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollectionListener;
-import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import lombok.Getter;
 
@@ -31,7 +28,7 @@ import java.util.List;
  * @author hundun
  * Created on 2021/11/02
  */
-public class WorldPlayScreen extends BaseIdleMushroomPlayScreen implements IConstructionCollectionListener {
+public class IdleMushroomWorldPlayScreen extends BaseIdleMushroomPlayScreen implements IConstructionCollectionListener {
 
     @Getter
     HexAreaVM hexAreaVM;
@@ -41,7 +38,7 @@ public class WorldPlayScreen extends BaseIdleMushroomPlayScreen implements ICons
     @Getter
     private boolean disableHexAreaInput;
 
-    public WorldPlayScreen(IdleMushroomGame game) {
+    public IdleMushroomWorldPlayScreen(IdleMushroomGame game) {
         super(game, IdleMushroomScreenId.SCREEN_WORLD);
 
         this.deskCamera = new OrthographicCamera();

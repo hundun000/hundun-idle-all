@@ -4,7 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushroomPlayScreenLayoutConst;
-import hundun.gdxgame.idlemushroom.ui.screen.WorldPlayScreen;
+import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomWorldPlayScreen;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseCellDetailNodeVM;
 import hundun.gdxgame.idlemushroom.ui.shared.BaseIdleMushroomPlayScreen;
 import hundun.gdxgame.idleshare.core.framework.StarterSecondaryInfoBoardCallerClickListener;
@@ -26,7 +26,7 @@ public class WorldTreeDetailNode extends BaseCellDetailNodeVM {
 
 
     public WorldTreeDetailNode(
-            WorldPlayScreen parent
+            IdleMushroomWorldPlayScreen parent
             ) {
         super();
         final IdleMushroomPlayScreenLayoutConst playScreenLayoutConst = parent.getLayoutConst();
