@@ -72,21 +72,21 @@ public class EpochCounterPrototype extends AbstractConstructionPrototype {
     public BaseConstruction getInstance(GridPosition position) {
         String id = prototypeId + "_" + IdleMushroomJavaFeatureForGwt.uuid();
 
-        BaseIdleMushroomConstruction thiz = new BaseIdleMushroomConstruction(prototypeId, id, position, descriptionPackage);
+        BaseIdleMushroomConstruction construction = new BaseIdleMushroomConstruction(prototypeId, id, position, descriptionPackage);
 
-        ConstProficiencyComponent proficiencyComponent = new ConstProficiencyComponent(thiz);
-        thiz.setProficiencyComponent(proficiencyComponent);
+        ConstProficiencyComponent proficiencyComponent = new ConstProficiencyComponent(construction);
+        construction.setProficiencyComponent(proficiencyComponent);
 
-        SimpleAutoOutputComponent outputComponent = new SimpleAutoOutputComponent(thiz);
-        thiz.setOutputComponent(outputComponent);
+        SimpleAutoOutputComponent outputComponent = new SimpleAutoOutputComponent(construction);
+        construction.setOutputComponent(outputComponent);
 
-        thiz.getUpgradeComponent().setUpgradeCostPack(IdleMushroomConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
+        construction.getUpgradeComponent().setUpgradeCostPack(IdleMushroomConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
                 ResourceType.DNA_POINT, 0
         )));
-        thiz.getUpgradeComponent().setCalculateCostFunction((baseValue, level) -> {
-            return level * 100L;
+        construction.getUpgradeComponent().setCalculateCostFunction((baseValue, level) -> {
+            return (1L << (level - 1)) * Math.max(1, (level - 1) * 2) * 50L;
         });
 
-        return thiz;
+        return construction;
     }
 }

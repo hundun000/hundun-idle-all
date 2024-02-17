@@ -36,7 +36,7 @@ public class HexCellVM extends Table {
     static int HIT_BOX_Y = 4;
     static int HIT_BOX_WIDTH = MAIN_IMAGE_WIDTH - HIT_BOX_X * 2;
     static int HIT_BOX_HEIGHT = SQR_3_DIV_2_HEX_SIZE - HIT_BOX_Y * 2;
-    static int LEVEL_STATE_IMAGE_SIZE = 50;
+    static int LEVEL_STATE_IMAGE_SIZE = 32;
     static float hexBaseSizeX = (float) (HEX_SIZE);
     static float hexBaseSizeY = (float) (SQR_3_DIV_2_HEX_SIZE);
 
@@ -85,8 +85,8 @@ public class HexCellVM extends Table {
 
         this.levelStateImage = new Image();
         levelStateImage.setBounds(
-                TABLE_WIDTH * 0.5f - LEVEL_STATE_IMAGE_SIZE * 0.5f,
-                TABLE_HEIGHT * 0.1f,
+                TABLE_WIDTH * 0.65f - LEVEL_STATE_IMAGE_SIZE * 0.5f,
+                TABLE_HEIGHT * 0.15f,
                 LEVEL_STATE_IMAGE_SIZE,
                 LEVEL_STATE_IMAGE_SIZE
         );

@@ -1,5 +1,6 @@
 package hundun.gdxgame.idleshare.gamelib.framework.model.buff;
 
+import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.model.buff.BuffManager.BuffSaveData;
 import lombok.AllArgsConstructor;
@@ -7,10 +8,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Map;
+import java.util.Optional;
+
 public class OutputScaleBuffPrototype extends AbstractBuffPrototype {
 
 
-    OutputScaleOneConstructionConfig defaultConstructionConfig;
+    Map<String, OutputScaleOneConstructionConfig> allConstructionConfigMap;
 
     @Data
     @AllArgsConstructor
@@ -27,10 +31,10 @@ public class OutputScaleBuffPrototype extends AbstractBuffPrototype {
             String name,
             String description,
             String levelPart,
-            OutputScaleOneConstructionConfig defaultConstructionConfig
+            Map<String, OutputScaleOneConstructionConfig> allConstructionConfigMap
     ) {
         super(id, name, description, levelPart);
-        this.defaultConstructionConfig = defaultConstructionConfig;
+        this.allConstructionConfigMap = allConstructionConfigMap;
     }
 
 
@@ -43,16 +47,18 @@ public class OutputScaleBuffPrototype extends AbstractBuffPrototype {
 
     @Override
     public long modifyOutputCost(BuffSaveData saveData, String constructionPrototypeId, String resourceType, long lastPhaseAmount) {
-        OutputScaleOneConstructionConfig targetConstructionConfig = defaultConstructionConfig;
-        float targetScaleArg = targetConstructionConfig.getScaleCostArg() != null ? targetConstructionConfig.getScaleCostArg() : 1.0f;
+        float targetScaleArg = Optional.ofNullable(allConstructionConfigMap.get(constructionPrototypeId))
+                        .map(it -> it.getScaleCostArg())
+                        .orElse(1.0f);
         double totalScale = Math.pow(targetScaleArg, saveData.buffLevel);
         return (long) (lastPhaseAmount * totalScale);
     }
 
     @Override
     public long modifyOutputGain(BuffSaveData saveData, String constructionPrototypeId, String resourceType, long lastPhaseAmount) {
-        OutputScaleOneConstructionConfig targetConstructionConfig = defaultConstructionConfig;
-        float targetScaleArg = targetConstructionConfig.getScaleGainArg() != null ? targetConstructionConfig.getScaleGainArg() : 1.0f;
+        float targetScaleArg = Optional.ofNullable(allConstructionConfigMap.get(constructionPrototypeId))
+                .map(it -> it.getScaleGainArg())
+                .orElse(1.0f);
         double totalScale = Math.pow(targetScaleArg, saveData.buffLevel);
         return (long) (lastPhaseAmount * totalScale);
     }

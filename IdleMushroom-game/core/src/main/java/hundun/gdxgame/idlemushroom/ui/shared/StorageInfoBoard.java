@@ -136,10 +136,8 @@ public class StorageInfoBoard extends Table implements IResourceChangeListener {
 
         nodes.stream().forEach(node -> {
             long historySum = parent.getGame().getIdleGameplayExport().getGameplayContext().getStorageManager().getSecondChangeMap(ModifyResourceTag.OUTPUT, 0).getOrDefault(node.getResourceType(), 0L);
-            long historySum1 = parent.getGame().getIdleGameplayExport().getGameplayContext().getStorageManager().getSecondChangeMap(ModifyResourceTag.OUTPUT, 1).getOrDefault(node.getResourceType(), 0L);
-            long historySum2 = parent.getGame().getIdleGameplayExport().getGameplayContext().getStorageManager().getSecondChangeMap(ModifyResourceTag.OUTPUT, 2).getOrDefault(node.getResourceType(), 0L);
             long amount = parent.getGame().getIdleGameplayExport().getGameplayContext().getStorageManager().getResourceNumOrZero(node.getResourceType());
-            node.update(amount, historySum, historySum1, historySum2);
+            node.update(amount, historySum);
         });
     }
 

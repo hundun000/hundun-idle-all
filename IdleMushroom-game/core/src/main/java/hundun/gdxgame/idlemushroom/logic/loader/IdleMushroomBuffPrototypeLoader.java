@@ -52,14 +52,19 @@ public class IdleMushroomBuffPrototypeLoader implements IBuffPrototypeLoader {
             Map<String, List<String>> textMap,
             String id,
             String arg) {
+        OutputScaleOneConstructionConfig config = OutputScaleOneConstructionConfig.builder()
+                .scaleGainArg(Float.parseFloat(arg))
+                .build();
+        Map<String, OutputScaleOneConstructionConfig> allConstructionConfigMap = new HashMap<>();
+        allConstructionConfigMap.put(IdleMushroomConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER, config);
+        allConstructionConfigMap.put(IdleMushroomConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER, config);
+        allConstructionConfigMap.put(IdleMushroomConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER, config);
         return new OutputScaleBuffPrototype(
                 id,
                 textMap.get(id).get(0),
                 JavaFeatureForGwt.stringFormat(textMap.get(id).get(1), arg),
                 textMap.get(id).get(2),
-                OutputScaleOneConstructionConfig.builder()
-                        .scaleGainArg(Float.parseFloat(arg))
-                        .build()
+                allConstructionConfigMap
         );
     }
 }

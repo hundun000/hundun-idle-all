@@ -31,7 +31,6 @@ public class IdleMushroomMenuScreen extends BaseHundunScreen<IdleMushroomGame, R
 
     final ChangeListener buttonContinueGameInputListener;
     final ChangeListener buttonNewGameInputListener;
-    final ChangeListener buttonProxyNewGameInputListener;
 
     Image backImage;
     TextButton buttonContinueGame;
@@ -62,17 +61,6 @@ public class IdleMushroomMenuScreen extends BaseHundunScreen<IdleMushroomGame, R
                 game.getIdleGameplayExport().getGameplayContext().getEventManager().notifyGameStart();
             }
         };
-        this.buttonProxyNewGameInputListener = new ChangeListener(){
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                game.getProxyManager().lazyInit(ProxyConfig.devInstance());
-                game.getSaveHandler().gameplayLoadOrStarter(false);
-                game.getScreenManager().pushScreen(IdleMushroomScreenId.SCREEN_MAIN, null);
-                game.getAudioPlayManager().intoScreen(IdleMushroomScreenId.SCREEN_MAIN);
-                game.getIdleGameplayExport().getGameplayContext().getEventManager().notifyGameStart();
-            }
-        };
-
     }
 
     private void initScene2d() {
@@ -86,8 +74,7 @@ public class IdleMushroomMenuScreen extends BaseHundunScreen<IdleMushroomGame, R
         buttonNewGame = new TextButton(memuScreenTexts.get(1), game.getMainSkin());
         buttonNewGame.addListener(buttonNewGameInputListener);
 
-        Button buttonProxyNewGame = new TextButton(memuScreenTexts.get(1) + " proxy", game.getMainSkin());
-        buttonProxyNewGame.addListener(buttonProxyNewGameInputListener);
+
 
         backUiStage.clear();
         uiRootTable.clear();
@@ -112,11 +99,26 @@ public class IdleMushroomMenuScreen extends BaseHundunScreen<IdleMushroomGame, R
                 .padTop(10)
                 .row();
 
-        uiRootTable.add(buttonProxyNewGame)
-                .width(layoutConst.menuButtonWidth)
-                .height(layoutConst.menuButtonHeight)
-                .padTop(10)
-                .row();
+        if (game.debugMode) {
+            Button buttonProxyNewGame = new TextButton(memuScreenTexts.get(1) + " proxy", game.getMainSkin());
+            ChangeListener buttonProxyNewGameInputListener = new ChangeListener(){
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    game.getProxyManager().lazyInit(ProxyConfig.devInstance());
+                    game.getSaveHandler().gameplayLoadOrStarter(false);
+                    game.getScreenManager().pushScreen(IdleMushroomScreenId.SCREEN_MAIN, null);
+                    game.getAudioPlayManager().intoScreen(IdleMushroomScreenId.SCREEN_MAIN);
+                    game.getIdleGameplayExport().getGameplayContext().getEventManager().notifyGameStart();
+                }
+            };
+            buttonProxyNewGame.addListener(buttonProxyNewGameInputListener);
+            uiRootTable.add(buttonProxyNewGame)
+                    .width(layoutConst.menuButtonWidth)
+                    .height(layoutConst.menuButtonHeight)
+                    .padTop(10)
+                    .row();
+
+        }
 
         this.languageSwitchBoardVM = new LanguageSwitchBoard(
                 this,

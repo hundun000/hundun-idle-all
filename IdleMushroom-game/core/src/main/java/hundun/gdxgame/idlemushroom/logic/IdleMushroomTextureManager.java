@@ -132,9 +132,15 @@ public class IdleMushroomTextureManager {
             questionMarkTexture = regions[0][13];
             proxyEnabledIcon = regions[0][6];
             proxyDisabledIcon = regions[0][0];
-            hexCellMaxLevelIcon = regions[0][11];
-            hexCellCanUpgradeIcon = regions[1][6];
         }
+        {
+            Texture texture = new Texture(Gdx.files.internal("cellStateIcons.png"));
+            TextureRegion[][] regions = TextureRegion.split(texture, 16, 16);
+            hexCellMaxLevelIcon = regions[0][0];
+            hexCellCanUpgradeIcon = regions[0][1];
+        }
+
+
 
         achievementMaskBoardTexture = new Texture(Gdx.files.internal("win.png"));
         menuTexture = new Texture(Gdx.files.internal("bg_grasslands.png"));

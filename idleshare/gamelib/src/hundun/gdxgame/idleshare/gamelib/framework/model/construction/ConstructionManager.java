@@ -170,7 +170,16 @@ public class ConstructionManager implements ITileNodeMap<Void> {
 
     public void addToCreateQueue(String prototypeId, GridPosition position)
     {
+        addToCreateQueue(prototypeId, position, null);
+    }
+    public void addToCreateQueue(String prototypeId, GridPosition position, ConstructionSaveData saveData)
+    {
         BaseConstruction construction = gameContext.getConstructionFactory().getInstanceOfPrototype(prototypeId, position);
+        if (saveData != null) {
+            construction.getSaveData().setLevel(saveData.getLevel());
+            construction.getSaveData().setWorkingLevel(saveData.getWorkingLevel());
+            construction.getSaveData().setProficiency(saveData.getProficiency());
+        }
         createQueue.add(construction);
     }
 

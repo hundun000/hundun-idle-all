@@ -36,7 +36,7 @@ public class AutoProviderPrototype extends AbstractConstructionPrototype {
             .wikiText("Mushroom Tile" + "：\n" +
                     "•Timely production of mushroom resources.\n" +
                     "•When the growth reaches its full length, it can be upgraded, and the growth length will be reset after the upgrade.\n" +
-                    "•The growth speed is related to the surrounding patches, trees benefit the growth, and the existence of other mushroom patches hinders the growth.")
+                    "•The growth speed is related to the surrounding tiles; trees benefit it, and the other mushrooms reduce it.")
             .upgradeButtonText("Upgrade")
             .outputCostDescriptionStart("Consume")
             .outputGainDescriptionStart("Produce")

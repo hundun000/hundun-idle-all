@@ -120,8 +120,8 @@ public class IdleMushroomSaveHandler extends PairChildrenSaveHandler<RootSaveDat
         });
 
         Map<String, Long> ownResources = new HashMap<>();
-        ownResources.put(ResourceType.MUSHROOM, 400L);
-        ownResources.put(ResourceType.DNA_POINT, 100L);
+        ownResources.put(ResourceType.MUSHROOM, 200L);
+        ownResources.put(ResourceType.DNA_POINT, 0L);
 
         return RootSaveData.builder()
                 .gameplaySave(GameplaySaveData.builder()
