@@ -3,7 +3,7 @@ package hundun.gdxgame.idlemushroom.logic.prototype;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idlemushroom.logic.loader.IdleMushroomConstructionsLoader;
 import hundun.gdxgame.idlemushroom.logic.id.ResourceType;
-import hundun.gdxgame.idlemushroom.logic.construction.BaseIdleDemoConstruction;
+import hundun.gdxgame.idlemushroom.logic.construction.BaseIdleMushroomConstruction;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.logic.construction.MainClickerOutputComponent;
 import hundun.gdxgame.idlemushroom.util.IdleMushroomJavaFeatureForGwt;
@@ -52,7 +52,7 @@ public class MainMushroomPrototype extends AbstractConstructionPrototype {
     @Override
     public BaseConstruction getInstance(GridPosition position) {
         String id = prototypeId + "_" + IdleMushroomJavaFeatureForGwt.uuid();
-        BaseIdleDemoConstruction construction = new BaseIdleDemoConstruction(prototypeId, id, position, descriptionPackage);
+        BaseIdleMushroomConstruction construction = new BaseIdleMushroomConstruction(prototypeId, id, position, descriptionPackage);
 
         ConstProficiencyComponent proficiencyComponent = new ConstProficiencyComponent(construction);
         construction.setProficiencyComponent(proficiencyComponent);
@@ -67,7 +67,6 @@ public class MainMushroomPrototype extends AbstractConstructionPrototype {
         )));
 
         construction.getUpgradeComponent().setUpgradeCostPack(IdleMushroomConstructionsLoader.toPack(new HashMap<>()));
-        construction.getLevelComponent().maxLevel = 3;
 
         return construction;
     }

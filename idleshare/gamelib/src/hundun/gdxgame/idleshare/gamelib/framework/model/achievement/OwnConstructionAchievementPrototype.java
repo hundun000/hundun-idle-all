@@ -5,6 +5,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.IdleGameplayContext;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -39,8 +40,9 @@ public class OwnConstructionAchievementPrototype extends AbstractAchievementProt
         {
             int requiredAmount = requiredEntry.getValue().getKey();
             int requiredLevel = requiredEntry.getValue().getValue();
+            List<String> targetConstructionPrototypeIds = JavaFeatureForGwt.listOf(requiredEntry.getKey().split("\\|"));
             boolean matched = allConstructions.stream()
-                    .filter(it -> it.getPrototypeId().equals(requiredEntry.getKey()))
+                    .filter(it -> targetConstructionPrototypeIds.contains(it.getPrototypeId()))
                     .filter(it -> it.getSaveData().getLevel() >= requiredLevel)
                     .count() >= requiredAmount;
             if (!matched)

@@ -32,7 +32,7 @@ public class IdleMushroomBuffPrototypeLoader implements IBuffPrototypeLoader {
                 textMap.put(IdleMushroomBuffId.BUFF_MUSHROOM_OUTPUT_SCALE, JavaFeatureForGwt.listOf(
                         "Mushroom-boost",
                         "Mushroom-boost" + "：\n"
-                        + "•Each level makes the mushroom production multiply by {0}.",
+                        + "•Each level makes the mushroom production multiply by {0} .",
                         "lv: {0}"
                 ));
                 break;

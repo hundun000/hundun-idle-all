@@ -91,7 +91,7 @@ public class UpgradeComponent {
     }
 
     public boolean canUpgrade() {
-        if (construction.levelComponent.isReachMaxLevel() || upgradeCostPack == null) {
+        if (upgradeState != UpgradeState.HAS_NEXT_UPGRADE || upgradeCostPack == null) {
             return false;
         }
         if (!construction.proficiencyComponent.isEnoughProficiencyForUpgrade()) {

@@ -114,4 +114,5 @@ public class IdleGameplayExport implements ILogicFrameListener,
         systemSettingSave.setLanguage(this.getLanguage());
     }
 
+    public void postConstructionCreate(BaseConstruction construction) {};
 }

@@ -22,8 +22,10 @@ import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext;
 import hundun.gdxgame.idlemushroom.logic.*;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomScreenContext.IdleMushroomPlayScreenLayoutConst;
 import hundun.gdxgame.idleshare.core.framework.StarterIdleFrontend;
+import hundun.gdxgame.idleshare.gamelib.export.IIdleFrontend;
 import hundun.gdxgame.idleshare.gamelib.export.IdleGameplayExport;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.TextFormatTool;
 import lombok.*;
 
@@ -32,6 +34,7 @@ import java.util.Map;
 
 
 public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
+    private static final float DEV_SCALE = 1f;
     private static final int LOGIC_FRAME_PER_SECOND = 100;
     @Getter
     protected IdleMushroomAudioPlayManager audioPlayManager;
@@ -71,7 +74,7 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
     public IdleMushroomGame(ISaveTool<RootSaveData> saveTool, IProxyManagerCallback proxyManagerCallback) {
         super(960, 640, LOGIC_FRAME_PER_SECOND);
         this.debugMode = false;
-        this.getLogicFrameHelper().setScale(0.01f);
+        this.getLogicFrameHelper().setScale(DEV_SCALE);
 
         this.sharedViewport = new ScreenViewport();
         this.textFormatTool = new TextFormatTool();
@@ -102,7 +105,7 @@ public class IdleMushroomGame extends BaseHundunGame<RootSaveData> {
         this.idleMushroomPlayScreenLayoutConst = new IdleMushroomPlayScreenLayoutConst(this.getWidth(), this.getHeight());
         this.idleGameplayExport = new IdleGameplayExport(
                 frontend,
-                new StarterIdleFrontend(this),
+                idleMushroomExtraGameplayExport,
                 new IdleMushroomConstructionsLoader(),
                 new IdleMushroomAchievementLoader(idleMushroomGameDictionary),
                 new IdleMushroomBuffPrototypeLoader(),

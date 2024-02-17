@@ -1,7 +1,7 @@
 package hundun.gdxgame.idlemushroom.logic.prototype;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.idlemushroom.logic.construction.BaseIdleDemoConstruction;
+import hundun.gdxgame.idlemushroom.logic.construction.BaseIdleMushroomConstruction;
 import hundun.gdxgame.idlemushroom.logic.loader.IdleMushroomConstructionsLoader;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.logic.id.ResourceType;
@@ -21,11 +21,11 @@ public class EpochCounterPrototype extends AbstractConstructionPrototype {
     public static DescriptionPackage descriptionPackageEN = DescriptionPackage.builder()
             .name("Genetic Modification")
             .wikiText("Genetic Modification" + "：\n" +
-                    "•Can consume genetic points for upgrade genetic modification.\n" +
-                    "•If the enlargement level changes, you will lose all the original mushroom tiles (because they are relatively too small).")
+                    "•Can consume genetic points for upgrade genetic modification.\n"
+            )
             .upgradeButtonText("Upgrade")
             .upgradeCostDescriptionStart("Upgrade cost")
-            .upgradeMaxLevelDescription("(max)")
+            .upgradeMaxLevelDescription("(max level)")
             .levelDescriptionProvider(DescriptionPackageFactory.EN_LEVEL_IMP.build())
             .proficiencyDescriptionProvider(DescriptionPackageFactory.EN_PROFICIENCY_IMP.build())
             .extraTexts(JavaFeatureForGwt.listOf(
@@ -38,8 +38,8 @@ public class EpochCounterPrototype extends AbstractConstructionPrototype {
     public static DescriptionPackage descriptionPackageCN = DescriptionPackage.builder()
             .name("基因改造")
             .wikiText("基因改造" + "：\n" +
-                    "•可消耗基因点数，进行一次基因改造。\n" +
-                    "•若巨大化等级变化，你将失去所有原有蘑菇地块（因为他们相对而言已经太小了）。")
+                    "•可消耗基因点数，进行一次基因改造。\n"
+            )
             .upgradeButtonText("升级")
             .upgradeCostDescriptionStart("升级费用")
             .upgradeMaxLevelDescription("(已达到最大等级)")
@@ -72,7 +72,7 @@ public class EpochCounterPrototype extends AbstractConstructionPrototype {
     public BaseConstruction getInstance(GridPosition position) {
         String id = prototypeId + "_" + IdleMushroomJavaFeatureForGwt.uuid();
 
-        BaseIdleDemoConstruction thiz = new BaseIdleDemoConstruction(prototypeId, id, position, descriptionPackage);
+        BaseIdleMushroomConstruction thiz = new BaseIdleMushroomConstruction(prototypeId, id, position, descriptionPackage);
 
         ConstProficiencyComponent proficiencyComponent = new ConstProficiencyComponent(thiz);
         thiz.setProficiencyComponent(proficiencyComponent);

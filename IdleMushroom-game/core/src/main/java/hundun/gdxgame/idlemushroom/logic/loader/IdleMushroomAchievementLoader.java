@@ -92,12 +92,15 @@ public class IdleMushroomAchievementLoader implements IAchievementPrototypeLoade
 
 
         Map<String, AbstractAchievementPrototype> map = new HashMap<>();
+        final String EPOCH_ANY_MUSHROOM_AUTO_PROVIDER = IdleMushroomConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER
+                + "|" + IdleMushroomConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER
+                + "|" + IdleMushroomConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER ;;
         OwnConstructionAchievementPrototype.Companion.quickAddOwnConstructionAchievement(
                 map,
                 IdleMushroomAchievementId.STEP_1,
                 textMap,
                 JavaFeatureForGwt.mapOf(
-                        IdleMushroomConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER, new SimpleEntry<>(2, 1)
+                        EPOCH_ANY_MUSHROOM_AUTO_PROVIDER, new SimpleEntry<>(2, 1)
                 ),
                 JavaFeatureForGwt.listOf(IdleMushroomAchievementId.STEP_2),
                 new ResourcePair(ResourceType.MUSHROOM, 50L)
@@ -107,7 +110,7 @@ public class IdleMushroomAchievementLoader implements IAchievementPrototypeLoade
                 IdleMushroomAchievementId.STEP_2,
                 textMap,
                 JavaFeatureForGwt.mapOf(
-                        IdleMushroomConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER, new SimpleEntry<>(2, 2)
+                        EPOCH_ANY_MUSHROOM_AUTO_PROVIDER, new SimpleEntry<>(2, 2)
                 ),
                 JavaFeatureForGwt.listOf(IdleMushroomAchievementId.STEP_3),
                 new ResourcePair(ResourceType.MUSHROOM, 100L)

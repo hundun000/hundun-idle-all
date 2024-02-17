@@ -3,9 +3,9 @@ package hundun.gdxgame.idlemushroom.logic.construction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.*;
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
 
-public class BaseIdleDemoConstruction extends BaseConstruction {
+public class BaseIdleMushroomConstruction extends BaseConstruction {
 
-    public BaseIdleDemoConstruction(
+    public BaseIdleMushroomConstruction(
             String prototypeId,
             String id,
             GridPosition position,

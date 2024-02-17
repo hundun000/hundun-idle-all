@@ -11,6 +11,7 @@ import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
 import hundun.gdxgame.idlemushroom.ui.screen.IdleMushroomWorldPlayScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.UpgradeComponent.UpgradeState;
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.TileNodeUtils.HexMode;
 import lombok.Getter;
 
@@ -158,7 +159,7 @@ public class HexCellVM extends Table {
     public void onLogicFrame() {
         if (deskData.getUpgradeComponent().canUpgrade()) {
             levelStateImage.setDrawable(cachedHexCellCanUpgradeIcon);
-        } else if (deskData.getLevelComponent().isReachMaxLevel()) {
+        } else if (deskData.getLevelComponent().isReachMaxLevel() && deskData.getUpgradeComponent().getUpgradeState() != UpgradeState.NO_UPGRADE) {
             levelStateImage.setDrawable(cachedHexCellMaxLevelIcon);
         } else {
             levelStateImage.setDrawable(null);

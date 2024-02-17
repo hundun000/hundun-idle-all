@@ -2,8 +2,6 @@ package hundun.gdxgame.idlemushroom.ui.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -47,6 +45,7 @@ public class IdleMushroomMenuScreen extends BaseHundunScreen<IdleMushroomGame, R
         this.buttonContinueGameInputListener = new ChangeListener(){
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                game.getProxyManager().lazyInit(ProxyConfig.releaseInstance());
                 game.getSaveHandler().gameplayLoadOrStarter(true);
                 game.getScreenManager().pushScreen(IdleMushroomScreenId.SCREEN_MAIN, null);
                 game.getAudioPlayManager().intoScreen(IdleMushroomScreenId.SCREEN_MAIN);
@@ -56,7 +55,7 @@ public class IdleMushroomMenuScreen extends BaseHundunScreen<IdleMushroomGame, R
         this.buttonNewGameInputListener = new ChangeListener(){
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.getProxyManager().lazyInit(ProxyConfig.disabledInstance());
+                game.getProxyManager().lazyInit(ProxyConfig.releaseInstance());
                 game.getSaveHandler().gameplayLoadOrStarter(false);
                 game.getScreenManager().pushScreen(IdleMushroomScreenId.SCREEN_MAIN, null);
                 game.getAudioPlayManager().intoScreen(IdleMushroomScreenId.SCREEN_MAIN);
@@ -66,7 +65,7 @@ public class IdleMushroomMenuScreen extends BaseHundunScreen<IdleMushroomGame, R
         this.buttonProxyNewGameInputListener = new ChangeListener(){
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.getProxyManager().lazyInit(ProxyConfig.demoInstance());
+                game.getProxyManager().lazyInit(ProxyConfig.devInstance());
                 game.getSaveHandler().gameplayLoadOrStarter(false);
                 game.getScreenManager().pushScreen(IdleMushroomScreenId.SCREEN_MAIN, null);
                 game.getAudioPlayManager().intoScreen(IdleMushroomScreenId.SCREEN_MAIN);

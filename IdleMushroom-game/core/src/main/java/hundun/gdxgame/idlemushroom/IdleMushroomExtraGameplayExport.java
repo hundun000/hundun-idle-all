@@ -8,6 +8,7 @@ import hundun.gdxgame.idlemushroom.IdleMushroomGame.ConstructionEpochConfig;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame.RootEpochConfig;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomBuffId;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomConstructionPrototypeId;
+import hundun.gdxgame.idleshare.core.framework.StarterIdleFrontend;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import lombok.Getter;
 
@@ -15,9 +16,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class IdleMushroomExtraGameplayExport implements IGameStartListener {
-    IdleMushroomGame game;
+public class IdleMushroomExtraGameplayExport extends StarterIdleFrontend implements IGameStartListener {
+    IdleMushroomGame idleMushroomGame;
     private final Map<Integer, RootEpochConfig> epochConfigMap;
+    private final int EPOCH_COUNTER_MAX_LEVEL = 20;
+    private final Map<String, Integer> specialEpochConfigMaxLevel = JavaFeatureForGwt.mapOf(
+            IdleMushroomConstructionPrototypeId.MAIN_MUSHROOM, Integer.MAX_VALUE,
+            IdleMushroomConstructionPrototypeId.MUSHROOM_AUTO_SELLER, 100,
+            IdleMushroomConstructionPrototypeId.EPOCH_COUNTER, EPOCH_COUNTER_MAX_LEVEL
+    );
     @Getter
     RootEpochConfig currentRootEpochConfig;
     @Getter
@@ -32,42 +39,32 @@ public class IdleMushroomExtraGameplayExport implements IGameStartListener {
     // for quick ref
     @Getter
     BaseConstruction autoSellerConstruction;
-    IdleMushroomExtraGameplayExport(IdleMushroomGame game) {
-        this.game = game;
-        this.epochConfigMap = JavaFeatureForGwt.mapOf(
+    IdleMushroomExtraGameplayExport(IdleMushroomGame idleMushroomGame) {
+        super(idleMushroomGame);
+        this.idleMushroomGame = idleMushroomGame;
+        this.epochConfigMap = new HashMap<>();
+        epochConfigMap.put(
                 1, RootEpochConfig.builder()
                         .enlargementLevel(1)
-                        .maxLevel(5)
-                        .buffEpochConfigMap(JavaFeatureForGwt.mapOf(
-                                IdleMushroomBuffId.BUFF_MUSHROOM_OUTPUT_SCALE,
-                                BuffEpochConfig.builder()
-                                        .buffLevel(0)
-                                        .build()
-                        ))
-                        .build(),
+                        .build()
+        );
+        epochConfigMap.put(
                 2, RootEpochConfig.builder()
                         .enlargementLevel(1)
-                        .maxLevel(7)
-                        .buffEpochConfigMap(JavaFeatureForGwt.mapOf(
-                                IdleMushroomBuffId.BUFF_MUSHROOM_OUTPUT_SCALE,
-                                BuffEpochConfig.builder()
-                                        .buffLevel(1)
-                                        .build()
-                        ))
-                        .build(),
+                        .build()
+        );
+        epochConfigMap.put(
                 3, RootEpochConfig.builder()
+                        .enlargementLevel(1)
+                        .build()
+        );
+        epochConfigMap.put(
+                4, RootEpochConfig.builder()
                         .enlargementLevel(2)
-                        .maxLevel(10)
-                        .buffEpochConfigMap(JavaFeatureForGwt.mapOf(
-                                IdleMushroomBuffId.BUFF_MUSHROOM_OUTPUT_SCALE,
-                                BuffEpochConfig.builder()
-                                        .buffLevel(2)
-                                        .build()
-                        ))
                         .constructionEpochConfigMap(JavaFeatureForGwt.mapOf(
                                 IdleMushroomConstructionPrototypeId.EPOCH_1_MUSHROOM_AUTO_PROVIDER,
                                 ConstructionEpochConfig.builder()
-                                        .transformToPrototypeId(IdleMushroomConstructionPrototypeId.EPOCH_2_EMPTY_CELL)
+                                        .transformToPrototypeId(IdleMushroomConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER)
                                         .build(),
                                 IdleMushroomConstructionPrototypeId.EPOCH_1_EMPTY_CELL,
                                 ConstructionEpochConfig.builder()
@@ -78,30 +75,30 @@ public class IdleMushroomExtraGameplayExport implements IGameStartListener {
                                         .transformToPrototypeId(IdleMushroomConstructionPrototypeId.EPOCH_2_TREE)
                                         .build()
                         ))
-                        .build(),
-                4, RootEpochConfig.builder()
-                        .enlargementLevel(2)
-                        .maxLevel(12)
-                        .buffEpochConfigMap(JavaFeatureForGwt.mapOf(
-                                IdleMushroomBuffId.BUFF_MUSHROOM_OUTPUT_SCALE,
-                                BuffEpochConfig.builder()
-                                        .buffLevel(3)
-                                        .build()
-                        ))
-                        .build(),
+                        .build()
+        );
+        epochConfigMap.put(
                 5, RootEpochConfig.builder()
+                        .enlargementLevel(2)
+                        .build()
+        );
+        epochConfigMap.put(
+                6, RootEpochConfig.builder()
+                        .enlargementLevel(2)
+                        .build()
+        );
+        epochConfigMap.put(
+                7, RootEpochConfig.builder()
+                        .enlargementLevel(2)
+                        .build()
+        );
+        epochConfigMap.put(
+                8, RootEpochConfig.builder()
                         .enlargementLevel(3)
-                        .maxLevel(15)
-                        .buffEpochConfigMap(JavaFeatureForGwt.mapOf(
-                                IdleMushroomBuffId.BUFF_MUSHROOM_OUTPUT_SCALE,
-                                BuffEpochConfig.builder()
-                                        .buffLevel(4)
-                                        .build()
-                        ))
                         .constructionEpochConfigMap(JavaFeatureForGwt.mapOf(
                                 IdleMushroomConstructionPrototypeId.EPOCH_2_MUSHROOM_AUTO_PROVIDER,
                                 ConstructionEpochConfig.builder()
-                                        .transformToPrototypeId(IdleMushroomConstructionPrototypeId.EPOCH_3_EMPTY_CELL)
+                                        .transformToPrototypeId(IdleMushroomConstructionPrototypeId.EPOCH_3_MUSHROOM_AUTO_PROVIDER)
                                         .build(),
                                 IdleMushroomConstructionPrototypeId.EPOCH_2_EMPTY_CELL,
                                 ConstructionEpochConfig.builder()
@@ -114,6 +111,22 @@ public class IdleMushroomExtraGameplayExport implements IGameStartListener {
                         ))
                         .build()
         );
+        for (int i = 9; i <= EPOCH_COUNTER_MAX_LEVEL; i++) {
+            epochConfigMap.put(
+                    i, RootEpochConfig.builder()
+                            .enlargementLevel(3)
+                            .build()
+            );
+        }
+        epochConfigMap.forEach((k, v) -> {
+            v.setMaxLevel(Math.max(1, 2 * (k - 1)));
+            v.setBuffEpochConfigMap(JavaFeatureForGwt.mapOf(
+                    IdleMushroomBuffId.BUFF_MUSHROOM_OUTPUT_SCALE,
+                    BuffEpochConfig.builder()
+                            .buffLevel(k - 1)
+                            .build()
+            ));
+        });
     }
 
 
@@ -122,7 +135,7 @@ public class IdleMushroomExtraGameplayExport implements IGameStartListener {
         this.currentRootEpochConfig = epochConfigMap.get(currentEpochLevel);
         this.nextRootEpochConfig = epochConfigMap.get(currentEpochLevel + 1);
 
-        game.getScreenContext().getMainPlayScreen().setMainClickerWithScale();
+        idleMushroomGame.getScreenContext().getMainPlayScreen().setMainClickerWithScale();
         // ------ UpdateBuff ------
         Map<String, Integer> deltaMap = currentRootEpochConfig.buffEpochConfigMap.entrySet().stream()
                         .collect(Collectors.toMap(
@@ -141,14 +154,14 @@ public class IdleMushroomExtraGameplayExport implements IGameStartListener {
                                 }));
         deltaMap.entrySet().removeIf(it -> it.getValue() == 0);
         if (!deltaMap.isEmpty()) {
-            game.getIdleGameplayExport().getGameplayContext().getBuffManager().modifyBuffLevel(deltaMap);
+            idleMushroomGame.getIdleGameplayExport().getGameplayContext().getBuffManager().modifyBuffLevel(deltaMap);
         }
         // ------ UpdateMaxLevel ------
         boolean needUpdateMaxLevel = lastRootEpochConfig == null || lastRootEpochConfig.getMaxLevel() != currentRootEpochConfig.getMaxLevel();
         if (needUpdateMaxLevel) {
-            game.getIdleGameplayExport().getGameplayContext().getConstructionManager().getWorldConstructionInstances().stream()
+            idleMushroomGame.getIdleGameplayExport().getGameplayContext().getConstructionManager().getWorldConstructionInstances().stream()
                     .forEach(it -> {
-                        it.getLevelComponent().maxLevel = currentRootEpochConfig.getMaxLevel();
+                        handleEpochConfigMaxLevel(it);
                     });
         }
         // ------ UpdateEveryConstruction ------
@@ -157,14 +170,14 @@ public class IdleMushroomExtraGameplayExport implements IGameStartListener {
                         || lastRootEpochConfig.getEnlargementLevel() != currentRootEpochConfig.getEnlargementLevel())
                 && currentRootEpochConfig.getConstructionEpochConfigMap() != null;
         if (needUpdateEveryConstruction) {
-            game.getIdleGameplayExport().getGameplayContext().getConstructionManager().getWorldConstructionInstances().stream()
+            idleMushroomGame.getIdleGameplayExport().getGameplayContext().getConstructionManager().getWorldConstructionInstances().stream()
                     .forEach(it -> {
                         ConstructionEpochConfig constructionEpochConfig = currentRootEpochConfig.getConstructionEpochConfigMap()
                                 .get(it.getPrototypeId());
                         if (constructionEpochConfig != null) {
-                            game.getIdleGameplayExport().getGameplayContext().getConstructionManager().addToRemoveQueue(it);
+                            idleMushroomGame.getIdleGameplayExport().getGameplayContext().getConstructionManager().addToRemoveQueue(it);
                             if (constructionEpochConfig.getTransformToPrototypeId() != null) {
-                                game.getIdleGameplayExport().getGameplayContext().getConstructionManager().addToCreateQueue(
+                                idleMushroomGame.getIdleGameplayExport().getGameplayContext().getConstructionManager().addToCreateQueue(
                                         constructionEpochConfig.getTransformToPrototypeId(),
                                         it.getPosition()
                                 );
@@ -180,38 +193,45 @@ public class IdleMushroomExtraGameplayExport implements IGameStartListener {
     }
 
     public void lazyInitStage2() {
-        game.getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(this);
+        idleMushroomGame.getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(this);
     }
 
     @Override
     public void onGameStart() {
-        this.epochCounterConstruction = game.getIdleGameplayExport().getGameplayContext()
+        this.epochCounterConstruction = idleMushroomGame.getIdleGameplayExport().getGameplayContext()
                 .getConstructionManager()
                 .getSingletonConstructionInstancesOrEmpty()
                 .stream()
                 .filter(it -> it.getPrototypeId().equals(IdleMushroomConstructionPrototypeId.EPOCH_COUNTER))
                 .findAny()
                 .orElseThrow(() -> new RuntimeException("bad onGameStart"));
-        this.mainClickerConstruction = game.getIdleGameplayExport().getGameplayContext().getConstructionManager()
+        this.mainClickerConstruction = idleMushroomGame.getIdleGameplayExport().getGameplayContext().getConstructionManager()
                 .getSingletonConstructionInstancesOrEmpty()
                 .stream()
                 .filter(it -> it.getPrototypeId().equals(IdleMushroomConstructionPrototypeId.MAIN_MUSHROOM))
                 .findAny()
                 .orElseThrow(() -> new RuntimeException("bad onGameStart"));
-        this.autoSellerConstruction = game.getIdleGameplayExport().getGameplayContext().getConstructionManager()
+        this.autoSellerConstruction = idleMushroomGame.getIdleGameplayExport().getGameplayContext().getConstructionManager()
                 .getSingletonConstructionInstancesOrEmpty()
                 .stream()
                 .filter(it -> it.getPrototypeId().equals(IdleMushroomConstructionPrototypeId.MUSHROOM_AUTO_SELLER))
                 .findAny()
                 .orElseThrow(() -> new RuntimeException("bad onGameStart"));
-        epochCounterConstruction.getLevelComponent().maxLevel = epochConfigMap.keySet().stream()
-                .mapToInt(it -> it)
-                .max()
-                .orElseThrow(() -> new RuntimeException("bad config"));
-        mainClickerConstruction.getLevelComponent().maxLevel = epochConfigMap.values().stream()
-                .mapToInt(it -> it.getEnlargementLevel())
-                .max()
-                .orElseThrow(() -> new RuntimeException("bad config"));
-        doChangeEpoch(1);
+        doChangeEpoch(epochCounterConstruction.getSaveData().getLevel());
+    }
+
+    @Override
+    public void postConstructionCreate(BaseConstruction construction) {
+        handleEpochConfigMaxLevel(construction);
+        construction.updateModifiedValues();
+    }
+
+    private void handleEpochConfigMaxLevel(BaseConstruction construction) {
+        if (specialEpochConfigMaxLevel.containsKey(construction.getPrototypeId())) {
+            construction.getLevelComponent().maxLevel = specialEpochConfigMaxLevel.get(construction.getPrototypeId());
+        } else {
+            construction.getLevelComponent().maxLevel = currentRootEpochConfig.getMaxLevel();
+        }
+        construction.updateModifiedValues();
     }
 }

@@ -1,7 +1,7 @@
 package hundun.gdxgame.idlemushroom.logic.prototype;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.idlemushroom.logic.construction.BaseIdleDemoConstruction;
+import hundun.gdxgame.idlemushroom.logic.construction.BaseIdleMushroomConstruction;
 import hundun.gdxgame.idlemushroom.logic.construction.DemoSimpleAutoOutputComponent;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.logic.loader.IdleMushroomConstructionsLoader;
@@ -41,7 +41,7 @@ public class AutoProviderPrototype extends AbstractConstructionPrototype {
             .outputCostDescriptionStart("Consume")
             .outputGainDescriptionStart("Produce")
             .upgradeCostDescriptionStart("Upgrade cost")
-            .upgradeMaxLevelDescription("(max)")
+            .upgradeMaxLevelDescription("(max level)")
             .levelDescriptionProvider(DescriptionPackageFactory.EN_LEVEL_IMP.build())
             .proficiencyDescriptionProvider(AutoProviderPrototype.EN_PROFICIENCY_IMP)
             .build();
@@ -85,7 +85,7 @@ public class AutoProviderPrototype extends AbstractConstructionPrototype {
     @Override
     public BaseConstruction getInstance(GridPosition position) {
         String id = prototypeId + "_" + IdleMushroomJavaFeatureForGwt.uuid();
-        BaseIdleDemoConstruction construction = new BaseIdleDemoConstruction(prototypeId, id, position, descriptionPackage);
+        BaseIdleMushroomConstruction construction = new BaseIdleMushroomConstruction(prototypeId, id, position, descriptionPackage);
 
         AutoProviderProficiencyComponent proficiencyComponent = new AutoProviderProficiencyComponent(construction);
         construction.setProficiencyComponent(proficiencyComponent);

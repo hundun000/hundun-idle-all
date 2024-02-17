@@ -32,7 +32,7 @@ public class ConstructionManager implements ITileNodeMap<Void> {
 
     private final List<BaseConstruction> removeQueue = new ArrayList<>();
     private final List<BaseConstruction> createQueue = new ArrayList<>();
-
+    private final List<BaseConstruction> loadPostQueue = new ArrayList<>();
     @Getter
     ConstructionConfig constructionConfig;
 
@@ -45,7 +45,12 @@ public class ConstructionManager implements ITileNodeMap<Void> {
     public void onSubLogicFrame() {
         createQueue.forEach(it -> {
             runningConstructionModelMap.put(it.getId(), it);
+            gameContext.getIdleFrontend().postConstructionCreate(it);
             TileNodeUtils.updateNeighborsAllStep(it, this);
+        });
+
+        loadPostQueue.forEach(it -> {
+            gameContext.getIdleFrontend().postConstructionCreate(it);
         });
 
         removeQueue.forEach(it -> {
@@ -59,7 +64,8 @@ public class ConstructionManager implements ITileNodeMap<Void> {
         }
         removeQueue.clear();
         createQueue.clear();
-        
+        loadPostQueue.clear();
+
         runningConstructionModelMap.values().forEach(item -> item.onSubLogicFrame());
     }
 
@@ -138,6 +144,7 @@ public class ConstructionManager implements ITileNodeMap<Void> {
 
         runningConstructionModelMap.put(construction.getId(), construction);
         TileNodeUtils.updateNeighborsAllStep(construction, this);
+        loadPostQueue.add(construction);
     }
 
     public boolean canBuyInstanceOfPrototype(ConstructionBuyCandidateConfig config, GridPosition position)

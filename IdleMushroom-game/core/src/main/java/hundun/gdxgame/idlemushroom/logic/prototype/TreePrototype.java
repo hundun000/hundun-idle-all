@@ -1,6 +1,6 @@
 package hundun.gdxgame.idlemushroom.logic.prototype;
 
-import hundun.gdxgame.idlemushroom.logic.construction.BaseIdleDemoConstruction;
+import hundun.gdxgame.idlemushroom.logic.construction.BaseIdleMushroomConstruction;
 import hundun.gdxgame.idlemushroom.util.IdleMushroomJavaFeatureForGwt;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
@@ -52,7 +52,7 @@ public class TreePrototype extends AbstractConstructionPrototype {
     public BaseConstruction getInstance(GridPosition position) {
         String id = prototypeId + "_" + IdleMushroomJavaFeatureForGwt.uuid();
 
-        BaseIdleDemoConstruction thiz = new BaseIdleDemoConstruction(prototypeId, id, position, descriptionPackage);
+        BaseIdleMushroomConstruction thiz = new BaseIdleMushroomConstruction(prototypeId, id, position, descriptionPackage);
 
         ConstProficiencyComponent proficiencyComponent = new ConstProficiencyComponent(thiz);
         thiz.setProficiencyComponent(proficiencyComponent);

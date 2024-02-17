@@ -3,7 +3,7 @@ package hundun.gdxgame.idlemushroom.logic.prototype;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idlemushroom.logic.loader.IdleMushroomConstructionsLoader;
 import hundun.gdxgame.idlemushroom.logic.id.ResourceType;
-import hundun.gdxgame.idlemushroom.logic.construction.BaseIdleDemoConstruction;
+import hundun.gdxgame.idlemushroom.logic.construction.BaseIdleMushroomConstruction;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.util.IdleMushroomJavaFeatureForGwt;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig.ConstructionBuyCandidateConfig;
@@ -63,7 +63,7 @@ public class DirtPrototype extends AbstractConstructionPrototype {
     public BaseConstruction getInstance(GridPosition position) {
         String id = prototypeId + "_" + IdleMushroomJavaFeatureForGwt.uuid();
 
-        BaseIdleDemoConstruction thiz = new BaseIdleDemoConstruction(prototypeId, id, position, descriptionPackage);
+        BaseIdleMushroomConstruction thiz = new BaseIdleMushroomConstruction(prototypeId, id, position, descriptionPackage);
 
         thiz.setAllowPositionOverwrite(true);
 

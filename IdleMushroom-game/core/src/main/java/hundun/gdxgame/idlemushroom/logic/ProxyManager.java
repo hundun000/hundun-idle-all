@@ -1,9 +1,6 @@
 package hundun.gdxgame.idlemushroom.logic;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonWriter.OutputType;
-import com.badlogic.gdx.utils.Null;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idlemushroom.IdleMushroomGame;
 import hundun.gdxgame.idlemushroom.logic.HistoryManager.ProxyActionType;
@@ -57,7 +54,7 @@ public class ProxyManager {
         Integer autoSaveDeltaSecond;
         ProxyState starterProxyState;
 
-        public static ProxyConfig demoInstance() {
+        public static ProxyConfig devInstance() {
             return ProxyConfig.builder()
                     .stopConditionSecondCount(null)
                     .stopConditionConstructionLevelMap(JavaFeatureForGwt.mapOf(
@@ -69,8 +66,9 @@ public class ProxyManager {
                     .build();
         }
 
-        public static ProxyConfig disabledInstance() {
+        public static ProxyConfig releaseInstance() {
             return ProxyConfig.builder()
+                    .autoSaveDeltaSecond(10)
                     .starterProxyState(ProxyState.PAUSE)
                     .build();
         }
@@ -150,6 +148,9 @@ public class ProxyManager {
 
         int beforeLevel = model.getSaveData().getLevel();
         model.getUpgradeComponent().doUpgrade();
+        if (model.getPrototypeId().equals(IdleMushroomConstructionPrototypeId.EPOCH_COUNTER)) {
+            game.getIdleMushroomExtraGameplayExport().doChangeEpoch(model.getSaveData().getLevel());
+        }
         int afterLevel = model.getSaveData().getLevel();
         game.getHistoryManager().addProxyRunRecord(
                 ProxyActionType.doUpgrade,

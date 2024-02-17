@@ -10,7 +10,7 @@ public class Const {
             .outputCostDescriptionStart("Consume")
             .outputGainDescriptionStart("Produce")
             .upgradeCostDescriptionStart("Upgrade cost")
-            .upgradeMaxLevelDescription("(max)")
+            .upgradeMaxLevelDescription("(max level)")
             .levelDescriptionProvider(DescriptionPackageFactory.EN_LEVEL_IMP.build())
             .proficiencyDescriptionProvider(DescriptionPackageFactory.EN_PROFICIENCY_IMP.build())
             ;

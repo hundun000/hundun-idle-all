@@ -1,7 +1,7 @@
 package hundun.gdxgame.idlemushroom.logic.prototype;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.idlemushroom.logic.construction.BaseIdleDemoConstruction;
+import hundun.gdxgame.idlemushroom.logic.construction.BaseIdleMushroomConstruction;
 import hundun.gdxgame.idlemushroom.logic.construction.DemoSimpleAutoOutputComponent;
 import hundun.gdxgame.idlemushroom.logic.id.IdleMushroomConstructionPrototypeId;
 import hundun.gdxgame.idlemushroom.logic.loader.IdleMushroomConstructionsLoader;
@@ -28,7 +28,7 @@ public class AutoSellerPrototype extends AbstractConstructionPrototype {
             .outputCostDescriptionStart("Cost")
             .outputGainDescriptionStart("Produce")
             .upgradeCostDescriptionStart("Upgrade cost")
-            .upgradeMaxLevelDescription("(max)")
+            .upgradeMaxLevelDescription("(max level)")
             .levelDescriptionProvider(DescriptionPackageFactory.EN_LEVEL_IMP.build())
             .proficiencyDescriptionProvider(DescriptionPackageFactory.EN_PROFICIENCY_IMP.build())
             .build();
@@ -68,7 +68,7 @@ public class AutoSellerPrototype extends AbstractConstructionPrototype {
     @Override
     public BaseConstruction getInstance(GridPosition position) {
         String id = prototypeId + "_" + IdleMushroomJavaFeatureForGwt.uuid();
-        BaseIdleDemoConstruction construction = new BaseIdleDemoConstruction(prototypeId, id, position, descriptionPackage);
+        BaseIdleMushroomConstruction construction = new BaseIdleMushroomConstruction(prototypeId, id, position, descriptionPackage);
 
         ConstProficiencyComponent proficiencyComponent = new ConstProficiencyComponent(construction);
         construction.setProficiencyComponent(proficiencyComponent);
@@ -87,7 +87,6 @@ public class AutoSellerPrototype extends AbstractConstructionPrototype {
                 ResourceType.MUSHROOM, 100
         )));
         construction.getLevelComponent().setTypeWorkingLevelChangeable(true);
-        construction.getLevelComponent().maxLevel = 100;
 
         return construction;
     }
