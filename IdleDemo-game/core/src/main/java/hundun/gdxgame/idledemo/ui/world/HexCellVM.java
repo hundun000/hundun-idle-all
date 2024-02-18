@@ -1,18 +1,15 @@
 package hundun.gdxgame.idledemo.ui.world;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import hundun.gdxgame.idledemo.DemoIdleGame;
+import hundun.gdxgame.idledemo.IdleDemoGame;
 import hundun.gdxgame.idledemo.ui.screen.WorldPlayScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.TileNodeUtils.HexMode;
 import lombok.Getter;
-import lombok.Setter;
 
 
 public class HexCellVM extends Table {
@@ -39,7 +36,7 @@ public class HexCellVM extends Table {
     static float hexBaseSizeX = (float) (HEX_SIZE);
     static float hexBaseSizeY = (float) (SQR_3_DIV_2_HEX_SIZE);
 
-    DemoIdleGame game;
+    IdleDemoGame game;
 
     HexAreaVM hexAreaVM;
     @Getter

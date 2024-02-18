@@ -5,7 +5,7 @@ import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idledemo.ui.shared.BaseDemoPlayScreen;
 import hundun.gdxgame.idledemo.ui.shared.BaseCellDetailNodeVM;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
+import hundun.gdxgame.idledemo.ui.shared.PlayScreenLayoutConst;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
 
@@ -34,15 +34,13 @@ public class WorldConstructionPrototypeCellDetailNode extends BaseCellDetailNode
         final PlayScreenLayoutConst playScreenLayoutConst = parent.getLayoutConst();
         this.parent = parent;
 
-        int CHILD_WIDTH = playScreenLayoutConst.CONSTRUCION_CHILD_WIDTH;
-        int CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_BUTTON_HEIGHT;
-        int NAME_CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_NAME_HEIGHT;
+        int CHILD_WIDTH = playScreenLayoutConst.CONSTRUCTION_BUTTON_AREA_WIDTH;
 
         this.constructionNameLabel = new Label("", parent.getGame().getMainSkin());
         constructionNameLabel.setWrap(true);
 
         // ------ this ------
-        this.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
+        this.add(constructionNameLabel).width(CHILD_WIDTH).row();
         this.setBackground(DrawableFactory.createBorderBoard(30, 10, 0.8f, 1));
     }
 
@@ -63,20 +61,13 @@ public class WorldConstructionPrototypeCellDetailNode extends BaseCellDetailNode
         } else {
             setVisible(true);
             //textButton.setVisible(true);
-            //Gdx.app.log("ConstructionView", model.getName() + " set to its view");
+            //Gdx.app.log("ConstructionView", model.getDescriptionPackage().getName() + " set to its view");
         }
         // ------ update text ------
 
         constructionNameLabel.setText(JavaFeatureForGwt.stringFormat(
                 "%s (%s, %s)",
-                parent.getGame()
-                        .getIdleGameplayExport()
-                        .getGameplayContext()
-                        .getGameDictionary()
-                        .constructionPrototypeIdToDetailDescriptionConstPart(
-                                parent.getGame().getIdleGameplayExport().getLanguage(),
-                                construction.getPrototypeId()
-                        ),
+                construction.getDescriptionPackage().getWikiText(),
                 position.getX(),
                 position.getY()
         ));

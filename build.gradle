@@ -32,7 +32,7 @@ allprojects {
         gdxFreeTypeGwtVersion = '1.9.10.1'
         gwtFrameworkVersion = '2.8.2'
         
-        hundunLibVersion = '77884f68d3'
+        hundunLibVersion = '77780c2919'
         raeleusStripeVersion = '1.4.1'
     }
 
@@ -129,6 +129,24 @@ project(":IdleDemo-game:html") {
     dependencies {
         implementation project(':IdleDemo-game:core')
         implementation project(":idleshare:html")
+    }
+}
+
+project(":IdleMushroom-game:core") {
+
+    dependencies {
+        api project(":idleshare:core")
+
+        compileOnly 'org.projectlombok:lombok:1.18.4'
+        annotationProcessor 'org.projectlombok:lombok:1.18.4'
+    }
+}
+
+project(":IdleMushroom-game:desktop") {
+
+    dependencies {
+        implementation project(":IdleMushroom-game:core")
+        implementation project(":idleshare:desktop")
     }
 }
 

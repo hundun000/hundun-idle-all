@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePack;
 import hundun.gdxgame.idleshare.gamelib.framework.model.resource.ResourcePair;
+import hundun.gdxgame.idleshare.gamelib.framework.model.resource.StorageManager.ModifyResourceTag;
 import lombok.Setter;
 import lombok.Getter;
 
@@ -30,10 +31,10 @@ public abstract class OutputComponent {
     @Setter
     protected ResourcePack outputCostPack;
 
-    protected static final int DEFAULT_AUTO_OUPUT_SECOND_MAX = 1;
+    protected static final int DEFAULT_AUTO_OUTPUT_SECOND_MAX = 1;
     @Getter
     @Setter
-    protected int autoOutputSecondCountMax = DEFAULT_AUTO_OUPUT_SECOND_MAX;
+    protected int autoOutputSecondCountMax = DEFAULT_AUTO_OUTPUT_SECOND_MAX;
 
     @Getter
     @Setter
@@ -43,39 +44,34 @@ public abstract class OutputComponent {
         this.construction = construction;
     }
 
-    public void lazyInitDescription() {
-        if (outputCostPack != null) {
-            outputCostPack.setDescriptionStart(construction.descriptionPackage.getOutputCostDescriptionStart());
-        }
-        if (outputGainPack != null) {
-            outputGainPack.setDescriptionStart(construction.descriptionPackage.getOutputGainDescriptionStart());
-        }
-    }
-
     public void updateModifiedValues() {
      // --------------
         if (outputGainPack != null) {
             outputGainPack.setModifiedValues(
                     outputGainPack.getBaseValues().stream()
                         .map(pair -> {
-                            long newAmout = this.calculateModifiedOutputGain(
+                            long newAmount = this.calculateModifiedOutputGain(
                                     pair.getAmount(),
                                     construction.saveData.getWorkingLevel(),
                                     construction.saveData.getProficiency()
                             );
-                            return new ResourcePair(pair.getType(), newAmout);
+                            newAmount = construction.getGameplayContext().getBuffManager()
+                                    .modifyOutputGain(construction.prototypeId, pair.getType(), newAmount);
+                            return new ResourcePair(pair.getType(), newAmount);
                         })
                         .collect(Collectors.toList())
             );
             outputGainPack.setPreviewNextLevelModifiedValues(
                     outputGainPack.getBaseValues().stream()
                             .map(pair -> {
-                                long newAmout = this.calculateModifiedOutputGain(
+                                long newAmount = this.calculateModifiedOutputGain(
                                         pair.getAmount(),
                                         construction.saveData.getWorkingLevel() + 1,
                                         construction.saveData.getProficiency()
                                 );
-                                return new ResourcePair(pair.getType(), newAmout);
+                                newAmount = construction.getGameplayContext().getBuffManager()
+                                        .modifyOutputCost(construction.prototypeId, pair.getType(), newAmount);
+                                return new ResourcePair(pair.getType(), newAmount);
                             })
                             .collect(Collectors.toList())
             );
@@ -85,24 +81,28 @@ public abstract class OutputComponent {
             outputCostPack.setModifiedValues(
                     outputCostPack.getBaseValues().stream()
                         .map(pair -> {
-                                long newAmout = this.calculateModifiedOutputCost(
-                                        pair.getAmount(),
-                                        construction.saveData.getWorkingLevel(),
-                                        construction.saveData.getProficiency()
-                                );
-                                return new ResourcePair(pair.getType(), newAmout);
-                            })
+                            long newAmount = this.calculateModifiedOutputCost(
+                                    pair.getAmount(),
+                                    construction.saveData.getWorkingLevel(),
+                                    construction.saveData.getProficiency()
+                            );
+                            newAmount = construction.getGameplayContext().getBuffManager()
+                                    .modifyOutputCost(construction.prototypeId, pair.getType(), newAmount);
+                            return new ResourcePair(pair.getType(), newAmount);
+                        })
                         .collect(Collectors.toList())
             );
             outputCostPack.setPreviewNextLevelModifiedValues(
                     outputCostPack.getBaseValues().stream()
                             .map(pair -> {
-                                long newAmout = this.calculateModifiedOutputGain(
+                                long newAmount = this.calculateModifiedOutputCost(
                                         pair.getAmount(),
                                         construction.saveData.getWorkingLevel() + 1,
                                         construction.saveData.getProficiency()
                                 );
-                                return new ResourcePair(pair.getType(), newAmout);
+                                newAmount = construction.getGameplayContext().getBuffManager()
+                                        .modifyOutputCost(construction.prototypeId, pair.getType(), newAmount);
+                                return new ResourcePair(pair.getType(), newAmount);
                             })
                             .collect(Collectors.toList())
             );
@@ -126,11 +126,11 @@ public abstract class OutputComponent {
     {
         if (this.hasCost())
         {
-            construction.getGameplayContext().getStorageManager().modifyAllResourceNum(this.outputCostPack.getModifiedValues(), false);
+            construction.getGameplayContext().getStorageManager().modifyAllResourceNum(this.outputCostPack.getModifiedValues(), false, ModifyResourceTag.OUTPUT);
         }
         if (this.outputGainPack != null)
         {
-            construction.getGameplayContext().getStorageManager().modifyAllResourceNum(this.outputGainPack.getModifiedValues(), true);
+            construction.getGameplayContext().getStorageManager().modifyAllResourceNum(this.outputGainPack.getModifiedValues(), true, ModifyResourceTag.OUTPUT);
         }
     }
 

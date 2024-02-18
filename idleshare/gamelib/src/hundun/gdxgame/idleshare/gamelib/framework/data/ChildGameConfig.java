@@ -40,6 +40,7 @@ public abstract class ChildGameConfig {
     @AllArgsConstructor
     public static class ConstructionBuyCandidateConfig {
         String prototypeId;
+        String buyDescriptionStart;
         ResourcePack buyCostPack;
     }
 

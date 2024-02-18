@@ -1,9 +1,11 @@
 package hundun.gdxgame.idledemo.logic.prototype;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.idledemo.logic.DemoConstructionPrototypeId;
 import hundun.gdxgame.idledemo.logic.DemoBuiltinConstructionsLoader;
+import hundun.gdxgame.idledemo.logic.DemoConstructionPrototypeId;
+import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.logic.construction.BaseIdleDemoConstruction;
+import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig.ConstructionBuyCandidateConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackage;
@@ -16,16 +18,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 import java.util.UUID;
 
 public class DirtPrototype extends AbstractConstructionPrototype {
-    public static DescriptionPackage descriptionPackageEN = DescriptionPackage.builder()
-            .levelDescriptionProvider(DescriptionPackageFactory.NO_LEVEL_IMP)
-            .proficiencyDescriptionProvider(DescriptionPackageFactory.EN_PROFICIENCY_IMP)
-            .build();
 
-
-    public static DescriptionPackage descriptionPackageCN = DescriptionPackage.builder()
-            .levelDescriptionProvider(DescriptionPackageFactory.CN_NO_LEVEL_IMP)
-            .proficiencyDescriptionProvider(DescriptionPackageFactory.CN_PROFICIENCY_IMP)
-            .build();
 
     public DirtPrototype(Language language) {
         super(
@@ -35,10 +28,16 @@ public class DirtPrototype extends AbstractConstructionPrototype {
         switch (language)
         {
             case CN:
-                this.descriptionPackage = descriptionPackageCN;
+                this.descriptionPackage = Const.templateDescriptionPackageEN
+                        .name("空地块")
+                        .wikiText("可转变为其他地块。")
+                        .build();;
                 break;
             default:
-                this.descriptionPackage = descriptionPackageEN;
+                this.descriptionPackage = Const.templateDescriptionPackageEN
+                        .name("Empty tile")
+                        .wikiText("Can be transformed into other tile.")
+                        .build();
                 break;
         }
 
@@ -56,6 +55,21 @@ public class DirtPrototype extends AbstractConstructionPrototype {
         SimpleAutoOutputComponent outputComponent = new SimpleAutoOutputComponent(thiz);
         outputComponent.setTypeClickOutput(true);
         thiz.setOutputComponent(outputComponent);
+
+        thiz.getExistenceComponent().setBuyCandidateConfigs(JavaFeatureForGwt.listOf(
+                ConstructionBuyCandidateConfig.builder()
+                        .prototypeId(DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER)
+                        .buyCostPack(DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
+                                ResourceType.COIN, 50
+                        )))
+                        .build(),
+                ConstructionBuyCandidateConfig.builder()
+                        .prototypeId(DemoConstructionPrototypeId.COOKIE_COMPLEX_AUTO_PROVIDER)
+                        .buyCostPack(DemoBuiltinConstructionsLoader.toPack(JavaFeatureForGwt.mapOf(
+                                ResourceType.COIN, 50
+                        )))
+                        .build()
+        ));
 
         return thiz;
     }

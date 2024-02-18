@@ -38,17 +38,12 @@ public abstract class BaseConstruction implements IBuffChangeListener, ITileNode
     protected ConstructionSaveData saveData;
 
     @Getter
-    protected String name;
-
-    @Getter
     protected String id;
     @Getter
     protected String prototypeId;
-    @Getter
-    protected String detailDescriptionConstPart;
 
     @Getter
-    public DescriptionPackage descriptionPackage;
+    protected DescriptionPackage descriptionPackage;
 
 
     /**
@@ -114,14 +109,6 @@ public abstract class BaseConstruction implements IBuffChangeListener, ITileNode
 
     public void lazyInitDescription(IdleGameplayContext gameContext, Language language) {
         this.gameplayContext = gameContext;
-        
-        this.name = gameContext.getGameDictionary().constructionPrototypeIdToShowName(language, prototypeId);
-        this.detailDescriptionConstPart = gameContext.getGameDictionary().constructionPrototypeIdToDetailDescriptionConstPart(language, prototypeId);
-        
-        outputComponent.lazyInitDescription();
-        upgradeComponent.lazyInitDescription();
-        existenceComponent.lazyInitDescription(gameContext, language);
-
         updateModifiedValues();
     }
 
@@ -136,7 +123,7 @@ public abstract class BaseConstruction implements IBuffChangeListener, ITileNode
      * 重新计算各个数值的加成后的结果
      */
     public void updateModifiedValues() {
-        gameplayContext.getFrontEnd().log(this.name, "updateCurrentCache called");
+        //gameplayContext.getFrontend().log(this.getClass().getSimpleName(), "updateCurrentCache called");
         // --------------
         upgradeComponent.updateModifiedValues();
         outputComponent.updateModifiedValues();
@@ -144,10 +131,9 @@ public abstract class BaseConstruction implements IBuffChangeListener, ITileNode
     }
 
     @Override
-    public void onBuffChange() {
+    public void onBuffChange(Map<String, Integer> changeMap) {
         updateModifiedValues();
     }
-
 
     protected void printDebugInfoAfterConstructed() {
         // default do nothing

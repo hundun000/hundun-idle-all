@@ -1,24 +1,21 @@
 package hundun.gdxgame.idledemo.ui.screen;
 
 import com.badlogic.gdx.InputProcessor;
-import hundun.gdxgame.idledemo.DemoIdleGame;
+import hundun.gdxgame.idledemo.IdleDemoGame;
 import hundun.gdxgame.idledemo.logic.DemoScreenId;
-import hundun.gdxgame.idledemo.logic.ResourceType;
-import hundun.gdxgame.idledemo.logic.RootSaveData;
 import hundun.gdxgame.idledemo.ui.achievement.AllAchievementBoardVM;
 import hundun.gdxgame.idledemo.ui.shared.BaseIdleDemoScreen;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.BaseIdleScreen;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IAchievementStateChangeListener;
-import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievement;
-import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementState;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AbstractAchievementPrototype;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementManager.AchievementState;
 
 public class DemoAchievementScreen extends BaseIdleDemoScreen implements IAchievementStateChangeListener {
 
-    AllAchievementBoardVM<DemoIdleGame, RootSaveData> allAchievementBoardVM;
+    AllAchievementBoardVM allAchievementBoardVM;
 
 
 
-    public DemoAchievementScreen(DemoIdleGame game) {
+    public DemoAchievementScreen(IdleDemoGame game) {
         super(game, DemoScreenId.SCREEN_ACHIEVEMENT, DemoScreenContext.customLayoutConst(game));
     }
 
@@ -36,7 +33,7 @@ public class DemoAchievementScreen extends BaseIdleDemoScreen implements IAchiev
     protected void lazyInitUiRootContext() {
         super.lazyInitUiRootContext();
 
-        allAchievementBoardVM = new AllAchievementBoardVM<>(this);
+        allAchievementBoardVM = new AllAchievementBoardVM(this);
 
 
         middleGroup.add(allAchievementBoardVM).expand().row();
@@ -47,11 +44,10 @@ public class DemoAchievementScreen extends BaseIdleDemoScreen implements IAchiev
     protected void lazyInitLogicContext() {
         super.lazyInitLogicContext();
 
-        storageInfoTable.lazyInit(ResourceType.VALUES_FOR_SHOW_ORDER);
     }
 
     @Override
-    public void onAchievementStateChange(AbstractAchievement achievement, AchievementState state) {
+    public void onAchievementStateChange(AbstractAchievementPrototype achievement, AchievementState state) {
         allAchievementBoardVM.updateData();
     }
 }

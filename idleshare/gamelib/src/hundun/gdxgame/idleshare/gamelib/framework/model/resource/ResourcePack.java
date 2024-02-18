@@ -11,7 +11,7 @@ import lombok.Data;
  */
 @Data
 public class ResourcePack {
-    String descriptionStart;
+    //String descriptionStart;
     List<ResourcePair> baseValues;
     List<ResourcePair> modifiedValues;
     List<ResourcePair> previewNextLevelModifiedValues;

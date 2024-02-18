@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.AbstractConstructionPrototype;
-import hundun.gdxgame.idleshare.gamelib.framework.util.text.IGameDictionary;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
 /**

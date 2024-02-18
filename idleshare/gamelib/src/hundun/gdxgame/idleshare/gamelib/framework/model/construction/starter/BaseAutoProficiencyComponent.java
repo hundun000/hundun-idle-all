@@ -9,8 +9,14 @@ public abstract class BaseAutoProficiencyComponent extends ProficiencyComponent 
     protected int autoProficiencyProgress = 0;
     protected final Integer AUTO_PROFICIENCY_SECOND_MAX; // n秒生长一次
 
-    public BaseAutoProficiencyComponent(BaseConstruction construction, Integer second, Integer upgradeLostProficiency) {
+    public BaseAutoProficiencyComponent(
+            BaseConstruction construction,
+            Integer second,
+            Integer upgradeLostProficiency,
+            int maxProficiency
+    ) {
         super(construction);
+        this.maxProficiency = maxProficiency;
         this.AUTO_PROFICIENCY_SECOND_MAX = second;
         this.upgradeLostProficiency = upgradeLostProficiency;
     }
@@ -20,7 +26,7 @@ public abstract class BaseAutoProficiencyComponent extends ProficiencyComponent 
         if (AUTO_PROFICIENCY_SECOND_MAX != null)
         {
             autoProficiencyProgress++;
-            int proficiencyFrameCountMax = AUTO_PROFICIENCY_SECOND_MAX * construction.getGameplayContext().LOGIC_FRAME_PER_SECOND;
+            int proficiencyFrameCountMax = AUTO_PROFICIENCY_SECOND_MAX * construction.getGameplayContext().getIdleFrontend().getLogicFramePerSecond();
             if (autoProficiencyProgress >= proficiencyFrameCountMax)
             {
                 autoProficiencyProgress = 0;

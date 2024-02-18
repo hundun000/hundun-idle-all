@@ -3,7 +3,8 @@ package hundun.gdxgame.idleshare.gamelib.framework.data;
 import java.util.Map;
 import java.util.Set;
 
-import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementSaveData;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementManager.AchievementSaveData;
+import hundun.gdxgame.idleshare.gamelib.framework.model.buff.BuffManager.BuffSaveData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -23,4 +24,5 @@ public class GameplaySaveData {
     Set<String> unlockedResourceTypes;
     Map<String, ConstructionSaveData> constructionSaveDataMap;
     Map<String, AchievementSaveData> achievementSaveDataMap;
+    Map<String, BuffSaveData> buffSaveDataMap;
 }

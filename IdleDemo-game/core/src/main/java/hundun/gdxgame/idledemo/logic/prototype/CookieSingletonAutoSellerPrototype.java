@@ -19,24 +19,14 @@ import java.util.UUID;
 public class CookieSingletonAutoSellerPrototype extends AbstractConstructionPrototype {
 
     public static DescriptionPackage descriptionPackageEN = DescriptionPackage.builder()
+            .name("AutoSeller")
             .upgradeButtonText("Upgrade")
             .outputCostDescriptionStart("Consume")
             .outputGainDescriptionStart("Produce")
             .upgradeCostDescriptionStart("Upgrade cost")
-            .upgradeMaxLevelDescription("(max)")
-            .levelDescriptionProvider(DescriptionPackageFactory.WORKING_LEVEL_IMP)
-            .proficiencyDescriptionProvider(DescriptionPackageFactory.EN_PROFICIENCY_IMP)
-            .build();
-
-
-    public static DescriptionPackage descriptionPackageCN = DescriptionPackage.builder()
-            .upgradeButtonText("升级")
-            .outputCostDescriptionStart("自动消耗")
-            .outputGainDescriptionStart("自动产出")
-            .upgradeCostDescriptionStart("升级费用")
-            .upgradeMaxLevelDescription("(已达到最大等级)")
-            .levelDescriptionProvider(DescriptionPackageFactory.WORKING_LEVEL_IMP)
-            .proficiencyDescriptionProvider(DescriptionPackageFactory.CN_PROFICIENCY_IMP)
+            .upgradeMaxLevelDescription("(max level)")
+            .levelDescriptionProvider(DescriptionPackageFactory.EN_LEVEL_IMP.build())
+            .proficiencyDescriptionProvider(DescriptionPackageFactory.EN_PROFICIENCY_IMP.build())
             .build();
 
     public CookieSingletonAutoSellerPrototype(Language language) {
@@ -47,10 +37,16 @@ public class CookieSingletonAutoSellerPrototype extends AbstractConstructionProt
         switch (language)
         {
             case CN:
-                this.descriptionPackage = CookieSingletonAutoSellerPrototype.descriptionPackageCN;
+                this.descriptionPackage = Const.templateDescriptionPackageCN
+                        .name("自动出售器")
+                        .wikiText("自动出售饼干")
+                        .build();
                 break;
             default:
-                this.descriptionPackage = CookieSingletonAutoSellerPrototype.descriptionPackageEN;
+                this.descriptionPackage = Const.templateDescriptionPackageEN
+                        .name("AutoSeller")
+                        .wikiText("Auto sell some cookie")
+                        .build();
                 break;
         }
 

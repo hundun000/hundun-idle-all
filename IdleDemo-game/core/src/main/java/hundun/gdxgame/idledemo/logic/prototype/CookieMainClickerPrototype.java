@@ -19,20 +19,14 @@ import java.util.UUID;
 
 public class CookieMainClickerPrototype extends AbstractConstructionPrototype {
     public static DescriptionPackage descriptionPackageEN = DescriptionPackage.builder()
-            .clickOutputButtonText("Gather")
-            .outputCostDescriptionStart("Consume")
-            .outputGainDescriptionStart("Produce")
-            .levelDescriptionProvider(DescriptionPackageFactory.NO_LEVEL_IMP)
-            .proficiencyDescriptionProvider(DescriptionPackageFactory.EN_PROFICIENCY_IMP)
+            .levelDescriptionProvider(DescriptionPackageFactory.EN_LEVEL_IMP.build())
+            .proficiencyDescriptionProvider(DescriptionPackageFactory.EN_PROFICIENCY_IMP.build())
             .build();
 
 
     public static DescriptionPackage descriptionPackageCN = DescriptionPackage.builder()
-            .clickOutputButtonText("收集")
-            .outputCostDescriptionStart("消耗")
-            .outputGainDescriptionStart("产出")
-            .levelDescriptionProvider(DescriptionPackageFactory.CN_NO_LEVEL_IMP)
-            .proficiencyDescriptionProvider(DescriptionPackageFactory.CN_PROFICIENCY_IMP)
+            .levelDescriptionProvider(DescriptionPackageFactory.CN_LEVEL_IMP.build())
+            .proficiencyDescriptionProvider(DescriptionPackageFactory.CN_PROFICIENCY_IMP.build())
             .build();
 
     public CookieMainClickerPrototype(Language language) {

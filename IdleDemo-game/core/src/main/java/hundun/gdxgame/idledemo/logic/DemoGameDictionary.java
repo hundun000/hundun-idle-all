@@ -4,82 +4,15 @@ import java.util.List;
 import java.util.Map;
 
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.idleshare.gamelib.framework.util.text.IGameDictionary;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
 /**
  * @author hundun
  * Created on 2021/11/22
  */
-public class DemoGameDictionary implements IGameDictionary {
+public class DemoGameDictionary {
 
-    
-    public String constructionPrototypeIdToShowName(Language language, String constructionId) {
-        switch (language) {
-            case CN:
-                switch (constructionId) {
-                    case DemoConstructionPrototypeId.SINGLETON_COOKIE_MAIN_CLICKER:
-                        return "点击器";
-                    case DemoConstructionPrototypeId.COOKIE_COMPLEX_AUTO_PROVIDER:
-                        return "高级自动点击器";
-                    case DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER:
-                        return "自动点击器";
-                    case DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER:
-                        return "自动出售器";
-                    default:
-                        return "口口";
-                }
-            default:
-                switch (constructionId) {
-                    case DemoConstructionPrototypeId.SINGLETON_COOKIE_MAIN_CLICKER:
-                        return "Clicker";
-                    case DemoConstructionPrototypeId.COOKIE_COMPLEX_AUTO_PROVIDER:
-                        return "ComplexAutoClicker";
-                    case DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER:
-                        return "SimpleAutoClicker";
-                    case DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER:
-                        return "AutoSeller";
-                    default:
-                        return "[dic lost]";
-                }
-        }
-        
-        
-    }
 
-    @Override
-    public String constructionPrototypeIdToDetailDescriptionConstPart(Language language, String constructionId) {
-        switch (language) {
-            case CN:
-                switch (constructionId) {
-                    case DemoConstructionPrototypeId.COOKIE_COMPLEX_AUTO_PROVIDER:
-                    case DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER:
-                        return "自动获得饼干";
-                    case DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER:
-                        return "自动出售饼干";
-                    case DemoConstructionPrototypeId.EMPTY_CELL:
-                        return "空位置";
-                    default:
-                        return "[dic lost]";
-                }
-            default:
-                switch (constructionId) {
-                    case DemoConstructionPrototypeId.COOKIE_COMPLEX_AUTO_PROVIDER:
-                    case DemoConstructionPrototypeId.COOKIE_SIMPLE_AUTO_PROVIDER:
-                        return "Auto gain some cookie";
-                    case DemoConstructionPrototypeId.SINGLETON_COOKIE_AUTO_SELLER:
-                        return "Auto sell some cookie";
-                    case DemoConstructionPrototypeId.EMPTY_CELL:
-                        return "Empty";
-                    default:
-                        return "[dic lost]";
-                }
-        }
-        
-
-    }
-
-    @Override
     public List<String> getMenuScreenTexts(Language language) {
         switch (language) {
             case CN:
@@ -89,7 +22,6 @@ public class DemoGameDictionary implements IGameDictionary {
         }
     }
 
-    @Override
     public Map<Language, String> getLanguageShowNameMap() {
         return JavaFeatureForGwt.mapOf(
                 Language.CN, "中文",
@@ -97,7 +29,6 @@ public class DemoGameDictionary implements IGameDictionary {
                 );
     }
 
-    @Override
     public List<String> getAchievementTexts(Language language)
     {
         switch (language)
@@ -116,7 +47,6 @@ public class DemoGameDictionary implements IGameDictionary {
     }
 
 
-    @Override
     public List<String> getStageSelectMaskBoardTexts(Language language)
     {
         switch (language)

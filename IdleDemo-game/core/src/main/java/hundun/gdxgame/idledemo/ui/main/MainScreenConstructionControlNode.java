@@ -14,10 +14,10 @@ import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idledemo.ui.shared.BaseDemoPlayScreen;
 import hundun.gdxgame.idledemo.ui.shared.BaseCellDetailNodeVM;
-import hundun.gdxgame.idleshare.core.starter.ui.component.board.construction.impl.StarterConstructionControlNode;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
+import hundun.gdxgame.idledemo.ui.shared.PlayScreenLayoutConst;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.ISecondaryInfoBoardCallback;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackage;
 
 
 /**
@@ -47,13 +47,9 @@ public class MainScreenConstructionControlNode extends BaseCellDetailNodeVM {
         final PlayScreenLayoutConst playScreenLayoutConst = parent.getLayoutConst();
         this.parent = parent;
 
-        int CHILD_WIDTH = playScreenLayoutConst.CONSTRUCION_CHILD_WIDTH;
-        int CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_BUTTON_HEIGHT;
-        int NAME_CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_NAME_HEIGHT;
-
         this.constructionNameLabel = new Label("", parent.getGame().getMainSkin());
         constructionNameLabel.setWrap(true);
-
+        constructionNameLabel.setAlignment(Align.center);
 
         this.upgradeButton = new TextButton("", parent.getGame().getMainSkin());
         upgradeButton.addListener(new ChangeListener() {
@@ -75,11 +71,11 @@ public class MainScreenConstructionControlNode extends BaseCellDetailNodeVM {
                 model.getLevelComponent().changeWorkingLevel(-1);
             }
         });
-        changeWorkingLevelGroup.add(downWorkingLevelButton).size(CHILD_WIDTH / 4, CHILD_HEIGHT);
+        changeWorkingLevelGroup.add(downWorkingLevelButton);
 
         this.workingLevelLabel = new Label("", parent.getGame().getMainSkin());
         workingLevelLabel.setAlignment(Align.center);
-        changeWorkingLevelGroup.add(workingLevelLabel).size(CHILD_WIDTH / 2, CHILD_HEIGHT);
+        changeWorkingLevelGroup.add(workingLevelLabel);
 
         this.upWorkingLevelButton = new TextButton("+", parent.getGame().getMainSkin());
         upWorkingLevelButton.addListener(new ClickListener() {
@@ -89,14 +85,14 @@ public class MainScreenConstructionControlNode extends BaseCellDetailNodeVM {
                 model.getLevelComponent().changeWorkingLevel(1);
             }
         });
-        changeWorkingLevelGroup.add(upWorkingLevelButton).size(CHILD_WIDTH / 4, CHILD_HEIGHT);
+        changeWorkingLevelGroup.add(upWorkingLevelButton);
 
 
         this.transformButton = new TextButton("-", parent.getGame().getMainSkin());
         // ------ this ------
-        this.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
-        this.add(upgradeButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
-        this.add(changeWorkingLevelGroup).size(CHILD_WIDTH, CHILD_HEIGHT).row();
+        this.add(constructionNameLabel).growX().row();
+        this.add(upgradeButton).row();
+        this.add(changeWorkingLevelGroup).row();
         this.setBackground(DrawableFactory.createBorderBoard(30, 10, 0.8f, 1));
         this.addListener(new ClickListener() {
 
@@ -105,7 +101,7 @@ public class MainScreenConstructionControlNode extends BaseCellDetailNodeVM {
                 if (model != null) {
                     callback.showAndUpdateGuideInfo(model);
                 }
-                Gdx.app.log(StarterConstructionControlNode.class.getSimpleName(), "this clicked event");
+                Gdx.app.log(MainScreenConstructionControlNode.class.getSimpleName(), "this clicked event");
                 super.clicked(event, x, y);
             }
 
@@ -137,17 +133,17 @@ public class MainScreenConstructionControlNode extends BaseCellDetailNodeVM {
         } else {
             setVisible(true);
             //textButton.setVisible(true);
-            //Gdx.app.log("ConstructionView", model.getName() + " set to its view");
+            //Gdx.app.log("ConstructionView", model.getDescriptionPackage().getName() + " set to its view");
         }
         // ------ update text ------
         constructionNameLabel.setText(JavaFeatureForGwt.stringFormat(
                 "%s (%s, %s)",
-                model.getName(),
+                model.getDescriptionPackage().getName(),
                 model.getSaveData().getPosition().getX(),
                 model.getSaveData().getPosition().getY()
         ));
         upgradeButton.setText(model.getDescriptionPackage().getUpgradeButtonText());
-        workingLevelLabel.setText(model.getLevelComponent().getWorkingLevelDescription());
+        workingLevelLabel.setText(DescriptionPackage.Helper.getWorkingLevelDescription(model));
 
 
         // ------ update clickable-state ------

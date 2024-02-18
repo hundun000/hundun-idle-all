@@ -2,13 +2,13 @@ package hundun.gdxgame.idledemo.ui.world;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import hundun.gdxgame.idledemo.DemoIdleGame;
+import hundun.gdxgame.idledemo.IdleDemoGame;
 import hundun.gdxgame.idledemo.ui.shared.BaseDemoPlayScreen;
 
 
 
 public class HexCellClickListener extends ClickListener {
-    DemoIdleGame game;
+    IdleDemoGame game;
     BaseDemoPlayScreen screen;
     private final HexCellVM vm;
 

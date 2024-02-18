@@ -4,15 +4,15 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
 
-import hundun.gdxgame.idledemo.DemoIdleGame;
+import hundun.gdxgame.idledemo.IdleDemoGame;
 
 
 public class HtmlLauncher extends GwtApplication {
     
-    DemoIdleGame game;
+    IdleDemoGame game;
     
     public HtmlLauncher() {
-        this.game = new DemoIdleGame(new GwtPreferencesSaveTool("IdleDemo-html-save"));
+        this.game = new IdleDemoGame(new GwtPreferencesSaveTool("IdleDemo-html-save"));
     }
 
     @Override

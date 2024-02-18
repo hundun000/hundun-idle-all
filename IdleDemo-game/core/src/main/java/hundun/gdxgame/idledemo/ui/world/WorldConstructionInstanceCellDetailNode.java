@@ -11,8 +11,9 @@ import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import hundun.gdxgame.idledemo.ui.shared.BaseDemoPlayScreen;
 import hundun.gdxgame.idledemo.ui.shared.BaseCellDetailNodeVM;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
+import hundun.gdxgame.idledemo.ui.shared.PlayScreenLayoutConst;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
+import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.DescriptionPackage;
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
 
 
@@ -22,7 +23,7 @@ import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
  */
 public class WorldConstructionInstanceCellDetailNode extends BaseCellDetailNodeVM {
     BaseDemoPlayScreen parent;
-    BaseConstruction model;
+    BaseConstruction construction;
     Label constructionNameLabel;
 
     Label workingLevelLabel;
@@ -44,9 +45,7 @@ public class WorldConstructionInstanceCellDetailNode extends BaseCellDetailNodeV
         final PlayScreenLayoutConst playScreenLayoutConst = parent.getLayoutConst();
         this.parent = parent;
 
-        int CHILD_WIDTH = playScreenLayoutConst.CONSTRUCION_CHILD_WIDTH;
-        int CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_BUTTON_HEIGHT;
-        int NAME_CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_NAME_HEIGHT;
+        int CHILD_WIDTH = playScreenLayoutConst.CONSTRUCTION_BUTTON_AREA_WIDTH;
 
         this.constructionNameLabel = new Label("", parent.getGame().getMainSkin());
         constructionNameLabel.setWrap(true);
@@ -57,7 +56,7 @@ public class WorldConstructionInstanceCellDetailNode extends BaseCellDetailNodeV
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Gdx.app.log(WorldConstructionInstanceCellDetailNode.class.getSimpleName(), "upgradeButton changed");
-                model.getUpgradeComponent().doUpgrade();
+                construction.getUpgradeComponent().doUpgrade();
             }
         });
 
@@ -72,10 +71,10 @@ public class WorldConstructionInstanceCellDetailNode extends BaseCellDetailNodeV
         this.destoryButton = new TextButton("-", parent.getGame().getMainSkin());
         this.transformButton = new TextButton("-", parent.getGame().getMainSkin());
         // ------ this ------
-        this.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
-        this.add(upgradeButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
-        this.add(workingLevelLabel).size(CHILD_WIDTH, CHILD_HEIGHT).row();
-        this.add(proficiencyLabel).size(CHILD_WIDTH, CHILD_HEIGHT).row();
+        this.add(constructionNameLabel).width(CHILD_WIDTH).row();
+        this.add(upgradeButton).width(CHILD_WIDTH).row();
+        this.add(workingLevelLabel).width(CHILD_WIDTH).row();
+        this.add(proficiencyLabel).width(CHILD_WIDTH).row();
         this.setBackground(DrawableFactory.createBorderBoard(30, 10, 0.8f, 1));
     }
 
@@ -86,14 +85,14 @@ public class WorldConstructionInstanceCellDetailNode extends BaseCellDetailNodeV
 
 
     private void setModel(BaseConstruction constructionExportProxy) {
-        this.model = constructionExportProxy;
+        this.construction = constructionExportProxy;
 
         update();
     }
 
     private void update() {
         // ------ update show-state ------
-        if (model == null) {
+        if (construction == null) {
             setVisible(false);
             //textButton.setVisible(false);
             //Gdx.app.log("ConstructionView", this.hashCode() + " no model");
@@ -101,30 +100,30 @@ public class WorldConstructionInstanceCellDetailNode extends BaseCellDetailNodeV
         } else {
             setVisible(true);
             //textButton.setVisible(true);
-            //Gdx.app.log("ConstructionView", model.getName() + " set to its view");
+            //Gdx.app.log("ConstructionView", model.getDescriptionPackage().getName() + " set to its view");
         }
         // ------ update text ------
         constructionNameLabel.setText(JavaFeatureForGwt.stringFormat(
                 "%s (%s, %s)",
-                model.getName(),
-                model.getSaveData().getPosition().getX(),
-                model.getSaveData().getPosition().getY()
+                construction.getDescriptionPackage().getName(),
+                construction.getSaveData().getPosition().getX(),
+                construction.getSaveData().getPosition().getY()
         ));
-        upgradeButton.setText(model.getDescriptionPackage().getUpgradeButtonText());
-        workingLevelLabel.setText(model.getLevelComponent().getWorkingLevelDescription());
-        proficiencyLabel.setText(model.getProficiencyComponent().getProficiencyDescroption());
-        positionLabel.setText(model.getSaveData().getPosition().toShowText());
-        destoryButton.setText(model.descriptionPackage.getDestroyButtonText());
+        upgradeButton.setText(construction.getDescriptionPackage().getUpgradeButtonText());
+        workingLevelLabel.setText(DescriptionPackage.Helper.getWorkingLevelDescription(construction));
+        proficiencyLabel.setText(DescriptionPackage.Helper.getProficiencyDescription(construction));
+        positionLabel.setText(construction.getSaveData().getPosition().toShowText());
+        destoryButton.setText(construction.getDescriptionPackage().getDestroyButtonText());
 
         // ------ update clickable-state ------
-        if (model.getUpgradeComponent().canUpgrade()) {
+        if (construction.getUpgradeComponent().canUpgrade()) {
             upgradeButton.setDisabled(false);
             upgradeButton.getLabel().setColor(Color.WHITE);
         } else {
             upgradeButton.setDisabled(true);
             upgradeButton.getLabel().setColor(Color.RED);
         }
-        if (model.getExistenceComponent().canDestroy())
+        if (construction.getExistenceComponent().canDestroy())
         {
             destoryButton.setDisabled(false);
             destoryButton.getLabel().setColor(Color.WHITE);
@@ -134,7 +133,7 @@ public class WorldConstructionInstanceCellDetailNode extends BaseCellDetailNodeV
             destoryButton.setDisabled(true);
             destoryButton.getLabel().setColor(Color.RED);
         }
-        if (model.getUpgradeComponent().canTransfer())
+        if (construction.getUpgradeComponent().canTransfer())
         {
             transformButton.setDisabled(false);
             transformButton.getLabel().setColor(Color.WHITE);

@@ -37,19 +37,6 @@ public class ExistenceComponent {
 
     }
 
-    public void lazyInitDescription(IdleGameplayContext gameContext, Language language)
-    {
-        if (destroyGainPack != null && destroyCostPack != null)
-        {
-            this.destroyGainPack.setDescriptionStart(construction.descriptionPackage.getDestroyGainDescriptionStart());
-            this.destroyCostPack.setDescriptionStart(construction.descriptionPackage.getDestroyCostDescriptionStart());
-        }
-        if (buyCandidateConfigs != null)
-        {
-            buyCandidateConfigs.forEach(it -> it.getBuyCostPack().setDescriptionStart(construction.getDescriptionPackage().getTransformCostDescriptionStart()));
-        }
-    }
-
     public void updateModifiedValues()
     {
         if (destroyGainPack != null && destroyCostPack != null)

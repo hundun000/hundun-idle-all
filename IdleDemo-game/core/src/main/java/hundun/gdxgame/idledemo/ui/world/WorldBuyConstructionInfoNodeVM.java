@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import hundun.gdxgame.corelib.base.util.DrawableFactory;
 import hundun.gdxgame.idledemo.ui.shared.BaseDemoPlayScreen;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
+import hundun.gdxgame.idledemo.ui.shared.PlayScreenLayoutConst;
 import hundun.gdxgame.idleshare.gamelib.framework.data.ChildGameConfig.ConstructionBuyCandidateConfig;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
@@ -30,11 +30,10 @@ public class WorldBuyConstructionInfoNodeVM extends Table  {
         this.constructionBuyCandidateConfig = constructionBuyCandidateConfig;
         this.model = model;
 
-        int CHILD_WIDTH = playScreenLayoutConst.CONSTRUCION_CHILD_WIDTH;
-        int CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_BUTTON_HEIGHT;
-        int NAME_CHILD_HEIGHT = playScreenLayoutConst.CONSTRUCION_CHILD_NAME_HEIGHT;
+        int CHILD_WIDTH = playScreenLayoutConst.CONSTRUCTION_BUTTON_AREA_WIDTH;
 
-        this.constructionNameLabel = new Label(constructionBuyCandidateConfig.getPrototypeId(), parent.getGame().getMainSkin());
+
+        this.constructionNameLabel = new Label("", parent.getGame().getMainSkin());
         constructionNameLabel.setWrap(true);
 
         this.buyButton = new TextButton("buy", parent.getGame().getMainSkin());
@@ -49,8 +48,8 @@ public class WorldBuyConstructionInfoNodeVM extends Table  {
 
 
         // ------ this ------
-        this.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT).row();
-        this.add(buyButton).size(CHILD_WIDTH, CHILD_HEIGHT).row();
+        this.add(constructionNameLabel).width(CHILD_WIDTH).row();
+        this.add(buyButton).width(CHILD_WIDTH).row();
         this.setBackground(DrawableFactory.createBorderBoard(30, 10, 0.8f, 1));
     }
 
@@ -64,18 +63,14 @@ public class WorldBuyConstructionInfoNodeVM extends Table  {
         } else {
             setVisible(true);
             //textButton.setVisible(true);
-            //Gdx.app.log("ConstructionView", model.getName() + " set to its view");
+            //Gdx.app.log("ConstructionView", model.getDescriptionPackage().getName() + " set to its view");
         }
         // ------ update text ------
         constructionNameLabel.setText(
-                parent.getGame()
-                        .getIdleGameplayExport()
-                        .getGameplayContext()
-                        .getGameDictionary()
-                        .constructionPrototypeIdToShowName(
-                                parent.getGame().getIdleGameplayExport().getLanguage(),
-                                constructionBuyCandidateConfig.getPrototypeId()
-                        )
+                parent.getGame().getIdleGameplayExport().getGameplayContext().getConstructionFactory()
+                        .getPrototype(constructionBuyCandidateConfig.getPrototypeId())
+                        .getDescriptionPackage()
+                        .getName()
         );
 
         // ------ update clickable-state ------

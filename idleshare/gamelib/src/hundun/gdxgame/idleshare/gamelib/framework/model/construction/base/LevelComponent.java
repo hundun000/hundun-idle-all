@@ -25,29 +25,21 @@ public class LevelComponent {
         this.typeWorkingLevelChangeable = typeWorkingLevelChangeable;
     }
 
-    public String getWorkingLevelDescription() {
-        boolean reachMaxLevel = construction.getSaveData().getLevel() == this.maxLevel;
-        return construction.descriptionPackage.getLevelDescriptionProvider().provide(construction.saveData.getLevel(), construction.saveData.getWorkingLevel(), reachMaxLevel);
-    }
-
     public boolean canChangeWorkingLevel(int delta) {
         if (!typeWorkingLevelChangeable) {
             return false;
         }
         int next = construction.saveData.getWorkingLevel() + delta;
-        if (next > construction.saveData.getLevel() || next < minWorkingLevel) {
-            return false;
-        }
-        return true;
+        return next <= construction.saveData.getLevel() && next >= minWorkingLevel;
     }
 
     public void changeWorkingLevel(int delta) {
         if (canChangeWorkingLevel(delta)) {
             construction.saveData.setWorkingLevel(construction.saveData.getWorkingLevel() + delta);
             construction.updateModifiedValues();
-            construction.getGameplayContext().getFrontEnd().log(construction.name, "changeWorkingLevel delta = " + delta + ", success to " + construction.saveData.getWorkingLevel());
+            construction.getGameplayContext().getFrontend().log(construction.getClass().getSimpleName(), "changeWorkingLevel delta = " + delta + ", success to " + construction.saveData.getWorkingLevel());
         } else {
-            construction.getGameplayContext().getFrontEnd().log(construction.name, "changeWorkingLevel delta = " + delta + ", but cannot!");
+            construction.getGameplayContext().getFrontend().log(construction.getClass().getSimpleName(), "changeWorkingLevel delta = " + delta + ", but cannot!");
         }
     }
 

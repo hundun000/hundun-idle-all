@@ -10,8 +10,8 @@ import hundun.gdxgame.idleshare.gamelib.framework.data.ConstructionSaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.data.GameplaySaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.data.SystemSettingSaveData;
 import hundun.gdxgame.idleshare.gamelib.framework.model.grid.GridPosition;
-import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementSaveData;
-import hundun.gdxgame.idleshare.gamelib.framework.model.manager.AchievementManager.AchievementState;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementManager.AchievementSaveData;
+import hundun.gdxgame.idleshare.gamelib.framework.model.achievement.AchievementManager.AchievementState;
 import hundun.gdxgame.idleshare.gamelib.framework.util.text.Language;
 
 /**
@@ -26,7 +26,7 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
     }
 
     @Override
-    protected RootSaveData genereateStarterRootSaveData() {
+    protected RootSaveData generateStarterRootSaveData() {
         Map<String, ConstructionSaveData> map = new HashMap<>();
 
         map.put(

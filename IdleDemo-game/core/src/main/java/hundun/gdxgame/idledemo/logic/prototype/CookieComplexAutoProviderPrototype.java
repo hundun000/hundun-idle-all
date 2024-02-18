@@ -18,26 +18,6 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class CookieComplexAutoProviderPrototype extends AbstractConstructionPrototype {
-    public static DescriptionPackage descriptionPackageEN = DescriptionPackage.builder()
-            .upgradeButtonText("Upgrade")
-            .outputCostDescriptionStart("Consume")
-            .outputGainDescriptionStart("Produce")
-            .upgradeCostDescriptionStart("Upgrade cost")
-            .upgradeMaxLevelDescription("(max)")
-            .levelDescriptionProvider(DescriptionPackageFactory.ONLY_LEVEL_IMP)
-            .proficiencyDescriptionProvider(DescriptionPackageFactory.EN_PROFICIENCY_IMP)
-            .build();
-
-
-    public static DescriptionPackage descriptionPackageCN = DescriptionPackage.builder()
-            .upgradeButtonText("升级")
-            .outputCostDescriptionStart("自动消耗")
-            .outputGainDescriptionStart("自动产出")
-            .upgradeCostDescriptionStart("升级费用")
-            .upgradeMaxLevelDescription("(已达到最大等级)")
-            .levelDescriptionProvider(DescriptionPackageFactory.ONLY_LEVEL_IMP)
-            .proficiencyDescriptionProvider(DescriptionPackageFactory.CN_PROFICIENCY_IMP)
-            .build();
 
     public CookieComplexAutoProviderPrototype(Language language) {
         super(
@@ -47,10 +27,16 @@ public class CookieComplexAutoProviderPrototype extends AbstractConstructionProt
         switch (language)
         {
             case CN:
-                this.descriptionPackage = descriptionPackageCN;
+                this.descriptionPackage = Const.templateDescriptionPackageCN
+                        .name("高级自动点击器")
+                        .wikiText("自动获得饼干")
+                        .build();
                 break;
             default:
-                this.descriptionPackage = descriptionPackageEN;
+                this.descriptionPackage = Const.templateDescriptionPackageEN
+                        .name("ComplexAutoClicker")
+                        .wikiText("Auto gain some cookie")
+                        .build();
                 break;
         }
 
@@ -84,7 +70,7 @@ public class CookieComplexAutoProviderPrototype extends AbstractConstructionProt
         public CookieComplexAutoProviderProficiencyComponent(
                 BaseConstruction construction
         ) {
-            super(construction, 1, 0);
+            super(construction, 1, 0, 100);
         }
 
         @Override

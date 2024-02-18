@@ -1,8 +1,11 @@
 package hundun.gdxgame.idleshare.gamelib.framework.model.construction.base;
 
+import lombok.Getter;
+
 public abstract class ProficiencyComponent {
 
-    public int maxProficiency = 100;
+    @Getter
+    protected int maxProficiency;
     protected final BaseConstruction construction;
     public String promoteConstructionPrototypeId;
     public String demoteConstructionPrototypeId;
@@ -10,12 +13,6 @@ public abstract class ProficiencyComponent {
     public ProficiencyComponent(BaseConstruction construction)
     {
         this.construction = construction;
-    }
-
-    public String getProficiencyDescroption()
-    {
-        Boolean reachMaxLevel = construction.saveData.getProficiency() >= this.maxProficiency;
-        return construction.descriptionPackage.getProficiencyDescriptionProvider().provide(construction.saveData.getProficiency(), reachMaxLevel);
     }
 
     public Boolean canPromote()
@@ -52,7 +49,7 @@ public abstract class ProficiencyComponent {
 
         construction.saveData.setProficiency(0);
         construction.updateModifiedValues();
-        construction.gameplayContext.getFrontEnd().log(construction.name, "cleanProficiency");
+        construction.gameplayContext.getFrontend().log(construction.getClass().getSimpleName(), "cleanProficiency");
 
     }
 

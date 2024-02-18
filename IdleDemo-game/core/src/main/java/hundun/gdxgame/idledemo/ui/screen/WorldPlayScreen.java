@@ -5,14 +5,13 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import hundun.gdxgame.idledemo.DemoIdleGame;
+import hundun.gdxgame.idledemo.IdleDemoGame;
 import hundun.gdxgame.idledemo.logic.DemoScreenId;
-import hundun.gdxgame.idledemo.logic.ResourceType;
 import hundun.gdxgame.idledemo.ui.shared.BaseDemoPlayScreen;
 import hundun.gdxgame.idledemo.ui.world.HexCellVM;
 import hundun.gdxgame.idledemo.ui.world.HexAreaVM;
 import hundun.gdxgame.idledemo.ui.world.WorldCellDetailBoardVM;
-import hundun.gdxgame.idleshare.core.framework.model.CameraDataPackage;
+import hundun.gdxgame.idleshare.core.framework.CameraDataPackage;
 import hundun.gdxgame.idleshare.gamelib.framework.callback.IConstructionCollectionListener;
 import hundun.gdxgame.idleshare.gamelib.framework.model.construction.base.BaseConstruction;
 
@@ -30,7 +29,7 @@ public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstruction
 
     protected WorldCellDetailBoardVM worldCellDetailBoardVM;
 
-    public WorldPlayScreen(DemoIdleGame game) {
+    public WorldPlayScreen(IdleDemoGame game) {
         super(game, DemoScreenId.SCREEN_WORLD);
 
         this.deskCamera = new OrthographicCamera();
@@ -44,7 +43,7 @@ public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstruction
 
         worldCellDetailBoardVM = new WorldCellDetailBoardVM(this);
         uiRootTable.add(worldCellDetailBoardVM)
-                .height(layoutConst.CONSTRUCION_BOARD_ROOT_BOX_HEIGHT)
+                .height(layoutConst.CONSTRUCTION_BOARD_ROOT_BOX_HEIGHT)
                 .fill()
                 .colspan(UI_ROOT_TABLE_COLSPAN_SIZE)
         ;
@@ -52,11 +51,14 @@ public class WorldPlayScreen extends BaseDemoPlayScreen implements IConstruction
 
     protected void lazyInitLogicContext() {
         super.lazyInitLogicContext();
-        
-        storageInfoTable.lazyInit(ResourceType.VALUES_FOR_SHOW_ORDER);
 
-        logicFrameListeners.add(worldCellDetailBoardVM);
         this.getGame().getIdleGameplayExport().getGameplayContext().getEventManager().registerListener(worldCellDetailBoardVM);
+    }
+
+    @Override
+    public void onLogicFrame() {
+        super.onLogicFrame();
+        worldCellDetailBoardVM.onLogicFrame();
     }
 
     @Override

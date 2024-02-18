@@ -1,20 +1,16 @@
 package hundun.gdxgame.idledemo.ui.screen;
 
 import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import hundun.gdxgame.idledemo.DemoIdleGame;
+import hundun.gdxgame.idledemo.IdleDemoGame;
 import hundun.gdxgame.idledemo.logic.DemoScreenId;
-import hundun.gdxgame.idledemo.logic.RootSaveData;
-import hundun.gdxgame.idleshare.core.framework.model.manager.AbstractIdleScreenContext;
-import hundun.gdxgame.idleshare.core.starter.ui.screen.play.PlayScreenLayoutConst;
+import hundun.gdxgame.idledemo.ui.shared.PlayScreenLayoutConst;
 
 /**
  * @author hundun
  * Created on 2023/02/17
  */
-public class DemoScreenContext extends AbstractIdleScreenContext<DemoIdleGame, RootSaveData> {
-
+public class DemoScreenContext {
+    protected IdleDemoGame game;
     DemoMenuScreen menuScreen;
     MainPlayScreen mainPlayScreen;
     WorldPlayScreen worldPlayScreen;
@@ -22,7 +18,7 @@ public class DemoScreenContext extends AbstractIdleScreenContext<DemoIdleGame, R
 
 
 
-    public static PlayScreenLayoutConst customLayoutConst(DemoIdleGame game) {
+    public static PlayScreenLayoutConst customLayoutConst(IdleDemoGame game) {
         PlayScreenLayoutConst layoutConst = new PlayScreenLayoutConst(game.getWidth(), game.getHeight());
         NinePatch ninePatch = new NinePatch(game.getTextureManager().getDefaultBoardNinePatchTexture(),
                 game.getTextureManager().getDefaultBoardNinePatchEdgeSize(),
@@ -30,16 +26,13 @@ public class DemoScreenContext extends AbstractIdleScreenContext<DemoIdleGame, R
                 game.getTextureManager().getDefaultBoardNinePatchEdgeSize(),
                 game.getTextureManager().getDefaultBoardNinePatchEdgeSize()
         );
-        layoutConst.simpleBoardBackground = new NinePatchDrawable(ninePatch);
-        layoutConst.simpleBoardBackgroundMiddle = new TextureRegionDrawable(game.getTextureManager().getDefaultBoardNinePatchMiddle());
         return layoutConst;
     }
 
-    public DemoScreenContext(DemoIdleGame game) {
-        super(game);
+    public DemoScreenContext(IdleDemoGame game) {
+        this.game = game;
     }
 
-    @Override
     public void lazyInit() {
         this.menuScreen = new DemoMenuScreen(game);
         this.mainPlayScreen = new MainPlayScreen(game);
