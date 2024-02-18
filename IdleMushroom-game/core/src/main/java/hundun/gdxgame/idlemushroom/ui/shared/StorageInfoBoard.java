@@ -65,12 +65,12 @@ public class StorageInfoBoard extends Table implements IResourceChangeListener {
             for (int i = 0; i < delta.length; i++) {
                 if (delta[i] > 0)
                 {
-                    deltaLabelText.append("(+").append(delta[i]).append(")");
+                    deltaLabelText.append("(+").append(game.getTextFormatTool().format(delta[i])).append(")");
                     deltaLabel.setStyle(PLUS_STYLE);
                 }
                 else if (delta[i] < 0)
                 {
-                    deltaLabelText.append("(-").append(Math.abs(delta[i])).append(")");
+                    deltaLabelText.append("(-").append(game.getTextFormatTool().format(Math.abs(delta[i]))).append(")");
                     deltaLabel.setStyle(MINUS_STYLE);
                 }
             }

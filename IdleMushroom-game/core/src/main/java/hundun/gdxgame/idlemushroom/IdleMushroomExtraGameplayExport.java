@@ -25,7 +25,7 @@ public class IdleMushroomExtraGameplayExport extends StarterIdleFrontend impleme
     public static final int EPOCH_COUNTER_SPECIAL_LEVEL_2 = 8;
     private final Map<String, Integer> specialEpochConfigMaxLevel = JavaFeatureForGwt.mapOf(
             IdleMushroomConstructionPrototypeId.MAIN_MUSHROOM, Integer.MAX_VALUE,
-            IdleMushroomConstructionPrototypeId.MUSHROOM_AUTO_SELLER, 100,
+            IdleMushroomConstructionPrototypeId.MUSHROOM_AUTO_SELLER, 999,
             IdleMushroomConstructionPrototypeId.EPOCH_COUNTER, EPOCH_COUNTER_MAX_LEVEL
     );
     @Getter

@@ -26,7 +26,7 @@ public class DemoSaveHandler extends PairChildrenSaveHandler<RootSaveData, Syste
     }
 
     @Override
-    protected RootSaveData genereateStarterRootSaveData() {
+    protected RootSaveData generateStarterRootSaveData() {
         Map<String, ConstructionSaveData> map = new HashMap<>();
 
         map.put(

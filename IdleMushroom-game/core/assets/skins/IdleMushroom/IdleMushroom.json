@@ -6,9 +6,9 @@
 },
 "com.badlogic.gdx.graphics.Color": {
 	"green": {
-		"r": 0,
-		"g": 1,
-		"b": 0,
+		"r": 0.25,
+		"g": 0.5,
+		"b": 0.25,
 		"a": 1
 	},
 	"white": {

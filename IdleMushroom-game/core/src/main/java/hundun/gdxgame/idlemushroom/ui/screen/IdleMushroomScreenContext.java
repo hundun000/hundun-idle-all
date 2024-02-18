@@ -25,7 +25,7 @@ public class IdleMushroomScreenContext {
         public final float DESK_WIDTH = 100;
         public final float DESK_HEIGHT = 100;
         public int CONSTRUCION_BOARD_ROOT_BOX_HEIGHT = 200;
-        public int CONSTRUCION_CHILD_WIDTH = 100;
+        public int CONSTRUCION_CHILD_WIDTH = 150;
         public int CONSTRUCION_CHILD_BUTTON_HEIGHT = 30;
         public int CONSTRUCION_CHILD_NAME_HEIGHT = 50;
 
@@ -53,12 +53,13 @@ public class IdleMushroomScreenContext {
 
         public float questionMarkAreaSize = 32;
         public int EPOCH_PART_CHILD_WIDTH = 150;
+        public int SELLER_PART_NAME_WIDTH = 200;
         public int SELLER_PART_CHILD_WIDTH = 150;
         public int EpochInfoArea_CHILD_WIDTH = 200;
         public float menuButtonWidth = 200;
         public float menuButtonHeight = 75;
         public int STORAGE_BOARD_NODE_HEIGHT = 25;
-        public int STORAGE_BOARD_NODE_WIDTH = 120;
+        public int STORAGE_BOARD_NODE_WIDTH = 150;
         public IdleMushroomPlayScreenLayoutConst(int gameLogicWidth, int gameLogicHeight) {
             this.gameEntityFactoryLayoutConst = IdleMushroomGameEntityFactoryLayoutConst.builder()
                     .EXPECTED_DRAW_MIN_X(0)
@@ -66,8 +67,6 @@ public class IdleMushroomScreenContext {
                     .EXPECTED_DRAW_MIN_Y(CONSTRUCION_BOARD_ROOT_BOX_HEIGHT)
                     .EXPECTED_DRAW_MAX_Y(gameLogicHeight - STORAGE_BOARD_BORDER_HEIGHT)
                     .build();
-
-            CONSTRUCION_CHILD_WIDTH = 150;
         }
 
     }

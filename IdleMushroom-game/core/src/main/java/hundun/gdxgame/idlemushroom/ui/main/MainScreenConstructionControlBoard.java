@@ -149,7 +149,7 @@ public class MainScreenConstructionControlBoard extends Table
             questionMarkArea.addListener(new StarterSecondaryInfoBoardCallerClickListener<>(() -> model, parent));
 
             // ------ this ------
-            leftPart.add(constructionNameLabel).size(CHILD_WIDTH, NAME_CHILD_HEIGHT);
+            leftPart.add(constructionNameLabel).size(playScreenLayoutConst.SELLER_PART_NAME_WIDTH, NAME_CHILD_HEIGHT);
             leftPart.add(questionMarkArea)
                     .size(parent.getIdleMushroomPlayScreenLayoutConst().questionMarkAreaSize, parent.getIdleMushroomPlayScreenLayoutConst().questionMarkAreaSize)
                     .row();
